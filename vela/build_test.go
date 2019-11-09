@@ -15,7 +15,6 @@ import (
 	"time"
 
 	"github.com/go-vela/mock/server"
-	"github.com/go-vela/types/database"
 	"github.com/go-vela/types/library"
 
 	"github.com/gin-gonic/gin"
@@ -104,7 +103,7 @@ func TestBuild_GetLogs_200(t *testing.T) {
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.BuildLogsResp)
-	var want []database.Log
+	var want []library.Log
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -129,7 +128,7 @@ func TestBuild_GetLogs_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
-	want := []database.Log{}
+	want := []library.Log{}
 
 	// run test
 	got, resp, err := c.Build.GetLogs("github", "octocat", 0)
