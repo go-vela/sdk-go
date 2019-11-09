@@ -69,7 +69,7 @@ func (svc *BuildService) Add(org, repo string, target *library.Build) (*library.
 // Update modifies a build with the provided details.
 func (svc *BuildService) Update(org, repo string, target *library.Build) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, *target.Number)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, target.GetNumber())
 
 	// library Build type we want to return
 	v := new(library.Build)

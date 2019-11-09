@@ -56,7 +56,7 @@ func (svc *StepService) Add(org, repo string, buildNum int, target *library.Step
 // Update modifies a step with the provided details.
 func (svc *StepService) Update(org, repo string, buildNum int, target *library.Step) (*library.Step, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d", org, repo, buildNum, *target.Number)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d", org, repo, buildNum, target.GetNumber())
 
 	// library Step type we want to return
 	v := new(library.Step)

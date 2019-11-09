@@ -56,7 +56,7 @@ func (svc *SecretService) Add(engine, sType, org, name string, target *library.S
 // Update modifies a secret with the provided details.
 func (svc *SecretService) Update(engine, sType, org, name string, target *library.Secret) (*library.Secret, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/secrets/%s/%s/%s/%s/%s", engine, sType, org, name, *target.Name)
+	u := fmt.Sprintf("/api/v1/secrets/%s/%s/%s/%s/%s", engine, sType, org, name, target.GetName())
 
 	// library Secret type we want to return
 	v := new(library.Secret)

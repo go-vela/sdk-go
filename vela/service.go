@@ -56,7 +56,7 @@ func (svc *SvcService) Add(org, repo string, buildNum int, target *library.Servi
 // Update modifies a service with the provided details.
 func (svc *SvcService) Update(org, repo string, buildNum int, target *library.Service) (*library.Service, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d", org, repo, buildNum, *target.Number)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d", org, repo, buildNum, target.GetNumber())
 
 	// library Service type we want to return
 	v := new(library.Service)
