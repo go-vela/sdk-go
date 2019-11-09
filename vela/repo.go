@@ -15,7 +15,7 @@ import (
 type RepoService service
 
 // Get returns the provided repo.
-func (s *RepoService) Get(org, repo string) (*library.Repo, *Response, error) {
+func (svc *RepoService) Get(org, repo string) (*library.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s", org, repo)
 
@@ -23,12 +23,12 @@ func (s *RepoService) Get(org, repo string) (*library.Repo, *Response, error) {
 	v := new(library.Repo)
 
 	// send request using client
-	resp, err := s.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v)
 	return v, resp, err
 }
 
 // GetAll returns a list of all repos.
-func (s *RepoService) GetAll() (*[]library.Repo, *Response, error) {
+func (svc *RepoService) GetAll() (*[]library.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos")
 
@@ -36,12 +36,12 @@ func (s *RepoService) GetAll() (*[]library.Repo, *Response, error) {
 	v := new([]library.Repo)
 
 	// send request using client
-	resp, err := s.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v)
 	return v, resp, err
 }
 
 // Add constructs a repo with the provided details.
-func (s *RepoService) Add(target *library.Repo) (*library.Repo, *Response, error) {
+func (svc *RepoService) Add(target *library.Repo) (*library.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos")
 
@@ -49,12 +49,12 @@ func (s *RepoService) Add(target *library.Repo) (*library.Repo, *Response, error
 	v := new(library.Repo)
 
 	// send request using client
-	resp, err := s.client.Call("POST", u, target, v)
+	resp, err := svc.client.Call("POST", u, target, v)
 	return v, resp, err
 }
 
 // Update modifies a repo with the provided details.
-func (s *RepoService) Update(org, repo string, target *library.Repo) (*library.Repo, *Response, error) {
+func (svc *RepoService) Update(org, repo string, target *library.Repo) (*library.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s", org, repo)
 
@@ -62,12 +62,12 @@ func (s *RepoService) Update(org, repo string, target *library.Repo) (*library.R
 	v := new(library.Repo)
 
 	// send request using client
-	resp, err := s.client.Call("PUT", u, target, v)
+	resp, err := svc.client.Call("PUT", u, target, v)
 	return v, resp, err
 }
 
 // Remove deletes the provided repo.
-func (s *RepoService) Remove(org, repo string) (*string, *Response, error) {
+func (svc *RepoService) Remove(org, repo string) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s", org, repo)
 
@@ -75,7 +75,7 @@ func (s *RepoService) Remove(org, repo string) (*string, *Response, error) {
 	v := new(string)
 
 	// send request using client
-	resp, err := s.client.Call("DELETE", u, nil, v)
+	resp, err := svc.client.Call("DELETE", u, nil, v)
 	return v, resp, err
 }
 
@@ -93,7 +93,7 @@ func (s *RepoService) Repair(org, repo string) (*string, *Response, error) {
 }
 
 // Chown modifies the org of a repo.
-func (s *RepoService) Chown(org, repo string) (*string, *Response, error) {
+func (svc *RepoService) Chown(org, repo string) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/chown", org, repo)
 
@@ -101,6 +101,6 @@ func (s *RepoService) Chown(org, repo string) (*string, *Response, error) {
 	v := new(string)
 
 	// send request using client
-	resp, err := s.client.Call("PATCH", u, nil, v)
+	resp, err := svc.client.Call("PATCH", u, nil, v)
 	return v, resp, err
 }

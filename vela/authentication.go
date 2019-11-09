@@ -19,17 +19,17 @@ type AuthenticationService struct {
 }
 
 // SetTokenAuth sets the authentication type as OAuth Token.
-func (s *AuthenticationService) SetTokenAuth(token string) {
-	s.secret = String(token)
-	s.authType = AuthenticationToken
+func (svc *AuthenticationService) SetTokenAuth(token string) {
+	svc.secret = String(token)
+	svc.authType = AuthenticationToken
 }
 
 // HasAuth checks if the authentication type is set.
-func (s *AuthenticationService) HasAuth() bool {
-	return s.authType > 0
+func (svc *AuthenticationService) HasAuth() bool {
+	return svc.authType > 0
 }
 
 // HasTokenAuth checks if the authentication type is OAuth Token.
-func (s *AuthenticationService) HasTokenAuth() bool {
-	return s.authType == AuthenticationToken
+func (svc *AuthenticationService) HasTokenAuth() bool {
+	return svc.authType == AuthenticationToken
 }

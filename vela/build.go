@@ -16,7 +16,7 @@ import (
 type BuildService service
 
 // Get returns the provided build.
-func (s *BuildService) Get(org, repo string, target int) (*library.Build, *Response, error) {
+func (svc *BuildService) Get(org, repo string, target int) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, target)
 
@@ -24,12 +24,12 @@ func (s *BuildService) Get(org, repo string, target int) (*library.Build, *Respo
 	v := new(library.Build)
 
 	// send request using client
-	resp, err := s.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v)
 	return v, resp, err
 }
 
 // GetAll returns a list of all builds.
-func (s *BuildService) GetAll(org, repo string) (*[]library.Build, *Response, error) {
+func (svc *BuildService) GetAll(org, repo string) (*[]library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds", org, repo)
 
@@ -37,12 +37,12 @@ func (s *BuildService) GetAll(org, repo string) (*[]library.Build, *Response, er
 	v := new([]library.Build)
 
 	// send request using client
-	resp, err := s.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v)
 	return v, resp, err
 }
 
 // GetLogs returns the provided build logs.
-func (s *BuildService) GetLogs(org, repo string, target int) (*[]database.Log, *Response, error) {
+func (svc *BuildService) GetLogs(org, repo string, target int) (*[]database.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/logs", org, repo, target)
 
@@ -50,12 +50,12 @@ func (s *BuildService) GetLogs(org, repo string, target int) (*[]database.Log, *
 	v := new([]database.Log)
 
 	// send request using client
-	resp, err := s.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v)
 	return v, resp, err
 }
 
 // Add constructs a build with the provided details.
-func (s *BuildService) Add(org, repo string, target *library.Build) (*library.Build, *Response, error) {
+func (svc *BuildService) Add(org, repo string, target *library.Build) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds", org, repo)
 
@@ -63,12 +63,12 @@ func (s *BuildService) Add(org, repo string, target *library.Build) (*library.Bu
 	v := new(library.Build)
 
 	// send request using client
-	resp, err := s.client.Call("POST", u, target, v)
+	resp, err := svc.client.Call("POST", u, target, v)
 	return v, resp, err
 }
 
 // Update modifies a build with the provided details.
-func (s *BuildService) Update(org, repo string, target *library.Build) (*library.Build, *Response, error) {
+func (svc *BuildService) Update(org, repo string, target *library.Build) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, *target.Number)
 
@@ -76,12 +76,12 @@ func (s *BuildService) Update(org, repo string, target *library.Build) (*library
 	v := new(library.Build)
 
 	// send request using client
-	resp, err := s.client.Call("PUT", u, target, v)
+	resp, err := svc.client.Call("PUT", u, target, v)
 	return v, resp, err
 }
 
 // Remove deletes the provided build.
-func (s *BuildService) Remove(org, repo string, target int) (*string, *Response, error) {
+func (svc *BuildService) Remove(org, repo string, target int) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, target)
 
@@ -89,12 +89,12 @@ func (s *BuildService) Remove(org, repo string, target int) (*string, *Response,
 	v := new(string)
 
 	// send request using client
-	resp, err := s.client.Call("DELETE", u, nil, v)
+	resp, err := svc.client.Call("DELETE", u, nil, v)
 	return v, resp, err
 }
 
 // Restart takes the build provided and restarts it
-func (s *BuildService) Restart(org, repo string, target int) (*library.Build, *Response, error) {
+func (svc *BuildService) Restart(org, repo string, target int) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, target)
 
@@ -102,6 +102,6 @@ func (s *BuildService) Restart(org, repo string, target int) (*library.Build, *R
 	v := new(library.Build)
 
 	// send request using client
-	resp, err := s.client.Call("POST", u, nil, v)
+	resp, err := svc.client.Call("POST", u, nil, v)
 	return v, resp, err
 }
