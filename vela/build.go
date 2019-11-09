@@ -7,7 +7,6 @@ package vela
 import (
 	"fmt"
 
-	"github.com/go-vela/types/database"
 	"github.com/go-vela/types/library"
 )
 
@@ -42,12 +41,12 @@ func (svc *BuildService) GetAll(org, repo string) (*[]library.Build, *Response, 
 }
 
 // GetLogs returns the provided build logs.
-func (svc *BuildService) GetLogs(org, repo string, target int) (*[]database.Log, *Response, error) {
+func (svc *BuildService) GetLogs(org, repo string, target int) (*[]library.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/logs", org, repo, target)
 
 	// slice database Log type we want to return
-	v := new([]database.Log)
+	v := new([]library.Log)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
