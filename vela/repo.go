@@ -41,7 +41,7 @@ func (svc *RepoService) GetAll() (*[]library.Repo, *Response, error) {
 }
 
 // Add constructs a repo with the provided details.
-func (svc *RepoService) Add(target *library.Repo) (*library.Repo, *Response, error) {
+func (svc *RepoService) Add(r *library.Repo) (*library.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos")
 
@@ -49,12 +49,12 @@ func (svc *RepoService) Add(target *library.Repo) (*library.Repo, *Response, err
 	v := new(library.Repo)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, target, v)
+	resp, err := svc.client.Call("POST", u, r, v)
 	return v, resp, err
 }
 
 // Update modifies a repo with the provided details.
-func (svc *RepoService) Update(org, repo string, target *library.Repo) (*library.Repo, *Response, error) {
+func (svc *RepoService) Update(org, repo string, r *library.Repo) (*library.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s", org, repo)
 
@@ -62,7 +62,7 @@ func (svc *RepoService) Update(org, repo string, target *library.Repo) (*library
 	v := new(library.Repo)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, target, v)
+	resp, err := svc.client.Call("PUT", u, r, v)
 	return v, resp, err
 }
 
@@ -80,7 +80,7 @@ func (svc *RepoService) Remove(org, repo string) (*string, *Response, error) {
 }
 
 // Repair modifies a damaged repo webhook.
-func (s *RepoService) Repair(org, repo string) (*string, *Response, error) {
+func (svc *RepoService) Repair(org, repo string) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/repair", org, repo)
 
@@ -88,7 +88,7 @@ func (s *RepoService) Repair(org, repo string) (*string, *Response, error) {
 	v := new(string)
 
 	// send request using client
-	resp, err := s.client.Call("PATCH", u, nil, v)
+	resp, err := svc.client.Call("PATCH", u, nil, v)
 	return v, resp, err
 }
 

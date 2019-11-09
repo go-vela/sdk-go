@@ -11,7 +11,7 @@ import (
 type AuthorizationService service
 
 // Login constructs a build with the provided details.
-func (svc *AuthorizationService) Login(target *library.Login) (*library.Login, *Response, error) {
+func (svc *AuthorizationService) Login(l *library.Login) (*library.Login, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/login")
 
@@ -19,6 +19,6 @@ func (svc *AuthorizationService) Login(target *library.Login) (*library.Login, *
 	v := new(library.Login)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, target, v)
+	resp, err := svc.client.Call("POST", u, l, v)
 	return v, resp, err
 }

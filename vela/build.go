@@ -15,9 +15,9 @@ import (
 type BuildService service
 
 // Get returns the provided build.
-func (svc *BuildService) Get(org, repo string, target int) (*library.Build, *Response, error) {
+func (svc *BuildService) Get(org, repo string, build int) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, target)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, build)
 
 	// library Build type we want to return
 	v := new(library.Build)
@@ -41,9 +41,9 @@ func (svc *BuildService) GetAll(org, repo string) (*[]library.Build, *Response, 
 }
 
 // GetLogs returns the provided build logs.
-func (svc *BuildService) GetLogs(org, repo string, target int) (*[]library.Log, *Response, error) {
+func (svc *BuildService) GetLogs(org, repo string, build int) (*[]library.Log, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/logs", org, repo, target)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/logs", org, repo, build)
 
 	// slice database Log type we want to return
 	v := new([]library.Log)
@@ -54,7 +54,7 @@ func (svc *BuildService) GetLogs(org, repo string, target int) (*[]library.Log, 
 }
 
 // Add constructs a build with the provided details.
-func (svc *BuildService) Add(org, repo string, target *library.Build) (*library.Build, *Response, error) {
+func (svc *BuildService) Add(org, repo string, b *library.Build) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds", org, repo)
 
@@ -62,27 +62,27 @@ func (svc *BuildService) Add(org, repo string, target *library.Build) (*library.
 	v := new(library.Build)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, target, v)
+	resp, err := svc.client.Call("POST", u, b, v)
 	return v, resp, err
 }
 
 // Update modifies a build with the provided details.
-func (svc *BuildService) Update(org, repo string, target *library.Build) (*library.Build, *Response, error) {
+func (svc *BuildService) Update(org, repo string, b *library.Build) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, target.GetNumber())
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, b.GetNumber())
 
 	// library Build type we want to return
 	v := new(library.Build)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, target, v)
+	resp, err := svc.client.Call("PUT", u, b, v)
 	return v, resp, err
 }
 
 // Remove deletes the provided build.
-func (svc *BuildService) Remove(org, repo string, target int) (*string, *Response, error) {
+func (svc *BuildService) Remove(org, repo string, build int) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, target)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, build)
 
 	// string type we want to return
 	v := new(string)
@@ -93,9 +93,9 @@ func (svc *BuildService) Remove(org, repo string, target int) (*string, *Respons
 }
 
 // Restart takes the build provided and restarts it
-func (svc *BuildService) Restart(org, repo string, target int) (*library.Build, *Response, error) {
+func (svc *BuildService) Restart(org, repo string, build int) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, target)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, build)
 
 	// library Build type we want to return
 	v := new(library.Build)

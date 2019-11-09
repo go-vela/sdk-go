@@ -15,9 +15,9 @@ import (
 type LogService service
 
 // GetService returns the provided service log.
-func (svc *LogService) GetService(org, repo string, buildNum, serviceNum int) (*library.Log, *Response, error) {
+func (svc *LogService) GetService(org, repo string, build, service int) (*library.Log, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, buildNum, serviceNum)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, build, service)
 
 	// library Log type we want to return
 	v := new(library.Log)
@@ -28,35 +28,35 @@ func (svc *LogService) GetService(org, repo string, buildNum, serviceNum int) (*
 }
 
 // AddService constructs a service log with the provided details.
-func (svc *LogService) AddService(org, repo string, buildNum, serviceNum int, target *library.Log) (*library.Log, *Response, error) {
+func (svc *LogService) AddService(org, repo string, build, service int, l *library.Log) (*library.Log, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, buildNum, serviceNum)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, build, service)
 
 	// library Log type we want to return
 	v := new(library.Log)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, target, v)
+	resp, err := svc.client.Call("POST", u, l, v)
 	return v, resp, err
 }
 
 // UpdateService modifies a service log with the provided details.
-func (svc *LogService) UpdateService(org, repo string, buildNum, serviceNum int, target *library.Log) (*library.Log, *Response, error) {
+func (svc *LogService) UpdateService(org, repo string, build, service int, l *library.Log) (*library.Log, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, buildNum, serviceNum)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, build, service)
 
 	// library Log type we want to return
 	v := new(library.Log)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, target, v)
+	resp, err := svc.client.Call("PUT", u, l, v)
 	return v, resp, err
 }
 
 // RemoveService deletes the provided service log.
-func (svc *LogService) RemoveService(org, repo string, buildNum, serviceNum int) (*string, *Response, error) {
+func (svc *LogService) RemoveService(org, repo string, build, service int) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, buildNum, serviceNum)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, build, service)
 
 	// string type we want to return
 	v := new(string)
@@ -67,9 +67,9 @@ func (svc *LogService) RemoveService(org, repo string, buildNum, serviceNum int)
 }
 
 // GetStep returns the provided step log.
-func (svc *LogService) GetStep(org, repo string, buildNum, stepNum int) (*library.Log, *Response, error) {
+func (svc *LogService) GetStep(org, repo string, build, step int) (*library.Log, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, buildNum, stepNum)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, build, step)
 
 	// library Log type we want to return
 	v := new(library.Log)
@@ -80,35 +80,35 @@ func (svc *LogService) GetStep(org, repo string, buildNum, stepNum int) (*librar
 }
 
 // AddStep constructs a step log with the provided details.
-func (svc *LogService) AddStep(org, repo string, buildNum, stepNum int, target *library.Log) (*library.Log, *Response, error) {
+func (svc *LogService) AddStep(org, repo string, build, step int, l *library.Log) (*library.Log, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, buildNum, stepNum)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, build, step)
 
 	// library Log type we want to return
 	v := new(library.Log)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, target, v)
+	resp, err := svc.client.Call("POST", u, l, v)
 	return v, resp, err
 }
 
 // UpdateStep modifies a step log with the provided details.
-func (svc *LogService) UpdateStep(org, repo string, buildNum, stepNum int, target *library.Log) (*library.Log, *Response, error) {
+func (svc *LogService) UpdateStep(org, repo string, build, step int, l *library.Log) (*library.Log, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, buildNum, stepNum)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, build, step)
 
 	// library Log type we want to return
 	v := new(library.Log)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, target, v)
+	resp, err := svc.client.Call("PUT", u, l, v)
 	return v, resp, err
 }
 
 // RemoveStep deletes the provided step log.
-func (svc *LogService) RemoveStep(org, repo string, buildNum, stepNum int) (*string, *Response, error) {
+func (svc *LogService) RemoveStep(org, repo string, build, step int) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, buildNum, stepNum)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, build, step)
 
 	// string type we want to return
 	v := new(string)
