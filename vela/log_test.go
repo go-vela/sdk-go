@@ -372,9 +372,9 @@ func ExampleLogService_GetService() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
-	u := os.Getenv("CARAVEL_USERNAME")
-	p := os.Getenv("CARAVEL_PASSWORD")
-	otp := os.Getenv("CARAVEL_OTP")
+	u := os.Getenv("VELA_USERNAME")
+	p := os.Getenv("VELA_PASSWORD")
+	otp := os.Getenv("VELA_OTP")
 
 	l := library.Login{
 		Username: &u,
@@ -401,9 +401,9 @@ func ExampleLogService_AddService() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
-	u := os.Getenv("CARAVEL_USERNAME")
-	p := os.Getenv("CARAVEL_PASSWORD")
-	otp := os.Getenv("CARAVEL_OTP")
+	u := os.Getenv("VELA_USERNAME")
+	p := os.Getenv("VELA_PASSWORD")
+	otp := os.Getenv("VELA_OTP")
 
 	l := library.Login{
 		Username: &u,
@@ -434,9 +434,9 @@ func ExampleLogService_UpdateService() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
-	u := os.Getenv("CARAVEL_USERNAME")
-	p := os.Getenv("CARAVEL_PASSWORD")
-	otp := os.Getenv("CARAVEL_OTP")
+	u := os.Getenv("VELA_USERNAME")
+	p := os.Getenv("VELA_PASSWORD")
+	otp := os.Getenv("VELA_OTP")
 
 	l := library.Login{
 		Username: &u,
@@ -467,9 +467,9 @@ func ExampleLogService_RemoveService() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
-	u := os.Getenv("CARAVEL_USERNAME")
-	p := os.Getenv("CARAVEL_PASSWORD")
-	otp := os.Getenv("CARAVEL_OTP")
+	u := os.Getenv("VELA_USERNAME")
+	p := os.Getenv("VELA_PASSWORD")
+	otp := os.Getenv("VELA_OTP")
 
 	l := library.Login{
 		Username: &u,
@@ -496,9 +496,9 @@ func ExampleLogService_GetStep() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
-	u := os.Getenv("CARAVEL_USERNAME")
-	p := os.Getenv("CARAVEL_PASSWORD")
-	otp := os.Getenv("CARAVEL_OTP")
+	u := os.Getenv("VELA_USERNAME")
+	p := os.Getenv("VELA_PASSWORD")
+	otp := os.Getenv("VELA_OTP")
 
 	l := library.Login{
 		Username: &u,
@@ -525,9 +525,9 @@ func ExampleLogService_AddStep() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
-	u := os.Getenv("CARAVEL_USERNAME")
-	p := os.Getenv("CARAVEL_PASSWORD")
-	otp := os.Getenv("CARAVEL_OTP")
+	u := os.Getenv("VELA_USERNAME")
+	p := os.Getenv("VELA_PASSWORD")
+	otp := os.Getenv("VELA_OTP")
 
 	l := library.Login{
 		Username: &u,
@@ -558,9 +558,9 @@ func ExampleLogService_UpdateStep() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
-	u := os.Getenv("CARAVEL_USERNAME")
-	p := os.Getenv("CARAVEL_PASSWORD")
-	otp := os.Getenv("CARAVEL_OTP")
+	u := os.Getenv("VELA_USERNAME")
+	p := os.Getenv("VELA_PASSWORD")
+	otp := os.Getenv("VELA_OTP")
 
 	l := library.Login{
 		Username: &u,
@@ -591,9 +591,9 @@ func ExampleLogService_RemoveStep() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
-	u := os.Getenv("CARAVEL_USERNAME")
-	p := os.Getenv("CARAVEL_PASSWORD")
-	otp := os.Getenv("CARAVEL_OTP")
+	u := os.Getenv("VELA_USERNAME")
+	p := os.Getenv("VELA_PASSWORD")
+	otp := os.Getenv("VELA_OTP")
 
 	l := library.Login{
 		Username: &u,

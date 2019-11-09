@@ -233,9 +233,9 @@ func ExampleSecretService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
-	u := os.Getenv("CARAVEL_USERNAME")
-	p := os.Getenv("CARAVEL_PASSWORD")
-	otp := os.Getenv("CARAVEL_OTP")
+	u := os.Getenv("VELA_USERNAME")
+	p := os.Getenv("VELA_PASSWORD")
+	otp := os.Getenv("VELA_OTP")
 
 	l := library.Login{
 		Username: &u,
@@ -262,9 +262,9 @@ func ExampleSecretService_GetAll() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
-	u := os.Getenv("CARAVEL_USERNAME")
-	p := os.Getenv("CARAVEL_PASSWORD")
-	otp := os.Getenv("CARAVEL_OTP")
+	u := os.Getenv("VELA_USERNAME")
+	p := os.Getenv("VELA_PASSWORD")
+	otp := os.Getenv("VELA_OTP")
 
 	l := library.Login{
 		Username: &u,
@@ -291,9 +291,9 @@ func ExampleSecretService_Add() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
-	u := os.Getenv("CARAVEL_USERNAME")
-	p := os.Getenv("CARAVEL_PASSWORD")
-	otp := os.Getenv("CARAVEL_OTP")
+	u := os.Getenv("VELA_USERNAME")
+	p := os.Getenv("VELA_PASSWORD")
+	otp := os.Getenv("VELA_OTP")
 
 	l := library.Login{
 		Username: &u,
@@ -327,9 +327,9 @@ func ExampleSecretService_Update() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
-	u := os.Getenv("CARAVEL_USERNAME")
-	p := os.Getenv("CARAVEL_PASSWORD")
-	otp := os.Getenv("CARAVEL_OTP")
+	u := os.Getenv("VELA_USERNAME")
+	p := os.Getenv("VELA_PASSWORD")
+	otp := os.Getenv("VELA_OTP")
 
 	l := library.Login{
 		Username: &u,
@@ -362,9 +362,9 @@ func ExampleSecretService_Remove() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
-	u := os.Getenv("CARAVEL_USERNAME")
-	p := os.Getenv("CARAVEL_PASSWORD")
-	otp := os.Getenv("CARAVEL_OTP")
+	u := os.Getenv("VELA_USERNAME")
+	p := os.Getenv("VELA_PASSWORD")
+	otp := os.Getenv("VELA_OTP")
 
 	l := library.Login{
 		Username: &u,
