@@ -4,10 +4,10 @@ github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3 h1:t8FVkw33L+wilf2
 github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3/go.mod h1:VJ0WA2NBN22VlZ2dKZQPAPnyWw5XTlK1KymzLKsr59s=
 github.com/gin-gonic/gin v1.4.0 h1:3tMoCCfM7ppqsR0ptz/wi1impNpT7/9wQtMZ8lr1mCQ=
 github.com/gin-gonic/gin v1.4.0/go.mod h1:OW2EZn3DO8Ln9oIKOvM++LBO+5UPHJJDH72/q/3rZdM=
-github.com/go-vela/mock v0.1.2 h1:Faxe3QHa6dqZKTAqBYH3XBMXLJBBRUEzaFNzBupgkb4=
-github.com/go-vela/mock v0.1.2/go.mod h1:zZ5GTcbjDqal6wziV1Hre0qHC2x9NHvRF8Z5L5trZUw=
-github.com/go-vela/types v0.1.2 h1:1YyjLJNREMiEkI8KH2bGICz7jihvsROTjFm8TaoaY7E=
-github.com/go-vela/types v0.1.2/go.mod h1:JR5jxRuE5A+RZyyQqMd4lJoUApVFo/Iq9iABbQzPCj0=
+github.com/go-vela/mock v0.1.3 h1:YDOPugUeGgrd0CylHzwKhcLqxY50HZayJuwkaIyWuV4=
+github.com/go-vela/mock v0.1.3/go.mod h1:3TgNZmhaNsptHvtnKTPVrsdBpH3DKAacymSaGS6vrSA=
+github.com/go-vela/types v0.1.3 h1:y7PRarTVNZdu9x8v3vah+0+hB4NuNHYqY5Uq6MVJ04U=
+github.com/go-vela/types v0.1.3/go.mod h1:JR5jxRuE5A+RZyyQqMd4lJoUApVFo/Iq9iABbQzPCj0=
 github.com/golang/protobuf v1.3.1 h1:YF8+flBXS5eO826T4nzqPrxfhQThhXl0YzfuUPu4SBg=
 github.com/golang/protobuf v1.3.1/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/google/go-querystring v1.0.0 h1:Xkwi/a1rcvNg1PPYe5vI8GbeBY/jrVuDX5ASuANWTrk=
