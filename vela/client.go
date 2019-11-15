@@ -277,7 +277,7 @@ func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 // A response is considered an error if it has a status code outside the 200 range.
 func CheckResponse(r *http.Response) error {
 	// return no error if successful response code
-	if c := r.StatusCode; 200 <= c && c <= 299 {
+	if c := r.StatusCode; http.StatusOK <= c && c <= 299 {
 		return nil
 	}
 
