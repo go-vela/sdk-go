@@ -13,10 +13,10 @@ github.com/go-playground/locales v0.13.0/go.mod h1:taPMhCMXrRLJO55olJkUXHZBHCxTM
 github.com/go-playground/universal-translator v0.16.0/go.mod h1:1AnU7NaIRDWWzGEKwgtJRd2xk99HeFyHw3yid4rvQIY=
 github.com/go-playground/universal-translator v0.17.0 h1:icxd5fm+REJzpZx7ZfpaD876Lmtgy7VtROAbHHXk8no=
 github.com/go-playground/universal-translator v0.17.0/go.mod h1:UkSxE5sNxxRwHyU+Scu5vgOQjsIJAF8j9muTVoKLVtA=
-github.com/go-vela/mock v0.2.0-rc2.0.20191209180956-9a3802b0d265 h1:ZFjBe2K1dE215BHVaD/O8jnP8Ptb9OdKcaSyDk7otjk=
-github.com/go-vela/mock v0.2.0-rc2.0.20191209180956-9a3802b0d265/go.mod h1:TXUYtk1gemUCLcLX4i+NA8tM5/OjEo+Ckqk6DT+oA0U=
-github.com/go-vela/types v0.2.0-rc2 h1:oAMCz9iRFXAOtHNALed2zpTRzU5+N8bl+YhEJIedPzo=
-github.com/go-vela/types v0.2.0-rc2/go.mod h1:LNDrn7/nV38H0HmRfYv6YfPNb881R5NRE1YKXeVqpF4=
+github.com/go-vela/mock v0.2.0-rc2.0.20191216181555-5569455c5826 h1:ci64U/274J7K8+VBi4ht01a0mTzIqdceL0ZyNZwwVUw=
+github.com/go-vela/mock v0.2.0-rc2.0.20191216181555-5569455c5826/go.mod h1:hrhIafy3YKrZWXvBz+yIiZdXuPq5MXC4hE094fcptqw=
+github.com/go-vela/types v0.2.0-rc2.0.20191216174112-50b01810eb81 h1:NlWiQMY27E8MTeiA+/brl0OD0o781lU2WSdEGUxaN94=
+github.com/go-vela/types v0.2.0-rc2.0.20191216174112-50b01810eb81/go.mod h1:LNDrn7/nV38H0HmRfYv6YfPNb881R5NRE1YKXeVqpF4=
 github.com/golang/protobuf v1.3.2 h1:6nsPYzhq5kReh6QImI3k5qWzO4PEbvbIW2cwSfR/6xs=
 github.com/golang/protobuf v1.3.2/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/google/go-querystring v1.0.0 h1:Xkwi/a1rcvNg1PPYe5vI8GbeBY/jrVuDX5ASuANWTrk=
