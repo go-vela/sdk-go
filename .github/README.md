@@ -2,7 +2,7 @@
 
 [![GoDoc](https://godoc.org/github.com/go-vela/sdk-go?status.svg)](https://godoc.org/github.com/go-vela/sdk-go)
 [![Go Report Card](https://goreportcard.com/badge/go-vela/sdk-go)](https://goreportcard.com/report/go-vela/sdk-go)
-[![Coverage Status](https://coveralls.io/repos/github/go-vela/sdk-go/badge.svg?branch=master)](https://coveralls.io/github/go-vela/sdk-go?branch=master)
+[![codecov](https://codecov.io/gh/go-vela/sdk-go/branch/master/graph/badge.svg)](https://codecov.io/gh/go-vela/sdk-go)
 
 > Vela is in active development and is a pre-release product. Please use at your own risk in production.
 >
