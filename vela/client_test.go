@@ -72,6 +72,7 @@ func TestVela_NewClient_BadUrl(t *testing.T) {
 func TestVela_buildURLForRequest_NoSlash(t *testing.T) {
 	// setup types
 	want := "http://localhost:8080/test"
+
 	c, err := NewClient("http://localhost:8080", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
@@ -91,6 +92,7 @@ func TestVela_buildURLForRequest_NoSlash(t *testing.T) {
 func TestVela_buildURLForRequest_PrefixSlash(t *testing.T) {
 	// setup types
 	want := "http://localhost:8080/test"
+
 	c, err := NewClient("http://localhost:8080", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
@@ -110,6 +112,7 @@ func TestVela_buildURLForRequest_PrefixSlash(t *testing.T) {
 func TestVela_buildURLForRequest_SuffixSlash(t *testing.T) {
 	// setup types
 	want := "http://localhost:8080/test/"
+
 	c, err := NewClient("http://localhost:8080", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
@@ -147,6 +150,7 @@ func TestVela_buildURLForRequest_BadUrl(t *testing.T) {
 func TestVela_addAuthentication(t *testing.T) {
 	// setup types
 	want := "Bearer foobar"
+
 	c, err := NewClient("http://localhost:8080", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
@@ -174,6 +178,7 @@ func TestVela_NewRequest(t *testing.T) {
 	if err != nil {
 		t.Errorf("Unable to create new request: %v", err)
 	}
+
 	want.Header.Add("Content-Type", "application/json")
 
 	c, err := NewClient("http://localhost:8080", nil)

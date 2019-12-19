@@ -24,6 +24,7 @@ func (svc *SecretService) Get(engine, sType, org, name, secret string) (*library
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
+
 	return v, resp, err
 }
 
@@ -37,6 +38,7 @@ func (svc *SecretService) GetAll(engine, sType, org, name string) (*[]library.Se
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
+
 	return v, resp, err
 }
 
@@ -50,6 +52,7 @@ func (svc *SecretService) Add(engine, sType, org, name string, s *library.Secret
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, s, v)
+
 	return v, resp, err
 }
 
@@ -63,6 +66,7 @@ func (svc *SecretService) Update(engine, sType, org, name string, s *library.Sec
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, s, v)
+
 	return v, resp, err
 }
 
@@ -76,5 +80,6 @@ func (svc *SecretService) Remove(engine, sType, org, name, secret string) (*stri
 
 	// send request using client
 	resp, err := svc.client.Call("DELETE", u, nil, v)
+
 	return v, resp, err
 }

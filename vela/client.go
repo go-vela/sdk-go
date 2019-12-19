@@ -108,6 +108,7 @@ func (c *Client) buildURLForRequest(urlStr string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	u += rel.String()
 
 	return u, nil
@@ -144,6 +145,7 @@ func addOptions(s string, opt interface{}) (string, error) {
 
 	// safely encode url with query values
 	u.RawQuery = qs.Encode()
+
 	return u.String(), nil
 }
 
@@ -271,6 +273,7 @@ func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 			_ = json.Unmarshal(body, v)
 		}
 	}
+
 	return response, err
 }
 

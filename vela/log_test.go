@@ -22,10 +22,12 @@ import (
 func TestLog_GetService_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.LogResp)
+
 	var want library.Log
 	_ = json.Unmarshal(data, &want)
 
@@ -48,6 +50,7 @@ func TestLog_GetService_200(t *testing.T) {
 func TestLog_GetService_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -72,10 +75,12 @@ func TestLog_GetService_404(t *testing.T) {
 func TestLog_AddService_201(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.LogResp)
+
 	var want library.Log
 	_ = json.Unmarshal(data, &want)
 
@@ -102,10 +107,12 @@ func TestLog_AddService_201(t *testing.T) {
 func TestLog_UpdateService_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.LogResp)
+
 	var want library.Log
 	_ = json.Unmarshal(data, &want)
 
@@ -132,6 +139,7 @@ func TestLog_UpdateService_200(t *testing.T) {
 func TestLog_UpdateService_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -160,6 +168,7 @@ func TestLog_UpdateService_404(t *testing.T) {
 func TestLog_RemoveService_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -178,6 +187,7 @@ func TestLog_RemoveService_200(t *testing.T) {
 func TestLog_RemoveService_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -196,10 +206,12 @@ func TestLog_RemoveService_404(t *testing.T) {
 func TestLog_GetStep_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.LogResp)
+
 	var want library.Log
 	_ = json.Unmarshal(data, &want)
 
@@ -222,6 +234,7 @@ func TestLog_GetStep_200(t *testing.T) {
 func TestLog_GetStep_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -246,10 +259,12 @@ func TestLog_GetStep_404(t *testing.T) {
 func TestLog_AddStep_201(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.LogResp)
+
 	var want library.Log
 	_ = json.Unmarshal(data, &want)
 
@@ -276,10 +291,12 @@ func TestLog_AddStep_201(t *testing.T) {
 func TestLog_UpdateStep_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.LogResp)
+
 	var want library.Log
 	_ = json.Unmarshal(data, &want)
 
@@ -306,6 +323,7 @@ func TestLog_UpdateStep_200(t *testing.T) {
 func TestLog_UpdateStep_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -334,6 +352,7 @@ func TestLog_UpdateStep_404(t *testing.T) {
 func TestLog_RemoveStep_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -352,6 +371,7 @@ func TestLog_RemoveStep_200(t *testing.T) {
 func TestLog_RemoveStep_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -368,7 +388,6 @@ func TestLog_RemoveStep_404(t *testing.T) {
 }
 
 func ExampleLogService_GetService() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -393,11 +412,11 @@ func ExampleLogService_GetService() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for log %+v", resp.StatusCode, log)
 }
 
 func ExampleLogService_AddService() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -426,11 +445,11 @@ func ExampleLogService_AddService() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for log %+v", resp.StatusCode, log)
 }
 
 func ExampleLogService_UpdateService() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -459,11 +478,11 @@ func ExampleLogService_UpdateService() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for log %+v", resp.StatusCode, log)
 }
 
 func ExampleLogService_RemoveService() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -488,11 +507,11 @@ func ExampleLogService_RemoveService() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for log %+v", resp.StatusCode, log)
 }
 
 func ExampleLogService_GetStep() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -517,11 +536,11 @@ func ExampleLogService_GetStep() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for log %+v", resp.StatusCode, log)
 }
 
 func ExampleLogService_AddStep() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -550,11 +569,11 @@ func ExampleLogService_AddStep() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for log %+v", resp.StatusCode, log)
 }
 
 func ExampleLogService_UpdateStep() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -583,11 +602,11 @@ func ExampleLogService_UpdateStep() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for log %+v", resp.StatusCode, log)
 }
 
 func ExampleLogService_RemoveStep() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -612,5 +631,6 @@ func ExampleLogService_RemoveStep() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for log %+v", resp.StatusCode, log)
 }

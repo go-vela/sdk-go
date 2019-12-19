@@ -23,10 +23,12 @@ import (
 func TestService_Get_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.ServiceResp)
+
 	var want library.Service
 	_ = json.Unmarshal(data, &want)
 
@@ -49,6 +51,7 @@ func TestService_Get_200(t *testing.T) {
 func TestService_Get_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -73,10 +76,12 @@ func TestService_Get_404(t *testing.T) {
 func TestService_GetAll_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.ServicesResp)
+
 	var want []library.Service
 	_ = json.Unmarshal(data, &want)
 
@@ -99,10 +104,12 @@ func TestService_GetAll_200(t *testing.T) {
 func TestService_Add_201(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.ServiceResp)
+
 	var want library.Service
 	_ = json.Unmarshal(data, &want)
 
@@ -136,10 +143,12 @@ func TestService_Add_201(t *testing.T) {
 func TestService_Update_201(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.ServiceResp)
+
 	var want library.Service
 	_ = json.Unmarshal(data, &want)
 
@@ -169,6 +178,7 @@ func TestService_Update_201(t *testing.T) {
 func TestService_Update_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -200,6 +210,7 @@ func TestService_Update_404(t *testing.T) {
 func TestService_Remove_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -218,6 +229,7 @@ func TestService_Remove_200(t *testing.T) {
 func TestService_Remove_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -234,7 +246,6 @@ func TestService_Remove_404(t *testing.T) {
 }
 
 func ExampleSvcService_Get() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -259,11 +270,11 @@ func ExampleSvcService_Get() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for service %+v", resp.StatusCode, service)
 }
 
 func ExampleSvcService_GetAll() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -288,11 +299,11 @@ func ExampleSvcService_GetAll() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for services %+v", resp.StatusCode, services)
 }
 
 func ExampleSvcService_Add() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -328,11 +339,11 @@ func ExampleSvcService_Add() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for service %+v", resp.StatusCode, service)
 }
 
 func ExampleSvcService_Update() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -362,11 +373,11 @@ func ExampleSvcService_Update() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for service %+v", resp.StatusCode, service)
 }
 
 func ExampleSvcService_Remove() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -391,5 +402,6 @@ func ExampleSvcService_Remove() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for service %+v", resp.StatusCode, service)
 }

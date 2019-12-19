@@ -23,10 +23,12 @@ import (
 func TestBuild_Get_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.BuildResp)
+
 	var want library.Build
 	_ = json.Unmarshal(data, &want)
 
@@ -49,6 +51,7 @@ func TestBuild_Get_200(t *testing.T) {
 func TestBuild_Get_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -73,10 +76,12 @@ func TestBuild_Get_404(t *testing.T) {
 func TestBuild_GetAll_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.BuildsResp)
+
 	var want []library.Build
 	_ = json.Unmarshal(data, &want)
 
@@ -99,10 +104,12 @@ func TestBuild_GetAll_200(t *testing.T) {
 func TestBuild_GetLogs_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.BuildLogsResp)
+
 	var want []library.Log
 	_ = json.Unmarshal(data, &want)
 
@@ -125,6 +132,7 @@ func TestBuild_GetLogs_200(t *testing.T) {
 func TestBuild_GetLogs_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -149,10 +157,12 @@ func TestBuild_GetLogs_404(t *testing.T) {
 func TestBuild_Add_201(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.BuildResp)
+
 	var want library.Build
 	_ = json.Unmarshal(data, &want)
 
@@ -203,10 +213,12 @@ func TestBuild_Add_201(t *testing.T) {
 func TestBuild_Update_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.BuildResp)
+
 	var want library.Build
 	_ = json.Unmarshal(data, &want)
 
@@ -236,6 +248,7 @@ func TestBuild_Update_200(t *testing.T) {
 func TestBuild_Update_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -267,6 +280,7 @@ func TestBuild_Update_404(t *testing.T) {
 func TestBuild_Remove_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -285,6 +299,7 @@ func TestBuild_Remove_200(t *testing.T) {
 func TestBuild_Remove_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -303,10 +318,12 @@ func TestBuild_Remove_404(t *testing.T) {
 func TestBuild_Restart_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.BuildResp)
+
 	var want library.Build
 	_ = json.Unmarshal(data, &want)
 
@@ -329,6 +346,7 @@ func TestBuild_Restart_200(t *testing.T) {
 func TestBuild_Restart_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -351,7 +369,6 @@ func TestBuild_Restart_404(t *testing.T) {
 }
 
 func ExampleBuildService_Get() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -376,11 +393,11 @@ func ExampleBuildService_Get() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for build %+v", resp.StatusCode, build)
 }
 
 func ExampleBuildService_GetAll() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -405,11 +422,11 @@ func ExampleBuildService_GetAll() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for builds %+v", resp.StatusCode, builds)
 }
 
 func ExampleBuildService_GetLogs() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -434,11 +451,11 @@ func ExampleBuildService_GetLogs() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for build logs %+v", resp.StatusCode, logs)
 }
 
 func ExampleBuildService_Add() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -491,11 +508,11 @@ func ExampleBuildService_Add() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for build %+v", resp.StatusCode, build)
 }
 
 func ExampleBuildService_Update() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -525,11 +542,11 @@ func ExampleBuildService_Update() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for build %+v", resp.StatusCode, build)
 }
 
 func ExampleBuildService_Remove() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -554,11 +571,11 @@ func ExampleBuildService_Remove() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for step %+v", resp.StatusCode, build)
 }
 
 func ExampleBuildService_Restart() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -583,5 +600,6 @@ func ExampleBuildService_Restart() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for step %+v", resp.StatusCode, build)
 }

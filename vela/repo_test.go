@@ -22,10 +22,12 @@ import (
 func TestRepo_Get_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.RepoResp)
+
 	var want library.Repo
 	_ = json.Unmarshal(data, &want)
 
@@ -48,6 +50,7 @@ func TestRepo_Get_200(t *testing.T) {
 func TestRepo_Get_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -72,10 +75,12 @@ func TestRepo_Get_404(t *testing.T) {
 func TestRepo_GetAll_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.ReposResp)
+
 	var want []library.Repo
 	_ = json.Unmarshal(data, &want)
 
@@ -98,10 +103,12 @@ func TestRepo_GetAll_200(t *testing.T) {
 func TestRepo_Add_201(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.RepoResp)
+
 	var want library.Repo
 	_ = json.Unmarshal(data, &want)
 
@@ -142,10 +149,12 @@ func TestRepo_Add_201(t *testing.T) {
 func TestRepo_Update_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.RepoResp)
+
 	var want library.Repo
 	_ = json.Unmarshal(data, &want)
 
@@ -178,6 +187,7 @@ func TestRepo_Update_200(t *testing.T) {
 func TestRepo_Update_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -212,6 +222,7 @@ func TestRepo_Update_404(t *testing.T) {
 func TestRepo_Remove_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -230,6 +241,7 @@ func TestRepo_Remove_200(t *testing.T) {
 func TestRepo_Remove_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -248,6 +260,7 @@ func TestRepo_Remove_404(t *testing.T) {
 func TestRepo_Repair_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -266,6 +279,7 @@ func TestRepo_Repair_200(t *testing.T) {
 func TestRepo_Repair_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -284,6 +298,7 @@ func TestRepo_Repair_404(t *testing.T) {
 func TestRepo_Chown_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -302,6 +317,7 @@ func TestRepo_Chown_200(t *testing.T) {
 func TestRepo_Chown_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -318,7 +334,6 @@ func TestRepo_Chown_404(t *testing.T) {
 }
 
 func ExampleRepoService_Get() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -343,11 +358,11 @@ func ExampleRepoService_Get() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for repo %+v", resp.StatusCode, repo)
 }
 
 func ExampleRepoService_GetAll() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -372,11 +387,11 @@ func ExampleRepoService_GetAll() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for repos %+v", resp.StatusCode, repos)
 }
 
 func ExampleRepoService_Add() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -419,11 +434,11 @@ func ExampleRepoService_Add() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for repo %+v", resp.StatusCode, repo)
 }
 
 func ExampleRepoService_Update() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -453,11 +468,11 @@ func ExampleRepoService_Update() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for repo %+v", resp.StatusCode, repo)
 }
 
 func ExampleRepoService_Remove() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -482,11 +497,11 @@ func ExampleRepoService_Remove() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for repo %+v", resp.StatusCode, repo)
 }
 
 func ExampleRepoService_Repair() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -511,11 +526,11 @@ func ExampleRepoService_Repair() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for repo %+v", resp.StatusCode, repo)
 }
 
 func ExampleRepoService_Chown() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -540,5 +555,6 @@ func ExampleRepoService_Chown() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for repo %+v", resp.StatusCode, repo)
 }

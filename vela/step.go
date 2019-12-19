@@ -24,6 +24,7 @@ func (svc *StepService) Get(org, repo string, build, step int) (*library.Step, *
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
+
 	return v, resp, err
 }
 
@@ -37,6 +38,7 @@ func (svc *StepService) GetAll(org, repo string, build int) (*[]library.Step, *R
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
+
 	return v, resp, err
 }
 
@@ -50,6 +52,7 @@ func (svc *StepService) Add(org, repo string, build int, s *library.Step) (*libr
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, s, v)
+
 	return v, resp, err
 }
 
@@ -63,6 +66,7 @@ func (svc *StepService) Update(org, repo string, build int, s *library.Step) (*l
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, s, v)
+
 	return v, resp, err
 }
 
@@ -76,5 +80,6 @@ func (svc *StepService) Remove(org, repo string, build, step int) (*string, *Res
 
 	// send request using client
 	resp, err := svc.client.Call("DELETE", u, nil, v)
+
 	return v, resp, err
 }
