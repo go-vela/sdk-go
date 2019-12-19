@@ -60,7 +60,7 @@ func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
 
 	// we must have a url provided to create the client
 	if len(baseURL) == 0 {
-		return nil, fmt.Errorf("No Vela baseURL provided")
+		return nil, fmt.Errorf("no Vela baseURL provided")
 	}
 
 	// parse url provided for the client
