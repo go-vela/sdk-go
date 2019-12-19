@@ -10,7 +10,7 @@ import (
 	"github.com/go-vela/types/library"
 )
 
-// BuildService handles retriving builds from
+// BuildService handles retrieving builds from
 // the server methods of the Vela API.
 type BuildService service
 

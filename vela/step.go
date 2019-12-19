@@ -10,7 +10,7 @@ import (
 	"github.com/go-vela/types/library"
 )
 
-// StepService handles retriving steps for builds
+// StepService handles retrieving steps for builds
 // from the server methods of the Vela API.
 type StepService service
 

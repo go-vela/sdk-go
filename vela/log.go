@@ -10,7 +10,7 @@ import (
 	"github.com/go-vela/types/library"
 )
 
-// LogService handles retriving logs for builds
+// LogService handles retrieving logs for builds
 // from the server methods of the Vela API.
 type LogService service
 

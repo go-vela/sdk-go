@@ -10,7 +10,7 @@ import (
 	"github.com/go-vela/types/library"
 )
 
-// SvcService handles retriving services for builds
+// SvcService handles retrieving services for builds
 // from the server methods of the Vela API.
 type SvcService service
 

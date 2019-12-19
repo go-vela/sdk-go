@@ -10,7 +10,7 @@ import (
 	"github.com/go-vela/types/library"
 )
 
-// RepoService handles retriving repos from
+// RepoService handles retrieving repos from
 // the server methods of the Vela API.
 type RepoService service
 

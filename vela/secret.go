@@ -10,7 +10,7 @@ import (
 	"github.com/go-vela/types/library"
 )
 
-// SecretService handles retriving secrets from
+// SecretService handles retrieving secrets from
 // the server methods of the Vela API.
 type SecretService service
 
