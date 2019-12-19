@@ -172,6 +172,20 @@ func TestVela_addAuthentication(t *testing.T) {
 	}
 }
 
+func TestVela_Call_BadMethod(t *testing.T) {
+	// setup types
+	c, err := NewClient("http://localhost:8080", nil)
+	if err != nil {
+		t.Errorf("Unable to create new client: %v", err)
+	}
+
+	// run test
+	_, err = c.Call("!@#$%^&*()", "/health", nil, nil)
+	if err == nil {
+		t.Errorf("Call should have returned err")
+	}
+}
+
 func TestVela_NewRequest(t *testing.T) {
 	// setup types
 	want, err := http.NewRequest("GET", "http://localhost:8080/health", nil)
@@ -197,6 +211,24 @@ func TestVela_NewRequest(t *testing.T) {
 
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("NewRequest is %v, want %v", got, want)
+	}
+}
+
+func TestVela_NewRequest_BadMethod(t *testing.T) {
+	// setup types
+	c, err := NewClient("http://localhost:8080", nil)
+	if err != nil {
+		t.Errorf("Unable to create new client: %v", err)
+	}
+
+	// run test
+	got, err := c.NewRequest("!@#$%^&*()", "/health", nil)
+	if err == nil {
+		t.Errorf("NewRequest should have returned err")
+	}
+
+	if got != nil {
+		t.Errorf("NewRequest is %v, want nil", got)
 	}
 }
 
