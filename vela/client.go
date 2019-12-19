@@ -252,7 +252,10 @@ func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 	if v != nil {
 		// copy response body if object implements io.Writer interface
 		if w, ok := v.(io.Writer); ok {
-			io.Copy(w, resp.Body)
+			_, err = io.Copy(w, resp.Body)
+			if err != nil {
+				return response, err
+			}
 		} else {
 			// copy all bytes from response body
 			body, err := ioutil.ReadAll(resp.Body)
