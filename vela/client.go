@@ -96,14 +96,12 @@ func (c *Client) buildURLForRequest(urlStr string) (string, error) {
 	u := c.baseURL.String()
 
 	// If there is no / at the end, add one.
-	if strings.HasSuffix(u, "/") == false {
+	if !strings.HasSuffix(u, "/") {
 		u += "/"
 	}
 
-	// If there is a "/" at the start, remove it.
-	if strings.HasPrefix(urlStr, "/") == true {
-		urlStr = urlStr[1:]
-	}
+	// remove "/" prefix from url
+	urlStr = strings.TrimPrefix(urlStr, "/")
 
 	// parse trimmed url string
 	rel, err := url.Parse(urlStr)
