@@ -22,10 +22,12 @@ import (
 func TestSecret_Get_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.SecretResp)
+
 	var want library.Secret
 	_ = json.Unmarshal(data, &want)
 
@@ -48,6 +50,7 @@ func TestSecret_Get_200(t *testing.T) {
 func TestSecret_Get_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -72,10 +75,12 @@ func TestSecret_Get_404(t *testing.T) {
 func TestSecret_GetAll_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.SecretsResp)
+
 	var want []library.Secret
 	_ = json.Unmarshal(data, &want)
 
@@ -98,10 +103,12 @@ func TestSecret_GetAll_200(t *testing.T) {
 func TestSecret_Add_201(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.SecretResp)
+
 	var want library.Secret
 	_ = json.Unmarshal(data, &want)
 
@@ -133,10 +140,12 @@ func TestSecret_Add_201(t *testing.T) {
 func TestSecret_Update_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.SecretResp)
+
 	var want library.Secret
 	_ = json.Unmarshal(data, &want)
 
@@ -165,6 +174,7 @@ func TestSecret_Update_200(t *testing.T) {
 func TestSecret_Update_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -195,6 +205,7 @@ func TestSecret_Update_404(t *testing.T) {
 func TestSecret_Remove_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -213,6 +224,7 @@ func TestSecret_Remove_200(t *testing.T) {
 func TestSecret_Remove_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -229,7 +241,6 @@ func TestSecret_Remove_404(t *testing.T) {
 }
 
 func ExampleSecretService_Get() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -254,11 +265,11 @@ func ExampleSecretService_Get() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for secret %+v", resp.StatusCode, secret)
 }
 
 func ExampleSecretService_GetAll() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -283,11 +294,11 @@ func ExampleSecretService_GetAll() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for secrets %+v", resp.StatusCode, secrets)
 }
 
 func ExampleSecretService_Add() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -319,11 +330,11 @@ func ExampleSecretService_Add() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for secret %+v", resp.StatusCode, secret)
 }
 
 func ExampleSecretService_Update() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -354,11 +365,11 @@ func ExampleSecretService_Update() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for secret %+v", resp.StatusCode, secret)
 }
 
 func ExampleSecretService_Remove() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -383,5 +394,6 @@ func ExampleSecretService_Remove() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for secret %+v", resp.StatusCode, secret)
 }

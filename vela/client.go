@@ -60,7 +60,7 @@ func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
 
 	// we must have a url provided to create the client
 	if len(baseURL) == 0 {
-		return nil, fmt.Errorf("No Vela baseURL provided")
+		return nil, fmt.Errorf("no Vela baseURL provided")
 	}
 
 	// parse url provided for the client
@@ -96,20 +96,19 @@ func (c *Client) buildURLForRequest(urlStr string) (string, error) {
 	u := c.baseURL.String()
 
 	// If there is no / at the end, add one.
-	if strings.HasSuffix(u, "/") == false {
+	if !strings.HasSuffix(u, "/") {
 		u += "/"
 	}
 
-	// If there is a "/" at the start, remove it.
-	if strings.HasPrefix(urlStr, "/") == true {
-		urlStr = urlStr[1:]
-	}
+	// remove "/" prefix from url
+	urlStr = strings.TrimPrefix(urlStr, "/")
 
 	// parse trimmed url string
 	rel, err := url.Parse(urlStr)
 	if err != nil {
 		return "", err
 	}
+
 	u += rel.String()
 
 	return u, nil
@@ -146,6 +145,7 @@ func addOptions(s string, opt interface{}) (string, error) {
 
 	// safely encode url with query values
 	u.RawQuery = qs.Encode()
+
 	return u.String(), nil
 }
 
@@ -254,7 +254,10 @@ func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 	if v != nil {
 		// copy response body if object implements io.Writer interface
 		if w, ok := v.(io.Writer); ok {
-			io.Copy(w, resp.Body)
+			_, err = io.Copy(w, resp.Body)
+			if err != nil {
+				return response, err
+			}
 		} else {
 			// copy all bytes from response body
 			body, err := ioutil.ReadAll(resp.Body)
@@ -270,6 +273,7 @@ func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 			_ = json.Unmarshal(body, v)
 		}
 	}
+
 	return response, err
 }
 

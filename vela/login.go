@@ -20,5 +20,6 @@ func (svc *AuthorizationService) Login(l *library.Login) (*library.Login, *Respo
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, l, v)
+
 	return v, resp, err
 }

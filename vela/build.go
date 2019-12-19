@@ -10,7 +10,7 @@ import (
 	"github.com/go-vela/types/library"
 )
 
-// BuildService handles retriving builds from
+// BuildService handles retrieving builds from
 // the server methods of the Vela API.
 type BuildService service
 
@@ -24,6 +24,7 @@ func (svc *BuildService) Get(org, repo string, build int) (*library.Build, *Resp
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
+
 	return v, resp, err
 }
 
@@ -37,6 +38,7 @@ func (svc *BuildService) GetAll(org, repo string) (*[]library.Build, *Response, 
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
+
 	return v, resp, err
 }
 
@@ -50,6 +52,7 @@ func (svc *BuildService) GetLogs(org, repo string, build int) (*[]library.Log, *
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
+
 	return v, resp, err
 }
 
@@ -63,6 +66,7 @@ func (svc *BuildService) Add(org, repo string, b *library.Build) (*library.Build
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, b, v)
+
 	return v, resp, err
 }
 
@@ -76,6 +80,7 @@ func (svc *BuildService) Update(org, repo string, b *library.Build) (*library.Bu
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, b, v)
+
 	return v, resp, err
 }
 
@@ -89,6 +94,7 @@ func (svc *BuildService) Remove(org, repo string, build int) (*string, *Response
 
 	// send request using client
 	resp, err := svc.client.Call("DELETE", u, nil, v)
+
 	return v, resp, err
 }
 
@@ -102,5 +108,6 @@ func (svc *BuildService) Restart(org, repo string, build int) (*library.Build, *
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, nil, v)
+
 	return v, resp, err
 }

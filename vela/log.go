@@ -10,7 +10,7 @@ import (
 	"github.com/go-vela/types/library"
 )
 
-// LogService handles retriving logs for builds
+// LogService handles retrieving logs for builds
 // from the server methods of the Vela API.
 type LogService service
 
@@ -24,6 +24,7 @@ func (svc *LogService) GetService(org, repo string, build, service int) (*librar
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
+
 	return v, resp, err
 }
 
@@ -37,6 +38,7 @@ func (svc *LogService) AddService(org, repo string, build, service int, l *libra
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, l, v)
+
 	return v, resp, err
 }
 
@@ -50,6 +52,7 @@ func (svc *LogService) UpdateService(org, repo string, build, service int, l *li
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, l, v)
+
 	return v, resp, err
 }
 
@@ -63,6 +66,7 @@ func (svc *LogService) RemoveService(org, repo string, build, service int) (*str
 
 	// send request using client
 	resp, err := svc.client.Call("DELETE", u, nil, v)
+
 	return v, resp, err
 }
 
@@ -76,6 +80,7 @@ func (svc *LogService) GetStep(org, repo string, build, step int) (*library.Log,
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
+
 	return v, resp, err
 }
 
@@ -89,6 +94,7 @@ func (svc *LogService) AddStep(org, repo string, build, step int, l *library.Log
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, l, v)
+
 	return v, resp, err
 }
 
@@ -102,6 +108,7 @@ func (svc *LogService) UpdateStep(org, repo string, build, step int, l *library.
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, l, v)
+
 	return v, resp, err
 }
 
@@ -115,5 +122,6 @@ func (svc *LogService) RemoveStep(org, repo string, build, step int) (*string, *
 
 	// send request using client
 	resp, err := svc.client.Call("DELETE", u, nil, v)
+
 	return v, resp, err
 }

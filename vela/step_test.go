@@ -23,10 +23,12 @@ import (
 func TestStep_Get_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.StepResp)
+
 	var want library.Step
 	_ = json.Unmarshal(data, &want)
 
@@ -49,6 +51,7 @@ func TestStep_Get_200(t *testing.T) {
 func TestStep_Get_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -73,10 +76,12 @@ func TestStep_Get_404(t *testing.T) {
 func TestStep_GetAll_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.StepsResp)
+
 	var want []library.Step
 	_ = json.Unmarshal(data, &want)
 
@@ -99,10 +104,12 @@ func TestStep_GetAll_200(t *testing.T) {
 func TestStep_Add_201(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.StepResp)
+
 	var want library.Step
 	_ = json.Unmarshal(data, &want)
 
@@ -139,10 +146,12 @@ func TestStep_Add_201(t *testing.T) {
 func TestStep_Update_201(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
 	data := []byte(server.StepResp)
+
 	var want library.Step
 	_ = json.Unmarshal(data, &want)
 
@@ -172,6 +181,7 @@ func TestStep_Update_201(t *testing.T) {
 func TestStep_Update_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -203,6 +213,7 @@ func TestStep_Update_404(t *testing.T) {
 func TestStep_Remove_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -221,6 +232,7 @@ func TestStep_Remove_200(t *testing.T) {
 func TestStep_Remove_404(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
+
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, nil)
 
@@ -237,7 +249,6 @@ func TestStep_Remove_404(t *testing.T) {
 }
 
 func ExampleStepService_Get() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -262,11 +273,11 @@ func ExampleStepService_Get() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for step %+v", resp.StatusCode, step)
 }
 
 func ExampleStepService_GetAll() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -291,11 +302,11 @@ func ExampleStepService_GetAll() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for steps %+v", resp.StatusCode, steps)
 }
 
 func ExampleStepService_Add() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -334,11 +345,11 @@ func ExampleStepService_Add() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for step %+v", resp.StatusCode, step)
 }
 
 func ExampleStepService_Update() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -368,11 +379,11 @@ func ExampleStepService_Update() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for step %+v", resp.StatusCode, step)
 }
 
 func ExampleStepService_Remove() {
-
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", nil)
 
@@ -397,5 +408,6 @@ func ExampleStepService_Remove() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Printf("Received response code %d, for step %+v", resp.StatusCode, step)
 }

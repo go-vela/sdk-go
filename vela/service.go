@@ -10,7 +10,7 @@ import (
 	"github.com/go-vela/types/library"
 )
 
-// SvcService handles retriving services for builds
+// SvcService handles retrieving services for builds
 // from the server methods of the Vela API.
 type SvcService service
 
@@ -24,6 +24,7 @@ func (svc *SvcService) Get(org, repo string, build, service int) (*library.Servi
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
+
 	return v, resp, err
 }
 
@@ -37,6 +38,7 @@ func (svc *SvcService) GetAll(org, repo string, build int) (*[]library.Service, 
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
+
 	return v, resp, err
 }
 
@@ -50,6 +52,7 @@ func (svc *SvcService) Add(org, repo string, build int, s *library.Service) (*li
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, s, v)
+
 	return v, resp, err
 }
 
@@ -63,6 +66,7 @@ func (svc *SvcService) Update(org, repo string, build int, s *library.Service) (
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, s, v)
+
 	return v, resp, err
 }
 
@@ -76,5 +80,6 @@ func (svc *SvcService) Remove(org, repo string, build, service int) (*string, *R
 
 	// send request using client
 	resp, err := svc.client.Call("DELETE", u, nil, v)
+
 	return v, resp, err
 }
