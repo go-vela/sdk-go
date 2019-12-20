@@ -13,10 +13,10 @@ github.com/go-playground/locales v0.13.0/go.mod h1:taPMhCMXrRLJO55olJkUXHZBHCxTM
 github.com/go-playground/universal-translator v0.16.0/go.mod h1:1AnU7NaIRDWWzGEKwgtJRd2xk99HeFyHw3yid4rvQIY=
 github.com/go-playground/universal-translator v0.17.0 h1:icxd5fm+REJzpZx7ZfpaD876Lmtgy7VtROAbHHXk8no=
 github.com/go-playground/universal-translator v0.17.0/go.mod h1:UkSxE5sNxxRwHyU+Scu5vgOQjsIJAF8j9muTVoKLVtA=
-github.com/go-vela/mock v0.2.0-rc3 h1:wp0QUTqa5Oca2jGeHLjzqXhy+YLK53aDNQPYBdPV0hM=
-github.com/go-vela/mock v0.2.0-rc3/go.mod h1:iYywX/5idxRZO5z1hLkIv5QWdIU9SqyQoGxsJHup2Wo=
-github.com/go-vela/types v0.2.0-rc3 h1:8huOI7wk35874T1HdwfbK2+AiIhagC3b4WWU6hdrmtE=
-github.com/go-vela/types v0.2.0-rc3/go.mod h1:LNDrn7/nV38H0HmRfYv6YfPNb881R5NRE1YKXeVqpF4=
+github.com/go-vela/mock v0.2.0 h1:LMQPsPGx0ttnfaoAAuooGtWOgCxVUBlWSSl/xdhFbjU=
+github.com/go-vela/mock v0.2.0/go.mod h1:Fti8z7+wTfMXkkPFsxjYcE5SzR/NTwdcL7xM5QomQZ4=
+github.com/go-vela/types v0.2.0 h1:VHOlUqCratdthbOpI1l0CLvVEINYqndpqVYVQoPm1Ac=
+github.com/go-vela/types v0.2.0/go.mod h1:LNDrn7/nV38H0HmRfYv6YfPNb881R5NRE1YKXeVqpF4=
 github.com/golang/protobuf v1.3.2 h1:6nsPYzhq5kReh6QImI3k5qWzO4PEbvbIW2cwSfR/6xs=
 github.com/golang/protobuf v1.3.2/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/google/go-querystring v1.0.0 h1:Xkwi/a1rcvNg1PPYe5vI8GbeBY/jrVuDX5ASuANWTrk=
