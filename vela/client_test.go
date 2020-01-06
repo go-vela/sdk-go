@@ -316,3 +316,66 @@ func TestVela_addOptions_NilOptions(t *testing.T) {
 		t.Errorf("addOptions is %v, want %v", got, want)
 	}
 }
+
+func TestResponse_populatePageValues(t *testing.T) {
+	// setup types
+	r := http.Response{
+		Header: http.Header{
+			"Link": {`<https://vela.company.com/api/v1/repos?per_page=1&page=1>; rel="first",` +
+				` <https://vela.company.com/api/v1/repos?per_page=1&page=2>; rel="prev",` +
+				` <https://vela.company.com/api/v1/repos?per_page=1&page=4>; rel="next",` +
+				` <https://vela.company.com/api/v1/repos?per_page=1&page=5>; rel="last"`,
+			},
+		},
+	}
+
+	// run test
+	response := newResponse(&r)
+	if got, want := response.FirstPage, 1; got != want {
+		t.Errorf("response.FirstPage: %v, want %v", got, want)
+	}
+
+	if got, want := response.PrevPage, 2; want != got {
+		t.Errorf("response.PrevPage: %v, want %v", got, want)
+	}
+
+	if got, want := response.NextPage, 4; want != got {
+		t.Errorf("response.NextPage: %v, want %v", got, want)
+	}
+
+	if got, want := response.LastPage, 5; want != got {
+		t.Errorf("response.LastPage: %v, want %v", got, want)
+	}
+}
+
+func TestResponse_populatePageValues_invalid(t *testing.T) {
+	// setup types
+	r := http.Response{
+		Header: http.Header{
+			"Link": {`<https://vela.company.com/api/v1/repos/?page=1>,` +
+				`<https://vela.company.com/api/v1/repos/?page=foo>; rel="first",` +
+				`https://vela.company.com/api/v1/repos/?page=1; rel="prev",` +
+				`<https://vela.company.com/api/v1/repos/>; rel="next",` +
+				`<https://vela.company.com/api/v1/repos/?page=>; rel="last"`,
+			},
+		},
+	}
+
+	// run test
+	response := newResponse(&r)
+	if got, want := response.FirstPage, 0; got != want {
+		t.Errorf("response.FirstPage: %v, want %v", got, want)
+	}
+
+	if got, want := response.PrevPage, 0; got != want {
+		t.Errorf("response.PrevPage: %v, want %v", got, want)
+	}
+
+	if got, want := response.NextPage, 0; got != want {
+		t.Errorf("response.NextPage: %v, want %v", got, want)
+	}
+
+	if got, want := response.LastPage, 0; got != want {
+		t.Errorf("response.LastPage: %v, want %v", got, want)
+	}
+}
