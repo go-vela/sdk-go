@@ -29,9 +29,15 @@ func (svc *StepService) Get(org, repo string, build, step int) (*library.Step, *
 }
 
 // GetAll returns a list of all steps.
-func (svc *StepService) GetAll(org, repo string, build int) (*[]library.Step, *Response, error) {
+func (svc *StepService) GetAll(org, repo string, build int, opt *ListOptions) (*[]library.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps", org, repo, build)
+
+	// add optional arguments if supplied
+	u, err := addOptions(u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	// slice library Step type we want to return
 	v := new([]library.Step)

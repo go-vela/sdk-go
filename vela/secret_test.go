@@ -85,7 +85,7 @@ func TestSecret_GetAll_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Secret.GetAll("native", "repo", "github", "octocat")
+	got, resp, err := c.Secret.GetAll("native", "repo", "github", "octocat", nil)
 
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
@@ -290,7 +290,7 @@ func ExampleSecretService_GetAll() {
 	c.Authentication.SetTokenAuth(*auth.Token)
 
 	// Get all the secrets from the server
-	secrets, resp, err := c.Secret.GetAll("native", "repo", "github", "octocat")
+	secrets, resp, err := c.Secret.GetAll("native", "repo", "github", "octocat", nil)
 	if err != nil {
 		fmt.Println(err)
 	}

@@ -24,31 +24,43 @@ const (
 	userAgent = "go-vela"
 )
 
-// Client is a client that manages communication with the Vela API.
-type Client struct {
-	// HTTP client used to communicate with the Vela API.
-	client *http.Client
+type (
+	// Client is a client that manages communication with the Vela API.
+	Client struct {
+		// HTTP client used to communicate with the Vela API.
+		client *http.Client
 
-	// Base URL for Vela API requests.
-	baseURL *url.URL
+		// Base URL for Vela API requests.
+		baseURL *url.URL
 
-	// User agent used when communicating with the Vela API.
-	UserAgent string
+		// User agent used when communicating with the Vela API.
+		UserAgent string
 
-	// Vela service for authentication.
-	Authentication *AuthenticationService
-	Authorization  *AuthorizationService
-	Log            *LogService
-	Build          *BuildService
-	Repo           *RepoService
-	Secret         *SecretService
-	Step           *StepService
-	Svc            *SvcService
-}
+		// Vela service for authentication.
+		Authentication *AuthenticationService
+		Authorization  *AuthorizationService
+		Log            *LogService
+		Build          *BuildService
+		Repo           *RepoService
+		Secret         *SecretService
+		Step           *StepService
+		Svc            *SvcService
+	}
 
-type service struct {
-	client *Client
-}
+	service struct {
+		client *Client
+	}
+
+	// ListOptions represents the optional parameters to various List methods that
+	// support pagination.
+	ListOptions struct {
+		// For paginated result sets, page of results to retrieve.
+		Page int `url:"page,omitempty"`
+
+		// For paginated result sets, the number of results to include per page.
+		PerPage int `url:"per_page,omitempty"`
+	}
+)
 
 // NewClient returns a new Vela API client.
 // baseURL has to be the HTTP endpoint of the Vela API.

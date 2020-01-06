@@ -85,7 +85,7 @@ func TestRepo_GetAll_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Repo.GetAll()
+	got, resp, err := c.Repo.GetAll(nil)
 
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
@@ -383,7 +383,7 @@ func ExampleRepoService_GetAll() {
 	c.Authentication.SetTokenAuth(*auth.Token)
 
 	// Get all the repos from the server
-	repos, resp, err := c.Repo.GetAll()
+	repos, resp, err := c.Repo.GetAll(nil)
 	if err != nil {
 		fmt.Println(err)
 	}

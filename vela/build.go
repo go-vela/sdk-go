@@ -29,9 +29,15 @@ func (svc *BuildService) Get(org, repo string, build int) (*library.Build, *Resp
 }
 
 // GetAll returns a list of all builds.
-func (svc *BuildService) GetAll(org, repo string) (*[]library.Build, *Response, error) {
+func (svc *BuildService) GetAll(org, repo string, opt *ListOptions) (*[]library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds", org, repo)
+
+	// add optional arguments if supplied
+	u, err := addOptions(u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	// slice library Build type we want to return
 	v := new([]library.Build)

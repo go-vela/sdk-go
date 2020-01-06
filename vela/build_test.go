@@ -86,7 +86,7 @@ func TestBuild_GetAll_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Build.GetAll("github", "octocat")
+	got, resp, err := c.Build.GetAll("github", "octocat", nil)
 
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
@@ -418,7 +418,7 @@ func ExampleBuildService_GetAll() {
 	c.Authentication.SetTokenAuth(*auth.Token)
 
 	// Get all the builds from the server
-	builds, resp, err := c.Build.GetAll("github", "octocat")
+	builds, resp, err := c.Build.GetAll("github", "octocat", nil)
 	if err != nil {
 		fmt.Println(err)
 	}
