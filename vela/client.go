@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"net/url"
 	"reflect"
+	"strconv"
 	"strings"
 
 	"github.com/go-vela/types"
@@ -194,6 +195,66 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}) (*http.Requ
 // This wraps the standard http.Response returned from Vela.
 type Response struct {
 	*http.Response
+
+	// Values hold basic information pertaining to how to paginate
+	// through response results
+	NextPage  int
+	PrevPage  int
+	FirstPage int
+	LastPage  int
+}
+
+// newResponse creates a new Response for the provided http.Response.
+// r must not be nil.
+func newResponse(r *http.Response) *Response {
+	response := &Response{Response: r}
+	response.populatePageValues()
+	return response
+}
+
+// populatePageValues parses the HTTP Link response headers and populates the
+// various pagination link values in the Response.
+func (r *Response) populatePageValues() {
+	if links, ok := r.Response.Header["Link"]; ok && len(links) > 0 {
+		for _, link := range strings.Split(links[0], ",") {
+			segments := strings.Split(strings.TrimSpace(link), ";")
+
+			// link must at least have href and rel
+			if len(segments) < 2 {
+				continue
+			}
+
+			// ensure href is properly formatted
+			if !strings.HasPrefix(segments[0], "<") || !strings.HasSuffix(segments[0], ">") {
+				continue
+			}
+
+			// try to pull out page parameter
+			url, err := url.Parse(segments[0][1 : len(segments[0])-1])
+			if err != nil {
+				continue
+			}
+
+			page := url.Query().Get("page")
+			if page == "" {
+				continue
+			}
+
+			for _, segment := range segments[1:] {
+				switch strings.TrimSpace(segment) {
+				case `rel="next"`:
+					r.NextPage, _ = strconv.Atoi(page)
+				case `rel="prev"`:
+					r.PrevPage, _ = strconv.Atoi(page)
+				case `rel="first"`:
+					r.FirstPage, _ = strconv.Atoi(page)
+				case `rel="last"`:
+					r.LastPage, _ = strconv.Atoi(page)
+				}
+
+			}
+		}
+	}
 }
 
 // Call is a combine function for Client.NewRequest and Client.Do.
