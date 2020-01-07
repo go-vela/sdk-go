@@ -29,9 +29,15 @@ func (svc *RepoService) Get(org, repo string) (*library.Repo, *Response, error) 
 }
 
 // GetAll returns a list of all repos.
-func (svc *RepoService) GetAll() (*[]library.Repo, *Response, error) {
+func (svc *RepoService) GetAll(opt *ListOptions) (*[]library.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos")
+
+	// add optional arguments if supplied
+	u, err := addOptions(u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	// slice library Repo type we want to return
 	v := new([]library.Repo)

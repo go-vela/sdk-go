@@ -29,9 +29,15 @@ func (svc *SecretService) Get(engine, sType, org, name, secret string) (*library
 }
 
 // GetAll returns a list of all secrets.
-func (svc *SecretService) GetAll(engine, sType, org, name string) (*[]library.Secret, *Response, error) {
+func (svc *SecretService) GetAll(engine, sType, org, name string, opt *ListOptions) (*[]library.Secret, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/secrets/%s/%s/%s/%s", engine, sType, org, name)
+
+	// add optional arguments if supplied
+	u, err := addOptions(u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	// slice library Secret type we want to return
 	v := new([]library.Secret)

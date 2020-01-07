@@ -86,7 +86,7 @@ func TestService_GetAll_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Svc.GetAll("github", "octocat", 1)
+	got, resp, err := c.Svc.GetAll("github", "octocat", 1, nil)
 
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
@@ -295,7 +295,7 @@ func ExampleSvcService_GetAll() {
 	c.Authentication.SetTokenAuth(*auth.Token)
 
 	// Get all the services from the server
-	services, resp, err := c.Svc.GetAll("github", "octocat", 1)
+	services, resp, err := c.Svc.GetAll("github", "octocat", 1, nil)
 	if err != nil {
 		fmt.Println(err)
 	}

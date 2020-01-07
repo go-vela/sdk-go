@@ -29,9 +29,15 @@ func (svc *SvcService) Get(org, repo string, build, service int) (*library.Servi
 }
 
 // GetAll returns a list of all services.
-func (svc *SvcService) GetAll(org, repo string, build int) (*[]library.Service, *Response, error) {
+func (svc *SvcService) GetAll(org, repo string, build int, opt *ListOptions) (*[]library.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services", org, repo, build)
+
+	// add optional arguments if supplied
+	u, err := addOptions(u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	// slice library Service type we want to return
 	v := new([]library.Service)

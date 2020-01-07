@@ -86,7 +86,7 @@ func TestStep_GetAll_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Step.GetAll("github", "octocat", 1)
+	got, resp, err := c.Step.GetAll("github", "octocat", 1, nil)
 
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
@@ -298,7 +298,7 @@ func ExampleStepService_GetAll() {
 	c.Authentication.SetTokenAuth(*auth.Token)
 
 	// Get all the steps from the server
-	steps, resp, err := c.Step.GetAll("github", "octocat", 1)
+	steps, resp, err := c.Step.GetAll("github", "octocat", 1, nil)
 	if err != nil {
 		fmt.Println(err)
 	}
