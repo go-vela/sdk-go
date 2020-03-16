@@ -1,5 +1,6 @@
 # sdk-go
 
+[![license](https://img.shields.io/crates/l/gl.svg)](../LICENSE)
 [![GoDoc](https://godoc.org/github.com/go-vela/sdk-go?status.svg)](https://godoc.org/github.com/go-vela/sdk-go)
 [![Go Report Card](https://goreportcard.com/badge/go-vela/sdk-go)](https://goreportcard.com/report/go-vela/sdk-go)
 [![codecov](https://codecov.io/gh/go-vela/sdk-go/branch/master/graph/badge.svg)](https://codecov.io/gh/go-vela/sdk-go)
@@ -34,4 +35,4 @@ Please see our [support](SUPPORT.md) documentation for further instructions.
 Copyright (c) 2020 Target Brands, Inc.
 ```
 
-[![license](https://img.shields.io/crates/l/gl.svg)](LICENSE)
+[Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
