@@ -39,8 +39,9 @@ type (
 		// Vela service for authentication.
 		Authentication *AuthenticationService
 		Authorization  *AuthorizationService
-		Log            *LogService
 		Build          *BuildService
+		Deployment     *DeploymentService
+		Log            *LogService
 		Repo           *RepoService
 		Secret         *SecretService
 		Step           *StepService
@@ -92,8 +93,9 @@ func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
 	// instantiate all client services
 	c.Authentication = &AuthenticationService{client: c}
 	c.Authorization = &AuthorizationService{client: c}
-	c.Log = &LogService{client: c}
 	c.Build = &BuildService{client: c}
+	c.Deployment = &DeploymentService{client: c}
+	c.Log = &LogService{client: c}
 	c.Repo = &RepoService{client: c}
 	c.Secret = &SecretService{client: c}
 	c.Step = &StepService{client: c}
