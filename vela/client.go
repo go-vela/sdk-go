@@ -41,6 +41,7 @@ type (
 		Authorization  *AuthorizationService
 		Build          *BuildService
 		Deployment     *DeploymentService
+		Hook           *HookService
 		Log            *LogService
 		Repo           *RepoService
 		Secret         *SecretService
@@ -95,6 +96,7 @@ func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
 	c.Authorization = &AuthorizationService{client: c}
 	c.Build = &BuildService{client: c}
 	c.Deployment = &DeploymentService{client: c}
+	c.Hook = &HookService{client: c}
 	c.Log = &LogService{client: c}
 	c.Repo = &RepoService{client: c}
 	c.Secret = &SecretService{client: c}
