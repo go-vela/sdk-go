@@ -195,13 +195,14 @@ func TestVela_NewRequest(t *testing.T) {
 		t.Errorf("Unable to create new request: %v", err)
 	}
 
-	want.Header.Add("Content-Type", "application/json")
-	want.Header.Add("Authorization", "Bearer foobar")
-
 	c, err := NewClient("http://localhost:8080", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}
+
+	want.Header.Add("Content-Type", "application/json")
+	want.Header.Add("Authorization", "Bearer foobar")
+	want.Header.Add("User-Agent", c.UserAgent)
 
 	c.Authentication.SetTokenAuth("foobar")
 

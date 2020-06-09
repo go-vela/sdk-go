@@ -21,6 +21,7 @@ import (
 )
 
 const (
+	// TODO: add version information, ie. "go-vela/0.4.3"
 	userAgent = "go-vela"
 )
 
@@ -200,6 +201,9 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}) (*http.Requ
 	if c.Authentication.HasAuth() {
 		c.addAuthentication(req)
 	}
+
+	// add the user agent for the request
+	req.Header.Add("User-Agent", c.UserAgent)
 
 	// apply default header for request
 	req.Header.Add("Content-Type", "application/json")
