@@ -5,10 +5,13 @@
 package vela
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 	"reflect"
 	"testing"
+
+	"github.com/go-vela/sdk-go/version"
 )
 
 func TestVela_NewClient(t *testing.T) {
@@ -23,7 +26,7 @@ func TestVela_NewClient(t *testing.T) {
 	want := &Client{
 		client:    http.DefaultClient,
 		baseURL:   url,
-		UserAgent: userAgent,
+		UserAgent: fmt.Sprintf("%s/%s", "vela-sdk-go", version.Version.String()),
 	}
 	want.Authentication = &AuthenticationService{client: want}
 	want.Authorization = &AuthorizationService{client: want}
