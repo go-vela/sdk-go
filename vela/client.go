@@ -22,7 +22,7 @@ import (
 )
 
 const (
-	userAgent = "go-vela-sdk"
+	userAgent = "vela-sdk-go"
 )
 
 type (
