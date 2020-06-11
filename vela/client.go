@@ -16,13 +16,13 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/go-vela/sdk-go/version"
 	"github.com/go-vela/types"
 	"github.com/google/go-querystring/query"
 )
 
 const (
-	// TODO: add version information, ie. "go-vela/0.4.3"
-	userAgent = "go-vela"
+	userAgent = "go-vela-sdk"
 )
 
 type (
@@ -89,7 +89,7 @@ func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
 	c := &Client{
 		client:    httpClient,
 		baseURL:   url,
-		UserAgent: userAgent,
+		UserAgent: fmt.Sprintf("%s/%s", userAgent, version.Version.String()),
 	}
 
 	// instantiate all client services
