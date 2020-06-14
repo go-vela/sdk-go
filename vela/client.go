@@ -16,12 +16,13 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/go-vela/sdk-go/version"
 	"github.com/go-vela/types"
 	"github.com/google/go-querystring/query"
 )
 
 const (
-	userAgent = "go-vela"
+	userAgent = "vela-sdk-go"
 )
 
 type (
@@ -88,7 +89,7 @@ func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
 	c := &Client{
 		client:    httpClient,
 		baseURL:   url,
-		UserAgent: userAgent,
+		UserAgent: fmt.Sprintf("%s/%s", userAgent, version.Version.String()),
 	}
 
 	// instantiate all client services
@@ -200,6 +201,9 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}) (*http.Requ
 	if c.Authentication.HasAuth() {
 		c.addAuthentication(req)
 	}
+
+	// add the user agent for the request
+	req.Header.Add("User-Agent", c.UserAgent)
 
 	// apply default header for request
 	req.Header.Add("Content-Type", "application/json")
