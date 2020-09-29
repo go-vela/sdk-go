@@ -37,10 +37,10 @@ github.com/go-playground/validator/v10 v10.2.0 h1:KgJ0snyC2R9VXYN2rneOtQcw5aHQB1
 github.com/go-playground/validator/v10 v10.2.0/go.mod h1:uOYAAleCW8F/7oMFd6aG0GOhaH6EGOAJShg8Id5JGkI=
 github.com/go-playground/validator/v10 v10.3.0 h1:nZU+7q+yJoFmwvNgv/LnPUkwPal62+b2xXj0AU1Es7o=
 github.com/go-playground/validator/v10 v10.3.0/go.mod h1:uOYAAleCW8F/7oMFd6aG0GOhaH6EGOAJShg8Id5JGkI=
-github.com/go-vela/mock v0.6.0-rc2 h1:oySYmHJFEn7aOFycwNNmwu88MestXSmBcDK+FZrBV7E=
-github.com/go-vela/mock v0.6.0-rc2/go.mod h1:wh/PsOE/cHxxHHleVaa0ijKRfkHjoLpz1lff8dmMSgY=
-github.com/go-vela/types v0.6.0-rc2 h1:u8lBGH7Ieab8b9k6dyO701s1/IOvqm0Sb36VIoaaw5o=
-github.com/go-vela/types v0.6.0-rc2/go.mod h1:G1Qp0JFtXV+QRNTEWXht+WdllOhjAGapg9vBZKdj6N0=
+github.com/go-vela/mock v0.6.0 h1:1ZS/UsCcCoOY/Y2Zmf6MxkNNQyeis4vbakoxzKNJxCE=
+github.com/go-vela/mock v0.6.0/go.mod h1:ql7Db2MSvHhlzp8D6Kx1oi1KwHgm8VK2zrv55QPP4S4=
+github.com/go-vela/types v0.6.0 h1:82/+Y3EGnnr37HeaJ5qhz/PGMvLkJfYvblEw1kFwxb4=
+github.com/go-vela/types v0.6.0/go.mod h1:G1Qp0JFtXV+QRNTEWXht+WdllOhjAGapg9vBZKdj6N0=
 github.com/gogo/protobuf v1.3.1/go.mod h1:SlYgWuQ5SjCEi6WLHjHCa1yvBfUnHcTbrrZtXPKa29o=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
 github.com/golang/mock v1.1.1/go.mod h1:oTYuIxOrZwtPieC+H1uAHpcLFnEyAGVDL/k47Jfbm0A=
