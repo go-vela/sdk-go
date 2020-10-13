@@ -59,7 +59,7 @@ func (svc *WorkerService) Add(w *library.Worker) (*library.Worker, *Response, er
 // Update modifies a worker with the provided details.
 func (svc *WorkerService) Update(worker string, w *library.Worker) (*library.Worker, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/worker/%s", worker)
+	u := fmt.Sprintf("/api/v1/workers/%s", worker)
 
 	// library Worker type we want to return
 	v := new(library.Worker)
