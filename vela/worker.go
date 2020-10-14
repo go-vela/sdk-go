@@ -14,7 +14,7 @@ import (
 // the server methods of the Vela API.
 type WorkerService service
 
-// Get returns the provided repo.
+// Get returns the provided worker.
 func (svc *WorkerService) Get(hostname string) (*library.Worker, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/workers/%s", hostname)
