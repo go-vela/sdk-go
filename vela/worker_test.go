@@ -365,12 +365,12 @@ func ExampleWorkerService_Update() {
 	}
 
 	// Update the worker in the server
-	repo, resp, err := c.Worker.Update("worker_1", &req)
+	worker, resp, err := c.Worker.Update("worker_1", &req)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Printf("Received response code %d, for repo %+v", resp.StatusCode, repo)
+	fmt.Printf("Received response code %d, for worker %+v", resp.StatusCode, worker)
 }
 
 func ExampleWorkerService_Remove() {
