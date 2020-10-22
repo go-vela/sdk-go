@@ -44,6 +44,7 @@ type (
 		Deployment     *DeploymentService
 		Hook           *HookService
 		Log            *LogService
+		Pipeline       *PipelineService
 		Repo           *RepoService
 		Secret         *SecretService
 		Step           *StepService
@@ -99,6 +100,7 @@ func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
 	c.Deployment = &DeploymentService{client: c}
 	c.Hook = &HookService{client: c}
 	c.Log = &LogService{client: c}
+	c.Pipeline = &PipelineService{client: c}
 	c.Repo = &RepoService{client: c}
 	c.Secret = &SecretService{client: c}
 	c.Step = &StepService{client: c}
