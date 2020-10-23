@@ -48,6 +48,7 @@ type (
 		Secret         *SecretService
 		Step           *StepService
 		Svc            *SvcService
+		Worker         *WorkerService
 	}
 
 	service struct {
@@ -103,6 +104,7 @@ func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
 	c.Secret = &SecretService{client: c}
 	c.Step = &StepService{client: c}
 	c.Svc = &SvcService{client: c}
+	c.Worker = &WorkerService{client: c}
 
 	return c, nil
 }
