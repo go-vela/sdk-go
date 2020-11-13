@@ -7,7 +7,6 @@ package vela
 import (
 	"fmt"
 
-	"github.com/go-vela/types/pipeline"
 	"github.com/go-vela/types/yaml"
 )
 
@@ -30,12 +29,12 @@ func (svc *PipelineService) Get(org, repo string) (*yaml.Build, *Response, error
 }
 
 // Compile returns the provided fully compiled pipeline.
-func (svc *PipelineService) Compile(org, repo string) (*pipeline.Build, *Response, error) {
+func (svc *PipelineService) Compile(org, repo string) (*yaml.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/compile", org, repo)
 
-	// pipeline Build type we want to return
-	v := new(pipeline.Build)
+	// yaml Build type we want to return
+	v := new(yaml.Build)
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, nil, v)
