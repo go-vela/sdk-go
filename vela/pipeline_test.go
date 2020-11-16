@@ -33,7 +33,7 @@ func TestPipeline_Get_200(t *testing.T) {
 	_ = yml.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Pipeline.Get("github", "octocat")
+	got, resp, err := c.Pipeline.Get("github", "octocat", nil)
 
 	if err != nil {
 		t.Errorf("Get returned err: %v", err)
@@ -58,7 +58,7 @@ func TestPipeline_Get_404(t *testing.T) {
 	want := yaml.Build{}
 
 	// run test
-	got, resp, err := c.Pipeline.Get("github", "not-found")
+	got, resp, err := c.Pipeline.Get("github", "not-found", nil)
 
 	if err == nil {
 		t.Errorf("Get returned err: %v", err)
@@ -86,7 +86,7 @@ func TestPipeline_Compile_200(t *testing.T) {
 	_ = yml.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Pipeline.Compile("github", "octocat")
+	got, resp, err := c.Pipeline.Compile("github", "octocat", nil)
 
 	if err != nil {
 		t.Errorf("Compile returned err: %v", err)
@@ -111,7 +111,7 @@ func TestPipeline_Compile_404(t *testing.T) {
 	want := yaml.Build{}
 
 	// run test
-	got, resp, err := c.Pipeline.Compile("github", "not-found")
+	got, resp, err := c.Pipeline.Compile("github", "not-found", nil)
 
 	if err == nil {
 		t.Errorf("Compile returned err: %v", err)
@@ -139,7 +139,7 @@ func TestPipeline_Expand_200(t *testing.T) {
 	_ = yml.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Pipeline.Expand("github", "octocat")
+	got, resp, err := c.Pipeline.Expand("github", "octocat", nil)
 
 	if err != nil {
 		t.Errorf("Expand returned err: %v", err)
@@ -164,7 +164,7 @@ func TestPipeline_Expand_404(t *testing.T) {
 	want := yaml.Build{}
 
 	// run test
-	got, resp, err := c.Pipeline.Expand("github", "not-found")
+	got, resp, err := c.Pipeline.Expand("github", "not-found", nil)
 
 	if err == nil {
 		t.Errorf("Expand returned err: %v", err)
@@ -192,7 +192,7 @@ func TestPipeline_Templates_200(t *testing.T) {
 	_ = yml.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Pipeline.Templates("github", "octocat")
+	got, resp, err := c.Pipeline.Templates("github", "octocat", nil)
 
 	if err != nil {
 		t.Errorf("Templates returned err: %v", err)
@@ -217,7 +217,7 @@ func TestPipeline_Templates_404(t *testing.T) {
 	want := make(map[string]*yaml.Template)
 
 	// run test
-	got, resp, err := c.Pipeline.Templates("github", "not-found")
+	got, resp, err := c.Pipeline.Templates("github", "not-found", nil)
 
 	if err == nil {
 		t.Errorf("Templates returned err: %v", err)
@@ -240,7 +240,7 @@ func TestPipeline_Validate_200(t *testing.T) {
 	c, _ := NewClient(s.URL, nil)
 
 	// run test
-	_, resp, err := c.Pipeline.Validate("github", "octocat")
+	_, resp, err := c.Pipeline.Validate("github", "octocat", nil)
 
 	if err != nil {
 		t.Errorf("Validate returned err: %v", err)
@@ -259,7 +259,7 @@ func TestPipeline_Validate_404(t *testing.T) {
 	c, _ := NewClient(s.URL, nil)
 
 	// run test
-	_, resp, err := c.Pipeline.Validate("github", "not-found")
+	_, resp, err := c.Pipeline.Validate("github", "not-found", nil)
 
 	if err == nil {
 		t.Errorf("Validate returned err: %v", err)
@@ -290,8 +290,14 @@ func ExamplePipelineService_Get() {
 	// Set new token in existing client
 	c.Authentication.SetTokenAuth(*auth.Token)
 
-	// Get a repo from the server
-	pipeline, resp, err := c.Pipeline.Get("github", "octocat")
+	// create options for pipeline call
+	opts := &PipelineOptions{
+		Output: "yaml",   // default
+		Ref:    "master", // default
+	}
+
+	// get a pipeline from a repo from the server
+	pipeline, resp, err := c.Pipeline.Get("github", "octocat", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -319,8 +325,14 @@ func ExamplePipelineService_Compile() {
 	// Set new token in existing client
 	c.Authentication.SetTokenAuth(*auth.Token)
 
-	// Get a repo from the server
-	pipeline, resp, err := c.Pipeline.Compile("github", "octocat")
+	// create options for pipeline call
+	opts := &PipelineOptions{
+		Output: "yaml",   // default
+		Ref:    "master", // default
+	}
+
+	// compile a pipeline from a repo from the server
+	pipeline, resp, err := c.Pipeline.Compile("github", "octocat", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -348,8 +360,14 @@ func ExamplePipelineService_Expand() {
 	// Set new token in existing client
 	c.Authentication.SetTokenAuth(*auth.Token)
 
-	// Get a repo from the server
-	pipeline, resp, err := c.Pipeline.Expand("github", "octocat")
+	// create options for pipeline call
+	opts := &PipelineOptions{
+		Output: "yaml",   // default
+		Ref:    "master", // default
+	}
+
+	// expand templates for a pipeline from a repo from the server
+	pipeline, resp, err := c.Pipeline.Expand("github", "octocat", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -377,8 +395,50 @@ func ExamplePipelineService_Templates() {
 	// Set new token in existing client
 	c.Authentication.SetTokenAuth(*auth.Token)
 
-	// Get a repo from the server
-	pipeline, resp, err := c.Pipeline.Templates("github", "octocat")
+	// create options for pipeline call
+	opts := &PipelineOptions{
+		Output: "yaml",   // default
+		Ref:    "master", // default
+	}
+
+	// get templates for a pipeline from a repo from the server
+	pipeline, resp, err := c.Pipeline.Templates("github", "octocat", opts)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("Received response code %d, for pipeline %+v", resp.StatusCode, pipeline)
+}
+
+func ExamplePipelineService_Validate() {
+	// Create a new vela client for interacting with server
+	c, _ := NewClient("http://localhost:8080", nil)
+
+	u := os.Getenv("VELA_USERNAME")
+	p := os.Getenv("VELA_PASSWORD")
+	otp := os.Getenv("VELA_OTP")
+
+	l := library.Login{
+		Username: &u,
+		Password: &p,
+		OTP:      &otp,
+	}
+
+	// Login to application and get token
+	auth, _, _ := c.Authorization.Login(&l)
+
+	// Set new token in existing client
+	c.Authentication.SetTokenAuth(*auth.Token)
+
+	// create options for pipeline call
+	opts := &PipelineOptions{
+		Output:   "yaml",   // default
+		Ref:      "master", // default
+		Template: true,     // default
+	}
+
+	// get templates for a pipeline from a repo from the server
+	pipeline, resp, err := c.Pipeline.Validate("github", "octocat", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
