@@ -38,6 +38,7 @@ type (
 		UserAgent string
 
 		// Vela service for authentication.
+		Admin          *AdminService
 		Authentication *AuthenticationService
 		Authorization  *AuthorizationService
 		Build          *BuildService
@@ -96,6 +97,16 @@ func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
 	// instantiate all client services
 	c.Authentication = &AuthenticationService{client: c}
 	c.Authorization = &AuthorizationService{client: c}
+	c.Admin = &AdminService{
+		&AdminBuildService{client: c},
+		&AdminDeploymentService{client: c},
+		&AdminHookService{client: c},
+		&AdminRepoService{client: c},
+		&AdminSecretService{client: c},
+		&AdminSvcService{client: c},
+		&AdminStepService{client: c},
+		&AdminUserService{client: c},
+	}
 	c.Build = &BuildService{client: c}
 	c.Deployment = &DeploymentService{client: c}
 	c.Hook = &HookService{client: c}
