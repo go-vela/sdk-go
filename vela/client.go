@@ -16,6 +16,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/buildkite/yaml"
 	"github.com/go-vela/sdk-go/version"
 	"github.com/go-vela/types"
 	"github.com/google/go-querystring/query"
@@ -44,6 +45,7 @@ type (
 		Deployment     *DeploymentService
 		Hook           *HookService
 		Log            *LogService
+		Pipeline       *PipelineService
 		Repo           *RepoService
 		Secret         *SecretService
 		Step           *StepService
@@ -100,6 +102,7 @@ func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
 	c.Deployment = &DeploymentService{client: c}
 	c.Hook = &HookService{client: c}
 	c.Log = &LogService{client: c}
+	c.Pipeline = &PipelineService{client: c}
 	c.Repo = &RepoService{client: c}
 	c.Secret = &SecretService{client: c}
 	c.Step = &StepService{client: c}
@@ -352,8 +355,15 @@ func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 				// may inspect it further for debugging and troubleshooting
 				return response, err
 			}
-			// unmarshal the body to the return object
-			_ = json.Unmarshal(body, v)
+
+			// check if the content type is YAML
+			if strings.Contains(resp.Header.Get("Content-Type"), "application/x-yaml") {
+				// unmarshal the body as YAML to the return object
+				_ = yaml.Unmarshal(body, v)
+			} else {
+				// unmarshal the body as JSON to the return object
+				_ = json.Unmarshal(body, v)
+			}
 		}
 	}
 
