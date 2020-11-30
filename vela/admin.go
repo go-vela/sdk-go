@@ -11,7 +11,7 @@ import (
 )
 
 type (
-	// AdminService handles retrieving builds from
+	// AdminService handles retrieving resources from
 	// the server methods of the Vela API.
 	AdminService struct {
 		Build      *AdminBuildService
