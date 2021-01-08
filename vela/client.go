@@ -20,6 +20,7 @@ import (
 	"github.com/go-vela/sdk-go/version"
 	"github.com/go-vela/types"
 	"github.com/google/go-querystring/query"
+	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -67,12 +68,17 @@ type (
 		// For paginated result sets, the number of results to include per page.
 		PerPage int `url:"per_page,omitempty"`
 	}
+
+	LoginOpts struct {
+		Type string `url:"type,omitempty"`
+		Port string `url:"port,omitempty"`
+	}
 )
 
 // NewClient returns a new Vela API client.
 // baseURL has to be the HTTP endpoint of the Vela API.
 // If no httpClient is provided, then the http.DefaultClient will be used.
-func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
+func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	// use http.DefaultClient if no client is provided
 	if httpClient == nil {
 		httpClient = http.DefaultClient
@@ -89,11 +95,19 @@ func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
 		return nil, err
 	}
 
+	// prepare the user agent string
+	ua := fmt.Sprintf("%s/%s", userAgent, version.Version.String())
+
+	// if an ID was given, use it in the user agent string
+	if len(id) > 0 {
+		ua = fmt.Sprintf("%s (%s)", ua, id)
+	}
+
 	// create initial client fields
 	c := &Client{
 		client:    httpClient,
 		baseURL:   url,
-		UserAgent: fmt.Sprintf("%s/%s", userAgent, version.Version.String()),
+		UserAgent: ua,
 	}
 
 	// instantiate all client services
@@ -153,7 +167,13 @@ func (c *Client) addAuthentication(req *http.Request) {
 	// Apply Token Authentication.
 	if c.Authentication.HasTokenAuth() {
 		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", *c.Authentication.secret))
+	} else if c.Authentication.HasAccessAndRefreshAuth() {
+		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", *c.Authentication.accessToken))
 	}
+}
+
+func (c *Client) addHeader(req *http.Request) {
+
 }
 
 // addOptions adds the parameters in opt as url query parameters to s.
@@ -211,6 +231,23 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}) (*http.Requ
 	req, err := http.NewRequest(method, u, buf)
 	if err != nil {
 		return nil, err
+	}
+
+	isExpired := IsTokenExpired(*c.Authentication.accessToken)
+	if isExpired {
+		logrus.Debug("access token has expired")
+
+		isRefreshExpired := IsTokenExpired(*c.Authentication.refreshToken)
+		if isRefreshExpired {
+			return nil, fmt.Errorf("your tokens have expired - please log in again with 'vela login'")
+		}
+
+		logrus.Debug("fetching new access token with existing refresh token")
+
+		err := c.Authentication.RefreshAccessToken(*c.Authentication.refreshToken)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	// apply authentication to request if client is set

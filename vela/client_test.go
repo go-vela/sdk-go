@@ -26,7 +26,7 @@ func TestVela_NewClient(t *testing.T) {
 	want := &Client{
 		client:    http.DefaultClient,
 		baseURL:   url,
-		UserAgent: fmt.Sprintf("%s/%s", "vela-sdk-go", version.Version.String()),
+		UserAgent: fmt.Sprintf("%s/%s CLI", "vela-sdk-go", version.Version.String()),
 	}
 	want.Authentication = &AuthenticationService{client: want}
 	want.Authorization = &AuthorizationService{client: want}
@@ -52,7 +52,7 @@ func TestVela_NewClient(t *testing.T) {
 	want.Worker = &WorkerService{client: want}
 
 	// run test
-	got, err := NewClient(addr, nil)
+	got, err := NewClient(addr, "", nil)
 	if err != nil {
 		t.Errorf("NewClient returned err: %v", err)
 	}
@@ -64,7 +64,7 @@ func TestVela_NewClient(t *testing.T) {
 
 func TestVela_NewClient_EmptyUrl(t *testing.T) {
 	// run test
-	got, err := NewClient("", nil)
+	got, err := NewClient("", "", nil)
 	if err == nil {
 		t.Errorf("NewClient should have returned err")
 	}
@@ -76,7 +76,7 @@ func TestVela_NewClient_EmptyUrl(t *testing.T) {
 
 func TestVela_NewClient_BadUrl(t *testing.T) {
 	// run test
-	got, err := NewClient("!@#$%^&*()", nil)
+	got, err := NewClient("!@#$%^&*()", "", nil)
 	if err == nil {
 		t.Errorf("NewClient should have returned err")
 	}
@@ -90,7 +90,7 @@ func TestVela_buildURLForRequest_NoSlash(t *testing.T) {
 	// setup types
 	want := "http://localhost:8080/test"
 
-	c, err := NewClient("http://localhost:8080", nil)
+	c, err := NewClient("http://localhost:8080", "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}
@@ -110,7 +110,7 @@ func TestVela_buildURLForRequest_PrefixSlash(t *testing.T) {
 	// setup types
 	want := "http://localhost:8080/test"
 
-	c, err := NewClient("http://localhost:8080", nil)
+	c, err := NewClient("http://localhost:8080", "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}
@@ -130,7 +130,7 @@ func TestVela_buildURLForRequest_SuffixSlash(t *testing.T) {
 	// setup types
 	want := "http://localhost:8080/test/"
 
-	c, err := NewClient("http://localhost:8080", nil)
+	c, err := NewClient("http://localhost:8080", "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}
@@ -148,7 +148,7 @@ func TestVela_buildURLForRequest_SuffixSlash(t *testing.T) {
 
 func TestVela_buildURLForRequest_BadUrl(t *testing.T) {
 	// setup types
-	c, err := NewClient("http://localhost:8080", nil)
+	c, err := NewClient("http://localhost:8080", "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}
@@ -168,7 +168,7 @@ func TestVela_addAuthentication(t *testing.T) {
 	// setup types
 	want := "Bearer foobar"
 
-	c, err := NewClient("http://localhost:8080", nil)
+	c, err := NewClient("http://localhost:8080", "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}
@@ -191,7 +191,7 @@ func TestVela_addAuthentication(t *testing.T) {
 
 func TestVela_Call_BadMethod(t *testing.T) {
 	// setup types
-	c, err := NewClient("http://localhost:8080", nil)
+	c, err := NewClient("http://localhost:8080", "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}
@@ -210,7 +210,7 @@ func TestVela_NewRequest(t *testing.T) {
 		t.Errorf("Unable to create new request: %v", err)
 	}
 
-	c, err := NewClient("http://localhost:8080", nil)
+	c, err := NewClient("http://localhost:8080", "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}
@@ -234,7 +234,7 @@ func TestVela_NewRequest(t *testing.T) {
 
 func TestVela_NewRequest_BadMethod(t *testing.T) {
 	// setup types
-	c, err := NewClient("http://localhost:8080", nil)
+	c, err := NewClient("http://localhost:8080", "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}
@@ -252,7 +252,7 @@ func TestVela_NewRequest_BadMethod(t *testing.T) {
 
 func TestVela_NewRequest_BadUrl(t *testing.T) {
 	// setup types
-	c, err := NewClient("http://localhost:8080", nil)
+	c, err := NewClient("http://localhost:8080", "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}
