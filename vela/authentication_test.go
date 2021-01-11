@@ -10,7 +10,7 @@ import (
 
 func TestVela_Authentication_SetTokenAuth(t *testing.T) {
 	// setup types
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
 	// run test
 	c.Authentication.SetTokenAuth("someToken")

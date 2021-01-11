@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"reflect"
 	"testing"
 
@@ -24,7 +23,7 @@ func TestLog_GetService_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.LogResp)
 
@@ -52,7 +51,7 @@ func TestLog_GetService_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	want := library.Log{}
 
@@ -77,7 +76,7 @@ func TestLog_AddService_201(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.LogResp)
 
@@ -109,7 +108,7 @@ func TestLog_UpdateService_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.LogResp)
 
@@ -141,7 +140,7 @@ func TestLog_UpdateService_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	want := library.Log{}
 
@@ -170,7 +169,7 @@ func TestLog_RemoveService_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Log.RemoveService("github", "octocat", 1, 1)
@@ -189,7 +188,7 @@ func TestLog_RemoveService_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Log.RemoveService("github", "octocat", 1, 0)
@@ -208,7 +207,7 @@ func TestLog_GetStep_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.LogResp)
 
@@ -236,7 +235,7 @@ func TestLog_GetStep_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	want := library.Log{}
 
@@ -261,7 +260,7 @@ func TestLog_AddStep_201(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.LogResp)
 
@@ -293,7 +292,7 @@ func TestLog_UpdateStep_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.LogResp)
 
@@ -325,7 +324,7 @@ func TestLog_UpdateStep_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	want := library.Log{}
 
@@ -354,7 +353,7 @@ func TestLog_RemoveStep_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Log.RemoveStep("github", "octocat", 1, 1)
@@ -373,7 +372,7 @@ func TestLog_RemoveStep_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Log.RemoveStep("github", "octocat", 1, 0)
@@ -389,17 +388,9 @@ func TestLog_RemoveStep_404(t *testing.T) {
 
 func ExampleLogService_GetService() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -418,17 +409,9 @@ func ExampleLogService_GetService() {
 
 func ExampleLogService_AddService() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -451,17 +434,9 @@ func ExampleLogService_AddService() {
 
 func ExampleLogService_UpdateService() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -484,17 +459,9 @@ func ExampleLogService_UpdateService() {
 
 func ExampleLogService_RemoveService() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -513,17 +480,9 @@ func ExampleLogService_RemoveService() {
 
 func ExampleLogService_GetStep() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -542,17 +501,9 @@ func ExampleLogService_GetStep() {
 
 func ExampleLogService_AddStep() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -575,17 +526,9 @@ func ExampleLogService_AddStep() {
 
 func ExampleLogService_UpdateStep() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -608,17 +551,9 @@ func ExampleLogService_UpdateStep() {
 
 func ExampleLogService_RemoveStep() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)

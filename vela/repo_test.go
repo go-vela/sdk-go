@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"reflect"
 	"testing"
 
@@ -24,7 +23,7 @@ func TestRepo_Get_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.RepoResp)
 
@@ -52,7 +51,7 @@ func TestRepo_Get_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	want := library.Repo{}
 
@@ -77,7 +76,7 @@ func TestRepo_GetAll_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.ReposResp)
 
@@ -105,7 +104,7 @@ func TestRepo_Add_201(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.RepoResp)
 
@@ -151,7 +150,7 @@ func TestRepo_Update_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.RepoResp)
 
@@ -189,7 +188,7 @@ func TestRepo_Update_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	want := library.Repo{}
 
@@ -224,7 +223,7 @@ func TestRepo_Remove_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Repo.Remove("github", "octocat")
@@ -243,7 +242,7 @@ func TestRepo_Remove_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Repo.Remove("github", "not-found")
@@ -262,7 +261,7 @@ func TestRepo_Repair_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Repo.Repair("github", "octocat")
@@ -281,7 +280,7 @@ func TestRepo_Repair_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Repo.Repair("github", "not-found")
@@ -300,7 +299,7 @@ func TestRepo_Chown_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Repo.Chown("github", "octocat")
@@ -319,7 +318,7 @@ func TestRepo_Chown_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Repo.Chown("github", "not-found")
@@ -335,17 +334,9 @@ func TestRepo_Chown_404(t *testing.T) {
 
 func ExampleRepoService_Get() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -364,17 +355,9 @@ func ExampleRepoService_Get() {
 
 func ExampleRepoService_GetAll() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -393,17 +376,9 @@ func ExampleRepoService_GetAll() {
 
 func ExampleRepoService_Add() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -440,17 +415,9 @@ func ExampleRepoService_Add() {
 
 func ExampleRepoService_Update() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -474,17 +441,9 @@ func ExampleRepoService_Update() {
 
 func ExampleRepoService_Remove() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -503,17 +462,9 @@ func ExampleRepoService_Remove() {
 
 func ExampleRepoService_Repair() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -532,17 +483,9 @@ func ExampleRepoService_Repair() {
 
 func ExampleRepoService_Chown() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
