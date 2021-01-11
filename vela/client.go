@@ -56,6 +56,7 @@ type (
 	}
 
 	service struct {
+		// nolint:structcheck // false negative
 		client *Client
 	}
 
@@ -188,7 +189,7 @@ func (c *Client) addAuthentication(req *http.Request) error {
 
 	// apply token authentication
 	if c.Authentication.HasTokenAuth() {
-		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", *c.Authentication.secret))
+		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", *c.Authentication.token))
 	}
 
 	return nil

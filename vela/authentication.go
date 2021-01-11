@@ -24,7 +24,7 @@ const (
 // authentication related functions.
 type AuthenticationService struct {
 	client       *Client
-	secret       *string // TODO: rename this to just "token"?
+	token        *string
 	accessToken  *string
 	refreshToken *string
 	authType     AuthenticationType
@@ -32,7 +32,7 @@ type AuthenticationService struct {
 
 // SetTokenAuth sets the authentication type as personal access token.
 func (svc *AuthenticationService) SetTokenAuth(token string) {
-	svc.secret = String(token)
+	svc.token = String(token)
 	svc.authType = AuthenticationToken
 }
 

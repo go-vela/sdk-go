@@ -180,7 +180,7 @@ func TestVela_addAuthentication(t *testing.T) {
 
 	// run test
 	c.Authentication.SetTokenAuth("foobar")
-	c.addAuthentication(r)
+	_ = c.addAuthentication(r)
 
 	got := r.Header.Get("Authorization")
 
