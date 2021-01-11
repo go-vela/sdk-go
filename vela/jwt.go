@@ -17,20 +17,30 @@ import (
 func IsTokenExpired(token string) bool {
 	minTimeLeft := 10 * time.Second
 
+	// if the token is empty, we treat it as expired
 	if len(token) == 0 {
 		return true
 	}
 
+	// parse the token, we just want to check expiration -
+	// the server will handle verification
 	t, _, err := new(jwt.Parser).ParseUnverified(token, jwt.MapClaims{})
 	if err != nil {
 		return true
 	}
 
+	// get the claims
 	c, ok := t.Claims.(jwt.MapClaims)
 	if !ok {
 		return true
 	}
 
+	// if there is no expiration set, it's expired
+	if _, ok := c["exp"]; !ok {
+		return true
+	}
+
+	// check the expiration
 	var expiration time.Time
 	switch e := c["exp"].(type) {
 	case float64:
@@ -40,7 +50,9 @@ func IsTokenExpired(token string) bool {
 		expiration = time.Unix(v, 0)
 	}
 
+	// get the difference
 	timeLeft := time.Until(expiration)
 
+	// return whether we are within the delta time padding
 	return timeLeft.Seconds() <= minTimeLeft.Seconds()
 }
