@@ -163,17 +163,35 @@ func (c *Client) buildURLForRequest(urlStr string) (string, error) {
 }
 
 // addAuthentication adds the necessary authentication to the request.
-func (c *Client) addAuthentication(req *http.Request) {
-	// Apply Token Authentication.
-	if c.Authentication.HasTokenAuth() {
-		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", *c.Authentication.secret))
-	} else if c.Authentication.HasAccessAndRefreshAuth() {
+func (c *Client) addAuthentication(req *http.Request) error {
+	// check if access token needs to be refreshed and
+	// add the token to the request
+	if c.Authentication.HasAccessAndRefreshAuth() {
+		isExpired := IsTokenExpired(*c.Authentication.accessToken)
+		if isExpired {
+			logrus.Debug("access token has expired")
+
+			isRefreshExpired := IsTokenExpired(*c.Authentication.refreshToken)
+			if isRefreshExpired {
+				return fmt.Errorf("your tokens have expired - please log in again with 'vela login'")
+			}
+
+			logrus.Debug("fetching new access token with existing refresh token")
+
+			err := c.Authentication.RefreshAccessToken(*c.Authentication.refreshToken)
+			if err != nil {
+				return err
+			}
+		}
 		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", *c.Authentication.accessToken))
 	}
-}
 
-func (c *Client) addHeader(req *http.Request) {
+	// apply token authentication
+	if c.Authentication.HasTokenAuth() {
+		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", *c.Authentication.secret))
+	}
 
+	return nil
 }
 
 // addOptions adds the parameters in opt as url query parameters to s.
@@ -233,26 +251,12 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}) (*http.Requ
 		return nil, err
 	}
 
-	isExpired := IsTokenExpired(*c.Authentication.accessToken)
-	if isExpired {
-		logrus.Debug("access token has expired")
-
-		isRefreshExpired := IsTokenExpired(*c.Authentication.refreshToken)
-		if isRefreshExpired {
-			return nil, fmt.Errorf("your tokens have expired - please log in again with 'vela login'")
-		}
-
-		logrus.Debug("fetching new access token with existing refresh token")
-
-		err := c.Authentication.RefreshAccessToken(*c.Authentication.refreshToken)
+	// apply authentication to request if client is set
+	if c.Authentication.HasAuth() {
+		err = c.addAuthentication(req)
 		if err != nil {
 			return nil, err
 		}
-	}
-
-	// apply authentication to request if client is set
-	if c.Authentication.HasAuth() {
-		c.addAuthentication(req)
 	}
 
 	// add the user agent for the request

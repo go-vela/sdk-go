@@ -5,8 +5,7 @@
 package vela
 
 import (
-	"crypto/rsa"
-	"io/ioutil"
+	"fmt"
 	"testing"
 	"time"
 
@@ -46,26 +45,21 @@ func TestIsTokenExpired(t *testing.T) {
 	}
 }
 
+// makeSampleToken is a helper to create test tokens
+// with the given claims.
 func makeSampleToken(c jwt.Claims) string {
-	key := loadKey("testdata/sample_key")
+	// create a new token
 	t := jwt.NewWithClaims(jwt.SigningMethodRS256, c)
-	s, e := t.SignedString(key)
+
+	// get the signing string (header + claims)
+	s, e := t.SigningString()
 
 	if e != nil {
 		return ""
 	}
 
-	return s
-}
+	// add bogus signature
+	s = fmt.Sprintf("%s.abcdef", s)
 
-func loadKey(loc string) *rsa.PrivateKey {
-	keyData, e := ioutil.ReadFile(loc)
-	if e != nil {
-		panic(e.Error())
-	}
-	key, e := jwt.ParseRSAPrivateKeyFromPEM(keyData)
-	if e != nil {
-		panic(e.Error())
-	}
-	return key
+	return s
 }

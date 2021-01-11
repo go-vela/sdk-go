@@ -26,7 +26,7 @@ func TestVela_NewClient(t *testing.T) {
 	want := &Client{
 		client:    http.DefaultClient,
 		baseURL:   url,
-		UserAgent: fmt.Sprintf("%s/%s CLI", "vela-sdk-go", version.Version.String()),
+		UserAgent: fmt.Sprintf("%s/%s", "vela-sdk-go", version.Version.String()),
 	}
 	want.Authentication = &AuthenticationService{client: want}
 	want.Authorization = &AuthorizationService{client: want}

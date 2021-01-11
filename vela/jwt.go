@@ -11,6 +11,9 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
+// IsTokenExpired will parse the expiration of the the given
+// token and return a boolean depending on whether the is
+// expired given the delta.
 func IsTokenExpired(token string) bool {
 	minTimeLeft := 10 * time.Second
 
