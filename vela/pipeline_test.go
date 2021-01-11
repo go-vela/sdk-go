@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"reflect"
 	"testing"
 
@@ -25,7 +24,7 @@ func TestPipeline_Get_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.PipelineResp)
 
@@ -53,7 +52,7 @@ func TestPipeline_Get_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	want := yaml.Build{}
 
@@ -78,7 +77,7 @@ func TestPipeline_Compile_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.CompileResp)
 
@@ -106,7 +105,7 @@ func TestPipeline_Compile_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	want := yaml.Build{}
 
@@ -131,7 +130,7 @@ func TestPipeline_Expand_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.ExpandResp)
 
@@ -159,7 +158,7 @@ func TestPipeline_Expand_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	want := yaml.Build{}
 
@@ -184,7 +183,7 @@ func TestPipeline_Templates_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.TemplateResp)
 
@@ -212,7 +211,7 @@ func TestPipeline_Templates_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	want := make(map[string]*yaml.Template)
 
@@ -237,7 +236,7 @@ func TestPipeline_Validate_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Pipeline.Validate("github", "octocat", nil)
@@ -256,7 +255,7 @@ func TestPipeline_Validate_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Pipeline.Validate("github", "not-found", nil)
@@ -272,17 +271,9 @@ func TestPipeline_Validate_404(t *testing.T) {
 
 func ExamplePipelineService_Get() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -307,17 +298,9 @@ func ExamplePipelineService_Get() {
 
 func ExamplePipelineService_Compile() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -342,17 +325,9 @@ func ExamplePipelineService_Compile() {
 
 func ExamplePipelineService_Expand() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -377,17 +352,9 @@ func ExamplePipelineService_Expand() {
 
 func ExamplePipelineService_Templates() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -412,17 +379,9 @@ func ExamplePipelineService_Templates() {
 
 func ExamplePipelineService_Validate() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)

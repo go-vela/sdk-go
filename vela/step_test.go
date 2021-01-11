@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"reflect"
 	"testing"
 	"time"
@@ -25,7 +24,7 @@ func TestStep_Get_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.StepResp)
 
@@ -53,7 +52,7 @@ func TestStep_Get_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	want := library.Step{}
 
@@ -78,7 +77,7 @@ func TestStep_GetAll_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.StepsResp)
 
@@ -106,7 +105,7 @@ func TestStep_Add_201(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.StepResp)
 
@@ -148,7 +147,7 @@ func TestStep_Update_201(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.StepResp)
 
@@ -183,7 +182,7 @@ func TestStep_Update_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	want := library.Step{}
 
@@ -215,7 +214,7 @@ func TestStep_Remove_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Step.Remove("github", "octocat", 1, 1)
@@ -234,7 +233,7 @@ func TestStep_Remove_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Step.Remove("github", "octocat", 1, 0)
@@ -250,17 +249,9 @@ func TestStep_Remove_404(t *testing.T) {
 
 func ExampleStepService_Get() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -279,17 +270,9 @@ func ExampleStepService_Get() {
 
 func ExampleStepService_GetAll() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -308,17 +291,9 @@ func ExampleStepService_GetAll() {
 
 func ExampleStepService_Add() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -351,17 +326,9 @@ func ExampleStepService_Add() {
 
 func ExampleStepService_Update() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -385,17 +352,9 @@ func ExampleStepService_Update() {
 
 func ExampleStepService_Remove() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)

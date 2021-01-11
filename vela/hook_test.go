@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"reflect"
 	"testing"
 
@@ -24,7 +23,7 @@ func TestHook_Get_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.HookResp)
 
@@ -52,7 +51,7 @@ func TestHook_Get_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	want := library.Hook{}
 
@@ -77,7 +76,7 @@ func TestHook_GetAll_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.HooksResp)
 
@@ -105,7 +104,7 @@ func TestHook_Add_201(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.HookResp)
 
@@ -145,7 +144,7 @@ func TestHook_Update_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	data := []byte(server.HookResp)
 
@@ -179,7 +178,7 @@ func TestHook_Update_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	want := library.Hook{}
 
@@ -210,7 +209,7 @@ func TestHook_Remove_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Hook.Remove("github", "octocat", 1)
@@ -229,7 +228,7 @@ func TestHook_Remove_404(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, nil)
+	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
 	_, resp, err := c.Hook.Remove("github", "octocat", 0)
@@ -245,17 +244,9 @@ func TestHook_Remove_404(t *testing.T) {
 
 func ExampleHookService_Get() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -274,17 +265,9 @@ func ExampleHookService_Get() {
 
 func ExampleHookService_GetAll() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -303,17 +286,9 @@ func ExampleHookService_GetAll() {
 
 func ExampleHookService_Add() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -344,17 +319,9 @@ func ExampleHookService_Add() {
 
 func ExampleHookService_Update() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
@@ -378,17 +345,9 @@ func ExampleHookService_Update() {
 
 func ExampleHookService_Remove() {
 	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", nil)
+	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	u := os.Getenv("VELA_USERNAME")
-	p := os.Getenv("VELA_PASSWORD")
-	otp := os.Getenv("VELA_OTP")
-
-	l := library.Login{
-		Username: &u,
-		Password: &p,
-		OTP:      &otp,
-	}
+	l := library.Login{}
 
 	// Login to application and get token
 	auth, _, _ := c.Authorization.Login(&l)
