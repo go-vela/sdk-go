@@ -117,3 +117,17 @@ func (svc *BuildService) Restart(org, repo string, build int) (*library.Build, *
 
 	return v, resp, err
 }
+
+// Cancel takes the build provided and cancels it
+func (svc *BuildService) Cancel(org, repo string, build int) (*library.Build, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/cancel", org, repo, build)
+
+	// library Build type we want to return
+	v := new(library.Build)
+
+	// send request using client
+	resp, err := svc.client.Call("DELETE", u, nil, v)
+
+	return v, resp, err
+}
