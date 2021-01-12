@@ -367,6 +367,44 @@ func TestBuild_Restart_404(t *testing.T) {
 	}
 }
 
+func TestBuild_Cancel_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	// run test
+	_, got, err := c.Build.Cancel("github", "octocat", 1)
+
+	if err != nil {
+		t.Errorf("New returned err: %v", err)
+	}
+
+	if got.StatusCode != http.StatusOK {
+		t.Errorf("Build returned %v, want %v", got.StatusCode, http.StatusOK)
+	}
+}
+
+func TestBuild_Cancel_404(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	// run test
+	_, resp, err := c.Build.Cancel("github", "octocat", 0)
+
+	if err == nil {
+		t.Errorf("New returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusNotFound {
+		t.Errorf("Build returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+}
+
 func ExampleBuildService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
@@ -545,4 +583,25 @@ func ExampleBuildService_Restart() {
 	}
 
 	fmt.Printf("Received response code %d, for step %+v", resp.StatusCode, build)
+}
+
+func ExampleBuildService_Cancel() {
+	// Create a new vela client for interacting with server
+	c, _ := NewClient("http://localhost:8080", "", nil)
+
+	l := library.Login{}
+
+	// Login to application and get token
+	auth, _, _ := c.Authorization.Login(&l)
+
+	// Set new token in existing client
+	c.Authentication.SetTokenAuth(*auth.Token)
+
+	// Cancel the build in the server
+	_, resp, err := c.Build.Cancel("github", "octocat", 1)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("Received response code %d, for github/octocat/1", resp.StatusCode)
 }
