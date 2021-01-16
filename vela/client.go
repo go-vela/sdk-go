@@ -179,7 +179,7 @@ func (c *Client) addAuthentication(req *http.Request) error {
 
 			logrus.Debug("fetching new access token with existing refresh token")
 
-			err := c.Authentication.RefreshAccessToken(*c.Authentication.refreshToken)
+			_, err := c.Authentication.RefreshAccessToken(*c.Authentication.refreshToken)
 			if err != nil {
 				return err
 			}

@@ -12,7 +12,13 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
+var (
+	TestTokenGood    = makeSampleToken(jwt.MapClaims{"exp": float64(time.Now().Unix() + 100)})
+	TestTokenExpired = makeSampleToken(jwt.MapClaims{"exp": float64(time.Now().Unix() - 100)})
+)
+
 func TestIsTokenExpired(t *testing.T) {
+	// run tests
 	type args struct {
 		token string
 	}
@@ -24,16 +30,37 @@ func TestIsTokenExpired(t *testing.T) {
 		{
 			name: "expired token",
 			args: args{
-				token: makeSampleToken(jwt.MapClaims{"exp": float64(time.Now().Unix() - 100)}),
+				token: TestTokenExpired,
 			},
 			want: true,
 		},
 		{
 			name: "good token",
 			args: args{
-				token: makeSampleToken(jwt.MapClaims{"exp": float64(time.Now().Unix() + 100)}),
+				token: TestTokenGood,
 			},
 			want: false,
+		},
+		{
+			name: "empty token",
+			args: args{
+				token: "",
+			},
+			want: true,
+		},
+		{
+			name: "bad token",
+			args: args{
+				token: "/65",
+			},
+			want: true,
+		},
+		{
+			name: "no exp",
+			args: args{
+				token: makeSampleToken(jwt.MapClaims{}),
+			},
+			want: true,
 		},
 	}
 	for _, tt := range tests {
