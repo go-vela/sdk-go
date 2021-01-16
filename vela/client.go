@@ -299,6 +299,7 @@ func (r *Response) populatePageValues() {
 			segments := strings.Split(strings.TrimSpace(link), ";")
 
 			// link must at least have href and rel
+			// nolint: gomnd // ignoring magic number
 			if len(segments) < 2 {
 				continue
 			}
