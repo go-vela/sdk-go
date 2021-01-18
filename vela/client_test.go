@@ -7,10 +7,12 @@ package vela
 import (
 	"fmt"
 	"net/http"
+	"net/http/httptest"
 	"net/url"
 	"reflect"
 	"testing"
 
+	"github.com/go-vela/mock/server"
 	"github.com/go-vela/sdk-go/version"
 )
 
@@ -71,6 +73,23 @@ func TestVela_NewClient_EmptyUrl(t *testing.T) {
 
 	if got != nil {
 		t.Errorf("NewClient is %v, want nil", got)
+	}
+}
+
+func TestVela_NewClient_UserAgent(t *testing.T) {
+	// setup types
+	addr := "http://localhost:8080"
+
+	want := fmt.Sprintf("%s/%s (%s)", userAgent, version.Version.String(), "vela")
+
+	// run test
+	got, err := NewClient(addr, "vela", nil)
+	if err != nil {
+		t.Errorf("NewClient returned err: %v", err)
+	}
+
+	if got.UserAgent != want {
+		t.Errorf("NewClient is %v, want %v", got, want)
 	}
 }
 
@@ -180,7 +199,94 @@ func TestVela_addAuthentication(t *testing.T) {
 
 	// run test
 	c.Authentication.SetTokenAuth("foobar")
-	_ = c.addAuthentication(r)
+
+	err = c.addAuthentication(r)
+	if err != nil {
+		t.Error("addAuthentication should not have errored")
+	}
+
+	got := r.Header.Get("Authorization")
+
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("addAuthentication is %v, want %v", got, want)
+	}
+}
+
+func TestVela_addAuthentication_AccessAndRefresh_GoodToken(t *testing.T) {
+	// setup types
+	testToken := TestTokenGood
+	want := fmt.Sprintf("Bearer %s", testToken)
+
+	c, err := NewClient("http://localhost:8080", "", nil)
+	if err != nil {
+		t.Errorf("Unable to create new client: %v", err)
+	}
+
+	r, err := http.NewRequest("GET", "http://localhost:8080/health", nil)
+	if err != nil {
+		t.Errorf("Unable to create new request: %v", err)
+	}
+
+	// run test
+	c.Authentication.SetAccessAndRefreshAuth(testToken, "bar")
+
+	err = c.addAuthentication(r)
+	if err != nil {
+		t.Error("addAuthentication should not have errored")
+	}
+
+	got := r.Header.Get("Authorization")
+
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("addAuthentication is %v, want %v", got, want)
+	}
+}
+
+func TestVela_addAuthentication_AccessAndRefresh_ExpiredTokens(t *testing.T) {
+	// setup types
+	testToken := TestTokenExpired
+
+	c, err := NewClient("http://localhost:8080", "", nil)
+	if err != nil {
+		t.Errorf("Unable to create new client: %v", err)
+	}
+
+	r, err := http.NewRequest("GET", "http://localhost:8080/health", nil)
+	if err != nil {
+		t.Errorf("Unable to create new request: %v", err)
+	}
+
+	// run test
+	c.Authentication.SetAccessAndRefreshAuth(testToken, testToken)
+
+	err = c.addAuthentication(r)
+	if err == nil {
+		t.Error("addAuthentication should have errored with expired tokens")
+	}
+}
+
+func TestVela_addAuthentication_AccessAndRefresh_ExpiredAccessGoodRefresh(t *testing.T) {
+	// setup types
+	want := fmt.Sprintf("Bearer header.payload.signature")
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, err := NewClient(s.URL, "", nil)
+	if err != nil {
+		t.Errorf("Unable to create new client: %v", err)
+	}
+
+	r, err := http.NewRequest("GET", fmt.Sprintf("%s/health", s.URL), nil)
+	if err != nil {
+		t.Errorf("Unable to create new request: %v", err)
+	}
+
+	// run test
+	c.Authentication.SetAccessAndRefreshAuth(TestTokenExpired, TestTokenGood)
+
+	err = c.addAuthentication(r)
+	if err != nil {
+		t.Error("addAuthentication should not have errored")
+	}
 
 	got := r.Header.Get("Authorization")
 

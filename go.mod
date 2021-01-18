@@ -7,7 +7,7 @@ require (
 	github.com/coreos/go-semver v0.3.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.6.3
-	github.com/go-vela/mock v0.7.0-rc1
+	github.com/go-vela/mock v0.7.0-rc1.0.20210115203827-902c57d55bd5
 	github.com/go-vela/types v0.7.0-rc1
 	github.com/google/go-querystring v1.0.0
 	github.com/sirupsen/logrus v1.7.0

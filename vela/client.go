@@ -179,7 +179,7 @@ func (c *Client) addAuthentication(req *http.Request) error {
 
 			logrus.Debug("fetching new access token with existing refresh token")
 
-			err := c.Authentication.RefreshAccessToken(*c.Authentication.refreshToken)
+			_, err := c.Authentication.RefreshAccessToken(*c.Authentication.refreshToken)
 			if err != nil {
 				return err
 			}
@@ -299,6 +299,7 @@ func (r *Response) populatePageValues() {
 			segments := strings.Split(strings.TrimSpace(link), ";")
 
 			// link must at least have href and rel
+			// nolint: gomnd // ignoring magic number
 			if len(segments) < 2 {
 				continue
 			}

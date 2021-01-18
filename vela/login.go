@@ -4,13 +4,18 @@
 
 package vela
 
-import "github.com/go-vela/types/library"
+import (
+	"fmt"
+
+	"github.com/go-vela/types/library"
+)
 
 // AuthorizationService handles user login actions
 // against the server methods of the Vela API.
 type AuthorizationService service
 
 // Login constructs a build with the provided details.
+// TODO: repurpose legacy method
 func (svc *AuthorizationService) Login(l *library.Login) (*library.Login, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/login"
@@ -37,6 +42,11 @@ func (svc *AuthorizationService) GetLoginURL(opt *LoginOpts) (string, error) {
 		if err != nil {
 			return "", err
 		}
+	}
+
+	// check that we have a client
+	if svc.client == nil {
+		return "", fmt.Errorf("client not found")
 	}
 
 	// build the url

@@ -5,7 +5,6 @@
 package vela
 
 import (
-	"encoding/json"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -41,14 +40,7 @@ func IsTokenExpired(token string) bool {
 	}
 
 	// check the expiration
-	var expiration time.Time
-	switch e := c["exp"].(type) {
-	case float64:
-		expiration = time.Unix(int64(e), 0)
-	case json.Number:
-		v, _ := e.Int64()
-		expiration = time.Unix(v, 0)
-	}
+	expiration := time.Unix(int64(c["exp"].(float64)), 0)
 
 	// get the difference
 	timeLeft := time.Until(expiration)

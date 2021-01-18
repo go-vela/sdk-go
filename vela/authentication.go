@@ -60,7 +60,7 @@ func (svc *AuthenticationService) HasAccessAndRefreshAuth() bool {
 
 // RefreshAccessToken uses the supplied refresh token to attempt and refresh
 // the access token.
-func (svc *AuthenticationService) RefreshAccessToken(refreshToken string) error {
+func (svc *AuthenticationService) RefreshAccessToken(refreshToken string) (*Response, error) {
 	u := "/token-refresh"
 
 	v := new(library.Login)
@@ -70,12 +70,12 @@ func (svc *AuthenticationService) RefreshAccessToken(refreshToken string) error 
 	// that's what can send us here
 	url, err := svc.client.buildURLForRequest(u)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// set a minimal cookie with the refresh token value
@@ -87,13 +87,10 @@ func (svc *AuthenticationService) RefreshAccessToken(refreshToken string) error 
 	req.AddCookie(cookie)
 
 	// send the request
-	_, err = svc.client.Do(req, v)
-	if err != nil {
-		return err
-	}
+	resp, err := svc.client.Do(req, v)
 
 	// set the received access token
 	svc.accessToken = v.Token
 
-	return nil
+	return resp, err
 }
