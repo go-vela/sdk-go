@@ -15,7 +15,7 @@ import (
 type AuthorizationService service
 
 // Login constructs a build with the provided details.
-// TODO: repurpose legacy method
+// TODO: Deprecate?
 func (svc *AuthorizationService) Login(l *library.Login) (*library.Login, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/login"
@@ -30,7 +30,7 @@ func (svc *AuthorizationService) Login(l *library.Login) (*library.Login, *Respo
 }
 
 // GetLoginURL returns the login url with the give login options.
-func (svc *AuthorizationService) GetLoginURL(opt *LoginOpts) (string, error) {
+func (svc *AuthorizationService) GetLoginURL(opt *LoginOptions) (string, error) {
 	var err error
 
 	// set the API endpoint path we send the request to

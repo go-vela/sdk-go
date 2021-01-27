@@ -15,6 +15,7 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/buildkite/yaml"
 	"github.com/go-vela/sdk-go/version"
@@ -70,7 +71,16 @@ type (
 		PerPage int `url:"per_page,omitempty"`
 	}
 
-	LoginOpts struct {
+	// OAuthExchangeOptions represents the required parameters to exchange
+	// for tokens
+	OAuthExchangeOptions struct {
+		Code  string `url:"code,omitempty"`
+		State string `url:"state,omitempty"`
+	}
+
+	// LoginOptions represents the optional parameters to launch
+	// the login process
+	LoginOptions struct {
 		Type string `url:"type,omitempty"`
 		Port string `url:"port,omitempty"`
 	}
@@ -83,6 +93,7 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	// use http.DefaultClient if no client is provided
 	if httpClient == nil {
 		httpClient = http.DefaultClient
+		httpClient.Timeout = time.Second * 15
 	}
 
 	// we must have a url provided to create the client

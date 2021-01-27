@@ -5,6 +5,7 @@
 package vela
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/go-vela/types/constants"
@@ -61,6 +62,7 @@ func (svc *AuthenticationService) HasAccessAndRefreshAuth() bool {
 // RefreshAccessToken uses the supplied refresh token to attempt and refresh
 // the access token.
 func (svc *AuthenticationService) RefreshAccessToken(refreshToken string) (*Response, error) {
+	// set the API endpoint path we send the request to
 	u := "/token-refresh"
 
 	v := new(library.Login)
@@ -93,4 +95,94 @@ func (svc *AuthenticationService) RefreshAccessToken(refreshToken string) (*Resp
 	svc.accessToken = v.Token
 
 	return resp, err
+}
+
+// AuthenticateWithToken attempts to authenticate with the provided token, typically
+// a personal access token created in the source provider, eg. GitHub. It will
+// return a short-lived Vela Access Token, if successful.
+func (svc *AuthenticationService) AuthenticateWithToken(token string) (string, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := "/authenticate/token"
+
+	// check for token
+	if len(token) == 0 {
+		return "", nil, fmt.Errorf("token must not be empty")
+	}
+
+	// will hold access token
+	v := new(library.Login)
+
+	// create a new request that we can attach a header to
+	req, err := svc.client.NewRequest("POST", u, nil)
+	if err != nil {
+		return "", nil, err
+	}
+
+	// add the token as a header
+	req.Header.Add("Token", token)
+
+	// send the request
+	resp, err := svc.client.Do(req, v)
+
+	at := v.GetToken()
+
+	// set the received access token
+	svc.token = &at
+
+	return at, resp, err
+}
+
+// ExchangeTokens handles the last part of the OAuth flow. It uses the supplied
+// code and state values to attempt to exchange them for Vela Access and
+// Refresh tokens.
+func (svc *AuthenticationService) ExchangeTokens(opt *OAuthExchangeOptions) (string, string, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := "/authenticate"
+
+	// will hold access token
+	v := new(library.Login)
+
+	// check required arguments
+	if len(opt.Code) == 0 || len(opt.State) == 0 {
+		return "", "", nil, fmt.Errorf("code and state must be provided")
+	}
+
+	// add required arguments
+	u, err := addOptions(u, opt)
+	if err != nil {
+		return "", "", nil, err
+	}
+
+	// attempt to exchange code + state for tokens
+	resp, err := svc.client.Call("GET", u, nil, v)
+	if err != nil {
+		return "", "", nil, err
+	}
+
+	// the refresh token will be in a cookie in the response
+	rt := extractRefreshToken(resp.Cookies())
+
+	// get the access token
+	at := v.GetToken()
+
+	// set the received tokens
+	svc.accessToken = &at
+	svc.refreshToken = &rt
+
+	return at, rt, resp, err
+}
+
+// extractRefreshToken is a helper function to extract
+// the refresh token from the supplied cookie slice.
+func extractRefreshToken(cookies []*http.Cookie) string {
+	c := ""
+
+	// loop over the cookies to find the refresh cookie
+	for _, cookie := range cookies {
+		if cookie.Name == constants.RefreshTokenName {
+			c = cookie.Value
+		}
+	}
+
+	return c
 }
