@@ -139,7 +139,7 @@ func ExampleDeploymentService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a build from the server
@@ -155,7 +155,7 @@ func ExampleDeploymentService_GetAll() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the deployments from the server
@@ -171,7 +171,7 @@ func ExampleDeploymentService_Add() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Deployment{

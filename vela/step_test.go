@@ -251,7 +251,7 @@ func ExampleStepService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a step from the server
@@ -267,7 +267,7 @@ func ExampleStepService_GetAll() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the steps from the server
@@ -283,7 +283,7 @@ func ExampleStepService_Add() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Step{
@@ -313,7 +313,7 @@ func ExampleStepService_Update() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Step{
@@ -334,7 +334,7 @@ func ExampleStepService_Remove() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the step in the server

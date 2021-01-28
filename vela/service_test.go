@@ -248,7 +248,7 @@ func ExampleSvcService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a service from the server
@@ -264,7 +264,7 @@ func ExampleSvcService_GetAll() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the services from the server
@@ -280,7 +280,7 @@ func ExampleSvcService_Add() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Service{
@@ -307,7 +307,7 @@ func ExampleSvcService_Update() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Service{
@@ -328,7 +328,7 @@ func ExampleSvcService_Remove() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the service in the server

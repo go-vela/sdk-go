@@ -246,7 +246,7 @@ func ExampleHookService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a hook from the server
@@ -262,7 +262,7 @@ func ExampleHookService_GetAll() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the hooks from the server
@@ -278,7 +278,7 @@ func ExampleHookService_Add() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Hook{
@@ -306,7 +306,7 @@ func ExampleHookService_Update() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Hook{
@@ -327,7 +327,7 @@ func ExampleHookService_Remove() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the hook in the server

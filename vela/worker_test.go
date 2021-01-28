@@ -243,7 +243,7 @@ func ExampleWorkerService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a worker from the server
@@ -259,7 +259,7 @@ func ExampleWorkerService_GetAll() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the workers from the server
@@ -275,7 +275,7 @@ func ExampleWorkerService_Add() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Worker{
@@ -304,7 +304,7 @@ func ExampleWorkerService_Update() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Worker{
@@ -324,7 +324,7 @@ func ExampleWorkerService_Remove() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	// Set new tokens in existing client
+	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the worker in the server

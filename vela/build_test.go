@@ -410,7 +410,7 @@ func ExampleBuildService_Get() {
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
 	// Set new token in existing client
-	c.Authentication.SetAccessAndRefreshAuth("access", "refresh")
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a build from the server
 	build, resp, err := c.Build.Get("github", "octocat", 1)
@@ -426,7 +426,7 @@ func ExampleBuildService_GetAll() {
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
 	// Set new token in existing client
-	c.Authentication.SetAccessAndRefreshAuth("access", "refresh")
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the builds from the server
 	builds, resp, err := c.Build.GetAll("github", "octocat", nil)
@@ -442,7 +442,7 @@ func ExampleBuildService_GetLogs() {
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
 	// Set new token in existing client
-	c.Authentication.SetAccessAndRefreshAuth("access", "refresh")
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get for a build from the server
 	logs, resp, err := c.Build.GetLogs("github", "octocat", 1)
@@ -458,7 +458,7 @@ func ExampleBuildService_Add() {
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
 	// Set new token in existing client
-	c.Authentication.SetAccessAndRefreshAuth("access", "refresh")
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Build{
 		Number:       Int(1),
@@ -502,7 +502,7 @@ func ExampleBuildService_Update() {
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
 	// Set new token in existing client
-	c.Authentication.SetAccessAndRefreshAuth("access", "refresh")
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Build{
 		Status: String("error"),
@@ -523,7 +523,7 @@ func ExampleBuildService_Remove() {
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
 	// Set new token in existing client
-	c.Authentication.SetAccessAndRefreshAuth("access", "refresh")
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the build in the server
 	build, resp, err := c.Build.Remove("github", "octocat", 1)
@@ -539,7 +539,7 @@ func ExampleBuildService_Restart() {
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
 	// Set new token in existing client
-	c.Authentication.SetAccessAndRefreshAuth("access", "refresh")
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Restart the build in the server
 	build, resp, err := c.Build.Restart("github", "octocat", 1)
@@ -555,7 +555,7 @@ func ExampleBuildService_Cancel() {
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
 	// Set new token in existing client
-	c.Authentication.SetAccessAndRefreshAuth("access", "refresh")
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Cancel the build in the server
 	_, resp, err := c.Build.Cancel("github", "octocat", 1)
