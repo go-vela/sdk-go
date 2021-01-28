@@ -8,7 +8,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-vela/mock v0.7.0-rc2.0.20210125180806-8e357d6fa4a7
-	github.com/go-vela/types v0.7.0-rc2
+	github.com/go-vela/types v0.7.0-rc3
 	github.com/google/go-querystring v1.0.0
 	github.com/sirupsen/logrus v1.7.0
 )
