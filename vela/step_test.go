@@ -251,13 +251,8 @@ func ExampleStepService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a step from the server
 	step, resp, err := c.Step.Get("github", "octocat", 1, 1)
@@ -272,13 +267,8 @@ func ExampleStepService_GetAll() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the steps from the server
 	steps, resp, err := c.Step.GetAll("github", "octocat", 1, nil)
@@ -293,13 +283,8 @@ func ExampleStepService_Add() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Step{
 		Number:       Int(1),
@@ -328,13 +313,8 @@ func ExampleStepService_Update() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Step{
 		Status: String("error"),
@@ -354,13 +334,8 @@ func ExampleStepService_Remove() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the step in the server
 	step, resp, err := c.Step.Remove("github", "octocat", 1, 1)

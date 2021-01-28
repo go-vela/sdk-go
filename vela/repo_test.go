@@ -336,13 +336,8 @@ func ExampleRepoService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a repo from the server
 	repo, resp, err := c.Repo.Get("github", "octocat")
@@ -357,13 +352,8 @@ func ExampleRepoService_GetAll() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the repos from the server
 	repos, resp, err := c.Repo.GetAll(nil)
@@ -378,13 +368,8 @@ func ExampleRepoService_Add() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Repo{
 		Org:         String("github"),
@@ -417,13 +402,8 @@ func ExampleRepoService_Update() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Repo{
 		AllowDeploy: Bool(true),
@@ -443,13 +423,8 @@ func ExampleRepoService_Remove() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the repo in the server
 	repo, resp, err := c.Repo.Remove("github", "octocat")
@@ -464,13 +439,8 @@ func ExampleRepoService_Repair() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Repair the repo in the server
 	repo, resp, err := c.Repo.Repair("github", "octocat")
@@ -485,13 +455,8 @@ func ExampleRepoService_Chown() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Change orgship of the repo in the server
 	repo, resp, err := c.Repo.Chown("github", "octocat")

@@ -322,7 +322,7 @@ func TestVela_NewRequest(t *testing.T) {
 	}
 
 	want.Header.Add("Content-Type", "application/json")
-	want.Header.Add("Authorization", "Bearer foobar")
+	want.Header.Add("Authorization", fmt.Sprintf("Bearer foobar"))
 	want.Header.Add("User-Agent", c.UserAgent)
 
 	c.Authentication.SetTokenAuth("foobar")

@@ -390,13 +390,8 @@ func ExampleLogService_GetService() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a log from the server
 	log, resp, err := c.Log.GetService("github", "octocat", 1, 1)
@@ -411,13 +406,8 @@ func ExampleLogService_AddService() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Log{
 		Data: Bytes([]byte("Hello World")),
@@ -436,13 +426,8 @@ func ExampleLogService_UpdateService() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Log{
 		Data: Bytes([]byte("Hello World")),
@@ -461,13 +446,8 @@ func ExampleLogService_RemoveService() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the log in the server
 	log, resp, err := c.Log.RemoveService("github", "octocat", 1, 1)
@@ -482,13 +462,8 @@ func ExampleLogService_GetStep() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a log from the server
 	log, resp, err := c.Log.GetStep("github", "octocat", 1, 1)
@@ -503,13 +478,8 @@ func ExampleLogService_AddStep() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Log{
 		Data: Bytes([]byte("Hello World")),
@@ -528,13 +498,8 @@ func ExampleLogService_UpdateStep() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Log{
 		Data: Bytes([]byte("Hello World")),
@@ -553,13 +518,8 @@ func ExampleLogService_RemoveStep() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the log in the server
 	log, resp, err := c.Log.RemoveStep("github", "octocat", 1, 1)

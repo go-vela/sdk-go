@@ -19,7 +19,7 @@ func TestAuthorizationService_GetLoginURL(t *testing.T) {
 		client *Client
 	}
 	type args struct {
-		opt *LoginOpts
+		opt *LoginOptions
 	}
 	tests := []struct {
 		name    string
@@ -31,28 +31,28 @@ func TestAuthorizationService_GetLoginURL(t *testing.T) {
 		{
 			name:    "basic",
 			fields:  fields{client: client},
-			args:    args{opt: &LoginOpts{Type: "", Port: ""}},
+			args:    args{opt: &LoginOptions{Type: "", Port: ""}},
 			want:    fmt.Sprintf("%s/login", addr),
 			wantErr: false,
 		},
 		{
 			name:    "cli",
 			fields:  fields{client: client},
-			args:    args{opt: &LoginOpts{Type: "cli", Port: "123"}},
+			args:    args{opt: &LoginOptions{Type: "cli", Port: "123"}},
 			want:    fmt.Sprintf("%s/login?port=123&type=cli", addr),
 			wantErr: false,
 		},
 		{
 			name:    "web",
 			fields:  fields{client: client},
-			args:    args{opt: &LoginOpts{Type: "web", Port: ""}},
+			args:    args{opt: &LoginOptions{Type: "web", Port: ""}},
 			want:    fmt.Sprintf("%s/login?type=web", addr),
 			wantErr: false,
 		},
 		{
 			name:    "basic bad",
 			fields:  fields{client: badClient},
-			args:    args{opt: &LoginOpts{Type: "", Port: ""}},
+			args:    args{opt: &LoginOptions{Type: "", Port: ""}},
 			want:    "",
 			wantErr: true,
 		},

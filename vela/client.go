@@ -15,6 +15,7 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/buildkite/yaml"
 	"github.com/go-vela/sdk-go/version"
@@ -70,7 +71,16 @@ type (
 		PerPage int `url:"per_page,omitempty"`
 	}
 
-	LoginOpts struct {
+	// OAuthExchangeOptions represents the required parameters to exchange
+	// for tokens
+	OAuthExchangeOptions struct {
+		Code  string `url:"code,omitempty"`
+		State string `url:"state,omitempty"`
+	}
+
+	// LoginOptions represents the optional parameters to launch
+	// the login process
+	LoginOptions struct {
 		Type string `url:"type,omitempty"`
 		Port string `url:"port,omitempty"`
 	}
@@ -83,6 +93,7 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	// use http.DefaultClient if no client is provided
 	if httpClient == nil {
 		httpClient = http.DefaultClient
+		httpClient.Timeout = time.Second * 15
 	}
 
 	// we must have a url provided to create the client
@@ -165,8 +176,11 @@ func (c *Client) buildURLForRequest(urlStr string) (string, error) {
 
 // addAuthentication adds the necessary authentication to the request.
 func (c *Client) addAuthentication(req *http.Request) error {
-	// check if access token needs to be refreshed and
-	// add the token to the request
+	// token that will be sent with the request depending on auth type
+	token := ""
+
+	// handle access + refresh tokens
+	// refresh access token if needed
 	if c.Authentication.HasAccessAndRefreshAuth() {
 		isExpired := IsTokenExpired(*c.Authentication.accessToken)
 		if isExpired {
@@ -179,18 +193,45 @@ func (c *Client) addAuthentication(req *http.Request) error {
 
 			logrus.Debug("fetching new access token with existing refresh token")
 
+			// nolint:lll // doc link
+			// send API call to refresh the access token to Vela
+			//
+			// https://pkg.go.dev/github.com/go-vela/sdk-go/vela?tab=doc#AuthenticationService.RefreshAccessToken
 			_, err := c.Authentication.RefreshAccessToken(*c.Authentication.refreshToken)
 			if err != nil {
 				return err
 			}
 		}
-		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", *c.Authentication.accessToken))
+
+		// set (new?) access token as the token
+		token = *c.Authentication.accessToken
 	}
 
-	// apply token authentication
-	if c.Authentication.HasTokenAuth() {
-		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", *c.Authentication.token))
+	// handle personal access token
+	if c.Authentication.HasPersonalAccessTokenAuth() {
+		// nolint:lll // doc link
+		// send API call to exchange token for access token to Vela
+		//
+		// https://pkg.go.dev/github.com/go-vela/sdk-go/vela?tab=doc#AuthenticationService.AuthenticateWithToken
+		at, _, err := c.Authentication.AuthenticateWithToken(*c.Authentication.personalAccessToken)
+		if err != nil {
+			return err
+		}
+
+		token = at
 	}
+
+	// handle plain token
+	if c.Authentication.HasTokenAuth() {
+		token = *c.Authentication.token
+	}
+
+	// make sure token is not empty
+	if len(token) == 0 {
+		return fmt.Errorf("token has no value")
+	}
+
+	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", token))
 
 	return nil
 }

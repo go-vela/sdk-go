@@ -248,13 +248,8 @@ func ExampleSvcService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a service from the server
 	service, resp, err := c.Svc.Get("github", "octocat", 1, 1)
@@ -269,13 +264,8 @@ func ExampleSvcService_GetAll() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the services from the server
 	services, resp, err := c.Svc.GetAll("github", "octocat", 1, nil)
@@ -290,13 +280,8 @@ func ExampleSvcService_Add() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Service{
 		Number:   Int(1),
@@ -322,13 +307,8 @@ func ExampleSvcService_Update() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Service{
 		Status: String("error"),
@@ -348,13 +328,8 @@ func ExampleSvcService_Remove() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
 	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the service in the server
 	service, resp, err := c.Svc.Remove("github", "octocat", 1, 1)
