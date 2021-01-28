@@ -243,13 +243,8 @@ func ExampleSecretService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get the secret from the server
 	secret, resp, err := c.Secret.Get("native", "repo", "github", "octocat", "foo")
@@ -264,13 +259,8 @@ func ExampleSecretService_GetAll() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the secrets from the server
 	secrets, resp, err := c.Secret.GetAll("native", "repo", "github", "octocat", nil)
@@ -285,13 +275,8 @@ func ExampleSecretService_Add() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Secret{
 		Name:   String("foo"),
@@ -313,13 +298,8 @@ func ExampleSecretService_Update() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Secret{
 		Name:   String("foo"),
@@ -340,13 +320,8 @@ func ExampleSecretService_Remove() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the secret in the server
 	secret, resp, err := c.Secret.Remove("native", "repo", "github", "octocat", "foo")

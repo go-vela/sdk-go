@@ -243,13 +243,8 @@ func ExampleWorkerService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a worker from the server
 	worker, resp, err := c.Worker.Get("worker_1")
@@ -264,13 +259,8 @@ func ExampleWorkerService_GetAll() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the workers from the server
 	workers, resp, err := c.Worker.GetAll()
@@ -285,13 +275,8 @@ func ExampleWorkerService_Add() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Worker{
 		ID:       Int64(1),
@@ -319,13 +304,8 @@ func ExampleWorkerService_Update() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Worker{
 		Active: Bool(false),
@@ -344,13 +324,8 @@ func ExampleWorkerService_Remove() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the worker in the server
 	worker, resp, err := c.Worker.Remove("worker_1")

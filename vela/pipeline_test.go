@@ -13,7 +13,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-vela/mock/server"
-	"github.com/go-vela/types/library"
 	"github.com/go-vela/types/yaml"
 
 	yml "github.com/buildkite/yaml"
@@ -273,13 +272,8 @@ func ExamplePipelineService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
@@ -300,13 +294,8 @@ func ExamplePipelineService_Compile() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
@@ -327,13 +316,8 @@ func ExamplePipelineService_Expand() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
@@ -354,13 +338,8 @@ func ExamplePipelineService_Templates() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
@@ -381,13 +360,8 @@ func ExamplePipelineService_Validate() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	l := library.Login{}
-
-	// Login to application and get token
-	auth, _, _ := c.Authorization.Login(&l)
-
-	// Set new token in existing client
-	c.Authentication.SetTokenAuth(*auth.Token)
+	// Set new tokens in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
