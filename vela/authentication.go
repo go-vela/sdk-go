@@ -112,8 +112,16 @@ func (svc *AuthenticationService) AuthenticateWithToken(token string) (string, *
 	// will hold access token
 	v := new(library.Login)
 
+	// building a custom request -
+	// we can't use svc.client.NewRequest because
+	// that's what can send us here
+	url, err := svc.client.buildURLForRequest(u)
+	if err != nil {
+		return "", nil, err
+	}
+
 	// create a new request that we can attach a header to
-	req, err := svc.client.NewRequest("POST", u, nil)
+	req, err := http.NewRequest("POST", url, nil)
 	if err != nil {
 		return "", nil, err
 	}
@@ -124,12 +132,7 @@ func (svc *AuthenticationService) AuthenticateWithToken(token string) (string, *
 	// send the request
 	resp, err := svc.client.Do(req, v)
 
-	at := v.GetToken()
-
-	// set the received access token
-	svc.token = &at
-
-	return at, resp, err
+	return v.GetToken(), resp, err
 }
 
 // ExchangeTokens handles the last part of the OAuth flow. It uses the supplied

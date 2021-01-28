@@ -101,10 +101,6 @@ func TestVela_Authentication_AuthenticateWithToken(t *testing.T) {
 	if at != want.GetToken() {
 		t.Errorf("AuthenticateWithToken didn't produce the right Access Token")
 	}
-
-	if *c.Authentication.token != want.GetToken() {
-		t.Errorf("AuthenticateWithToken didn't produce the right Access Token")
-	}
 }
 
 func TestVela_Authentication_AuthenticateWithToken_NoToken(t *testing.T) {
