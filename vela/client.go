@@ -190,6 +190,7 @@ func (c *Client) addAuthentication(req *http.Request) error {
 
 			logrus.Debug("fetching new access token with existing refresh token")
 
+			// nolint:lll // doc link
 			// send API call to refresh the access token to Vela
 			//
 			// https://pkg.go.dev/github.com/go-vela/sdk-go/vela?tab=doc#AuthenticationService.RefreshAccessToken
@@ -204,6 +205,7 @@ func (c *Client) addAuthentication(req *http.Request) error {
 
 	// apply token authentication
 	if c.Authentication.HasTokenAuth() {
+		// nolint:lll // doc link
 		// send API call to exchange token for access token to Vela
 		//
 		// https://pkg.go.dev/github.com/go-vela/sdk-go/vela?tab=doc#AuthenticationService.AuthenticateWithToken
