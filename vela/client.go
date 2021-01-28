@@ -213,7 +213,7 @@ func (c *Client) addAuthentication(req *http.Request) error {
 		// send API call to exchange token for access token to Vela
 		//
 		// https://pkg.go.dev/github.com/go-vela/sdk-go/vela?tab=doc#AuthenticationService.AuthenticateWithToken
-		at, _, err := c.Authentication.AuthenticateWithToken(*c.Authentication.token)
+		at, _, err := c.Authentication.AuthenticateWithToken(*c.Authentication.personalAccessToken)
 		if err != nil {
 			return err
 		}
