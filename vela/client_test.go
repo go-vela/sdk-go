@@ -5,7 +5,6 @@
 package vela
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -15,7 +14,6 @@ import (
 
 	"github.com/go-vela/mock/server"
 	"github.com/go-vela/sdk-go/version"
-	"github.com/go-vela/types/library"
 )
 
 func TestVela_NewClient(t *testing.T) {
@@ -187,15 +185,9 @@ func TestVela_buildURLForRequest_BadUrl(t *testing.T) {
 
 func TestVela_addAuthentication(t *testing.T) {
 	// setup types
-	data := []byte(server.TokenRefreshResp)
+	want := "Bearer foobar"
 
-	var l library.Login
-	_ = json.Unmarshal(data, &l)
-
-	want := fmt.Sprintf("Bearer %s", l.GetToken())
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, err := NewClient(s.URL, "", nil)
+	c, err := NewClient("http://localhost:8080", "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}
@@ -319,25 +311,18 @@ func TestVela_Call_BadMethod(t *testing.T) {
 
 func TestVela_NewRequest(t *testing.T) {
 	// setup types
-	data := []byte(server.TokenRefreshResp)
-
-	var l library.Login
-	_ = json.Unmarshal(data, &l)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, err := NewClient(s.URL, "", nil)
-	if err != nil {
-		t.Errorf("Unable to create new client: %v", err)
-	}
-
-	url := fmt.Sprintf("%s/health", s.URL)
-	want, err := http.NewRequest("GET", url, nil)
+	want, err := http.NewRequest("GET", "http://localhost:8080/health", nil)
 	if err != nil {
 		t.Errorf("Unable to create new request: %v", err)
 	}
 
+	c, err := NewClient("http://localhost:8080", "", nil)
+	if err != nil {
+		t.Errorf("Unable to create new client: %v", err)
+	}
+
 	want.Header.Add("Content-Type", "application/json")
-	want.Header.Add("Authorization", fmt.Sprintf("Bearer %s", l.GetToken()))
+	want.Header.Add("Authorization", fmt.Sprintf("Bearer foobar"))
 	want.Header.Add("User-Agent", c.UserAgent)
 
 	c.Authentication.SetTokenAuth("foobar")

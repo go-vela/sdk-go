@@ -18,23 +18,31 @@ const (
 	// AuthenticationToken defines the
 	// authentication type for auth tokens.
 	AuthenticationToken AuthenticationType = iota + 1
+	PersonalAccessToken
 	AccessAndRefreshToken
 )
 
 // AuthenticationService contains
 // authentication related functions.
 type AuthenticationService struct {
-	client       *Client
-	token        *string
-	accessToken  *string
-	refreshToken *string
-	authType     AuthenticationType
+	client              *Client
+	token               *string
+	personalAccessToken *string
+	accessToken         *string
+	refreshToken        *string
+	authType            AuthenticationType
 }
 
-// SetTokenAuth sets the authentication type as personal access token.
+// SetTokenAuth sets the authentication type as a plain token.
 func (svc *AuthenticationService) SetTokenAuth(token string) {
 	svc.token = String(token)
 	svc.authType = AuthenticationToken
+}
+
+// SetPersonalAccessTokenAuth sets the authentication type as personal access token
+func (svc *AuthenticationService) SetPersonalAccessTokenAuth(token string) {
+	svc.personalAccessToken = String(token)
+	svc.authType = PersonalAccessToken
 }
 
 // SetAccessAndRefreshAuth sets the authentication type as oauth token pair.
@@ -49,9 +57,14 @@ func (svc *AuthenticationService) HasAuth() bool {
 	return svc.authType > 0
 }
 
-// HasTokenAuth checks if the authentication type is a personal access token.
+// HasTokenAuth checks if the authentication type is a plain token.
 func (svc *AuthenticationService) HasTokenAuth() bool {
 	return svc.authType == AuthenticationToken
+}
+
+// HasPersonalAccessTokenAuth checks if the authentication type is a personal access token.
+func (svc *AuthenticationService) HasPersonalAccessTokenAuth() bool {
+	return svc.authType == PersonalAccessToken
 }
 
 // HasAccessAndRefreshAuth checks if the authentication type is oauth token pair.
