@@ -7,11 +7,11 @@ package version
 import "github.com/coreos/go-semver/semver"
 
 var (
-	// VersionMajor is for an API incompatible changes
+	// VersionMajor is for an API incompatible changes.
 	VersionMajor int64
-	// VersionMinor is for functionality in a backwards-compatible manner
+	// VersionMinor is for functionality in a backwards-compatible manner.
 	VersionMinor int64 = 7
-	// VersionPatch is for backwards-compatible bug fixes
+	// VersionPatch is for backwards-compatible bug fixes.
 	VersionPatch int64
 )
 
