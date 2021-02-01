@@ -2,6 +2,7 @@
 //
 // Use of this source code is governed by the LICENSE file in this repository.
 
+// nolint: dupl // ignore dupl linter false positive
 package vela
 
 import (
@@ -15,6 +16,8 @@ import (
 type SvcService service
 
 // Get returns the provided service.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *SvcService) Get(org, repo string, build, service int) (*library.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d", org, repo, build, service)
@@ -29,6 +32,8 @@ func (svc *SvcService) Get(org, repo string, build, service int) (*library.Servi
 }
 
 // GetAll returns a list of all services.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *SvcService) GetAll(org, repo string, build int, opt *ListOptions) (*[]library.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services", org, repo, build)
@@ -49,6 +54,8 @@ func (svc *SvcService) GetAll(org, repo string, build int, opt *ListOptions) (*[
 }
 
 // Add constructs a service with the provided details.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *SvcService) Add(org, repo string, build int, s *library.Service) (*library.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services", org, repo, build)
@@ -63,6 +70,8 @@ func (svc *SvcService) Add(org, repo string, build int, s *library.Service) (*li
 }
 
 // Update modifies a service with the provided details.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *SvcService) Update(org, repo string, build int, s *library.Service) (*library.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d", org, repo, build, s.GetNumber())

@@ -31,7 +31,7 @@ func (svc *RepoService) Get(org, repo string) (*library.Repo, *Response, error) 
 // GetAll returns a list of all repos.
 func (svc *RepoService) GetAll(opt *ListOptions) (*[]library.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos")
+	u := "/api/v1/repos"
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)
@@ -51,7 +51,7 @@ func (svc *RepoService) GetAll(opt *ListOptions) (*[]library.Repo, *Response, er
 // Add constructs a repo with the provided details.
 func (svc *RepoService) Add(r *library.Repo) (*library.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos")
+	u := "/api/v1/repos"
 
 	// library Repo type we want to return
 	v := new(library.Repo)
@@ -63,6 +63,8 @@ func (svc *RepoService) Add(r *library.Repo) (*library.Repo, *Response, error) {
 }
 
 // Update modifies a repo with the provided details.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *RepoService) Update(org, repo string, r *library.Repo) (*library.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s", org, repo)

@@ -29,6 +29,8 @@ func (svc *BuildService) Get(org, repo string, build int) (*library.Build, *Resp
 }
 
 // GetAll returns a list of all builds.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *BuildService) GetAll(org, repo string, opt *ListOptions) (*[]library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds", org, repo)
@@ -63,6 +65,8 @@ func (svc *BuildService) GetLogs(org, repo string, build int) (*[]library.Log, *
 }
 
 // Add constructs a build with the provided details.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *BuildService) Add(org, repo string, b *library.Build) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds", org, repo)
@@ -77,6 +81,8 @@ func (svc *BuildService) Add(org, repo string, b *library.Build) (*library.Build
 }
 
 // Update modifies a build with the provided details.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *BuildService) Update(org, repo string, b *library.Build) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, b.GetNumber())
@@ -104,7 +110,7 @@ func (svc *BuildService) Remove(org, repo string, build int) (*string, *Response
 	return v, resp, err
 }
 
-// Restart takes the build provided and restarts it
+// Restart takes the build provided and restarts it.
 func (svc *BuildService) Restart(org, repo string, build int) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, build)
@@ -118,7 +124,7 @@ func (svc *BuildService) Restart(org, repo string, build int) (*library.Build, *
 	return v, resp, err
 }
 
-// Cancel takes the build provided and cancels it
+// Cancel takes the build provided and cancels it.
 func (svc *BuildService) Cancel(org, repo string, build int) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/cancel", org, repo, build)

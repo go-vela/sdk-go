@@ -39,7 +39,7 @@ func (svc *AuthenticationService) SetTokenAuth(token string) {
 	svc.authType = AuthenticationToken
 }
 
-// SetPersonalAccessTokenAuth sets the authentication type as personal access token
+// SetPersonalAccessTokenAuth sets the authentication type as personal access token.
 func (svc *AuthenticationService) SetPersonalAccessTokenAuth(token string) {
 	svc.personalAccessToken = String(token)
 	svc.authType = PersonalAccessToken

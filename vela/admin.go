@@ -5,8 +5,6 @@
 package vela
 
 import (
-	"fmt"
-
 	"github.com/go-vela/types/library"
 )
 
@@ -58,10 +56,9 @@ type (
 )
 
 // GetAll returns a list of all builds.
-// nolint
 func (svc *AdminBuildService) GetAll(opt *ListOptions) (*[]library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/builds")
+	u := "/api/v1/admin/builds"
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)
@@ -79,10 +76,9 @@ func (svc *AdminBuildService) GetAll(opt *ListOptions) (*[]library.Build, *Respo
 }
 
 // Update modifies a build with the provided details.
-// nolint
 func (svc *AdminBuildService) Update(b *library.Build) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/build")
+	u := "/api/v1/admin/build"
 
 	// library Build type we want to return
 	v := new(library.Build)
@@ -94,10 +90,11 @@ func (svc *AdminBuildService) Update(b *library.Build) (*library.Build, *Respons
 }
 
 // GetAll returns a list of all deployments.
-// nolint
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *AdminDeploymentService) GetAll(opt *ListOptions) (*[]library.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/deployments")
+	u := "/api/v1/admin/deployments"
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)
@@ -115,10 +112,11 @@ func (svc *AdminDeploymentService) GetAll(opt *ListOptions) (*[]library.Deployme
 }
 
 // Update modifies a deployment with the provided details.
-// nolint
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *AdminDeploymentService) Update(d *library.Deployment) (*library.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/deployment")
+	u := "/api/v1/admin/deployment"
 
 	// library Deployment type we want to return
 	v := new(library.Deployment)
@@ -130,10 +128,9 @@ func (svc *AdminDeploymentService) Update(d *library.Deployment) (*library.Deplo
 }
 
 // GetAll returns a list of all hooks.
-// nolint
 func (svc *AdminHookService) GetAll(opt *ListOptions) (*[]library.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/hooks")
+	u := "/api/v1/admin/hooks"
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)
@@ -151,10 +148,9 @@ func (svc *AdminHookService) GetAll(opt *ListOptions) (*[]library.Hook, *Respons
 }
 
 // Update modifies a hook with the provided details.
-// nolint
 func (svc *AdminHookService) Update(h *library.Hook) (*library.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/hook")
+	u := "/api/v1/admin/hook"
 
 	// library Hook type we want to return
 	v := new(library.Hook)
@@ -166,10 +162,9 @@ func (svc *AdminHookService) Update(h *library.Hook) (*library.Hook, *Response, 
 }
 
 // GetAll returns a list of all repos.
-// nolint
 func (svc *AdminRepoService) GetAll(opt *ListOptions) (*[]library.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/repos")
+	u := "/api/v1/admin/repos"
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)
@@ -187,10 +182,9 @@ func (svc *AdminRepoService) GetAll(opt *ListOptions) (*[]library.Repo, *Respons
 }
 
 // Update modifies a repo with the provided details.
-// nolint
 func (svc *AdminRepoService) Update(r *library.Repo) (*library.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/repo")
+	u := "/api/v1/admin/repo"
 
 	// library Repo type we want to return
 	v := new(library.Repo)
@@ -202,10 +196,9 @@ func (svc *AdminRepoService) Update(r *library.Repo) (*library.Repo, *Response, 
 }
 
 // GetAll returns a list of all secrets.
-// nolint
 func (svc *AdminSecretService) GetAll(opt *ListOptions) (*[]library.Secret, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/secrets")
+	u := "/api/v1/admin/secrets"
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)
@@ -223,10 +216,9 @@ func (svc *AdminSecretService) GetAll(opt *ListOptions) (*[]library.Secret, *Res
 }
 
 // Update modifies a secret with the provided details.
-// nolint
 func (svc *AdminSecretService) Update(s *library.Secret) (*library.Secret, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/secret")
+	u := "/api/v1/admin/secret"
 
 	// library Secret type we want to return
 	v := new(library.Secret)
@@ -238,10 +230,9 @@ func (svc *AdminSecretService) Update(s *library.Secret) (*library.Secret, *Resp
 }
 
 // GetAll returns a list of all services.
-// nolint
 func (svc *AdminSvcService) GetAll(opt *ListOptions) (*[]library.Service, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/services")
+	u := "/api/v1/admin/services"
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)
@@ -259,10 +250,9 @@ func (svc *AdminSvcService) GetAll(opt *ListOptions) (*[]library.Service, *Respo
 }
 
 // Update modifies a service with the provided details.
-// nolint
 func (svc *AdminSvcService) Update(s *library.Service) (*library.Service, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/service")
+	u := "/api/v1/admin/service"
 
 	// library Service type we want to return
 	v := new(library.Service)
@@ -274,10 +264,9 @@ func (svc *AdminSvcService) Update(s *library.Service) (*library.Service, *Respo
 }
 
 // GetAll returns a list of all steps.
-// nolint
 func (svc *AdminStepService) GetAll(opt *ListOptions) (*[]library.Step, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/steps")
+	u := "/api/v1/admin/steps"
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)
@@ -295,10 +284,9 @@ func (svc *AdminStepService) GetAll(opt *ListOptions) (*[]library.Step, *Respons
 }
 
 // Update modifies a step with the provided details.
-// nolint
 func (svc *AdminStepService) Update(s *library.Step) (*library.Step, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/step")
+	u := "/api/v1/admin/step"
 
 	// library Step type we want to return
 	v := new(library.Step)
@@ -310,10 +298,9 @@ func (svc *AdminStepService) Update(s *library.Step) (*library.Step, *Response, 
 }
 
 // GetAll returns a list of all users.
-// nolint
 func (svc *AdminUserService) GetAll(opt *ListOptions) (*[]library.User, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/admin/users")
+	u := "/api/v1/admin/users"
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)
@@ -331,10 +318,9 @@ func (svc *AdminUserService) GetAll(opt *ListOptions) (*[]library.User, *Respons
 }
 
 // Update modifies a user with the provided details.
-// nolint
 func (svc *AdminUserService) Update(u *library.User) (*library.User, *Response, error) {
 	// set the API endpoint path we send the request to
-	url := fmt.Sprintf("/api/v1/admin/user")
+	url := "/api/v1/admin/user"
 
 	// library User type we want to return
 	v := new(library.User)

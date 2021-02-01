@@ -2,6 +2,7 @@
 //
 // Use of this source code is governed by the LICENSE file in this repository.
 
+// nolint: dupl // ignore dupl linter false positive
 package vela
 
 import (
@@ -29,6 +30,8 @@ func (svc *StepService) Get(org, repo string, build, step int) (*library.Step, *
 }
 
 // GetAll returns a list of all steps.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *StepService) GetAll(org, repo string, build int, opt *ListOptions) (*[]library.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps", org, repo, build)
@@ -49,6 +52,8 @@ func (svc *StepService) GetAll(org, repo string, build int, opt *ListOptions) (*
 }
 
 // Add constructs a step with the provided details.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *StepService) Add(org, repo string, build int, s *library.Step) (*library.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps", org, repo, build)
@@ -63,6 +68,8 @@ func (svc *StepService) Add(org, repo string, build int, s *library.Step) (*libr
 }
 
 // Update modifies a step with the provided details.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *StepService) Update(org, repo string, build int, s *library.Step) (*library.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d", org, repo, build, s.GetNumber())
