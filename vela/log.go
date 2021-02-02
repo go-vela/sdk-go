@@ -15,6 +15,8 @@ import (
 type LogService service
 
 // GetService returns the provided service log.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *LogService) GetService(org, repo string, build, service int) (*library.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, build, service)
@@ -29,6 +31,8 @@ func (svc *LogService) GetService(org, repo string, build, service int) (*librar
 }
 
 // AddService constructs a service log with the provided details.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *LogService) AddService(org, repo string, build, service int, l *library.Log) (*library.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, build, service)
@@ -43,6 +47,8 @@ func (svc *LogService) AddService(org, repo string, build, service int, l *libra
 }
 
 // UpdateService modifies a service log with the provided details.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *LogService) UpdateService(org, repo string, build, service int, l *library.Log) (*library.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, build, service)
@@ -57,6 +63,8 @@ func (svc *LogService) UpdateService(org, repo string, build, service int, l *li
 }
 
 // RemoveService deletes the provided service log.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *LogService) RemoveService(org, repo string, build, service int) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, build, service)
@@ -85,6 +93,8 @@ func (svc *LogService) GetStep(org, repo string, build, step int) (*library.Log,
 }
 
 // AddStep constructs a step log with the provided details.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *LogService) AddStep(org, repo string, build, step int, l *library.Log) (*library.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, build, step)
@@ -99,6 +109,8 @@ func (svc *LogService) AddStep(org, repo string, build, step int, l *library.Log
 }
 
 // UpdateStep modifies a step log with the provided details.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *LogService) UpdateStep(org, repo string, build, step int, l *library.Log) (*library.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, build, step)

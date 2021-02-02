@@ -71,15 +71,15 @@ type (
 		PerPage int `url:"per_page,omitempty"`
 	}
 
-	// OAuthExchangeOptions represents the required parameters to exchange
-	// for tokens
+	// OAuthExchangeOptions represents the required
+	// parameters to exchange for tokens.
 	OAuthExchangeOptions struct {
 		Code  string `url:"code,omitempty"`
 		State string `url:"state,omitempty"`
 	}
 
-	// LoginOptions represents the optional parameters to launch
-	// the login process
+	// LoginOptions represents the optional parameters
+	// to launch the login process.
 	LoginOptions struct {
 		Type string `url:"type,omitempty"`
 		Port string `url:"port,omitempty"`

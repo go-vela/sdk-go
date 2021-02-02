@@ -31,7 +31,7 @@ func (svc *WorkerService) Get(hostname string) (*library.Worker, *Response, erro
 // GetAll returns a list of all workers.
 func (svc *WorkerService) GetAll() (*[]library.Worker, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/workers")
+	u := "/api/v1/workers"
 
 	// slice library Worker type we want to return
 	v := new([]library.Worker)
@@ -45,7 +45,7 @@ func (svc *WorkerService) GetAll() (*[]library.Worker, *Response, error) {
 // Add constructs a worker with the provided details.
 func (svc *WorkerService) Add(w *library.Worker) (*library.Worker, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/workers")
+	u := "/api/v1/workers"
 
 	// library Worker type we want to return
 	v := new(library.Worker)
@@ -57,6 +57,8 @@ func (svc *WorkerService) Add(w *library.Worker) (*library.Worker, *Response, er
 }
 
 // Update modifies a worker with the provided details.
+//
+// nolint: lll // ignore long line length due to variable names
 func (svc *WorkerService) Update(worker string, w *library.Worker) (*library.Worker, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/workers/%s", worker)
