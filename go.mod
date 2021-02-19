@@ -3,7 +3,7 @@ module github.com/go-vela/sdk-go
 go 1.15
 
 require (
-	github.com/buildkite/yaml v0.0.0-20181016232759-0caa5f0796e3
+	github.com/buildkite/yaml/v2/v2 v2.2.0
 	github.com/coreos/go-semver v0.3.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.6.3
