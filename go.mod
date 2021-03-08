@@ -1,5 +1,7 @@
 module github.com/go-vela/sdk-go
 
+replace github.com/go-vela/server => github.com/JordanSussman/server v0.2.1-0.20210305155754-9f2b15a12fa0
+
 go 1.15
 
 require (
@@ -8,7 +10,8 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-vela/mock v0.7.3
-	github.com/go-vela/types v0.7.3
+	github.com/go-vela/server v0.7.3
+	github.com/go-vela/types v0.7.4-0.20210304165129-580e7ea750df
 	github.com/google/go-querystring v1.0.0
 	github.com/sirupsen/logrus v1.8.0
 )
