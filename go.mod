@@ -9,6 +9,6 @@ require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-vela/mock v0.7.4
 	github.com/go-vela/types v0.7.4
-	github.com/google/go-querystring v1.0.0
+	github.com/google/go-querystring v1.1.0
 	github.com/sirupsen/logrus v1.8.1
 )
