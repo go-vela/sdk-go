@@ -5,8 +5,6 @@
 package vela
 
 import (
-	"fmt"
-
 	"github.com/go-vela/server/database"
 	"github.com/go-vela/types/library"
 )
@@ -58,6 +56,17 @@ type (
 	AdminUserService service
 )
 
+// GetQueueOptions specifies the optional parameters to the
+// AdminBuildService.GetQueue method.
+type GetQueueOptions struct {
+	// Unix timestamp.
+	// Returns only the builds created since the timestamp.
+	// Default: 24 hours ago
+	After string `url:"after,omitempty"`
+
+	ListOptions
+}
+
 // GetAll returns a list of all builds.
 func (svc *AdminBuildService) GetAll(opt *ListOptions) (*[]library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
@@ -93,12 +102,14 @@ func (svc *AdminBuildService) Update(b *library.Build) (*library.Build, *Respons
 }
 
 // GetQueue returns the list of builds in pending and running status.
-func (svc *AdminBuildService) GetQueue(opt *ListOptions, after string) (*[]database.BuildQueue, *Response, error) {
+func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]database.BuildQueue, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/builds/queue"
 
-	if after != "" {
-		u = u + fmt.Sprintf("?after=%s", after)
+	// add optional arguments if supplied
+	u, err := addOptions(u, opt)
+	if err != nil {
+		return nil, nil, err
 	}
 
 	// BuildQueue type we want to return
