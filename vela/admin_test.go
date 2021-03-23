@@ -6,6 +6,8 @@ package vela
 
 import (
 	"encoding/json"
+	"github.com/go-vela/server/database"
+	"github.com/google/go-cmp/cmp"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -515,5 +517,35 @@ func TestAdmin_User_Update_200(t *testing.T) {
 
 	if !reflect.DeepEqual(got, &want) {
 		t.Errorf("User update is %v, want %v", got, want)
+	}
+}
+
+func TestAdmin_Build_Queue_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	data := []byte(server.BuildQueueResp)
+
+	var want *[]database.BuildQueue
+	err := json.Unmarshal(data, &want)
+	if err != nil {
+		t.Error(err)
+	}
+
+	// run test
+	got, resp, err := c.Admin.Build.GetQueue(&GetQueueOptions{})
+	if err != nil {
+		t.Errorf("GetQueue returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("GetQueue returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("GetQueue() mismatch (-want +got):\n%s", diff)
 	}
 }

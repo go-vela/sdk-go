@@ -34,6 +34,8 @@ dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7
 github.com/Azure/go-ansiterm v0.0.0-20170929234023-d6e3b3328b78/go.mod h1:LmzpDX56iTiv29bbRTIsUNlaFfuhWRQBWjQdVyAevI8=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
+github.com/JordanSussman/mock v0.7.5-0.20210323192552-de403570531d h1:2s4Aik0tVCIzoGTMtK/04xm2+StqkVnsaMVOOEvwC5c=
+github.com/JordanSussman/mock v0.7.5-0.20210323192552-de403570531d/go.mod h1:MZBxR/A9ChWsHI/+b3NQPYF85VJqh6iYU47Wpoujjrk=
 github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible/go.mod h1:r7JcOSlj0wfOMncg0iLm8Leh48TZaKVeNIfJntJ2wa0=
 github.com/Masterminds/goutils v1.1.1/go.mod h1:8cTjp+g8YejhMuvIA5y2vz3BpJxksy863GQaJW2MFNU=
 github.com/Masterminds/semver/v3 v3.1.1/go.mod h1:VPu/7SZ7ePZ3QOrcuXROw5FAcLl4a0cBrbBpGY/8hQs=
@@ -169,8 +171,6 @@ github.com/go-sql-driver/mysql v1.5.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LB
 github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=
 github.com/go-test/deep v1.0.2-0.20181118220953-042da051cf31/go.mod h1:wGDj63lr65AM2AQyKZd/NYHGb0R+1RLqB8NKt3aSFNA=
 github.com/go-vela/compiler v0.7.4/go.mod h1:1l4DWOSHJMHVcmgq6P6PEDTQicI6KMtSn7GI8LmoJ+M=
-github.com/go-vela/mock v0.7.4 h1:YthX/HXq9796wUAd+LV++x1tHnUJoWQnKZw7Rupw54w=
-github.com/go-vela/mock v0.7.4/go.mod h1:MZBxR/A9ChWsHI/+b3NQPYF85VJqh6iYU47Wpoujjrk=
 github.com/go-vela/server v0.7.5-0.20210323124812-0da2c57a87ff h1:1LT69ic6xXBKSi+FngkSCJTqqv3xCWTYzdlLKg9xRzk=
 github.com/go-vela/server v0.7.5-0.20210323124812-0da2c57a87ff/go.mod h1:QCB02xu5y2OMSZMNOZAjyoT3j5O6zTlDSdR/lF4ajYI=
 github.com/go-vela/types v0.7.4 h1:iVz1kDS/uvkOoridyyt0bTZ5tG2j3QYx25rbyFdu35M=
