@@ -11,6 +11,6 @@ require (
 	github.com/go-vela/server v0.7.5-0.20210323124812-0da2c57a87ff
 	github.com/go-vela/types v0.7.4
 	github.com/google/go-cmp v0.5.5
-	github.com/google/go-querystring v1.0.0
+	github.com/google/go-querystring v1.1.0
 	github.com/sirupsen/logrus v1.8.1
 )
