@@ -5,7 +5,6 @@
 package vela
 
 import (
-	"github.com/go-vela/server/database"
 	"github.com/go-vela/types/library"
 )
 
@@ -102,7 +101,7 @@ func (svc *AdminBuildService) Update(b *library.Build) (*library.Build, *Respons
 }
 
 // GetQueue returns the list of builds in pending and running status.
-func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]database.BuildQueue, *Response, error) {
+func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]library.BuildQueue, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/builds/queue"
 
@@ -113,7 +112,7 @@ func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]database.BuildQ
 	}
 
 	// BuildQueue type we want to return
-	v := new([]database.BuildQueue)
+	v := new([]library.BuildQueue)
 
 	resp, err := svc.client.Call("GET", u, nil, v)
 

@@ -6,12 +6,12 @@ package vela
 
 import (
 	"encoding/json"
-	"github.com/go-vela/server/database"
-	"github.com/google/go-cmp/cmp"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-vela/mock/server"
@@ -529,7 +529,7 @@ func TestAdmin_Build_Queue_200(t *testing.T) {
 
 	data := []byte(server.BuildQueueResp)
 
-	var want *[]database.BuildQueue
+	var want *[]library.BuildQueue
 	err := json.Unmarshal(data, &want)
 	if err != nil {
 		t.Error(err)
