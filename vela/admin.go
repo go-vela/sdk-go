@@ -55,6 +55,17 @@ type (
 	AdminUserService service
 )
 
+// GetQueueOptions specifies the optional parameters to the
+// AdminBuildService.GetQueue method.
+type GetQueueOptions struct {
+	// Unix timestamp.
+	// Returns only the builds created since the timestamp.
+	// Default: 24 hours ago
+	After string `url:"after,omitempty"`
+
+	ListOptions
+}
+
 // GetAll returns a list of all builds.
 func (svc *AdminBuildService) GetAll(opt *ListOptions) (*[]library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
@@ -85,6 +96,25 @@ func (svc *AdminBuildService) Update(b *library.Build) (*library.Build, *Respons
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, b, v)
+
+	return v, resp, err
+}
+
+// GetQueue returns the list of builds in pending and running status.
+func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]library.BuildQueue, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := "/api/v1/admin/builds/queue"
+
+	// add optional arguments if supplied
+	u, err := addOptions(u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	// BuildQueue type we want to return
+	v := new([]library.BuildQueue)
+
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
