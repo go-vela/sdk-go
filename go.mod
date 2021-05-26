@@ -9,7 +9,7 @@ require (
 	github.com/gin-gonic/gin v1.7.2
 	github.com/go-vela/mock v0.8.0-rc1
 	github.com/go-vela/types v0.8.0-rc1
-	github.com/google/go-cmp v0.5.5
+	github.com/google/go-cmp v0.5.6
 	github.com/google/go-querystring v1.1.0
 	github.com/sirupsen/logrus v1.8.1
 )
