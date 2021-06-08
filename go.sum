@@ -18,7 +18,7 @@ github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/dgrijalva/jwt-go v3.2.0+incompatible h1:7qlOGliEKZXTDg6OTjfoBKDXWrumCAMpl/TFQ4/5kLM=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible/go.mod h1:E3ru+11k8xSBh+hMPgOLZmtrrCbhqsmaPHjLKYnJCaQ=
 github.com/docker/distribution v2.7.1+incompatible/go.mod h1:J2gT2udsDAN96Uj4KfcMRqY0/ypR+oyYUYmja8H+y+w=
-github.com/docker/docker v20.10.6+incompatible/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
+github.com/docker/docker v20.10.7+incompatible/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
 github.com/docker/go-connections v0.4.0/go.mod h1:Gbd7IOopHjR8Iph03tsViu4nIes5XhDvyHbTtUxmeec=
 github.com/docker/go-units v0.4.0/go.mod h1:fgPhTUdO+D/Jk86RDLlptpiXQzgHJF7gydDDbaIK4Dk=
 github.com/drone/envsubst v1.0.2 h1:dpYLMAspQHW0a8dZpLRKe9jCNvIGZPhCPrycZzIHdqo=
@@ -41,10 +41,10 @@ github.com/go-playground/universal-translator v0.17.0 h1:icxd5fm+REJzpZx7ZfpaD87
 github.com/go-playground/universal-translator v0.17.0/go.mod h1:UkSxE5sNxxRwHyU+Scu5vgOQjsIJAF8j9muTVoKLVtA=
 github.com/go-playground/validator/v10 v10.4.1 h1:pH2c5ADXtd66mxoE0Zm9SUhxE20r7aM3F26W0hOn+GE=
 github.com/go-playground/validator/v10 v10.4.1/go.mod h1:nlOn6nFhuKACm19sB/8EGNn9GlaMV7XkbRSipzJ0Ii4=
-github.com/go-vela/mock v0.8.0 h1:0LWJOS697rPqgEmi8UNDuAN2M6T1Zb2xWFPc2D+T01U=
-github.com/go-vela/mock v0.8.0/go.mod h1:mom8WVv8pxmUdYLO/E7lG0rP7otvEAz3I1FauTRf1iw=
-github.com/go-vela/types v0.8.0 h1:u/mlMU3/GIiXclRuD/PRHuh6wTf2ZhA5O9i9TEUZOS4=
-github.com/go-vela/types v0.8.0/go.mod h1:tKk+FpEAv+BTMr9CL3Wed6tMy5IqyOCJpRTKZI88yDc=
+github.com/go-vela/mock v0.8.1 h1:NNOukyA6MRAPp59cBZlrKCrl8LSm+Ww9Pa96OpEsYCo=
+github.com/go-vela/mock v0.8.1/go.mod h1:7WebOs2EzrlNzNrwss1r+tRvy0fUoN73YayMvH9+VQg=
+github.com/go-vela/types v0.8.2 h1:XM5fgHfbAOmIk5zzppjh4u1KsC3auTibsEoVfUZs5pc=
+github.com/go-vela/types v0.8.2/go.mod h1:tKk+FpEAv+BTMr9CL3Wed6tMy5IqyOCJpRTKZI88yDc=
 github.com/gogo/protobuf v1.3.1/go.mod h1:SlYgWuQ5SjCEi6WLHjHCa1yvBfUnHcTbrrZtXPKa29o=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
 github.com/golang/mock v1.1.1/go.mod h1:oTYuIxOrZwtPieC+H1uAHpcLFnEyAGVDL/k47Jfbm0A=
