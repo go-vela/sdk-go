@@ -148,3 +148,22 @@ func (svc *PipelineService) Validate(org, repo string, opt *PipelineOptions) (*s
 
 	return v, resp, err
 }
+
+func (svc *PipelineService) ValidateRaw(b64Pipeline string, opt *PipelineOptions) (*string, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := "/api/v1/pipeline/raw"
+
+	// add optional arguments if supplied
+	u, err := addOptions(u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	// string type we want to return
+	v := new(string)
+
+	// send request using client
+	resp, err := svc.client.Call("POST", u, b64Pipeline, v)
+
+	return v, resp, err
+}
