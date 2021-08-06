@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
+	jwt "github.com/golang-jwt/jwt/v4"
 )
 
 var (
