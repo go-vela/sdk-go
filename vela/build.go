@@ -14,6 +14,16 @@ import (
 // the server methods of the Vela API.
 type BuildService service
 
+// BuildListOptions specifies the optional parameters to the
+// Build.GetAll method.
+type BuildListOptions struct {
+	Branch string `url:"branch,omitempty"`
+	Event  string `url:"event,omitempty"`
+	Status string `url:"status,omitempty"`
+
+	ListOptions
+}
+
 // Get returns the provided build.
 func (svc *BuildService) Get(org, repo string, build int) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
@@ -31,7 +41,7 @@ func (svc *BuildService) Get(org, repo string, build int) (*library.Build, *Resp
 // GetAll returns a list of all builds.
 //
 // nolint: lll // ignore long line length due to variable names
-func (svc *BuildService) GetAll(org, repo string, opt *ListOptions) (*[]library.Build, *Response, error) {
+func (svc *BuildService) GetAll(org, repo string, opt *BuildListOptions) (*[]library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds", org, repo)
 
