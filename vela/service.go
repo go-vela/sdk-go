@@ -26,7 +26,7 @@ func (svc *SvcService) Get(org, repo string, build, service int) (*library.Servi
 	v := new(library.Service)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v, nil)
 
 	return v, resp, err
 }
@@ -48,7 +48,7 @@ func (svc *SvcService) GetAll(org, repo string, build int, opt *ListOptions) (*[
 	v := new([]library.Service)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v, nil)
 
 	return v, resp, err
 }
@@ -64,7 +64,7 @@ func (svc *SvcService) Add(org, repo string, build int, s *library.Service) (*li
 	v := new(library.Service)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, s, v)
+	resp, err := svc.client.Call("POST", u, s, v, nil)
 
 	return v, resp, err
 }
@@ -80,7 +80,7 @@ func (svc *SvcService) Update(org, repo string, build int, s *library.Service) (
 	v := new(library.Service)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, s, v)
+	resp, err := svc.client.Call("PUT", u, s, v, nil)
 
 	return v, resp, err
 }
@@ -94,7 +94,7 @@ func (svc *SvcService) Remove(org, repo string, build, service int) (*string, *R
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v)
+	resp, err := svc.client.Call("DELETE", u, nil, v, nil)
 
 	return v, resp, err
 }

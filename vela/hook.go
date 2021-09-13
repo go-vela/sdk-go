@@ -23,7 +23,7 @@ func (svc *HookService) Get(org, repo string, hook int) (*library.Hook, *Respons
 	v := new(library.Hook)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v, nil)
 
 	return v, resp, err
 }
@@ -45,7 +45,7 @@ func (svc *HookService) GetAll(org, repo string, opt *ListOptions) (*[]library.H
 	v := new([]library.Hook)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v, nil)
 
 	return v, resp, err
 }
@@ -59,7 +59,7 @@ func (svc *HookService) Add(org, repo string, h *library.Hook) (*library.Hook, *
 	v := new(library.Hook)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, h, v)
+	resp, err := svc.client.Call("POST", u, h, v, nil)
 
 	return v, resp, err
 }
@@ -75,7 +75,7 @@ func (svc *HookService) Update(org, repo string, h *library.Hook) (*library.Hook
 	v := new(library.Hook)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, h, v)
+	resp, err := svc.client.Call("PUT", u, h, v, nil)
 
 	return v, resp, err
 }
@@ -89,7 +89,7 @@ func (svc *HookService) Remove(org, repo string, hook int) (*string, *Response, 
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v)
+	resp, err := svc.client.Call("DELETE", u, nil, v, nil)
 
 	return v, resp, err
 }

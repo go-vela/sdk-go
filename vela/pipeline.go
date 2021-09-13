@@ -56,7 +56,7 @@ func (svc *PipelineService) Get(org, repo string, opt *PipelineOptions) (*yaml.B
 	v := new(yaml.Build)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v, nil)
 
 	return v, resp, err
 }
@@ -78,7 +78,7 @@ func (svc *PipelineService) Compile(org, repo string, opt *PipelineOptions) (*ya
 	v := new(yaml.Build)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, nil, v)
+	resp, err := svc.client.Call("POST", u, nil, v, nil)
 
 	return v, resp, err
 }
@@ -100,7 +100,7 @@ func (svc *PipelineService) Expand(org, repo string, opt *PipelineOptions) (*yam
 	v := new(yaml.Build)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, nil, v)
+	resp, err := svc.client.Call("POST", u, nil, v, nil)
 
 	return v, resp, err
 }
@@ -122,7 +122,7 @@ func (svc *PipelineService) Templates(org, repo string, opt *PipelineOptions) (m
 	v := make(map[string]*yaml.Template)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v, nil)
 
 	return v, resp, err
 }
@@ -144,7 +144,7 @@ func (svc *PipelineService) Validate(org, repo string, opt *PipelineOptions) (*s
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, nil, v)
+	resp, err := svc.client.Call("POST", u, nil, v, nil)
 
 	return v, resp, err
 }
@@ -163,7 +163,7 @@ func (svc *PipelineService) ValidateRaw(b64Pipeline string, opt *PipelineOptions
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, b64Pipeline, v)
+	resp, err := svc.client.Call("POST", u, b64Pipeline, v, nil)
 
 	return v, resp, err
 }

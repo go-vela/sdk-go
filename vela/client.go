@@ -268,7 +268,8 @@ func addOptions(s string, opt interface{}) (string, error) {
 // in which case it is resolved relative to the baseURL of the Client.
 // Relative URLs should always be specified without a preceding slash.
 // If specified, the value pointed to by body is JSON encoded and included as the request body.
-func (c *Client) NewRequest(method, urlStr string, body interface{}) (*http.Request, error) {
+// headers is optional TODO
+func (c *Client) NewRequest(method, urlStr string, body interface{}, headers map[string]string) (*http.Request, error) {
 	// build url for request
 	u, err := c.buildURLForRequest(urlStr)
 	if err != nil {
@@ -304,8 +305,13 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}) (*http.Requ
 	// add the user agent for the request
 	req.Header.Add("User-Agent", c.UserAgent)
 
-	// apply default header for request
+	// apply default header for content-type
 	req.Header.Add("Content-Type", "application/json")
+
+	// add header key or overwrite key with new values
+	for k, v := range headers {
+		req.Header.Set(k, v)
+	}
 
 	return req, nil
 }
@@ -390,9 +396,9 @@ func (r *Response) populatePageValues() {
 // v is the HTTP response.
 //
 // For more information read https://github.com/google/go-github/issues/234
-func (c *Client) Call(method, u string, body interface{}, v interface{}) (*Response, error) {
+func (c *Client) Call(method, u string, body interface{}, v interface{}, headers map[string]string) (*Response, error) {
 	// create new request from parameters
-	req, err := c.NewRequest(method, u, body)
+	req, err := c.NewRequest(method, u, body, headers)
 	if err != nil {
 		return nil, err
 	}

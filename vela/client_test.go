@@ -303,7 +303,7 @@ func TestVela_Call_BadMethod(t *testing.T) {
 	}
 
 	// run test
-	_, err = c.Call("!@#$%^&*()", "/health", nil, nil)
+	_, err = c.Call("!@#$%^&*()", "/health", nil, nil, nil)
 	if err == nil {
 		t.Errorf("Call should have returned err")
 	}
@@ -328,7 +328,7 @@ func TestVela_NewRequest(t *testing.T) {
 	c.Authentication.SetTokenAuth("foobar")
 
 	// run test
-	got, err := c.NewRequest("GET", "/health", nil)
+	got, err := c.NewRequest("GET", "/health", nil, nil)
 	if err != nil {
 		t.Errorf("NewRequest returned err: %v", err)
 	}
@@ -346,7 +346,7 @@ func TestVela_NewRequest_BadMethod(t *testing.T) {
 	}
 
 	// run test
-	got, err := c.NewRequest("!@#$%^&*()", "/health", nil)
+	got, err := c.NewRequest("!@#$%^&*()", "/health", nil, nil)
 	if err == nil {
 		t.Errorf("NewRequest should have returned err")
 	}
@@ -364,7 +364,7 @@ func TestVela_NewRequest_BadUrl(t *testing.T) {
 	}
 
 	// run test
-	got, err := c.NewRequest("GET", "!@#$%^&*()", nil)
+	got, err := c.NewRequest("GET", "!@#$%^&*()", nil, nil)
 	if err == nil {
 		t.Errorf("NewRequest should have returned err")
 	}
