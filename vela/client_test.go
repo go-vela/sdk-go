@@ -5,6 +5,7 @@
 package vela
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -311,30 +312,50 @@ func TestVela_Call_BadMethod(t *testing.T) {
 
 func TestVela_NewRequest(t *testing.T) {
 	// setup types
-	want, err := http.NewRequest("GET", "http://localhost:8080/health", nil)
-	if err != nil {
-		t.Errorf("Unable to create new request: %v", err)
-	}
-
 	c, err := NewClient("http://localhost:8080", "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}
+	c.Authentication.SetTokenAuth("foobar")
 
+	want, err := http.NewRequest("GET", "http://localhost:8080/health", nil)
+	if err != nil {
+		t.Errorf("Unable to create new request: %v", err)
+	}
 	want.Header.Add("Content-Type", "application/json")
 	want.Header.Add("Authorization", "Bearer foobar")
 	want.Header.Add("User-Agent", c.UserAgent)
 
-	c.Authentication.SetTokenAuth("foobar")
-
-	// run test
-	got, err := c.NewRequest("GET", "/health", nil, nil)
-	if err != nil {
-		t.Errorf("NewRequest returned err: %v", err)
+	tests := []struct {
+		headers map[string]string
+		want    *http.Request
+	}{
+		{
+			headers: nil,
+			want:    want.Clone(context.Background()),
+		},
+		{
+			headers: map[string]string{
+				"Content-Type": "text/event-stream",
+			},
+			want: want.Clone(context.Background()),
+		},
 	}
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("NewRequest is %v, want %v", got, want)
+	for _, tc := range tests {
+		// set the desired headers for the test in want
+		for k, v := range tc.headers {
+			tc.want.Header.Set(k, v)
+		}
+		// run test
+		got, err := c.NewRequest("GET", "/health", nil, tc.headers)
+		if err != nil {
+			t.Errorf("NewRequest returned err: %v", err)
+		}
+
+		if !reflect.DeepEqual(got, tc.want) {
+			t.Errorf("NewRequest is %v, want %v", got, tc.want)
+		}
 	}
 }
 
