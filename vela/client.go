@@ -268,7 +268,7 @@ func addOptions(s string, opt interface{}) (string, error) {
 // in which case it is resolved relative to the baseURL of the Client.
 // Relative URLs should always be specified without a preceding slash.
 // If specified, the value pointed to by body is JSON encoded and included as the request body.
-// headers is optional TODO
+// nolint: lll // ignore long line length due to variable names
 func (c *Client) NewRequest(method, urlStr string, body interface{}, headers map[string]string) (*http.Request, error) {
 	// build url for request
 	u, err := c.buildURLForRequest(urlStr)
@@ -394,8 +394,10 @@ func (r *Response) populatePageValues() {
 // u is the URL you want to call.
 // body is the HTTP body.
 // v is the HTTP response.
+// headers is a map of the HTTP headers.
 //
 // For more information read https://github.com/google/go-github/issues/234
+// nolint: lll // ignore long line length due to variable names
 func (c *Client) Call(method, u string, body interface{}, v interface{}, headers map[string]string) (*Response, error) {
 	// create new request from parameters
 	req, err := c.NewRequest(method, u, body, headers)
