@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/go-vela/mock/server"
 	"github.com/go-vela/sdk-go/version"
@@ -102,6 +103,43 @@ func TestVela_NewClient_BadUrl(t *testing.T) {
 
 	if got != nil {
 		t.Errorf("NewClient is %v, want nil", got)
+	}
+}
+
+func TestVela_SetTimeout(t *testing.T) {
+	// setup types
+	c, err := NewClient("http://localhost:8080", "", nil)
+	if err != nil {
+		t.Errorf("Unable to create new client: %v", err)
+	}
+
+	tests := []struct {
+		input time.Duration
+		want  time.Duration
+	}{
+		// use the default timeout
+		{
+			want: 15 * time.Second,
+		},
+		// set a custom timeout
+		{
+			input: 73 * time.Minute,
+			want:  73 * time.Minute,
+		},
+	}
+
+	for _, tc := range tests {
+		// if not using the default timeout, then set custom timeout
+		if tc.input != 0 {
+			t.Log(tc.input)
+			c.SetTimeout(tc.input)
+		}
+
+		got := c.client.Timeout
+
+		if !reflect.DeepEqual(got, tc.want) {
+			t.Errorf("SetTimeout is %v, want %v", got, tc.want)
+		}
 	}
 }
 
@@ -309,7 +347,7 @@ func TestVela_Call_BadMethod(t *testing.T) {
 	}
 }
 
-func TestVela_NewRequest(t *testing.T) {
+func TestVela_NewRequestOld(t *testing.T) {
 	// setup types
 	want, err := http.NewRequest("GET", "http://localhost:8080/health", nil)
 	if err != nil {
