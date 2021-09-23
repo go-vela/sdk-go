@@ -6,10 +6,12 @@ package vela
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"reflect"
+	"strings"
 	"testing"
 	"time"
 
@@ -347,68 +349,86 @@ func TestVela_Call_BadMethod(t *testing.T) {
 	}
 }
 
-func TestVela_NewRequestOld(t *testing.T) {
-	// setup types
-	want, err := http.NewRequest("GET", "http://localhost:8080/health", nil)
-	if err != nil {
-		t.Errorf("Unable to create new request: %v", err)
+func TestVela_NewRequest(t *testing.T) {
+	rc := io.NopCloser(strings.NewReader("Hello, world!"))
+	type input struct {
+		method   string
+		endpoint string
+		body     interface{}
+	}
+
+	tests := []struct {
+		input   input
+		failure bool
+		want    *http.Request
+	}{
+		{
+			input:   input{method: "GET", endpoint: "/health", body: nil},
+			failure: false,
+		},
+		{
+			input:   input{method: "!@#$%^&*()", endpoint: "/health", body: nil},
+			failure: true,
+		},
+		{
+			input:   input{method: "GET", endpoint: "!@#$%^&*()", body: nil},
+			failure: true,
+		},
+		{
+			input:   input{method: "GET", endpoint: "/health", body: rc},
+			failure: false,
+		},
 	}
 
 	c, err := NewClient("http://localhost:8080", "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}
-
-	want.Header.Add("Content-Type", "application/json")
-	want.Header.Add("Authorization", "Bearer foobar")
-	want.Header.Add("User-Agent", c.UserAgent)
 
 	c.Authentication.SetTokenAuth("foobar")
 
 	// run test
-	got, err := c.NewRequest("GET", "/health", nil)
-	if err != nil {
-		t.Errorf("NewRequest returned err: %v", err)
-	}
+	for _, test := range tests {
+		// setup types
+		if !test.failure {
+			if test.input.body == nil {
+				test.want, err = http.NewRequest(
+					test.input.method,
+					fmt.Sprintf("http://localhost:8080%s", test.input.endpoint),
+					nil,
+				)
+			} else {
+				test.want, err = http.NewRequest(
+					test.input.method,
+					fmt.Sprintf("http://localhost:8080%s", test.input.endpoint),
+					test.input.body.(io.ReadCloser),
+				)
+			}
+			if err != nil {
+				t.Errorf("Unable to create new request: %v", err)
+			}
+			test.want.Header.Add("Content-Type", "application/json")
+			test.want.Header.Add("Authorization", "Bearer foobar")
+			test.want.Header.Add("User-Agent", c.UserAgent)
+		}
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("NewRequest is %v, want %v", got, want)
-	}
-}
+		got, err := c.NewRequest(test.input.method, test.input.endpoint, test.input.body)
 
-func TestVela_NewRequest_BadMethod(t *testing.T) {
-	// setup types
-	c, err := NewClient("http://localhost:8080", "", nil)
-	if err != nil {
-		t.Errorf("Unable to create new client: %v", err)
-	}
+		if test.failure {
+			if err == nil {
+				t.Errorf("WithAddress should have returned err")
+			}
 
-	// run test
-	got, err := c.NewRequest("!@#$%^&*()", "/health", nil)
-	if err == nil {
-		t.Errorf("NewRequest should have returned err")
-	}
+			continue
+		}
 
-	if got != nil {
-		t.Errorf("NewRequest is %v, want nil", got)
-	}
-}
+		if err != nil {
+			t.Errorf("WithAddress returned err: %v", err)
+		}
 
-func TestVela_NewRequest_BadUrl(t *testing.T) {
-	// setup types
-	c, err := NewClient("http://localhost:8080", "", nil)
-	if err != nil {
-		t.Errorf("Unable to create new client: %v", err)
-	}
-
-	// run test
-	got, err := c.NewRequest("GET", "!@#$%^&*()", nil)
-	if err == nil {
-		t.Errorf("NewRequest should have returned err")
-	}
-
-	if got != nil {
-		t.Errorf("NewRequest is %v, want nil", got)
+		if !reflect.DeepEqual(got, test.want) {
+			t.Errorf("NewRequest is %v, want %v", got, test.want)
+		}
 	}
 }
 
