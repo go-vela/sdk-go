@@ -364,6 +364,7 @@ func TestVela_StepStream(t *testing.T) {
 	}
 
 	tests := []struct {
+		name    string
 		input   input
 		failure bool
 		want    *Response

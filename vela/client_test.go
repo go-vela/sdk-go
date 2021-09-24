@@ -358,23 +358,28 @@ func TestVela_NewRequest(t *testing.T) {
 	}
 
 	tests := []struct {
+		name    string
 		input   input
 		failure bool
 		want    *http.Request
 	}{
 		{
+			name:    "happy path",
 			input:   input{method: "GET", endpoint: "/health", body: nil},
 			failure: false,
 		},
 		{
+			name:    "bad method",
 			input:   input{method: "!@#$%^&*()", endpoint: "/health", body: nil},
 			failure: true,
 		},
 		{
+			name:    "bad endpoint",
 			input:   input{method: "GET", endpoint: "!@#$%^&*()", body: nil},
 			failure: true,
 		},
 		{
+			name:    "stream",
 			input:   input{method: "GET", endpoint: "/health", body: rc},
 			failure: false,
 		},
@@ -389,46 +394,48 @@ func TestVela_NewRequest(t *testing.T) {
 
 	// run test
 	for _, test := range tests {
-		// setup types
-		if !test.failure {
-			if test.input.body == nil {
-				test.want, err = http.NewRequest(
-					test.input.method,
-					fmt.Sprintf("http://localhost:8080%s", test.input.endpoint),
-					nil,
-				)
-			} else {
-				test.want, err = http.NewRequest(
-					test.input.method,
-					fmt.Sprintf("http://localhost:8080%s", test.input.endpoint),
-					test.input.body.(io.ReadCloser),
-				)
+		t.Run(test.name, func(t *testing.T) {
+			// setup types
+			if !test.failure {
+				if test.input.body == nil {
+					test.want, err = http.NewRequest(
+						test.input.method,
+						fmt.Sprintf("http://localhost:8080%s", test.input.endpoint),
+						nil,
+					)
+				} else {
+					test.want, err = http.NewRequest(
+						test.input.method,
+						fmt.Sprintf("http://localhost:8080%s", test.input.endpoint),
+						test.input.body.(io.ReadCloser),
+					)
+				}
+				if err != nil {
+					t.Errorf("Unable to create new request: %v", err)
+				}
+				test.want.Header.Add("Content-Type", "application/json")
+				test.want.Header.Add("Authorization", "Bearer foobar")
+				test.want.Header.Add("User-Agent", c.UserAgent)
 			}
+
+			got, err := c.NewRequest(test.input.method, test.input.endpoint, test.input.body)
+
+			if test.failure {
+				if err == nil {
+					t.Errorf("NewRequest should have returned err")
+				}
+
+				return
+			}
+
 			if err != nil {
-				t.Errorf("Unable to create new request: %v", err)
-			}
-			test.want.Header.Add("Content-Type", "application/json")
-			test.want.Header.Add("Authorization", "Bearer foobar")
-			test.want.Header.Add("User-Agent", c.UserAgent)
-		}
-
-		got, err := c.NewRequest(test.input.method, test.input.endpoint, test.input.body)
-
-		if test.failure {
-			if err == nil {
-				t.Errorf("WithAddress should have returned err")
+				t.Errorf("NewRequest returned err: %v", err)
 			}
 
-			continue
-		}
-
-		if err != nil {
-			t.Errorf("WithAddress returned err: %v", err)
-		}
-
-		if !reflect.DeepEqual(got, test.want) {
-			t.Errorf("NewRequest is %v, want %v", got, test.want)
-		}
+			if !reflect.DeepEqual(got, test.want) {
+				t.Errorf("NewRequest is %v, want %v", got, test.want)
+			}
+		})
 	}
 }
 
