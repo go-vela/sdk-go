@@ -364,29 +364,19 @@ func TestVela_StepStream(t *testing.T) {
 	}
 
 	tests := []struct {
-		name    string
-		input   input
-		failure bool
-		want    *Response
+		input input
 	}{
 		{
-			input:   input{org: "github", repo: "octocat", build: 1, step: 1, rc: nil},
-			failure: false,
+			input: input{org: "github", repo: "octocat", build: 1, step: 1, rc: nil},
 		},
 	}
 
 	for _, test := range tests {
-		// setup types
-		if !test.failure {
-			test.want = newResponse(
-				&http.Response{},
-			)
 
-			got, _ := c.Svc.Stream(test.input.org, test.input.repo, test.input.build, test.input.step, test.input.rc)
+		got, _ := c.Svc.Stream(test.input.org, test.input.repo, test.input.build, test.input.step, test.input.rc)
 
-			if got.StatusCode != http.StatusNoContent {
-				t.Errorf("Stream returned %v, want %v", got.StatusCode, http.StatusNoContent)
-			}
+		if got.StatusCode != http.StatusNoContent {
+			t.Errorf("Stream returned %v, want %v", got.StatusCode, http.StatusNoContent)
 		}
 	}
 }
