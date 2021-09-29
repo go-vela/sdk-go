@@ -349,6 +349,54 @@ func TestVela_Call_BadMethod(t *testing.T) {
 	}
 }
 
+func TestClient_CallWithHeaders(t *testing.T) {
+	type args struct {
+		method  string
+		u       string
+		body    interface{}
+		v       interface{}
+		headers map[string]string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			"happy path",
+			args{"GET", "/health", nil, nil, nil},
+			false,
+		},
+		{
+			"custom header",
+			args{"GET", "/health", nil, nil, map[string]string{"Content-Type": "application/octet-stream"}},
+			false,
+		},
+		{
+			"bad method",
+			args{"$(#*@&$", "/health", nil, nil, nil},
+			true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			s := httptest.NewServer(server.FakeHandler())
+
+			c, err := NewClient(s.URL, "", nil)
+			if err != nil {
+				t.Errorf("Unable to create new client: %v", err)
+			}
+
+			_, err = c.CallWithHeaders(tt.args.method, tt.args.u, tt.args.body, tt.args.v, tt.args.headers)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Client.CallWithHeaders() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+		})
+	}
+}
+
 func TestVela_NewRequest(t *testing.T) {
 	rc := io.NopCloser(strings.NewReader("Hello, world!"))
 	type input struct {
