@@ -268,8 +268,7 @@ func addOptions(s string, opt interface{}) (string, error) {
 // in which case it is resolved relative to the baseURL of the Client.
 // Relative URLs should always be specified without a preceding slash.
 // If specified, the value pointed to by body is JSON encoded and included as the request body.
-// nolint: lll // ignore long line length due to variable names
-func (c *Client) NewRequest(method, urlStr string, body interface{}, headers map[string]string) (*http.Request, error) {
+func (c *Client) NewRequest(method, urlStr string, body interface{}) (*http.Request, error) {
 	// build url for request
 	u, err := c.buildURLForRequest(urlStr)
 	if err != nil {
@@ -307,11 +306,6 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}, headers map
 
 	// apply default header for content-type
 	req.Header.Add("Content-Type", "application/json")
-
-	// add header key or overwrite key with new values
-	for k, v := range headers {
-		req.Header.Set(k, v)
-	}
 
 	return req, nil
 }
@@ -383,7 +377,7 @@ func (r *Response) populatePageValues() {
 	}
 }
 
-// Call is a combine function for Client.NewRequest and Client.Do.
+// Call is a combined function for Client.NewRequest and Client.Do.
 //
 // Most API methods are quite the same.
 // Get the URL, apply options, make a request, and get the response.
@@ -394,15 +388,49 @@ func (r *Response) populatePageValues() {
 // u is the URL you want to call.
 // body is the HTTP body.
 // v is the HTTP response.
-// headers is a map of the HTTP headers.
+//
+// For more information read https://github.com/google/go-github/issues/234
+func (c *Client) Call(method, u string, body, v interface{}) (*Response, error) {
+	// create new request from parameters
+	req, err := c.NewRequest(method, u, body)
+	if err != nil {
+		return nil, err
+	}
+
+	// send request with client
+	resp, err := c.Do(req, v)
+	if err != nil {
+		return resp, err
+	}
+
+	return resp, err
+}
+
+// CallWithHeaders is a combined function for Client.NewRequest and Client.Do.
+//
+// Most API methods are quite the same.
+// Get the URL, apply options, make a request, and get the response.
+// Without adding special headers or something.
+// To avoid a big amount of code duplication you can Client.Call.
+//
+// method is the HTTP method you want to call.
+// u is the URL you want to call.
+// body is the HTTP body.
+// v is the HTTP response.
+// headers is a map of HTTP headers
 //
 // For more information read https://github.com/google/go-github/issues/234
 // nolint: lll // ignore long line length due to variable names
-func (c *Client) Call(method, u string, body interface{}, v interface{}, headers map[string]string) (*Response, error) {
+func (c *Client) CallWithHeaders(method, u string, body, v interface{}, headers map[string]string) (*Response, error) {
 	// create new request from parameters
-	req, err := c.NewRequest(method, u, body, headers)
+	req, err := c.NewRequest(method, u, body)
 	if err != nil {
 		return nil, err
+	}
+
+	// add header key or overwrite key with new values
+	for k, v := range headers {
+		req.Header.Set(k, v)
 	}
 
 	// send request with client

@@ -23,7 +23,7 @@ func (svc *WorkerService) Get(hostname string) (*library.Worker, *Response, erro
 	v := new(library.Worker)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -37,7 +37,7 @@ func (svc *WorkerService) GetAll() (*[]library.Worker, *Response, error) {
 	v := new([]library.Worker)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -51,7 +51,7 @@ func (svc *WorkerService) Add(w *library.Worker) (*library.Worker, *Response, er
 	v := new(library.Worker)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, w, v, nil)
+	resp, err := svc.client.Call("POST", u, w, v)
 
 	return v, resp, err
 }
@@ -67,7 +67,7 @@ func (svc *WorkerService) Update(worker string, w *library.Worker) (*library.Wor
 	v := new(library.Worker)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, w, v, nil)
+	resp, err := svc.client.Call("PUT", u, w, v)
 
 	return v, resp, err
 }
@@ -81,7 +81,7 @@ func (svc *WorkerService) Remove(worker string) (*string, *Response, error) {
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v, nil)
+	resp, err := svc.client.Call("DELETE", u, nil, v)
 
 	return v, resp, err
 }

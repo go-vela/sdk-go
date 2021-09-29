@@ -81,7 +81,7 @@ func (svc *AdminBuildService) GetAll(opt *ListOptions) (*[]library.Build, *Respo
 	v := new([]library.Build)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -95,7 +95,7 @@ func (svc *AdminBuildService) Update(b *library.Build) (*library.Build, *Respons
 	v := new(library.Build)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, b, v, nil)
+	resp, err := svc.client.Call("PUT", u, b, v)
 
 	return v, resp, err
 }
@@ -114,7 +114,7 @@ func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]library.BuildQu
 	// BuildQueue type we want to return
 	v := new([]library.BuildQueue)
 
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -136,7 +136,7 @@ func (svc *AdminDeploymentService) GetAll(opt *ListOptions) (*[]library.Deployme
 	v := new([]library.Deployment)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -152,7 +152,7 @@ func (svc *AdminDeploymentService) Update(d *library.Deployment) (*library.Deplo
 	v := new(library.Deployment)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, d, v, nil)
+	resp, err := svc.client.Call("PUT", u, d, v)
 
 	return v, resp, err
 }
@@ -172,7 +172,7 @@ func (svc *AdminHookService) GetAll(opt *ListOptions) (*[]library.Hook, *Respons
 	v := new([]library.Hook)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -186,7 +186,7 @@ func (svc *AdminHookService) Update(h *library.Hook) (*library.Hook, *Response, 
 	v := new(library.Hook)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, h, v, nil)
+	resp, err := svc.client.Call("PUT", u, h, v)
 
 	return v, resp, err
 }
@@ -206,7 +206,7 @@ func (svc *AdminRepoService) GetAll(opt *ListOptions) (*[]library.Repo, *Respons
 	v := new([]library.Repo)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -220,7 +220,7 @@ func (svc *AdminRepoService) Update(r *library.Repo) (*library.Repo, *Response, 
 	v := new(library.Repo)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, r, v, nil)
+	resp, err := svc.client.Call("PUT", u, r, v)
 
 	return v, resp, err
 }
@@ -240,7 +240,7 @@ func (svc *AdminSecretService) GetAll(opt *ListOptions) (*[]library.Secret, *Res
 	v := new([]library.Secret)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -254,7 +254,7 @@ func (svc *AdminSecretService) Update(s *library.Secret) (*library.Secret, *Resp
 	v := new(library.Secret)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, s, v, nil)
+	resp, err := svc.client.Call("PUT", u, s, v)
 
 	return v, resp, err
 }
@@ -274,7 +274,7 @@ func (svc *AdminSvcService) GetAll(opt *ListOptions) (*[]library.Service, *Respo
 	v := new([]library.Service)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -288,7 +288,7 @@ func (svc *AdminSvcService) Update(s *library.Service) (*library.Service, *Respo
 	v := new(library.Service)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, s, v, nil)
+	resp, err := svc.client.Call("PUT", u, s, v)
 
 	return v, resp, err
 }
@@ -308,7 +308,7 @@ func (svc *AdminStepService) GetAll(opt *ListOptions) (*[]library.Step, *Respons
 	v := new([]library.Step)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -322,7 +322,7 @@ func (svc *AdminStepService) Update(s *library.Step) (*library.Step, *Response, 
 	v := new(library.Step)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, s, v, nil)
+	resp, err := svc.client.Call("PUT", u, s, v)
 
 	return v, resp, err
 }
@@ -342,7 +342,7 @@ func (svc *AdminUserService) GetAll(opt *ListOptions) (*[]library.User, *Respons
 	v := new([]library.User)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -356,7 +356,7 @@ func (svc *AdminUserService) Update(u *library.User) (*library.User, *Response, 
 	v := new(library.User)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", url, u, v, nil)
+	resp, err := svc.client.Call("PUT", url, u, v)
 
 	return v, resp, err
 }

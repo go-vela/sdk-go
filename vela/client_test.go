@@ -5,7 +5,6 @@
 package vela
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -304,58 +303,86 @@ func TestVela_Call_BadMethod(t *testing.T) {
 	}
 
 	// run test
-	_, err = c.Call("!@#$%^&*()", "/health", nil, nil, nil)
+	_, err = c.Call("!@#$%^&*()", "/health", nil, nil)
 	if err == nil {
 		t.Errorf("Call should have returned err")
 	}
 }
 
+func TestClient_CallWithHeaders(t *testing.T) {
+	type args struct {
+		method  string
+		u       string
+		body    interface{}
+		v       interface{}
+		headers map[string]string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			"happy path",
+			args{"GET", "/health", nil, nil, nil},
+			false,
+		},
+		{
+			"custom header",
+			args{"GET", "/health", nil, nil, map[string]string{"Content-Type": "application/octet-stream"}},
+			false,
+		},
+		{
+			"bad method",
+			args{"$(#*@&$", "/health", nil, nil, nil},
+			true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			s := httptest.NewServer(server.FakeHandler())
+
+			c, err := NewClient(s.URL, "", nil)
+			if err != nil {
+				t.Errorf("Unable to create new client: %v", err)
+			}
+
+			_, err = c.CallWithHeaders(tt.args.method, tt.args.u, tt.args.body, tt.args.v, tt.args.headers)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Client.CallWithHeaders() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+		})
+	}
+}
+
 func TestVela_NewRequest(t *testing.T) {
 	// setup types
-	c, err := NewClient("http://localhost:8080", "", nil)
-	if err != nil {
-		t.Errorf("Unable to create new client: %v", err)
-	}
-	c.Authentication.SetTokenAuth("foobar")
-
 	want, err := http.NewRequest("GET", "http://localhost:8080/health", nil)
 	if err != nil {
 		t.Errorf("Unable to create new request: %v", err)
 	}
+
+	c, err := NewClient("http://localhost:8080", "", nil)
+	if err != nil {
+		t.Errorf("Unable to create new client: %v", err)
+	}
+
 	want.Header.Add("Content-Type", "application/json")
 	want.Header.Add("Authorization", "Bearer foobar")
 	want.Header.Add("User-Agent", c.UserAgent)
 
-	tests := []struct {
-		headers map[string]string
-		want    *http.Request
-	}{
-		{
-			headers: nil,
-			want:    want.Clone(context.Background()),
-		},
-		{
-			headers: map[string]string{
-				"Content-Type": "text/event-stream",
-			},
-			want: want.Clone(context.Background()),
-		},
+	c.Authentication.SetTokenAuth("foobar")
+
+	// run test
+	got, err := c.NewRequest("GET", "/health", nil)
+	if err != nil {
+		t.Errorf("NewRequest returned err: %v", err)
 	}
 
-	for _, tc := range tests {
-		// set the desired headers for the test in want
-		for k, v := range tc.headers {
-			tc.want.Header.Set(k, v)
-		}
-		// run test
-		got, err := c.NewRequest("GET", "/health", nil, tc.headers)
-		if err != nil {
-			t.Errorf("NewRequest returned err: %v", err)
-		}
-
-		if !reflect.DeepEqual(got, tc.want) {
-			t.Errorf("NewRequest is %v, want %v", got, tc.want)
-		}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("NewRequest is %v, want %v", got, want)
 	}
 }
 
@@ -367,7 +394,7 @@ func TestVela_NewRequest_BadMethod(t *testing.T) {
 	}
 
 	// run test
-	got, err := c.NewRequest("!@#$%^&*()", "/health", nil, nil)
+	got, err := c.NewRequest("!@#$%^&*()", "/health", nil)
 	if err == nil {
 		t.Errorf("NewRequest should have returned err")
 	}
@@ -385,7 +412,7 @@ func TestVela_NewRequest_BadUrl(t *testing.T) {
 	}
 
 	// run test
-	got, err := c.NewRequest("GET", "!@#$%^&*()", nil, nil)
+	got, err := c.NewRequest("GET", "!@#$%^&*()", nil)
 	if err == nil {
 		t.Errorf("NewRequest should have returned err")
 	}

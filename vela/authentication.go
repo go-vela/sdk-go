@@ -171,7 +171,7 @@ func (svc *AuthenticationService) ExchangeTokens(opt *OAuthExchangeOptions) (str
 	}
 
 	// attempt to exchange code + state for tokens
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 	if err != nil {
 		return "", "", resp, err
 	}

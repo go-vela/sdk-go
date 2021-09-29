@@ -25,7 +25,7 @@ func (svc *LogService) GetService(org, repo string, build, service int) (*librar
 	v := new(library.Log)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -41,7 +41,7 @@ func (svc *LogService) AddService(org, repo string, build, service int, l *libra
 	v := new(library.Log)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, l, v, nil)
+	resp, err := svc.client.Call("POST", u, l, v)
 
 	return v, resp, err
 }
@@ -57,7 +57,7 @@ func (svc *LogService) UpdateService(org, repo string, build, service int, l *li
 	v := new(library.Log)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, l, v, nil)
+	resp, err := svc.client.Call("PUT", u, l, v)
 
 	return v, resp, err
 }
@@ -73,7 +73,7 @@ func (svc *LogService) RemoveService(org, repo string, build, service int) (*str
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v, nil)
+	resp, err := svc.client.Call("DELETE", u, nil, v)
 
 	return v, resp, err
 }
@@ -87,7 +87,7 @@ func (svc *LogService) GetStep(org, repo string, build, step int) (*library.Log,
 	v := new(library.Log)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -103,7 +103,7 @@ func (svc *LogService) AddStep(org, repo string, build, step int, l *library.Log
 	v := new(library.Log)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, l, v, nil)
+	resp, err := svc.client.Call("POST", u, l, v)
 
 	return v, resp, err
 }
@@ -119,7 +119,7 @@ func (svc *LogService) UpdateStep(org, repo string, build, step int, l *library.
 	v := new(library.Log)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, l, v, nil)
+	resp, err := svc.client.Call("PUT", u, l, v)
 
 	return v, resp, err
 }
@@ -133,7 +133,7 @@ func (svc *LogService) RemoveStep(org, repo string, build, step int) (*string, *
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v, nil)
+	resp, err := svc.client.Call("DELETE", u, nil, v)
 
 	return v, resp, err
 }

@@ -25,7 +25,7 @@ func (svc *DeploymentService) Get(org, repo string, deployment int) (*library.De
 	v := new(library.Deployment)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -47,7 +47,7 @@ func (svc *DeploymentService) GetAll(org, repo string, opt *ListOptions) (*[]lib
 	v := new([]library.Deployment)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -63,7 +63,7 @@ func (svc *DeploymentService) Add(org, repo string, d *library.Deployment) (*lib
 	v := new(library.Deployment)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, d, v, nil)
+	resp, err := svc.client.Call("POST", u, d, v)
 
 	return v, resp, err
 }

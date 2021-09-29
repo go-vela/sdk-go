@@ -23,7 +23,7 @@ func (svc *RepoService) Get(org, repo string) (*library.Repo, *Response, error) 
 	v := new(library.Repo)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -43,7 +43,7 @@ func (svc *RepoService) GetAll(opt *ListOptions) (*[]library.Repo, *Response, er
 	v := new([]library.Repo)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -57,7 +57,7 @@ func (svc *RepoService) Add(r *library.Repo) (*library.Repo, *Response, error) {
 	v := new(library.Repo)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, r, v, nil)
+	resp, err := svc.client.Call("POST", u, r, v)
 
 	return v, resp, err
 }
@@ -73,7 +73,7 @@ func (svc *RepoService) Update(org, repo string, r *library.Repo) (*library.Repo
 	v := new(library.Repo)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, r, v, nil)
+	resp, err := svc.client.Call("PUT", u, r, v)
 
 	return v, resp, err
 }
@@ -87,7 +87,7 @@ func (svc *RepoService) Remove(org, repo string) (*string, *Response, error) {
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v, nil)
+	resp, err := svc.client.Call("DELETE", u, nil, v)
 
 	return v, resp, err
 }
@@ -101,7 +101,7 @@ func (svc *RepoService) Repair(org, repo string) (*string, *Response, error) {
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("PATCH", u, nil, v, nil)
+	resp, err := svc.client.Call("PATCH", u, nil, v)
 
 	return v, resp, err
 }
@@ -115,7 +115,7 @@ func (svc *RepoService) Chown(org, repo string) (*string, *Response, error) {
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("PATCH", u, nil, v, nil)
+	resp, err := svc.client.Call("PATCH", u, nil, v)
 
 	return v, resp, err
 }

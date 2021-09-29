@@ -33,7 +33,7 @@ func (svc *BuildService) Get(org, repo string, build int) (*library.Build, *Resp
 	v := new(library.Build)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -55,7 +55,7 @@ func (svc *BuildService) GetAll(org, repo string, opt *BuildListOptions) (*[]lib
 	v := new([]library.Build)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -69,7 +69,7 @@ func (svc *BuildService) GetLogs(org, repo string, build int) (*[]library.Log, *
 	v := new([]library.Log)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v, nil)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -85,7 +85,7 @@ func (svc *BuildService) Add(org, repo string, b *library.Build) (*library.Build
 	v := new(library.Build)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, b, v, nil)
+	resp, err := svc.client.Call("POST", u, b, v)
 
 	return v, resp, err
 }
@@ -101,7 +101,7 @@ func (svc *BuildService) Update(org, repo string, b *library.Build) (*library.Bu
 	v := new(library.Build)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, b, v, nil)
+	resp, err := svc.client.Call("PUT", u, b, v)
 
 	return v, resp, err
 }
@@ -115,7 +115,7 @@ func (svc *BuildService) Remove(org, repo string, build int) (*string, *Response
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v, nil)
+	resp, err := svc.client.Call("DELETE", u, nil, v)
 
 	return v, resp, err
 }
@@ -129,7 +129,7 @@ func (svc *BuildService) Restart(org, repo string, build int) (*library.Build, *
 	v := new(library.Build)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, nil, v, nil)
+	resp, err := svc.client.Call("POST", u, nil, v)
 
 	return v, resp, err
 }
@@ -143,7 +143,7 @@ func (svc *BuildService) Cancel(org, repo string, build int) (*library.Build, *R
 	v := new(library.Build)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v, nil)
+	resp, err := svc.client.Call("DELETE", u, nil, v)
 
 	return v, resp, err
 }
