@@ -264,13 +264,13 @@ func addOptions(s string, opt interface{}) (string, error) {
 }
 
 // NewRequest creates an API request.
-// A relative URL can be provided in urlStr,
+// A relative URL can be provided in url,
 // in which case it is resolved relative to the baseURL of the Client.
 // Relative URLs should always be specified without a preceding slash.
 // If specified, the value pointed to by body is JSON encoded and included as the request body.
-func (c *Client) NewRequest(method, urlStr string, body interface{}) (*http.Request, error) {
+func (c *Client) NewRequest(method, url string, body interface{}) (*http.Request, error) {
 	// build url for request
-	u, err := c.buildURLForRequest(urlStr)
+	u, err := c.buildURLForRequest(url)
 	if err != nil {
 		return nil, err
 	}
@@ -385,20 +385,20 @@ func (r *Response) populatePageValues() {
 // To avoid a big amount of code duplication you can Client.Call.
 //
 // method is the HTTP method you want to call.
-// u is the URL you want to call.
+// url is the URL you want to call.
 // body is the HTTP body.
-// v is the HTTP response.
+// respType is the type that the HTTP response will resolve to.
 //
 // For more information read https://github.com/google/go-github/issues/234
-func (c *Client) Call(method, u string, body, v interface{}) (*Response, error) {
+func (c *Client) Call(method, url string, body, respType interface{}) (*Response, error) {
 	// create new request from parameters
-	req, err := c.NewRequest(method, u, body)
+	req, err := c.NewRequest(method, url, body)
 	if err != nil {
 		return nil, err
 	}
 
 	// send request with client
-	resp, err := c.Do(req, v)
+	resp, err := c.Do(req, respType)
 	if err != nil {
 		return resp, err
 	}
@@ -414,16 +414,16 @@ func (c *Client) Call(method, u string, body, v interface{}) (*Response, error) 
 // To avoid a big amount of code duplication you can Client.Call.
 //
 // method is the HTTP method you want to call.
-// u is the URL you want to call.
+// url is the URL you want to call.
 // body is the HTTP body.
-// v is the HTTP response.
-// headers is a map of HTTP headers
+// respType is the type that the HTTP response will resolve to.
+// headers is a map of HTTP headers.
 //
 // For more information read https://github.com/google/go-github/issues/234
 // nolint: lll // ignore long line length due to variable names
-func (c *Client) CallWithHeaders(method, u string, body, v interface{}, headers map[string]string) (*Response, error) {
+func (c *Client) CallWithHeaders(method, url string, body, respType interface{}, headers map[string]string) (*Response, error) {
 	// create new request from parameters
-	req, err := c.NewRequest(method, u, body)
+	req, err := c.NewRequest(method, url, body)
 	if err != nil {
 		return nil, err
 	}
@@ -434,7 +434,7 @@ func (c *Client) CallWithHeaders(method, u string, body, v interface{}, headers 
 	}
 
 	// send request with client
-	resp, err := c.Do(req, v)
+	resp, err := c.Do(req, respType)
 	if err != nil {
 		return resp, err
 	}
@@ -443,11 +443,11 @@ func (c *Client) CallWithHeaders(method, u string, body, v interface{}, headers 
 }
 
 // Do sends an API request and returns the API response.
-// The API response is JSON decoded and stored in the value pointed to by v,
+// The API response is JSON decoded and stored in the value pointed to by respType,
 // or returned as an error if an API error has occurred.
-// If v implements the io.Writer interface, the raw response body will be written to v,
-// without attempting to first decode it.
-func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
+// If respType implements the io.Writer interface, the raw response body will
+// be written to respType, without attempting to first decode it.
+func (c *Client) Do(req *http.Request, respType interface{}) (*Response, error) {
 	// send request with client
 	resp, err := c.client.Do(req)
 	if err != nil {
@@ -468,9 +468,9 @@ func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 	}
 
 	// if return object is provided
-	if v != nil {
+	if respType != nil {
 		// copy response body if object implements io.Writer interface
-		if w, ok := v.(io.Writer); ok {
+		if w, ok := respType.(io.Writer); ok {
 			_, err = io.Copy(w, resp.Body)
 			if err != nil {
 				return response, err
@@ -490,10 +490,10 @@ func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 			// check if the content type is YAML
 			if strings.Contains(resp.Header.Get("Content-Type"), "application/x-yaml") {
 				// unmarshal the body as YAML to the return object
-				_ = yaml.Unmarshal(body, v)
+				_ = yaml.Unmarshal(body, respType)
 			} else {
 				// unmarshal the body as JSON to the return object
-				_ = json.Unmarshal(body, v)
+				_ = json.Unmarshal(body, respType)
 			}
 		}
 	}
