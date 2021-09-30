@@ -11,5 +11,6 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.0.0
 	github.com/google/go-cmp v0.5.6
 	github.com/google/go-querystring v1.1.0
+	github.com/kr/pretty v0.3.0 // indirect
 	github.com/sirupsen/logrus v1.8.1
 )
