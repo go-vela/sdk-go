@@ -430,6 +430,11 @@ func TestVela_NewRequest(t *testing.T) {
 			input:   input{method: "GET", endpoint: "/health", body: rc},
 			failure: false,
 		},
+		{
+			name:    "stream bad method",
+			input:   input{method: "!@#$%^&*()", endpoint: "/health", body: rc},
+			failure: true,
+		},
 	}
 
 	c, err := NewClient("http://localhost:8080", "", nil)

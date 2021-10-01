@@ -362,9 +362,14 @@ func TestVela_StepStream(t *testing.T) {
 		rc    io.ReadCloser
 	}
 
+	// var buf bytes.Buffer
+
 	tests := []struct {
 		input input
 	}{
+		{
+			input: input{org: "github", repo: "octocat", build: 1, step: 1, rc: nil},
+		},
 		{
 			input: input{org: "github", repo: "octocat", build: 1, step: 1, rc: nil},
 		},
