@@ -7,6 +7,7 @@ package vela
 
 import (
 	"fmt"
+	"io"
 
 	"github.com/go-vela/types/library"
 )
@@ -97,4 +98,17 @@ func (svc *SvcService) Remove(org, repo string, build, service int) (*string, *R
 	resp, err := svc.client.Call("DELETE", u, nil, v)
 
 	return v, resp, err
+}
+
+// Stream opens a connection to the stream endpoint for the service
+//
+// nolint: lll // ignore long line length due to variable names
+func (svc *SvcService) Stream(org, repo string, build, service int, rc io.ReadCloser) (*Response, error) {
+	// set the API endpoint path we send the request to
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/stream", org, repo, build, service)
+
+	// send request using client
+	resp, err := svc.client.CallWithHeaders("POST", u, rc, nil, map[string]string{"Content-Type": "application/octet-stream"})
+
+	return resp, err
 }

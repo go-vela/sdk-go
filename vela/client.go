@@ -149,6 +149,11 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	return c, nil
 }
 
+// SetTimeout sets the timeout for the http client.
+func (c *Client) SetTimeout(d time.Duration) {
+	c.client.Timeout = d
+}
+
 // buildURLForRequest will build the URL (as a string) that will be called.
 // It does several cleaning tasks for us.
 func (c *Client) buildURLForRequest(urlStr string) (string, error) {
@@ -275,22 +280,36 @@ func (c *Client) NewRequest(method, url string, body interface{}) (*http.Request
 		return nil, err
 	}
 
-	var buf io.ReadWriter
-	if body != nil {
-		// buffer to store request body
-		buf = new(bytes.Buffer)
+	// variable to store http request
+	var req *http.Request
 
-		// encode request body into buffer for request
-		err := json.NewEncoder(buf).Encode(body)
+	// handle body based on body type
+	switch body := body.(type) {
+	// io.ReadCloser is used for streaming endpoints
+	case io.ReadCloser:
+		req, err = http.NewRequest(method, u, body)
 		if err != nil {
 			return nil, err
 		}
-	}
+	// default assumes JSON body
+	default:
+		var buf io.ReadWriter
+		if body != nil {
+			// buffer to store request body
+			buf = new(bytes.Buffer)
 
-	// create new http request from built url and body
-	req, err := http.NewRequest(method, u, buf)
-	if err != nil {
-		return nil, err
+			// encode request body into buffer for request
+			err := json.NewEncoder(buf).Encode(body)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		// create new http request from built url and body
+		req, err = http.NewRequest(method, u, buf)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	// apply authentication to request if client is set
