@@ -379,16 +379,14 @@ func TestClient_CallWithHeaders(t *testing.T) {
 		},
 	}
 
+	c, err := NewClient("http://localhost:8080", "", nil)
+	if err != nil {
+		t.Errorf("Unable to create new client: %v", err)
+	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			s := httptest.NewServer(server.FakeHandler())
-
-			c, err := NewClient(s.URL, "", nil)
-			if err != nil {
-				t.Errorf("Unable to create new client: %v", err)
-			}
-
-			_, err = c.CallWithHeaders(tt.args.method, tt.args.u, tt.args.body, tt.args.v, tt.args.headers)
+			_, err := c.CallWithHeaders(tt.args.method, tt.args.u, tt.args.body, tt.args.v, tt.args.headers)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Client.CallWithHeaders() error = %v, wantErr %v", err, tt.wantErr)
 				return
