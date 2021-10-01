@@ -108,7 +108,7 @@ func (svc *SvcService) Stream(org, repo string, build, service int, rc io.ReadCl
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/stream", org, repo, build, service)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, rc, nil)
+	resp, err := svc.client.CallWithHeaders("POST", u, rc, nil, map[string]string{"Content-Type": "application/octet-stream"})
 
 	return resp, err
 }

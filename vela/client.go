@@ -149,7 +149,7 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	return c, nil
 }
 
-// SetTimeout sets the timeout for the http client
+// SetTimeout sets the timeout for the http client.
 func (c *Client) SetTimeout(d time.Duration) {
 	c.client.Timeout = d
 }
@@ -284,10 +284,10 @@ func (c *Client) NewRequest(method, url string, body interface{}) (*http.Request
 	var req *http.Request
 
 	// handle body based on body type
-	switch body.(type) {
+	switch body := body.(type) {
 	// io.ReadCloser is used for streaming endpoints
 	case io.ReadCloser:
-		req, err = http.NewRequest(method, u, body.(io.ReadCloser))
+		req, err = http.NewRequest(method, u, body)
 		if err != nil {
 			return nil, err
 		}

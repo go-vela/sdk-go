@@ -348,7 +348,6 @@ func ExampleStepService_Remove() {
 }
 
 func TestVela_StepStream(t *testing.T) {
-
 	// setup context
 	gin.SetMode(gin.TestMode)
 
@@ -372,7 +371,6 @@ func TestVela_StepStream(t *testing.T) {
 	}
 
 	for _, test := range tests {
-
 		got, _ := c.Svc.Stream(test.input.org, test.input.repo, test.input.build, test.input.step, test.input.rc)
 
 		if got.StatusCode != http.StatusNoContent {

@@ -2,6 +2,8 @@ module github.com/go-vela/sdk-go
 
 go 1.16
 
+replace github.com/go-vela/mock => ../mock
+
 require (
 	github.com/buildkite/yaml v0.0.0-20181016232759-0caa5f0796e3
 	github.com/coreos/go-semver v0.3.0
