@@ -379,7 +379,8 @@ func TestClient_CallWithHeaders(t *testing.T) {
 		},
 	}
 
-	c, err := NewClient("http://localhost:8080", "", nil)
+	s := httptest.NewServer(server.FakeHandler())
+	c, err := NewClient(s.URL, "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}

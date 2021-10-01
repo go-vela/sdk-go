@@ -41,6 +41,8 @@ github.com/go-playground/universal-translator v0.17.0 h1:icxd5fm+REJzpZx7ZfpaD87
 github.com/go-playground/universal-translator v0.17.0/go.mod h1:UkSxE5sNxxRwHyU+Scu5vgOQjsIJAF8j9muTVoKLVtA=
 github.com/go-playground/validator/v10 v10.4.1 h1:pH2c5ADXtd66mxoE0Zm9SUhxE20r7aM3F26W0hOn+GE=
 github.com/go-playground/validator/v10 v10.4.1/go.mod h1:nlOn6nFhuKACm19sB/8EGNn9GlaMV7XkbRSipzJ0Ii4=
+github.com/go-vela/mock v0.9.1-0.20211001185918-7c31308f19fd h1:Feil57YFLwVcMzsCjDT+V938A5SulJ0/8QGqykLN+MY=
+github.com/go-vela/mock v0.9.1-0.20211001185918-7c31308f19fd/go.mod h1:vJAxrKg8WpsMWoC3kN2bPyjHo0ZeRJl3f7//SpPVIQk=
 github.com/go-vela/types v0.9.0 h1:vAwxYzG8KSDtvpSALOoHzac4wrMM+NFW1QxoXrjXWSc=
 github.com/go-vela/types v0.9.0/go.mod h1:uiQ8TITRIemGwgnfACIHaTdcTVJaZTo7eO1HZeFgnHc=
 github.com/gogo/protobuf v1.3.1/go.mod h1:SlYgWuQ5SjCEi6WLHjHCa1yvBfUnHcTbrrZtXPKa29o=
