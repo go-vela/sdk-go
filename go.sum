@@ -18,7 +18,7 @@ github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/docker/distribution v2.7.1+incompatible/go.mod h1:J2gT2udsDAN96Uj4KfcMRqY0/ypR+oyYUYmja8H+y+w=
-github.com/docker/docker v20.10.8+incompatible/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
+github.com/docker/docker v20.10.9+incompatible/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
 github.com/docker/go-connections v0.4.0/go.mod h1:Gbd7IOopHjR8Iph03tsViu4nIes5XhDvyHbTtUxmeec=
 github.com/docker/go-units v0.4.0/go.mod h1:fgPhTUdO+D/Jk86RDLlptpiXQzgHJF7gydDDbaIK4Dk=
 github.com/drone/envsubst v1.0.3 h1:PCIBwNDYjs50AsLZPYdfhSATKaRg/FJmDc2D6+C2x8g=
@@ -41,10 +41,10 @@ github.com/go-playground/universal-translator v0.17.0 h1:icxd5fm+REJzpZx7ZfpaD87
 github.com/go-playground/universal-translator v0.17.0/go.mod h1:UkSxE5sNxxRwHyU+Scu5vgOQjsIJAF8j9muTVoKLVtA=
 github.com/go-playground/validator/v10 v10.4.1 h1:pH2c5ADXtd66mxoE0Zm9SUhxE20r7aM3F26W0hOn+GE=
 github.com/go-playground/validator/v10 v10.4.1/go.mod h1:nlOn6nFhuKACm19sB/8EGNn9GlaMV7XkbRSipzJ0Ii4=
-github.com/go-vela/mock v0.10.0-rc1 h1:qmNQ7+TeIXJtHduR3zVVOpBxyK+kJDGvc75W3PyotbA=
-github.com/go-vela/mock v0.10.0-rc1/go.mod h1:/TyCo/+XxWmOC3n7UzhMepd3rofXcjKRQKAUR1LdIwE=
-github.com/go-vela/types v0.10.0-rc1 h1:IivOokpjtMLpCPi3rWZcnHWrmaynxW9cDUDbhUDubqY=
-github.com/go-vela/types v0.10.0-rc1/go.mod h1:6taTlivaC0wDwDJVlc8sBaVZToyzkyDMtGUYIAfgA9M=
+github.com/go-vela/mock v0.10.0-rc2 h1:IJbrTczeGl+1Q0ynPUWVVScbc5p3/bRnfRyTRqqOl+g=
+github.com/go-vela/mock v0.10.0-rc2/go.mod h1:VDKgwRdTG/mY+xMVtcxKIhiJj6iNL2Xydf5z72XWgXw=
+github.com/go-vela/types v0.10.0-rc2 h1:6MJBM2ZNN/czW4lQbt2hnGmpakY1Hc4Q0unrbsCdEk4=
+github.com/go-vela/types v0.10.0-rc2/go.mod h1:6taTlivaC0wDwDJVlc8sBaVZToyzkyDMtGUYIAfgA9M=
 github.com/gogo/protobuf v1.3.1/go.mod h1:SlYgWuQ5SjCEi6WLHjHCa1yvBfUnHcTbrrZtXPKa29o=
 github.com/golang-jwt/jwt/v4 v4.1.0 h1:XUgk2Ex5veyVFVeLm0xhusUTQybEbexJXrvPNOKkSY0=
 github.com/golang-jwt/jwt/v4 v4.1.0/go.mod h1:/xlHOz8bRuivTWchD4jCa+NbatV+wEUSzwAxVc6locg=
