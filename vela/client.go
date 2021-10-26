@@ -152,6 +152,27 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 // SetTimeout sets the timeout for the http client.
 func (c *Client) SetTimeout(d time.Duration) {
 	c.client.Timeout = d
+	
+	c.Authentication.client.Timeout = d
+	c.Authorization.client.Timeout = d
+	c.Admin.Build.client.Timeout = d
+	c.Admin.Deployment.client.Timeout = d
+	c.Admin.Hook.client.Timeout = d
+	c.Admin.Repo.client.Timeout = d
+	c.Admin.Secret.client.Timeout = d
+	c.Admin.Service.client.Timeout = d
+	c.Admin.Step.client.Timeout = d
+	c.Admin.User.client.Timeout = d
+	c.Build.client.Timeout = d
+	c.Deployment.client.Timeout = d
+	c.Hook.client.Timeout = d
+	c.Log.client.Timeout = d
+	c.Pipeline.client.Timeout = d
+	c.Repo.client.Timeout = d
+	c.Secret.client.Timeout = d
+	c.Step.client.Timeout = d
+	c.Svc.client.Timeout = d
+	c.Worker.client.Timeout = d
 }
 
 // buildURLForRequest will build the URL (as a string) that will be called.
