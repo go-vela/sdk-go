@@ -12,7 +12,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/go-vela/mock/server"
+	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types/library"
 
 	"github.com/gin-gonic/gin"
