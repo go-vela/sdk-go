@@ -14,7 +14,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-vela/mock/server"
+	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types/library"
 )
 

@@ -15,8 +15,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/go-vela/mock/server"
 	"github.com/go-vela/sdk-go/version"
+	"github.com/go-vela/server/mock/server"
 )
 
 func TestVela_NewClient(t *testing.T) {
