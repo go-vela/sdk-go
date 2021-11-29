@@ -328,7 +328,7 @@ func TestRepo_Chown_404(t *testing.T) {
 	}
 
 	if resp.StatusCode != http.StatusNotFound {
-		t.Errorf("Repo returned %v, want %v", resp.StatusCode, http.StatusOK)
+		t.Errorf("Repo returned %v, want %v", resp.StatusCode, http.StatusNotFound)
 	}
 }
 
