@@ -119,19 +119,3 @@ func (svc *RepoService) Chown(org, repo string) (*string, *Response, error) {
 
 	return v, resp, err
 }
-
-// Sync synchronizes a repo between the database and the SCM.
-func (svc *RepoService) Sync(org, repo string) (*string, *Response, error) {
-	u := fmt.Sprintf("/api/v1/scm/repos/%s/%s/sync", org, repo)
-	v := new(string)
-	resp, err := svc.client.Call("GET", u, nil, v)
-	return v, resp, err
-}
-
-// Sync synchronizes all org repos between the database and the SCM.
-func (svc *RepoService) SyncAll(org string) (*string, *Response, error) {
-	u := fmt.Sprintf("/api/v1/scm/orgs/%s/sync", org)
-	v := new(string)
-	resp, err := svc.client.Call("GET", u, nil, v)
-	return v, resp, err
-}

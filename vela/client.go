@@ -50,6 +50,7 @@ type (
 		Log            *LogService
 		Pipeline       *PipelineService
 		Repo           *RepoService
+		SCM            *SCMService
 		Secret         *SecretService
 		Step           *StepService
 		Svc            *SvcService
@@ -141,6 +142,7 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	c.Log = &LogService{client: c}
 	c.Pipeline = &PipelineService{client: c}
 	c.Repo = &RepoService{client: c}
+	c.SCM = &SCMService{client: c}
 	c.Secret = &SecretService{client: c}
 	c.Step = &StepService{client: c}
 	c.Svc = &SvcService{client: c}

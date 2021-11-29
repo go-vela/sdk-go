@@ -332,78 +332,6 @@ func TestRepo_Chown_404(t *testing.T) {
 	}
 }
 
-func TestRepo_Sync_200(t *testing.T) {
-	gin.SetMode(gin.TestMode)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, "", nil)
-
-	// run test
-	_, resp, err := c.Repo.Sync("github", "octocat")
-
-	if err != nil {
-		t.Errorf("New returned err: %v", err)
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Repo returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-}
-
-func TestRepo_Sync_404(t *testing.T) {
-	gin.SetMode(gin.TestMode)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, "", nil)
-
-	// run test
-	_, resp, err := c.Repo.Sync("github", "not-found")
-
-	if err == nil {
-		t.Errorf("New returned err: %v", err)
-	}
-
-	if resp.StatusCode != http.StatusNotFound {
-		t.Errorf("Repo returned %v, want %v", resp.StatusCode, http.StatusNotFound)
-	}
-}
-
-func TestRepo_SyncAll_200(t *testing.T) {
-	gin.SetMode(gin.TestMode)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, "", nil)
-
-	// run test
-	_, resp, err := c.Repo.SyncAll("github")
-
-	if err != nil {
-		t.Errorf("New returned err: %v", err)
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Repo returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-}
-
-func TestRepo_SyncAll_404(t *testing.T) {
-	gin.SetMode(gin.TestMode)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, "", nil)
-
-	// run test
-	_, resp, err := c.Repo.SyncAll("not-found")
-
-	if err == nil {
-		t.Errorf("New returned err: %v", err)
-	}
-
-	if resp.StatusCode != http.StatusNotFound {
-		t.Errorf("Repo returned %v, want %v", resp.StatusCode, http.StatusNotFound)
-	}
-}
-
 func ExampleRepoService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
@@ -537,36 +465,4 @@ func ExampleRepoService_Chown() {
 	}
 
 	fmt.Printf("Received response code %d, for repo %+v", resp.StatusCode, repo)
-}
-
-func ExampleRepoService_Sync() {
-	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", "", nil)
-
-	// Set new token in existing client
-	c.Authentication.SetPersonalAccessTokenAuth("token")
-
-	// Change orgship of the repo in the server
-	repo, resp, err := c.Repo.Sync("github", "octocat")
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	fmt.Printf("Received response code %d, for repo %+v", resp.StatusCode, repo)
-}
-
-func ExampleRepoService_SyncAll() {
-	// Create a new vela client for interacting with server
-	c, _ := NewClient("http://localhost:8080", "", nil)
-
-	// Set new token in existing client
-	c.Authentication.SetPersonalAccessTokenAuth("token")
-
-	// Change orgship of the repo in the server
-	org, resp, err := c.Repo.SyncAll("github")
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	fmt.Printf("Received response code %d, for repo %+v", resp.StatusCode, org)
 }
