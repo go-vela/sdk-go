@@ -17,7 +17,7 @@ clean: tidy vet fmt fix
 tidy:
 	@echo
 	@echo "### Tidying Go module"
-	@go mod tidy -compat=1.17
+	@go mod tidy
 
 # The `vet` target is intended to inspect the
 # Go source code for potential issues.
