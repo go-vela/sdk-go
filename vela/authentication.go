@@ -5,6 +5,7 @@
 package vela
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
@@ -88,7 +89,7 @@ func (svc *AuthenticationService) RefreshAccessToken(refreshToken string) (*Resp
 		return nil, err
 	}
 
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequestWithContext(context.Background(), "GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +135,7 @@ func (svc *AuthenticationService) AuthenticateWithToken(token string) (string, *
 	}
 
 	// create a new request that we can attach a header to
-	req, err := http.NewRequest("POST", url, nil)
+	req, err := http.NewRequestWithContext(context.Background(), "POST", url, nil)
 	if err != nil {
 		return "", nil, err
 	}

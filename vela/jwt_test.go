@@ -22,6 +22,7 @@ func TestIsTokenExpired(t *testing.T) {
 	type args struct {
 		token string
 	}
+
 	tests := []struct {
 		name string
 		args args
@@ -63,6 +64,7 @@ func TestIsTokenExpired(t *testing.T) {
 			want: true,
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := IsTokenExpired(tt.args.token); got != tt.want {
