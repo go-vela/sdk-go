@@ -539,6 +539,7 @@ func CheckResponse(r *http.Response) error {
 	// unmarshal bytes into custom response type
 	err := json.Unmarshal(b, &resp)
 	if err != nil {
+		// nolint: nilerr // ignore returning nil
 		return nil
 	}
 
