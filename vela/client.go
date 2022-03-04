@@ -200,7 +200,6 @@ func (c *Client) addAuthentication(req *http.Request) error {
 
 			logrus.Debug("fetching new access token with existing refresh token")
 
-			// nolint:lll // doc link
 			// send API call to refresh the access token to Vela
 			//
 			// https://pkg.go.dev/github.com/go-vela/sdk-go/vela?tab=doc#AuthenticationService.RefreshAccessToken
@@ -216,7 +215,6 @@ func (c *Client) addAuthentication(req *http.Request) error {
 
 	// handle personal access token
 	if c.Authentication.HasPersonalAccessTokenAuth() {
-		// nolint:lll // doc link
 		// send API call to exchange token for access token to Vela
 		//
 		// https://pkg.go.dev/github.com/go-vela/sdk-go/vela?tab=doc#AuthenticationService.AuthenticateWithToken
@@ -361,7 +359,6 @@ func (r *Response) populatePageValues() {
 			segments := strings.Split(strings.TrimSpace(link), ";")
 
 			// link must at least have href and rel
-			// nolint: gomnd // ignoring magic number
 			if len(segments) < 2 {
 				continue
 			}
@@ -441,7 +438,6 @@ func (c *Client) Call(method, url string, body, respType interface{}) (*Response
 // headers is a map of HTTP headers.
 //
 // For more information read https://github.com/google/go-github/issues/234
-// nolint: lll // ignore long line length due to variable names
 func (c *Client) CallWithHeaders(method, url string, body, respType interface{}, headers map[string]string) (*Response, error) {
 	// create new request from parameters
 	req, err := c.NewRequest(method, url, body)

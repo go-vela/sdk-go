@@ -152,7 +152,6 @@ func (svc *AuthenticationService) AuthenticateWithToken(token string) (string, *
 // ExchangeTokens handles the last part of the OAuth flow. It uses the supplied
 // code and state values to attempt to exchange them for Vela Access and
 // Refresh tokens.
-// nolint:lll // long struct names
 func (svc *AuthenticationService) ExchangeTokens(opt *OAuthExchangeOptions) (string, string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/authenticate"

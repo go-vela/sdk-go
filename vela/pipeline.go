@@ -40,8 +40,6 @@ type PipelineOptions struct {
 }
 
 // Get returns the provided pipeline.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *PipelineService) Get(org, repo string, opt *PipelineOptions) (*yaml.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s", org, repo)
@@ -62,8 +60,6 @@ func (svc *PipelineService) Get(org, repo string, opt *PipelineOptions) (*yaml.B
 }
 
 // Compile returns the provided fully compiled pipeline.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *PipelineService) Compile(org, repo string, opt *PipelineOptions) (*yaml.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/compile", org, repo)
@@ -84,8 +80,6 @@ func (svc *PipelineService) Compile(org, repo string, opt *PipelineOptions) (*ya
 }
 
 // Expand returns the provided pipeline fully compiled.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *PipelineService) Expand(org, repo string, opt *PipelineOptions) (*yaml.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/expand", org, repo)
@@ -106,8 +100,6 @@ func (svc *PipelineService) Expand(org, repo string, opt *PipelineOptions) (*yam
 }
 
 // Templates returns the provided templates for a pipeline.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *PipelineService) Templates(org, repo string, opt *PipelineOptions) (map[string]*yaml.Template, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/templates", org, repo)
@@ -128,8 +120,6 @@ func (svc *PipelineService) Templates(org, repo string, opt *PipelineOptions) (m
 }
 
 // Validate returns the validation status of the provided pipeline.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *PipelineService) Validate(org, repo string, opt *PipelineOptions) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/validate", org, repo)

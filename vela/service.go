@@ -17,8 +17,6 @@ import (
 type SvcService service
 
 // Get returns the provided service.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *SvcService) Get(org, repo string, build, service int) (*library.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d", org, repo, build, service)
@@ -33,8 +31,6 @@ func (svc *SvcService) Get(org, repo string, build, service int) (*library.Servi
 }
 
 // GetAll returns a list of all services.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *SvcService) GetAll(org, repo string, build int, opt *ListOptions) (*[]library.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services", org, repo, build)
@@ -55,8 +51,6 @@ func (svc *SvcService) GetAll(org, repo string, build int, opt *ListOptions) (*[
 }
 
 // Add constructs a service with the provided details.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *SvcService) Add(org, repo string, build int, s *library.Service) (*library.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services", org, repo, build)
@@ -71,8 +65,6 @@ func (svc *SvcService) Add(org, repo string, build int, s *library.Service) (*li
 }
 
 // Update modifies a service with the provided details.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *SvcService) Update(org, repo string, build int, s *library.Service) (*library.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d", org, repo, build, s.GetNumber())
@@ -100,9 +92,7 @@ func (svc *SvcService) Remove(org, repo string, build, service int) (*string, *R
 	return v, resp, err
 }
 
-// Stream opens a connection to the stream endpoint for the service
-//
-// nolint: lll // ignore long line length due to variable names
+// Stream opens a connection to the stream endpoint for the service.
 func (svc *SvcService) Stream(org, repo string, build, service int, rc io.ReadCloser) (*Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/stream", org, repo, build, service)
