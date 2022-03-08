@@ -17,6 +17,7 @@ func (svc *SCMService) Sync(org, repo string) (*string, *Response, error) {
 	u := fmt.Sprintf("/api/v1/scm/repos/%s/%s/sync", org, repo)
 	v := new(string)
 	resp, err := svc.client.Call("GET", u, nil, v)
+
 	return v, resp, err
 }
 
@@ -25,5 +26,6 @@ func (svc *SCMService) SyncAll(org string) (*string, *Response, error) {
 	u := fmt.Sprintf("/api/v1/scm/orgs/%s/sync", org)
 	v := new(string)
 	resp, err := svc.client.Call("GET", u, nil, v)
+
 	return v, resp, err
 }

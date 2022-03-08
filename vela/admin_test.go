@@ -530,6 +530,7 @@ func TestAdmin_Build_Queue_200(t *testing.T) {
 	data := []byte(server.BuildQueueResp)
 
 	var want *[]library.BuildQueue
+
 	err := json.Unmarshal(data, &want)
 	if err != nil {
 		t.Error(err)

@@ -15,8 +15,6 @@ import (
 type DeploymentService service
 
 // Get returns the provided deployment.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *DeploymentService) Get(org, repo string, deployment int) (*library.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/deployments/%s/%s/%d", org, repo, deployment)
@@ -31,8 +29,6 @@ func (svc *DeploymentService) Get(org, repo string, deployment int) (*library.De
 }
 
 // GetAll returns a list of all deployments.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *DeploymentService) GetAll(org, repo string, opt *ListOptions) (*[]library.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/deployments/%s/%s", org, repo)
@@ -53,8 +49,6 @@ func (svc *DeploymentService) GetAll(org, repo string, opt *ListOptions) (*[]lib
 }
 
 // Add constructs a deployment with the provided details.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *DeploymentService) Add(org, repo string, d *library.Deployment) (*library.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/deployments/%s/%s", org, repo)

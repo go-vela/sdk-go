@@ -5,6 +5,7 @@
 package vela
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"net/http"
@@ -233,7 +234,7 @@ func TestVela_addAuthentication(t *testing.T) {
 		t.Errorf("Unable to create new client: %v", err)
 	}
 
-	r, err := http.NewRequest("GET", "http://localhost:8080/health", nil)
+	r, err := http.NewRequestWithContext(context.Background(), "GET", "http://localhost:8080/health", nil)
 	if err != nil {
 		t.Errorf("Unable to create new request: %v", err)
 	}
@@ -263,7 +264,7 @@ func TestVela_addAuthentication_AccessAndRefresh_GoodToken(t *testing.T) {
 		t.Errorf("Unable to create new client: %v", err)
 	}
 
-	r, err := http.NewRequest("GET", "http://localhost:8080/health", nil)
+	r, err := http.NewRequestWithContext(context.Background(), "GET", "http://localhost:8080/health", nil)
 	if err != nil {
 		t.Errorf("Unable to create new request: %v", err)
 	}
@@ -292,7 +293,7 @@ func TestVela_addAuthentication_AccessAndRefresh_ExpiredTokens(t *testing.T) {
 		t.Errorf("Unable to create new client: %v", err)
 	}
 
-	r, err := http.NewRequest("GET", "http://localhost:8080/health", nil)
+	r, err := http.NewRequestWithContext(context.Background(), "GET", "http://localhost:8080/health", nil)
 	if err != nil {
 		t.Errorf("Unable to create new request: %v", err)
 	}
@@ -309,14 +310,14 @@ func TestVela_addAuthentication_AccessAndRefresh_ExpiredTokens(t *testing.T) {
 func TestVela_addAuthentication_AccessAndRefresh_ExpiredAccessGoodRefresh(t *testing.T) {
 	// setup types
 	want := "Bearer header.payload.signature"
-
 	s := httptest.NewServer(server.FakeHandler())
+
 	c, err := NewClient(s.URL, "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
 	}
 
-	r, err := http.NewRequest("GET", fmt.Sprintf("%s/health", s.URL), nil)
+	r, err := http.NewRequestWithContext(context.Background(), "GET", fmt.Sprintf("%s/health", s.URL), nil)
 	if err != nil {
 		t.Errorf("Unable to create new request: %v", err)
 	}
@@ -358,6 +359,7 @@ func TestClient_CallWithHeaders(t *testing.T) {
 		v       interface{}
 		headers map[string]string
 	}
+
 	tests := []struct {
 		name    string
 		args    args
@@ -381,6 +383,7 @@ func TestClient_CallWithHeaders(t *testing.T) {
 	}
 
 	s := httptest.NewServer(server.FakeHandler())
+
 	c, err := NewClient(s.URL, "", nil)
 	if err != nil {
 		t.Errorf("Unable to create new client: %v", err)
@@ -399,6 +402,7 @@ func TestClient_CallWithHeaders(t *testing.T) {
 
 func TestVela_NewRequest(t *testing.T) {
 	rc := io.NopCloser(strings.NewReader("Hello, world!"))
+
 	type input struct {
 		method   string
 		endpoint string

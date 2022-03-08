@@ -57,8 +57,6 @@ func (svc *WorkerService) Add(w *library.Worker) (*library.Worker, *Response, er
 }
 
 // Update modifies a worker with the provided details.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *WorkerService) Update(worker string, w *library.Worker) (*library.Worker, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/workers/%s", worker)

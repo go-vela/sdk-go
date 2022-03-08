@@ -120,8 +120,6 @@ func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]library.BuildQu
 }
 
 // GetAll returns a list of all deployments.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *AdminDeploymentService) GetAll(opt *ListOptions) (*[]library.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/deployments"
@@ -142,8 +140,6 @@ func (svc *AdminDeploymentService) GetAll(opt *ListOptions) (*[]library.Deployme
 }
 
 // Update modifies a deployment with the provided details.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *AdminDeploymentService) Update(d *library.Deployment) (*library.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/deployment"
