@@ -158,8 +158,11 @@ github.com/go-task/slim-sprig v0.0.0-20210107165309-348f09dbbbc0/go.mod h1:fyg78
 github.com/go-test/deep v1.0.2/go.mod h1:wGDj63lr65AM2AQyKZd/NYHGb0R+1RLqB8NKt3aSFNA=
 github.com/go-vela/server v0.13.0-rc1 h1:BWSx+V1fkC/Yz2P7DoUFqqDp2TPpP4x+13Xg0tBTu/0=
 github.com/go-vela/server v0.13.0-rc1/go.mod h1:F2CFqqo2maVAhB3yyg3Do+f3T9ihxFsVFBko/bP1yyk=
+github.com/go-vela/server v0.13.0-rc2 h1:ZeUYtltHGzKC2FZM4A8AWbXUGHp3yOX+qJo8K+xo9bg=
+github.com/go-vela/server v0.13.0-rc2/go.mod h1:ltr/Ied01GTID566AmJreo79kFU/zVeIpSiQoLvwHIM=
 github.com/go-vela/types v0.13.0-rc1 h1:y4A5R/zbjlz/XXdwDE7iOdl+/6hgB0B/jVz9LFDfznw=
 github.com/go-vela/types v0.13.0-rc1/go.mod h1:n2aGQj5hzLFUvl1LnxyzItaPKSgC7jSiuSq+6XkRly8=
+github.com/go-vela/types v0.13.0-rc2/go.mod h1:n2aGQj5hzLFUvl1LnxyzItaPKSgC7jSiuSq+6XkRly8=
 github.com/gofrs/uuid v4.0.0+incompatible/go.mod h1:b2aQJv3Z4Fp6yNu3cdSllBxTCLRxnplIgP/c0N/04lM=
 github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
 github.com/gogo/protobuf v1.3.2/go.mod h1:P1XiOD3dCwIKUDQYPy72D8LYyHL2YPYrpS2s69NZV8Q=
