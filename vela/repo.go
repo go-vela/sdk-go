@@ -63,8 +63,6 @@ func (svc *RepoService) Add(r *library.Repo) (*library.Repo, *Response, error) {
 }
 
 // Update modifies a repo with the provided details.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *RepoService) Update(org, repo string, r *library.Repo) (*library.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s", org, repo)

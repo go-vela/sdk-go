@@ -15,8 +15,6 @@ import (
 type SecretService service
 
 // Get returns the provided secret.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *SecretService) Get(engine, sType, org, name, secret string) (*library.Secret, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/secrets/%s/%s/%s/%s/%s", engine, sType, org, name, secret)
@@ -31,8 +29,6 @@ func (svc *SecretService) Get(engine, sType, org, name, secret string) (*library
 }
 
 // GetAll returns a list of all secrets.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *SecretService) GetAll(engine, sType, org, name string, opt *ListOptions) (*[]library.Secret, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/secrets/%s/%s/%s/%s", engine, sType, org, name)
@@ -53,8 +49,6 @@ func (svc *SecretService) GetAll(engine, sType, org, name string, opt *ListOptio
 }
 
 // Add constructs a secret with the provided details.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *SecretService) Add(engine, sType, org, name string, s *library.Secret) (*library.Secret, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/secrets/%s/%s/%s/%s", engine, sType, org, name)
@@ -69,8 +63,6 @@ func (svc *SecretService) Add(engine, sType, org, name string, s *library.Secret
 }
 
 // Update modifies a secret with the provided details.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *SecretService) Update(engine, sType, org, name string, s *library.Secret) (*library.Secret, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/secrets/%s/%s/%s/%s/%s", engine, sType, org, name, s.GetName())
@@ -85,8 +77,6 @@ func (svc *SecretService) Update(engine, sType, org, name string, s *library.Sec
 }
 
 // Remove deletes the provided secret.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *SecretService) Remove(engine, sType, org, name, secret string) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/secrets/%s/%s/%s/%s/%s", engine, sType, org, name, secret)

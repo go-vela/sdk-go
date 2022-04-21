@@ -29,8 +29,6 @@ func (svc *HookService) Get(org, repo string, hook int) (*library.Hook, *Respons
 }
 
 // GetAll returns a list of all hooks.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *HookService) GetAll(org, repo string, opt *ListOptions) (*[]library.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s", org, repo)
@@ -65,8 +63,6 @@ func (svc *HookService) Add(org, repo string, h *library.Hook) (*library.Hook, *
 }
 
 // Update modifies a hook with the provided details.
-//
-// nolint: lll // ignore long line length due to variable names
 func (svc *HookService) Update(org, repo string, h *library.Hook) (*library.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s/%d", org, repo, h.GetNumber())
