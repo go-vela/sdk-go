@@ -24,13 +24,6 @@ type PipelineOptions struct {
 	// Default: yaml
 	Output string `url:"output,omitempty"`
 
-	// Reference of the pipeline from the repo.
-	//
-	// Typically would be a commit SHA but can also be a branch or tag.
-	//
-	// Default: master
-	Ref string `url:"ref,omitempty"`
-
 	// Enables expanding templates when validating a pipeline.
 	//
 	// Can be: true or false
@@ -40,9 +33,9 @@ type PipelineOptions struct {
 }
 
 // Get returns the provided pipeline.
-func (svc *PipelineService) Get(org, repo string, opt *PipelineOptions) (*yaml.Build, *Response, error) {
+func (svc *PipelineService) Get(org, repo, ref string, opt *PipelineOptions) (*yaml.Build, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/pipelines/%s/%s", org, repo)
+	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s", org, repo, ref)
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)
@@ -60,9 +53,9 @@ func (svc *PipelineService) Get(org, repo string, opt *PipelineOptions) (*yaml.B
 }
 
 // Compile returns the provided fully compiled pipeline.
-func (svc *PipelineService) Compile(org, repo string, opt *PipelineOptions) (*yaml.Build, *Response, error) {
+func (svc *PipelineService) Compile(org, repo, ref string, opt *PipelineOptions) (*yaml.Build, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/compile", org, repo)
+	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s/compile", org, repo, ref)
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)
@@ -80,9 +73,9 @@ func (svc *PipelineService) Compile(org, repo string, opt *PipelineOptions) (*ya
 }
 
 // Expand returns the provided pipeline fully compiled.
-func (svc *PipelineService) Expand(org, repo string, opt *PipelineOptions) (*yaml.Build, *Response, error) {
+func (svc *PipelineService) Expand(org, repo, ref string, opt *PipelineOptions) (*yaml.Build, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/expand", org, repo)
+	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s/expand", org, repo, ref)
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)
@@ -100,9 +93,9 @@ func (svc *PipelineService) Expand(org, repo string, opt *PipelineOptions) (*yam
 }
 
 // Templates returns the provided templates for a pipeline.
-func (svc *PipelineService) Templates(org, repo string, opt *PipelineOptions) (map[string]*yaml.Template, *Response, error) {
+func (svc *PipelineService) Templates(org, repo, ref string, opt *PipelineOptions) (map[string]*yaml.Template, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/templates", org, repo)
+	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s/templates", org, repo, ref)
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)
@@ -120,9 +113,9 @@ func (svc *PipelineService) Templates(org, repo string, opt *PipelineOptions) (m
 }
 
 // Validate returns the validation status of the provided pipeline.
-func (svc *PipelineService) Validate(org, repo string, opt *PipelineOptions) (*string, *Response, error) {
+func (svc *PipelineService) Validate(org, repo, ref string, opt *PipelineOptions) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/validate", org, repo)
+	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s/validate", org, repo, ref)
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)

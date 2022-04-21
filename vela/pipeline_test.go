@@ -31,7 +31,7 @@ func TestPipeline_Get_200(t *testing.T) {
 	_ = yml.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Pipeline.Get("github", "octocat", nil)
+	got, resp, err := c.Pipeline.Get("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
 
 	if err != nil {
 		t.Errorf("Get returned err: %v", err)
@@ -56,7 +56,7 @@ func TestPipeline_Get_404(t *testing.T) {
 	want := yaml.Build{}
 
 	// run test
-	got, resp, err := c.Pipeline.Get("github", "not-found", nil)
+	got, resp, err := c.Pipeline.Get("github", "not-found", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
 
 	if err == nil {
 		t.Errorf("Get returned err: %v", err)
@@ -84,7 +84,7 @@ func TestPipeline_Compile_200(t *testing.T) {
 	_ = yml.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Pipeline.Compile("github", "octocat", nil)
+	got, resp, err := c.Pipeline.Compile("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
 
 	if err != nil {
 		t.Errorf("Compile returned err: %v", err)
@@ -109,7 +109,7 @@ func TestPipeline_Compile_404(t *testing.T) {
 	want := yaml.Build{}
 
 	// run test
-	got, resp, err := c.Pipeline.Compile("github", "not-found", nil)
+	got, resp, err := c.Pipeline.Compile("github", "not-found", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
 
 	if err == nil {
 		t.Errorf("Compile returned err: %v", err)
@@ -137,7 +137,7 @@ func TestPipeline_Expand_200(t *testing.T) {
 	_ = yml.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Pipeline.Expand("github", "octocat", nil)
+	got, resp, err := c.Pipeline.Expand("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
 
 	if err != nil {
 		t.Errorf("Expand returned err: %v", err)
@@ -162,7 +162,7 @@ func TestPipeline_Expand_404(t *testing.T) {
 	want := yaml.Build{}
 
 	// run test
-	got, resp, err := c.Pipeline.Expand("github", "not-found", nil)
+	got, resp, err := c.Pipeline.Expand("github", "not-found", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
 
 	if err == nil {
 		t.Errorf("Expand returned err: %v", err)
@@ -190,7 +190,7 @@ func TestPipeline_Templates_200(t *testing.T) {
 	_ = yml.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Pipeline.Templates("github", "octocat", nil)
+	got, resp, err := c.Pipeline.Templates("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
 
 	if err != nil {
 		t.Errorf("Templates returned err: %v", err)
@@ -215,7 +215,7 @@ func TestPipeline_Templates_404(t *testing.T) {
 	want := make(map[string]*yaml.Template)
 
 	// run test
-	got, resp, err := c.Pipeline.Templates("github", "not-found", nil)
+	got, resp, err := c.Pipeline.Templates("github", "not-found", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
 
 	if err == nil {
 		t.Errorf("Templates returned err: %v", err)
@@ -238,7 +238,7 @@ func TestPipeline_Validate_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Pipeline.Validate("github", "octocat", nil)
+	_, resp, err := c.Pipeline.Validate("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
 
 	if err != nil {
 		t.Errorf("Validate returned err: %v", err)
@@ -257,7 +257,7 @@ func TestPipeline_Validate_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Pipeline.Validate("github", "not-found", nil)
+	_, resp, err := c.Pipeline.Validate("github", "not-found", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
 
 	if err == nil {
 		t.Errorf("Validate returned err: %v", err)
@@ -277,12 +277,11 @@ func ExamplePipelineService_Get() {
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
-		Output: "yaml",   // default
-		Ref:    "master", // default
+		Output: "yaml", // default
 	}
 
 	// get a pipeline from a repo from the server
-	pipeline, resp, err := c.Pipeline.Get("github", "octocat", opts)
+	pipeline, resp, err := c.Pipeline.Get("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -299,12 +298,11 @@ func ExamplePipelineService_Compile() {
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
-		Output: "yaml",   // default
-		Ref:    "master", // default
+		Output: "yaml", // default
 	}
 
 	// compile a pipeline from a repo from the server
-	pipeline, resp, err := c.Pipeline.Compile("github", "octocat", opts)
+	pipeline, resp, err := c.Pipeline.Compile("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -321,12 +319,11 @@ func ExamplePipelineService_Expand() {
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
-		Output: "yaml",   // default
-		Ref:    "master", // default
+		Output: "yaml", // default
 	}
 
 	// expand templates for a pipeline from a repo from the server
-	pipeline, resp, err := c.Pipeline.Expand("github", "octocat", opts)
+	pipeline, resp, err := c.Pipeline.Expand("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -343,12 +340,11 @@ func ExamplePipelineService_Templates() {
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
-		Output: "yaml",   // default
-		Ref:    "master", // default
+		Output: "yaml", // default
 	}
 
 	// get templates for a pipeline from a repo from the server
-	pipeline, resp, err := c.Pipeline.Templates("github", "octocat", opts)
+	pipeline, resp, err := c.Pipeline.Templates("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -365,13 +361,12 @@ func ExamplePipelineService_Validate() {
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
-		Output:   "yaml",   // default
-		Ref:      "master", // default
-		Template: true,     // default
+		Output:   "yaml", // default
+		Template: true,   // default
 	}
 
 	// get templates for a pipeline from a repo from the server
-	pipeline, resp, err := c.Pipeline.Validate("github", "octocat", opts)
+	pipeline, resp, err := c.Pipeline.Validate("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
