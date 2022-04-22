@@ -6,8 +6,8 @@ package vela
 
 import (
 	"fmt"
-	"github.com/go-vela/types/library"
 
+	"github.com/go-vela/types/library"
 	"github.com/go-vela/types/yaml"
 )
 
