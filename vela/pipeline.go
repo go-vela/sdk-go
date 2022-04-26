@@ -34,15 +34,9 @@ type PipelineOptions struct {
 }
 
 // Get returns the provided pipeline.
-func (svc *PipelineService) Get(org, repo, ref string, opt *PipelineOptions) (*library.Pipeline, *Response, error) {
+func (svc *PipelineService) Get(org, repo, ref string) (*library.Pipeline, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s", org, repo, ref)
-
-	// add optional arguments if supplied
-	u, err := addOptions(u, opt)
-	if err != nil {
-		return nil, nil, err
-	}
 
 	// library Pipeline type we want to return
 	v := new(library.Pipeline)

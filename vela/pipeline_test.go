@@ -32,7 +32,7 @@ func TestPipeline_Get_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Pipeline.Get("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
+	got, resp, err := c.Pipeline.Get("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163")
 
 	if err != nil {
 		t.Errorf("Get returned err: %v", err)
@@ -57,7 +57,7 @@ func TestPipeline_Get_404(t *testing.T) {
 	want := library.Pipeline{}
 
 	// run test
-	got, resp, err := c.Pipeline.Get("github", "octocat", "0", nil)
+	got, resp, err := c.Pipeline.Get("github", "octocat", "0")
 
 	if err == nil {
 		t.Errorf("Get returned err: %v", err)
@@ -440,13 +440,8 @@ func ExamplePipelineService_Get() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	// create options for pipeline call
-	opts := &PipelineOptions{
-		Output: "yaml", // default
-	}
-
 	// get a pipeline from a repo from the server
-	pipeline, resp, err := c.Pipeline.Get("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
+	pipeline, resp, err := c.Pipeline.Get("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163")
 	if err != nil {
 		fmt.Println(err)
 	}
