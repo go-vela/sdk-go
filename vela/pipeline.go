@@ -54,7 +54,7 @@ func (svc *PipelineService) Get(org, repo, ref string, opt *PipelineOptions) (*l
 }
 
 // GetAll returns a list of all pipelines.
-func (svc *PipelineService) GetAll(org, repo string, opt *PipelineOptions) (*[]library.Pipeline, *Response, error) {
+func (svc *PipelineService) GetAll(org, repo string, opt *ListOptions) (*[]library.Pipeline, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s", org, repo)
 
