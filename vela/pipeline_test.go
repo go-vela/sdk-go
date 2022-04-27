@@ -5,17 +5,18 @@
 package vela
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
 	"testing"
 
+	yml "github.com/buildkite/yaml"
 	"github.com/gin-gonic/gin"
 	"github.com/go-vela/server/mock/server"
+	"github.com/go-vela/types/library"
 	"github.com/go-vela/types/yaml"
-
-	yml "github.com/buildkite/yaml"
 )
 
 func TestPipeline_Get_200(t *testing.T) {
@@ -27,11 +28,11 @@ func TestPipeline_Get_200(t *testing.T) {
 
 	data := []byte(server.PipelineResp)
 
-	var want yaml.Build
-	_ = yml.Unmarshal(data, &want)
+	var want library.Pipeline
+	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Pipeline.Get("github", "octocat", nil)
+	got, resp, err := c.Pipeline.Get("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163")
 
 	if err != nil {
 		t.Errorf("Get returned err: %v", err)
@@ -53,10 +54,10 @@ func TestPipeline_Get_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := yaml.Build{}
+	want := library.Pipeline{}
 
 	// run test
-	got, resp, err := c.Pipeline.Get("github", "not-found", nil)
+	got, resp, err := c.Pipeline.Get("github", "octocat", "0")
 
 	if err == nil {
 		t.Errorf("Get returned err: %v", err)
@@ -68,6 +69,170 @@ func TestPipeline_Get_404(t *testing.T) {
 
 	if !reflect.DeepEqual(got, &want) {
 		t.Errorf("Get is %v, want %v", got, want)
+	}
+}
+
+func TestPipeline_GetAll_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	data := []byte(server.PipelinesResp)
+
+	var want []library.Pipeline
+	_ = json.Unmarshal(data, &want)
+
+	// run test
+	got, resp, err := c.Pipeline.GetAll("github", "octocat", nil)
+
+	if err != nil {
+		t.Errorf("New returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("GetAll returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("GetAll is %v, want %v", got, want)
+	}
+}
+
+func TestPipeline_Add_201(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	data := []byte(server.PipelineResp)
+
+	var want library.Pipeline
+	_ = json.Unmarshal(data, &want)
+
+	req := library.Pipeline{
+		Commit:  String("48afb5bdc41ad69bf22588491333f7cf71135163"),
+		Ref:     String("refs/heads/master"),
+		Type:    String("yaml"),
+		Version: String("1"),
+		Steps:   Bool(true),
+	}
+
+	// run test
+	got, resp, err := c.Pipeline.Add("github", "octocat", &req)
+
+	if err != nil {
+		t.Errorf("New returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusCreated {
+		t.Errorf("Add returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("Add add is %v, want %v", got, want)
+	}
+}
+
+func TestPipeline_Update_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	data := []byte(server.PipelineResp)
+
+	var want library.Pipeline
+	_ = json.Unmarshal(data, &want)
+
+	req := library.Pipeline{
+		Commit: String("48afb5bdc41ad69bf22588491333f7cf71135163"),
+		Type:   String("yaml"),
+	}
+
+	// run test
+	got, resp, err := c.Pipeline.Update("github", "octocat", &req)
+
+	if err != nil {
+		t.Errorf("New returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Update returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("Update is %v, want %v", got, want)
+	}
+}
+
+func TestPipeline_Update_404(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	want := library.Pipeline{}
+
+	req := library.Pipeline{
+		Commit: String("0"),
+	}
+
+	// run test
+	got, resp, err := c.Pipeline.Update("github", "octocat", &req)
+
+	if err == nil {
+		t.Errorf("New returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusNotFound {
+		t.Errorf("Update returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("Update is %v, want %v", got, want)
+	}
+}
+
+func TestPipeline_Remove_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	// run test
+	_, resp, err := c.Pipeline.Remove("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163")
+
+	if err != nil {
+		t.Errorf("New returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Remove returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+}
+
+func TestPipeline_Remove_404(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	// run test
+	_, resp, err := c.Pipeline.Remove("github", "octocat", "0")
+
+	if err == nil {
+		t.Errorf("New returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusNotFound {
+		t.Errorf("Remove returned %v, want %v", resp.StatusCode, http.StatusOK)
 	}
 }
 
@@ -84,7 +249,7 @@ func TestPipeline_Compile_200(t *testing.T) {
 	_ = yml.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Pipeline.Compile("github", "octocat", nil)
+	got, resp, err := c.Pipeline.Compile("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
 
 	if err != nil {
 		t.Errorf("Compile returned err: %v", err)
@@ -109,7 +274,7 @@ func TestPipeline_Compile_404(t *testing.T) {
 	want := yaml.Build{}
 
 	// run test
-	got, resp, err := c.Pipeline.Compile("github", "not-found", nil)
+	got, resp, err := c.Pipeline.Compile("github", "octocat", "0", nil)
 
 	if err == nil {
 		t.Errorf("Compile returned err: %v", err)
@@ -137,7 +302,7 @@ func TestPipeline_Expand_200(t *testing.T) {
 	_ = yml.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Pipeline.Expand("github", "octocat", nil)
+	got, resp, err := c.Pipeline.Expand("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
 
 	if err != nil {
 		t.Errorf("Expand returned err: %v", err)
@@ -162,7 +327,7 @@ func TestPipeline_Expand_404(t *testing.T) {
 	want := yaml.Build{}
 
 	// run test
-	got, resp, err := c.Pipeline.Expand("github", "not-found", nil)
+	got, resp, err := c.Pipeline.Expand("github", "octocat", "0", nil)
 
 	if err == nil {
 		t.Errorf("Expand returned err: %v", err)
@@ -190,7 +355,7 @@ func TestPipeline_Templates_200(t *testing.T) {
 	_ = yml.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Pipeline.Templates("github", "octocat", nil)
+	got, resp, err := c.Pipeline.Templates("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
 
 	if err != nil {
 		t.Errorf("Templates returned err: %v", err)
@@ -215,7 +380,7 @@ func TestPipeline_Templates_404(t *testing.T) {
 	want := make(map[string]*yaml.Template)
 
 	// run test
-	got, resp, err := c.Pipeline.Templates("github", "not-found", nil)
+	got, resp, err := c.Pipeline.Templates("github", "octocat", "0", nil)
 
 	if err == nil {
 		t.Errorf("Templates returned err: %v", err)
@@ -238,7 +403,7 @@ func TestPipeline_Validate_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Pipeline.Validate("github", "octocat", nil)
+	_, resp, err := c.Pipeline.Validate("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
 
 	if err != nil {
 		t.Errorf("Validate returned err: %v", err)
@@ -257,7 +422,7 @@ func TestPipeline_Validate_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Pipeline.Validate("github", "not-found", nil)
+	_, resp, err := c.Pipeline.Validate("github", "octocat", "0", nil)
 
 	if err == nil {
 		t.Errorf("Validate returned err: %v", err)
@@ -275,19 +440,90 @@ func ExamplePipelineService_Get() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	// create options for pipeline call
-	opts := &PipelineOptions{
-		Output: "yaml",   // default
-		Ref:    "master", // default
-	}
-
 	// get a pipeline from a repo from the server
-	pipeline, resp, err := c.Pipeline.Get("github", "octocat", opts)
+	pipeline, resp, err := c.Pipeline.Get("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163")
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	fmt.Printf("Received response code %d, for pipeline %+v", resp.StatusCode, pipeline)
+}
+
+func ExamplePipelineService_GetAll() {
+	// Create a new vela client for interacting with server
+	c, _ := NewClient("http://localhost:8080", "", nil)
+
+	// Set new token in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
+
+	// Get all the pipelines from the server
+	pipelines, resp, err := c.Pipeline.GetAll("github", "octocat", nil)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("Received response code %d, for pipelines %+v", resp.StatusCode, pipelines)
+}
+
+func ExamplePipelineService_Add() {
+	// Create a new vela client for interacting with server
+	c, _ := NewClient("http://localhost:8080", "", nil)
+
+	// Set new token in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
+
+	req := library.Pipeline{
+		Commit:  String("48afb5bdc41ad69bf22588491333f7cf71135163"),
+		Ref:     String("refs/heads/master"),
+		Type:    String("yaml"),
+		Version: String("1"),
+		Steps:   Bool(true),
+	}
+
+	// Create the pipeline in the server
+	pipeline, resp, err := c.Pipeline.Add("github", "octocat", &req)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("Received response code %d, for pipeline %+v", resp.StatusCode, pipeline)
+}
+
+func ExamplePipelineService_Update() {
+	// Create a new vela client for interacting with server
+	c, _ := NewClient("http://localhost:8080", "", nil)
+
+	// Set new token in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
+
+	req := library.Pipeline{
+		Commit: String("48afb5bdc41ad69bf22588491333f7cf71135163"),
+		Type:   String("yaml"),
+	}
+
+	// Update the step in the server
+	pipeline, resp, err := c.Pipeline.Update("github", "octocat", &req)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("Received response code %d, for pipeline %+v", resp.StatusCode, pipeline)
+}
+
+func ExamplePipelineService_Remove() {
+	// Create a new vela client for interacting with server
+	c, _ := NewClient("http://localhost:8080", "", nil)
+
+	// Set new token in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
+
+	// Remove the pipeline in the server
+	pipeline, resp, err := c.Pipeline.Remove("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("Received response code %d, for step %+v", resp.StatusCode, pipeline)
 }
 
 func ExamplePipelineService_Compile() {
@@ -299,12 +535,11 @@ func ExamplePipelineService_Compile() {
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
-		Output: "yaml",   // default
-		Ref:    "master", // default
+		Output: "yaml", // default
 	}
 
 	// compile a pipeline from a repo from the server
-	pipeline, resp, err := c.Pipeline.Compile("github", "octocat", opts)
+	pipeline, resp, err := c.Pipeline.Compile("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -321,12 +556,11 @@ func ExamplePipelineService_Expand() {
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
-		Output: "yaml",   // default
-		Ref:    "master", // default
+		Output: "yaml", // default
 	}
 
 	// expand templates for a pipeline from a repo from the server
-	pipeline, resp, err := c.Pipeline.Expand("github", "octocat", opts)
+	pipeline, resp, err := c.Pipeline.Expand("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -343,12 +577,11 @@ func ExamplePipelineService_Templates() {
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
-		Output: "yaml",   // default
-		Ref:    "master", // default
+		Output: "yaml", // default
 	}
 
 	// get templates for a pipeline from a repo from the server
-	pipeline, resp, err := c.Pipeline.Templates("github", "octocat", opts)
+	pipeline, resp, err := c.Pipeline.Templates("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -365,13 +598,12 @@ func ExamplePipelineService_Validate() {
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
-		Output:   "yaml",   // default
-		Ref:      "master", // default
-		Template: true,     // default
+		Output:   "yaml", // default
+		Template: true,   // default
 	}
 
 	// get templates for a pipeline from a repo from the server
-	pipeline, resp, err := c.Pipeline.Validate("github", "octocat", opts)
+	pipeline, resp, err := c.Pipeline.Validate("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
