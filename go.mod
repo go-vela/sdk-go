@@ -9,7 +9,7 @@ require (
 	github.com/go-vela/server v0.13.2-0.20220426180142-90727d2b465a
 	github.com/go-vela/types v0.13.1-0.20220419120049-00bb10826281
 	github.com/golang-jwt/jwt/v4 v4.4.1
-	github.com/google/go-cmp v0.5.7
+	github.com/google/go-cmp v0.5.8
 	github.com/google/go-querystring v1.1.0
 	github.com/sirupsen/logrus v1.8.1
 )
@@ -33,7 +33,6 @@ require (
 	github.com/ugorji/go/codec v1.1.11 // indirect
 	golang.org/x/crypto v0.0.0-20211108221036-ceb1ce70b4fa // indirect
 	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
-	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
