@@ -20,8 +20,8 @@ type BuildListOptions struct {
 	Branch string `url:"branch,omitempty"`
 	Event  string `url:"event,omitempty"`
 	Status string `url:"status,omitempty"`
-	Before int    `url:"before,omitempty"`
-	After  int    `url:"after,omitempty"`
+	Before int64  `url:"before,omitempty"`
+	After  int64  `url:"after,omitempty"`
 
 	ListOptions
 }
