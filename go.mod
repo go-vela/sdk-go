@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/buildkite/yaml v0.0.0-20181016232759-0caa5f0796e3
 	github.com/coreos/go-semver v0.3.0
-	github.com/gin-gonic/gin v1.8.0
+	github.com/gin-gonic/gin v1.8.1
 	github.com/go-vela/server v0.14.0-rc2
 	github.com/go-vela/types v0.14.0-rc2
 	github.com/golang-jwt/jwt/v4 v4.4.1
