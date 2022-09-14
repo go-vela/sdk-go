@@ -9,7 +9,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -58,7 +57,7 @@ type (
 	}
 
 	service struct {
-		// nolint:structcheck // false negative
+		//nolint:structcheck // false negative
 		client *Client
 	}
 
@@ -494,10 +493,10 @@ func (c *Client) Do(req *http.Request, respType interface{}) (*Response, error) 
 			}
 		} else {
 			// copy all bytes from response body
-			body, err := ioutil.ReadAll(resp.Body)
+			body, err := io.ReadAll(resp.Body)
 			// ensure response body is not empty so the user may inspect
 			// it further for debugging and troubleshooting
-			resp.Body = ioutil.NopCloser(bytes.NewBuffer(body))
+			resp.Body = io.NopCloser(bytes.NewBuffer(body))
 			if err != nil {
 				// if error is present, we still return the response so the caller
 				// may inspect it further for debugging and troubleshooting
@@ -530,12 +529,12 @@ func CheckResponse(r *http.Response) error {
 	resp := types.Error{}
 
 	// read all bytes from response body
-	b, _ := ioutil.ReadAll(r.Body)
+	b, _ := io.ReadAll(r.Body)
 
 	// unmarshal bytes into custom response type
 	err := json.Unmarshal(b, &resp)
 	if err != nil {
-		// nolint: nilerr // ignore returning nil
+		//nolint:nilerr // ignore returning nil
 		return nil
 	}
 

@@ -6,5 +6,5 @@
 //
 // Usage:
 //
-// 	import "github.com/go-vela/sdk-go/vela"
+//	import "github.com/go-vela/sdk-go/vela"
 package vela
