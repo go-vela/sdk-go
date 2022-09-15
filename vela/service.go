@@ -2,7 +2,7 @@
 //
 // Use of this source code is governed by the LICENSE file in this repository.
 
-// nolint: dupl // ignore dupl linter false positive
+//nolint:dupl // ignore dupl linter false positive
 package vela
 
 import (
