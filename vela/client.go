@@ -57,7 +57,6 @@ type (
 	}
 
 	service struct {
-		//nolint:structcheck // false negative
 		client *Client
 	}
 
