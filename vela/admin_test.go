@@ -18,34 +18,6 @@ import (
 	"github.com/go-vela/types/library"
 )
 
-func TestAdmin_Build_GetAll_200(t *testing.T) {
-	// setup context
-	gin.SetMode(gin.TestMode)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, "", nil)
-
-	data := []byte(server.BuildsResp)
-
-	var want []library.Build
-	_ = json.Unmarshal(data, &want)
-
-	// run test
-	got, resp, err := c.Admin.Build.GetAll(nil)
-
-	if err != nil {
-		t.Errorf("Build returned err: %v", err)
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Build returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Build getall is %v, want %v", got, want)
-	}
-}
-
 func TestAdmin_Build_Update_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
@@ -78,34 +50,6 @@ func TestAdmin_Build_Update_200(t *testing.T) {
 
 	if !reflect.DeepEqual(got, &want) {
 		t.Errorf("Build update is %v, want %v", got, want)
-	}
-}
-
-func TestAdmin_Deployment_GetAll_200(t *testing.T) {
-	// setup context
-	gin.SetMode(gin.TestMode)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, "", nil)
-
-	data := []byte(server.DeploymentsResp)
-
-	var want []library.Deployment
-	_ = json.Unmarshal(data, &want)
-
-	// run test
-	got, resp, err := c.Admin.Deployment.GetAll(nil)
-
-	if err != nil {
-		t.Errorf("Deployment returned err: %v", err)
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Deployment returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Deployment getall is %v, want %v", got, want)
 	}
 }
 
@@ -145,34 +89,6 @@ func TestAdmin_Deployment_Update_200(t *testing.T) {
 	}
 }
 
-func TestAdmin_Hook_GetAll_200(t *testing.T) {
-	// setup context
-	gin.SetMode(gin.TestMode)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, "", nil)
-
-	data := []byte(server.HooksResp)
-
-	var want []library.Hook
-	_ = json.Unmarshal(data, &want)
-
-	// run test
-	got, resp, err := c.Admin.Hook.GetAll(nil)
-
-	if err != nil {
-		t.Errorf("Hook returned err: %v", err)
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Hook returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Hook getall is %v, want %v", got, want)
-	}
-}
-
 func TestAdmin_Hook_Update_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
@@ -204,34 +120,6 @@ func TestAdmin_Hook_Update_200(t *testing.T) {
 
 	if !reflect.DeepEqual(got, &want) {
 		t.Errorf("Hook update is %v, want %v", got, want)
-	}
-}
-
-func TestAdmin_Repo_GetAll_200(t *testing.T) {
-	// setup context
-	gin.SetMode(gin.TestMode)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, "", nil)
-
-	data := []byte(server.ReposResp)
-
-	var want []library.Repo
-	_ = json.Unmarshal(data, &want)
-
-	// run test
-	got, resp, err := c.Admin.Repo.GetAll(nil)
-
-	if err != nil {
-		t.Errorf("Repo returned err: %v", err)
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Repo returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Repo getall is %v, want %v", got, want)
 	}
 }
 
@@ -273,34 +161,6 @@ func TestAdmin_Repo_Update_200(t *testing.T) {
 	}
 }
 
-func TestAdmin_Secret_GetAll_200(t *testing.T) {
-	// setup context
-	gin.SetMode(gin.TestMode)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, "", nil)
-
-	data := []byte(server.SecretsResp)
-
-	var want []library.Secret
-	_ = json.Unmarshal(data, &want)
-
-	// run test
-	got, resp, err := c.Admin.Secret.GetAll(nil)
-
-	if err != nil {
-		t.Errorf("Secret returned err: %v", err)
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Secret returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Secret getall is %v, want %v", got, want)
-	}
-}
-
 func TestAdmin_Secret_Update_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
@@ -331,34 +191,6 @@ func TestAdmin_Secret_Update_200(t *testing.T) {
 
 	if !reflect.DeepEqual(got, &want) {
 		t.Errorf("Secret update is %v, want %v", got, want)
-	}
-}
-
-func TestAdmin_Service_GetAll_200(t *testing.T) {
-	// setup context
-	gin.SetMode(gin.TestMode)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, "", nil)
-
-	data := []byte(server.ServicesResp)
-
-	var want []library.Service
-	_ = json.Unmarshal(data, &want)
-
-	// run test
-	got, resp, err := c.Admin.Service.GetAll(nil)
-
-	if err != nil {
-		t.Errorf("Service returned err: %v", err)
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Service returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Service getall is %v, want %v", got, want)
 	}
 }
 
@@ -397,34 +229,6 @@ func TestAdmin_Service_Update_200(t *testing.T) {
 	}
 }
 
-func TestAdmin_Step_GetAll_200(t *testing.T) {
-	// setup context
-	gin.SetMode(gin.TestMode)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, "", nil)
-
-	data := []byte(server.StepsResp)
-
-	var want []library.Step
-	_ = json.Unmarshal(data, &want)
-
-	// run test
-	got, resp, err := c.Admin.Step.GetAll(nil)
-
-	if err != nil {
-		t.Errorf("Step returned err: %v", err)
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Step returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Step getall is %v, want %v", got, want)
-	}
-}
-
 func TestAdmin_Step_Update_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
@@ -457,34 +261,6 @@ func TestAdmin_Step_Update_200(t *testing.T) {
 
 	if !reflect.DeepEqual(got, &want) {
 		t.Errorf("Step update is %v, want %v", got, want)
-	}
-}
-
-func TestAdmin_User_GetAll_200(t *testing.T) {
-	// setup context
-	gin.SetMode(gin.TestMode)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, "", nil)
-
-	data := []byte(server.UsersResp)
-
-	var want []library.User
-	_ = json.Unmarshal(data, &want)
-
-	// run test
-	got, resp, err := c.Admin.User.GetAll(nil)
-
-	if err != nil {
-		t.Errorf("User returned err: %v", err)
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("User returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("User getall is %v, want %v", got, want)
 	}
 }
 

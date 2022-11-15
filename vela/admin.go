@@ -66,26 +66,6 @@ type GetQueueOptions struct {
 	ListOptions
 }
 
-// GetAll returns a list of all builds.
-func (svc *AdminBuildService) GetAll(opt *ListOptions) (*[]library.Build, *Response, error) {
-	// set the API endpoint path we send the request to
-	u := "/api/v1/admin/builds"
-
-	// add optional arguments if supplied
-	u, err := addOptions(u, opt)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// slice library Build type we want to return
-	v := new([]library.Build)
-
-	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
-
-	return v, resp, err
-}
-
 // Update modifies a build with the provided details.
 func (svc *AdminBuildService) Update(b *library.Build) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
@@ -119,26 +99,6 @@ func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]library.BuildQu
 	return v, resp, err
 }
 
-// GetAll returns a list of all deployments.
-func (svc *AdminDeploymentService) GetAll(opt *ListOptions) (*[]library.Deployment, *Response, error) {
-	// set the API endpoint path we send the request to
-	u := "/api/v1/admin/deployments"
-
-	// add optional arguments if supplied
-	u, err := addOptions(u, opt)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// slice library Deployment type we want to return
-	v := new([]library.Deployment)
-
-	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
-
-	return v, resp, err
-}
-
 // Update modifies a deployment with the provided details.
 func (svc *AdminDeploymentService) Update(d *library.Deployment) (*library.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
@@ -149,26 +109,6 @@ func (svc *AdminDeploymentService) Update(d *library.Deployment) (*library.Deplo
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, d, v)
-
-	return v, resp, err
-}
-
-// GetAll returns a list of all hooks.
-func (svc *AdminHookService) GetAll(opt *ListOptions) (*[]library.Hook, *Response, error) {
-	// set the API endpoint path we send the request to
-	u := "/api/v1/admin/hooks"
-
-	// add optional arguments if supplied
-	u, err := addOptions(u, opt)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// slice library Hook type we want to return
-	v := new([]library.Hook)
-
-	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -187,26 +127,6 @@ func (svc *AdminHookService) Update(h *library.Hook) (*library.Hook, *Response, 
 	return v, resp, err
 }
 
-// GetAll returns a list of all repos.
-func (svc *AdminRepoService) GetAll(opt *ListOptions) (*[]library.Repo, *Response, error) {
-	// set the API endpoint path we send the request to
-	u := "/api/v1/admin/repos"
-
-	// add optional arguments if supplied
-	u, err := addOptions(u, opt)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// slice library Repo type we want to return
-	v := new([]library.Repo)
-
-	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
-
-	return v, resp, err
-}
-
 // Update modifies a repo with the provided details.
 func (svc *AdminRepoService) Update(r *library.Repo) (*library.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
@@ -217,26 +137,6 @@ func (svc *AdminRepoService) Update(r *library.Repo) (*library.Repo, *Response, 
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, r, v)
-
-	return v, resp, err
-}
-
-// GetAll returns a list of all secrets.
-func (svc *AdminSecretService) GetAll(opt *ListOptions) (*[]library.Secret, *Response, error) {
-	// set the API endpoint path we send the request to
-	u := "/api/v1/admin/secrets"
-
-	// add optional arguments if supplied
-	u, err := addOptions(u, opt)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// slice library Secret type we want to return
-	v := new([]library.Secret)
-
-	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
@@ -255,26 +155,6 @@ func (svc *AdminSecretService) Update(s *library.Secret) (*library.Secret, *Resp
 	return v, resp, err
 }
 
-// GetAll returns a list of all services.
-func (svc *AdminSvcService) GetAll(opt *ListOptions) (*[]library.Service, *Response, error) {
-	// set the API endpoint path we send the request to
-	u := "/api/v1/admin/services"
-
-	// add optional arguments if supplied
-	u, err := addOptions(u, opt)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// slice library Service type we want to return
-	v := new([]library.Service)
-
-	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
-
-	return v, resp, err
-}
-
 // Update modifies a service with the provided details.
 func (svc *AdminSvcService) Update(s *library.Service) (*library.Service, *Response, error) {
 	// set the API endpoint path we send the request to
@@ -289,26 +169,6 @@ func (svc *AdminSvcService) Update(s *library.Service) (*library.Service, *Respo
 	return v, resp, err
 }
 
-// GetAll returns a list of all steps.
-func (svc *AdminStepService) GetAll(opt *ListOptions) (*[]library.Step, *Response, error) {
-	// set the API endpoint path we send the request to
-	u := "/api/v1/admin/steps"
-
-	// add optional arguments if supplied
-	u, err := addOptions(u, opt)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// slice library Step type we want to return
-	v := new([]library.Step)
-
-	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
-
-	return v, resp, err
-}
-
 // Update modifies a step with the provided details.
 func (svc *AdminStepService) Update(s *library.Step) (*library.Step, *Response, error) {
 	// set the API endpoint path we send the request to
@@ -319,26 +179,6 @@ func (svc *AdminStepService) Update(s *library.Step) (*library.Step, *Response, 
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, s, v)
-
-	return v, resp, err
-}
-
-// GetAll returns a list of all users.
-func (svc *AdminUserService) GetAll(opt *ListOptions) (*[]library.User, *Response, error) {
-	// set the API endpoint path we send the request to
-	u := "/api/v1/admin/users"
-
-	// add optional arguments if supplied
-	u, err := addOptions(u, opt)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// slice library User type we want to return
-	v := new([]library.User)
-
-	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
