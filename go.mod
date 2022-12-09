@@ -8,7 +8,7 @@ require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-vela/server v0.16.2
 	github.com/go-vela/types v0.16.2
-	github.com/golang-jwt/jwt/v4 v4.4.2
+	github.com/golang-jwt/jwt/v4 v4.4.3
 	github.com/google/go-cmp v0.5.9
 	github.com/google/go-querystring v1.1.0
 	github.com/sirupsen/logrus v1.9.0
