@@ -143,3 +143,17 @@ func (svc *BuildService) Cancel(org, repo string, build int) (*library.Build, *R
 
 	return v, resp, err
 }
+
+// GetBuildToken returns an auth token for updating build resources.
+func (svc *BuildService) GetBuildToken(org, repo string, build int) (*library.Token, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/token", org, repo, build)
+
+	// library Token type we want to return
+	t := new(library.Token)
+
+	// send request using client
+	resp, err := svc.client.Call("GET", u, nil, t)
+
+	return t, resp, err
+}
