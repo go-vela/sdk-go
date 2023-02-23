@@ -1,5 +1,5 @@
-github.com/buildkite/yaml v0.0.0-20181016232759-0caa5f0796e3 h1:q+sMKdA6L8LyGVudTkpGoC73h6ak2iWSPFiFo/pFOU8=
-github.com/buildkite/yaml v0.0.0-20181016232759-0caa5f0796e3/go.mod h1:5hCug3EZaHXU3FdCA3gJm0YTNi+V+ooA2qNTiVpky4A=
+github.com/buildkite/yaml v0.0.0-20210326113714-4a3f40911396 h1:qLN32md48xyTEqw6XEZMyNMre7njm0XXvDrea6NVwOM=
+github.com/buildkite/yaml v0.0.0-20210326113714-4a3f40911396/go.mod h1:AV5wtJnn1/CRaRGlJ8xspkMWfKXV0/pkJVgGleTIrfk=
 github.com/coreos/go-semver v0.3.0 h1:wkHLiw0WNATZnSG7epLsujiMCgPAc9xhjJ4tgnAxmfM=
 github.com/coreos/go-semver v0.3.0/go.mod h1:nnelYz7RCh+5ahJtPPxZlU+153eP4D4r3EedlOD2RNk=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
@@ -22,10 +22,10 @@ github.com/go-playground/universal-translator v0.18.0 h1:82dyy6p4OuJq4/CByFNOn/j
 github.com/go-playground/universal-translator v0.18.0/go.mod h1:UvRDBj+xPUEGrFYl+lu/H90nyDXpg0fqeB/AQUGNTVA=
 github.com/go-playground/validator/v10 v10.10.0 h1:I7mrTYv78z8k8VXa/qJlOlEXn/nBh+BF8dHX5nt/dr0=
 github.com/go-playground/validator/v10 v10.10.0/go.mod h1:74x4gJWsvQexRdW8Pn3dXSGrTK4nAUsbPlLADvpJkos=
-github.com/go-vela/server v0.17.0 h1:sEJ4a9mus43Qw4E431OYwN8qvYugoA0ZmaU0sFGgESk=
-github.com/go-vela/server v0.17.0/go.mod h1:Z8YT/IFJTQ80a63GINRHCaFBTkkkHAL7mDohw4xLbEE=
-github.com/go-vela/types v0.17.0 h1:nvKBbNO8BSiLtYPMScT0XWosGqEWX85UKSkkclb2DVA=
-github.com/go-vela/types v0.17.0/go.mod h1:6KoRkvXMw9DkAcLdtI7PxPqMlT2Bl0DiigQamLGGjwo=
+github.com/go-vela/server v0.17.1-0.20230223224438-bff8352d3020 h1:ISN/2Hj3YScBV8PARlCpICgug2tiQCnrX2XvI0yy1zg=
+github.com/go-vela/server v0.17.1-0.20230223224438-bff8352d3020/go.mod h1:jENOjblPQesqa/wmbaUxp+Ar5fBQbW8Cui0zJ3JLTOE=
+github.com/go-vela/types v0.17.1-0.20230223155025-1c8a34f71425 h1:tdjas7NJLWlU2vmETaU36wjbd+zvWPLtznE4uwtnFlw=
+github.com/go-vela/types v0.17.1-0.20230223155025-1c8a34f71425/go.mod h1:6KoRkvXMw9DkAcLdtI7PxPqMlT2Bl0DiigQamLGGjwo=
 github.com/goccy/go-json v0.9.7 h1:IcB+Aqpx/iMHu5Yooh7jEzJk1JZ7Pjtmys2ukPr7EeM=
 github.com/goccy/go-json v0.9.7/go.mod h1:6MelG93GURQebXPDq3khkgXZkazVtN9CRI+MGFi0w8I=
 github.com/golang-jwt/jwt/v4 v4.4.3 h1:Hxl6lhQFj4AnOX6MLrsCb/+7tCj7DxP7VA+2rDIq5AU=

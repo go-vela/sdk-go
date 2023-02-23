@@ -3,11 +3,11 @@ module github.com/go-vela/sdk-go
 go 1.19
 
 require (
-	github.com/buildkite/yaml v0.0.0-20181016232759-0caa5f0796e3
+	github.com/buildkite/yaml v0.0.0-20210326113714-4a3f40911396
 	github.com/coreos/go-semver v0.3.0
 	github.com/gin-gonic/gin v1.8.1
-	github.com/go-vela/server v0.17.0
-	github.com/go-vela/types v0.17.0
+	github.com/go-vela/server v0.17.1-0.20230223224438-bff8352d3020
+	github.com/go-vela/types v0.17.1-0.20230223155025-1c8a34f71425
 	github.com/golang-jwt/jwt/v4 v4.4.3
 	github.com/google/go-cmp v0.5.9
 	github.com/google/go-querystring v1.1.0
