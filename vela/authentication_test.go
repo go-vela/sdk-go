@@ -56,7 +56,7 @@ func TestVela_Authentication_RefreshAccessToken(t *testing.T) {
 
 	data := []byte(server.TokenRefreshResp)
 
-	var want library.Login
+	var want library.Token
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -84,7 +84,7 @@ func TestVela_Authentication_AuthenticateWithToken(t *testing.T) {
 
 	data := []byte(server.TokenRefreshResp)
 
-	var want library.Login
+	var want library.Token
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -135,7 +135,7 @@ func TestVela_Authentication_ExchangeTokens(t *testing.T) {
 
 	data := []byte(server.TokenRefreshResp)
 
-	var want library.Login
+	var want library.Token
 	_ = json.Unmarshal(data, &want)
 
 	// create options

@@ -79,7 +79,7 @@ func (svc *AuthenticationService) RefreshAccessToken(refreshToken string) (*Resp
 	// set the API endpoint path we send the request to
 	u := "/token-refresh"
 
-	v := new(library.Login)
+	v := new(library.Token)
 
 	// building a custom request -
 	// we can't use svc.client.NewRequest because
@@ -124,7 +124,7 @@ func (svc *AuthenticationService) AuthenticateWithToken(token string) (string, *
 	}
 
 	// will hold access token
-	v := new(library.Login)
+	v := new(library.Token)
 
 	// building a custom request -
 	// we can't use svc.client.NewRequest because
@@ -157,7 +157,7 @@ func (svc *AuthenticationService) ExchangeTokens(opt *OAuthExchangeOptions) (str
 	u := "/authenticate"
 
 	// will hold access token
-	v := new(library.Login)
+	v := new(library.Token)
 
 	// check required arguments
 	if len(opt.Code) == 0 || len(opt.State) == 0 {
