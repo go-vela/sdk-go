@@ -28,8 +28,8 @@ github.com/go-playground/validator/v10 v10.11.2 h1:q3SHpufmypg+erIExEKUmsgmhDTyh
 github.com/go-playground/validator/v10 v10.11.2/go.mod h1:NieE624vt4SCTJtD87arVLvdmjPAeV8BQlHtMnw9D7s=
 github.com/go-vela/server v0.17.1-0.20230224163114-c4283eb079e8 h1:CUXtUYOu8Jz9IYuTMXivu4GXr8BdQXLAYjFYnDnkndE=
 github.com/go-vela/server v0.17.1-0.20230224163114-c4283eb079e8/go.mod h1:WJZQJ2nwSSDuB56LskZ3gEoSWI0IwKRtxaFE8GdTLIc=
-github.com/go-vela/types v0.17.1-0.20230223155025-1c8a34f71425 h1:tdjas7NJLWlU2vmETaU36wjbd+zvWPLtznE4uwtnFlw=
-github.com/go-vela/types v0.17.1-0.20230223155025-1c8a34f71425/go.mod h1:6KoRkvXMw9DkAcLdtI7PxPqMlT2Bl0DiigQamLGGjwo=
+github.com/go-vela/types v0.17.1-0.20230224215558-80c7558ebb43 h1:Bwh/mRvxSWZtYz9NUrQRGRF1O2hAtgYu3HmlHFZN9RQ=
+github.com/go-vela/types v0.17.1-0.20230224215558-80c7558ebb43/go.mod h1:nv2rcjDAGmUhQRQff9lJu4xHcBlGeSQgJPUUkaKaI2Q=
 github.com/goccy/go-json v0.10.0 h1:mXKd9Qw4NuzShiRlOXKews24ufknHO7gx30lsDyokKA=
 github.com/goccy/go-json v0.10.0/go.mod h1:6MelG93GURQebXPDq3khkgXZkazVtN9CRI+MGFi0w8I=
 github.com/golang-jwt/jwt/v4 v4.5.0 h1:7cYmW1XlMY7h7ii7UhUyChSgS5wUJEnm9uZVTGqOWzg=
