@@ -14,6 +14,11 @@ import (
 // the server methods of the Vela API.
 type WorkerService service
 
+type WorkerCheckIn struct {
+	Worker *library.Worker
+	Token  *library.Token
+}
+
 // Get returns the provided worker.
 func (svc *WorkerService) Get(hostname string) (*library.Worker, *Response, error) {
 	// set the API endpoint path we send the request to
@@ -43,12 +48,12 @@ func (svc *WorkerService) GetAll() (*[]library.Worker, *Response, error) {
 }
 
 // Add constructs a worker with the provided details.
-func (svc *WorkerService) Add(w *library.Worker) (*library.Worker, *Response, error) {
+func (svc *WorkerService) Add(w *library.Worker) (*library.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/workers"
 
 	// library Worker type we want to return
-	v := new(library.Worker)
+	v := new(library.Token)
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, w, v)
@@ -57,12 +62,12 @@ func (svc *WorkerService) Add(w *library.Worker) (*library.Worker, *Response, er
 }
 
 // Update modifies a worker with the provided details.
-func (svc *WorkerService) Update(worker string, w *library.Worker) (*library.Worker, *Response, error) {
+func (svc *WorkerService) Update(worker string, w *library.Worker) (*WorkerCheckIn, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/workers/%s", worker)
 
 	// library Worker type we want to return
-	v := new(library.Worker)
+	v := new(WorkerCheckIn)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, w, v)
