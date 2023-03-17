@@ -45,6 +45,7 @@ func TestVela_NewClient(t *testing.T) {
 		&AdminSvcService{client: want},
 		&AdminStepService{client: want},
 		&AdminUserService{client: want},
+		&AdminWorkerService{client: want},
 	}
 	want.Build = &BuildService{client: want}
 	want.Deployment = &DeploymentService{client: want}

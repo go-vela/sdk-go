@@ -5,6 +5,8 @@
 package vela
 
 import (
+	"fmt"
+
 	"github.com/go-vela/types/library"
 )
 
@@ -20,6 +22,7 @@ type (
 		Service    *AdminSvcService
 		Step       *AdminStepService
 		User       *AdminUserService
+		Worker     *AdminWorkerService
 	}
 
 	// AdminBuildService handles retrieving admin builds from
@@ -53,6 +56,10 @@ type (
 	// AdminUserService handles retrieving admin users from
 	// the server methods of the Vela API.
 	AdminUserService service
+
+	// AdminWorkerService handles managing admin worker functionality
+	// from the server methods of the Vela API.
+	AdminWorkerService service
 )
 
 // GetQueueOptions specifies the optional parameters to the
@@ -195,4 +202,18 @@ func (svc *AdminUserService) Update(u *library.User) (*library.User, *Response, 
 	resp, err := svc.client.Call("PUT", url, u, v)
 
 	return v, resp, err
+}
+
+// RegistrationToken generates a worker registration token with the provided details.
+func (svc *AdminUserService) RegistrationToken(w *library.Worker) (*library.Token, *Response, error) {
+	// set the API endpoint path we send the request to
+	url := fmt.Sprintf("/api/v1/workers/%s/register-token", w.GetHostname())
+
+	// library Token type we want to return
+	t := new(library.Token)
+
+	// send request using client
+	resp, err := svc.client.Call("POST", url, nil, t)
+
+	return t, resp, err
 }

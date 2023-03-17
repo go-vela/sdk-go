@@ -35,6 +35,11 @@ type AuthenticationService struct {
 }
 
 // SetTokenAuth sets the authentication type as a plain token.
+func (svc *AuthenticationService) GetToken() string {
+	return *svc.token
+}
+
+// SetTokenAuth sets the authentication type as a plain token.
 func (svc *AuthenticationService) SetTokenAuth(token string) {
 	svc.token = String(token)
 	svc.authType = AuthenticationToken
@@ -202,4 +207,14 @@ func extractRefreshToken(cookies []*http.Cookie) string {
 	}
 
 	return c
+}
+
+// ValidateToken makes a request to validate tokens with the Vela server.
+func (svc *AuthenticationService) ValidateToken() (*Response, error) {
+	// set the API endpoint path we send the request to
+	u := "/validate-token"
+
+	// attempt to validate a server token
+	resp, err := svc.client.Call("GET", u, nil, nil)
+	return resp, err
 }
