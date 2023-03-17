@@ -35,11 +35,6 @@ type AuthenticationService struct {
 }
 
 // SetTokenAuth sets the authentication type as a plain token.
-func (svc *AuthenticationService) GetToken() string {
-	return *svc.token
-}
-
-// SetTokenAuth sets the authentication type as a plain token.
 func (svc *AuthenticationService) SetTokenAuth(token string) {
 	svc.token = String(token)
 	svc.authType = AuthenticationToken
