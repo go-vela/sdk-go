@@ -221,10 +221,6 @@ func TestVela_Authentication_ValidateToken_200(t *testing.T) {
 		t.Errorf("ValidateToken returned error %v", err)
 	}
 
-	if resp == nil {
-		t.Errorf("ValidateToken response should not be nil")
-	}
-
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("ValidateToken returned %v, want %v", resp.StatusCode, http.StatusOK)
 	}
@@ -247,6 +243,6 @@ func TestVela_Authentication_ValidateToken_NoToken(t *testing.T) {
 	}
 
 	if resp != nil {
-		t.Errorf("ValidateToken response should be nil")
+		t.Error("ValidateToken response should be nil")
 	}
 }
