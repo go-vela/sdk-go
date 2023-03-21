@@ -335,8 +335,7 @@ func TestAdmin_Worker_RegistrationToken_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// needs mocks from server feature
-	// data := []byte(server.RegisterTokenResp)
-	data := []byte{}
+	data := []byte(server.RegisterTokenResp)
 
 	var want *library.Token
 
