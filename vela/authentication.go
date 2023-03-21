@@ -211,5 +211,6 @@ func (svc *AuthenticationService) ValidateToken() (*Response, error) {
 
 	// attempt to validate a server token
 	resp, err := svc.client.Call("GET", u, nil, nil)
+
 	return resp, err
 }

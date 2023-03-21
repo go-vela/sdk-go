@@ -5,7 +5,9 @@
 package vela
 
 import (
+	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/go-vela/types/library"
 )
@@ -204,10 +206,15 @@ func (svc *AdminUserService) Update(u *library.User) (*library.User, *Response, 
 	return v, resp, err
 }
 
-// RegistrationToken generates a worker registration token with the provided details.
-func (svc *AdminUserService) RegistrationToken(w *library.Worker) (*library.Token, *Response, error) {
+// RegisterToken generates a worker registration token with the provided details.
+func (svc *AdminWorkerService) RegisterToken(hostname string) (*library.Token, *Response, error) {
+	// validate input
+	if strings.EqualFold(hostname, "") {
+		return nil, nil, errors.New("bad request, no hostname provided")
+	}
+
 	// set the API endpoint path we send the request to
-	url := fmt.Sprintf("/api/v1/workers/%s/register-token", w.GetHostname())
+	url := fmt.Sprintf("/api/v1/workers/%s/register-token", hostname)
 
 	// library Token type we want to return
 	t := new(library.Token)

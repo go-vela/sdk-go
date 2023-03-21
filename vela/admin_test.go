@@ -326,3 +326,55 @@ func TestAdmin_Build_Queue_200(t *testing.T) {
 		t.Errorf("GetQueue() mismatch (-want +got):\n%s", diff)
 	}
 }
+
+func TestAdmin_Worker_RegistrationToken_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	// needs mocks from server feature
+	// data := []byte(server.RegisterTokenResp)
+	data := []byte{}
+
+	var want *library.Token
+
+	err := json.Unmarshal(data, &want)
+	if err != nil {
+		t.Error(err)
+	}
+
+	hostname := "foo"
+
+	// run test
+	got, resp, err := c.Admin.Worker.RegisterToken(hostname)
+	if err != nil {
+		t.Errorf("RegisterToken returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("RegisterToken returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("RegisterToken() mismatch (-want +got):\n%s", diff)
+	}
+}
+
+func TestAdmin_Worker_RegistrationToken_NoHostname(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	// bad hostname
+	hostname := ""
+
+	// run test
+	_, _, err := c.Admin.Worker.RegisterToken(hostname)
+	if err == nil {
+		t.Error("RegisterToken should have returned err")
+	}
+}
