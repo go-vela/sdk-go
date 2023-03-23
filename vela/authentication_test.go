@@ -212,13 +212,18 @@ func TestVela_Authentication_ValidateToken_200(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	c.Authentication.SetTokenAuth("foobar")
+	c.Authentication.SetTokenAuth("foo")
 
 	// run test
 	resp, err := c.Authentication.ValidateToken()
 
 	if err != nil {
 		t.Errorf("ValidateToken returned error %v", err)
+	}
+
+	if resp == nil {
+		// Fatal so that nil resp is not checked
+		t.Fatal("ValidateToken returned nil response")
 	}
 
 	if resp.StatusCode != http.StatusOK {

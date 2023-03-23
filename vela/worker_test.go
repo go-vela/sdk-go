@@ -34,11 +34,11 @@ func TestWorker_Get_200(t *testing.T) {
 	got, resp, err := c.Worker.Get("worker_1")
 
 	if err != nil {
-		t.Errorf("New returned err: %v", err)
+		t.Errorf("Worker get returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Worker returned %v, want %v", resp.StatusCode, http.StatusOK)
+		t.Errorf("Worker get returned %v, want %v", resp.StatusCode, http.StatusOK)
 	}
 
 	if !reflect.DeepEqual(got, &want) {
@@ -59,11 +59,11 @@ func TestWorker_Get_404(t *testing.T) {
 	got, resp, err := c.Worker.Get("0")
 
 	if err == nil {
-		t.Errorf("New returned err: %v", err)
+		t.Errorf("Worker get returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusNotFound {
-		t.Errorf("Worker returned %v, want %v", resp.StatusCode, http.StatusOK)
+		t.Errorf("Worker get returned %v, want %v", resp.StatusCode, http.StatusOK)
 	}
 
 	if !reflect.DeepEqual(got, &want) {
@@ -87,7 +87,7 @@ func TestWorker_GetAll_200(t *testing.T) {
 	got, resp, err := c.Worker.GetAll()
 
 	if err != nil {
-		t.Errorf("New returned err: %v", err)
+		t.Errorf("Worker get all returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusOK {
@@ -106,9 +106,9 @@ func TestWorker_Add_201(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	data := []byte(server.WorkerResp)
+	data := []byte(server.AddWorkerResp)
 
-	var want library.Worker
+	var want library.Token
 	_ = json.Unmarshal(data, &want)
 
 	req := library.Worker{
@@ -128,11 +128,11 @@ func TestWorker_Add_201(t *testing.T) {
 	got, resp, err := c.Worker.Add(&req)
 
 	if err != nil {
-		t.Errorf("New returned err: %v", err)
+		t.Errorf("Worker add returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusCreated {
-		t.Errorf("Worker returned %v, want %v", resp.StatusCode, http.StatusOK)
+		t.Errorf("Worker add returned %v, want %v", resp.StatusCode, http.StatusOK)
 	}
 
 	if !reflect.DeepEqual(got, &want) {
@@ -160,7 +160,7 @@ func TestWorker_Update_200(t *testing.T) {
 	got, resp, err := c.Worker.Update("worker_1", &req)
 
 	if err != nil {
-		t.Errorf("New returned err: %v", err)
+		t.Errorf("Worker update returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusOK {
@@ -189,7 +189,7 @@ func TestWorker_Update_404(t *testing.T) {
 	got, resp, err := c.Worker.Update("0", &req)
 
 	if err == nil {
-		t.Errorf("New returned err: %v", err)
+		t.Errorf("Worker update returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusNotFound {
@@ -212,11 +212,11 @@ func TestWorker_Remove_200(t *testing.T) {
 	_, resp, err := c.Worker.Remove("worker_1")
 
 	if err != nil {
-		t.Errorf("New returned err: %v", err)
+		t.Errorf("Worker remove returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Worker returned %v, want %v", resp.StatusCode, http.StatusOK)
+		t.Errorf("Worker remove returned %v, want %v", resp.StatusCode, http.StatusOK)
 	}
 }
 
@@ -231,11 +231,11 @@ func TestWorker_Remove_404(t *testing.T) {
 	_, resp, err := c.Worker.Remove("0")
 
 	if err == nil {
-		t.Errorf("New returned err: %v", err)
+		t.Errorf("Worker remove returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusNotFound {
-		t.Errorf("Worker returned %v, want %v", resp.StatusCode, http.StatusOK)
+		t.Errorf("Worker remove returned %v, want %v", resp.StatusCode, http.StatusOK)
 	}
 }
 

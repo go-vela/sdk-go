@@ -327,14 +327,13 @@ func TestAdmin_Build_Queue_200(t *testing.T) {
 	}
 }
 
-func TestAdmin_Worker_RegistrationToken_200(t *testing.T) {
+func TestAdmin_Worker_RegistrationToken_201(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	// needs mocks from server feature
 	data := []byte(server.RegisterTokenResp)
 
 	var want *library.Token
@@ -352,8 +351,8 @@ func TestAdmin_Worker_RegistrationToken_200(t *testing.T) {
 		t.Errorf("RegisterToken returned err: %v", err)
 	}
 
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("RegisterToken returned %v, want %v", resp.StatusCode, http.StatusOK)
+	if resp.StatusCode != http.StatusCreated {
+		t.Errorf("RegisterToken returned %v, want %v", resp.StatusCode, http.StatusCreated)
 	}
 
 	if diff := cmp.Diff(want, got); diff != "" {
