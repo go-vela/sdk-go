@@ -7,7 +7,7 @@ require (
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-vela/server v0.18.1
-	github.com/go-vela/types v0.18.1
+	github.com/go-vela/types v0.18.2-0.20230321015315-6c723879639c
 	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/google/go-cmp v0.5.9
 	github.com/google/go-querystring v1.1.0
@@ -42,3 +42,5 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/go-vela/server => ../server
