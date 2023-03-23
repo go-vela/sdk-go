@@ -221,11 +221,6 @@ func TestVela_Authentication_ValidateToken_200(t *testing.T) {
 		t.Errorf("ValidateToken returned error %v", err)
 	}
 
-	if resp == nil {
-		// Fatal so that nil resp is not checked
-		t.Fatal("ValidateToken returned nil response")
-	}
-
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("ValidateToken returned %v, want %v", resp.StatusCode, http.StatusOK)
 	}
