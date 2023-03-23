@@ -56,6 +56,20 @@ func (svc *WorkerService) Add(w *library.Worker) (*library.Token, *Response, err
 	return v, resp, err
 }
 
+// RefreshAuth exchanges a worker token for a new one.
+func (svc *WorkerService) RefreshAuth(worker string) (*library.Token, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := fmt.Sprintf("/api/v1/workers/%s/refresh", worker)
+
+	// library Token type we want to return
+	v := new(library.Token)
+
+	// send request using client
+	resp, err := svc.client.Call("POST", u, nil, v)
+
+	return v, resp, err
+}
+
 // Update modifies a worker with the provided details.
 func (svc *WorkerService) Update(worker string, w *library.Worker) (*library.Worker, *Response, error) {
 	// set the API endpoint path we send the request to

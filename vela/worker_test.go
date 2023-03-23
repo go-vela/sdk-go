@@ -63,7 +63,7 @@ func TestWorker_Get_404(t *testing.T) {
 	}
 
 	if resp.StatusCode != http.StatusNotFound {
-		t.Errorf("Worker get returned %v, want %v", resp.StatusCode, http.StatusOK)
+		t.Errorf("Worker get returned %v, want %v", resp.StatusCode, http.StatusNotFound)
 	}
 
 	if !reflect.DeepEqual(got, &want) {
@@ -132,11 +132,62 @@ func TestWorker_Add_201(t *testing.T) {
 	}
 
 	if resp.StatusCode != http.StatusCreated {
-		t.Errorf("Worker add returned %v, want %v", resp.StatusCode, http.StatusOK)
+		t.Errorf("Worker add returned %v, want %v", resp.StatusCode, http.StatusCreated)
 	}
 
 	if !reflect.DeepEqual(got, &want) {
 		t.Errorf("Worker add is %v, want %v", got, want)
+	}
+}
+
+func TestWorker_RefreshAuth_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	data := []byte(server.AddWorkerResp)
+
+	var want library.Token
+	_ = json.Unmarshal(data, &want)
+
+	worker := "worker_1"
+
+	// run test
+	got, resp, err := c.Worker.RefreshAuth(worker)
+
+	if err != nil {
+		t.Errorf("Worker RefreshAuth returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Worker RefreshAuth returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("Worker RefreshAuth is %v, want %v", got, want)
+	}
+}
+
+func TestWorker_RefreshAuth_404(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	worker := "0"
+
+	// run test
+	_, resp, err := c.Worker.RefreshAuth(worker)
+
+	if err == nil {
+		t.Error("Worker RefreshAuth should have returned err")
+	}
+
+	if resp.StatusCode != http.StatusNotFound {
+		t.Errorf("Worker RefreshAuth returned %v, want %v", resp.StatusCode, http.StatusNotFound)
 	}
 }
 
@@ -193,7 +244,7 @@ func TestWorker_Update_404(t *testing.T) {
 	}
 
 	if resp.StatusCode != http.StatusNotFound {
-		t.Errorf("Worker returned %v, want %v", resp.StatusCode, http.StatusOK)
+		t.Errorf("Worker returned %v, want %v", resp.StatusCode, http.StatusNotFound)
 	}
 
 	if !reflect.DeepEqual(got, &want) {
@@ -235,7 +286,7 @@ func TestWorker_Remove_404(t *testing.T) {
 	}
 
 	if resp.StatusCode != http.StatusNotFound {
-		t.Errorf("Worker remove returned %v, want %v", resp.StatusCode, http.StatusOK)
+		t.Errorf("Worker remove returned %v, want %v", resp.StatusCode, http.StatusNotFound)
 	}
 }
 
@@ -293,6 +344,24 @@ func ExampleWorkerService_Add() {
 
 	// Create the worker in the server
 	worker, resp, err := c.Worker.Add(&req)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("Received response code %d, for worker %+v", resp.StatusCode, worker)
+}
+
+func ExampleWorkerService_RefreshAuth() {
+	// Create a new vela client for interacting with server
+	c, _ := NewClient("http://localhost:8080", "", nil)
+
+	// Set new token in existing client
+	c.Authentication.SetPersonalAccessTokenAuth("token")
+
+	worker := "worker_1"
+
+	// Refresh a worker token with the server
+	_, resp, err := c.Worker.RefreshAuth(worker)
 	if err != nil {
 		fmt.Println(err)
 	}
