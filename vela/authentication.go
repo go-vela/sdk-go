@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Target Brands, Inc. All rights reserved.
+// Copyright (c) 2023 Target Brands, Inc. All rights reserved.
 //
 // Use of this source code is governed by the LICENSE file in this repository.
 
@@ -202,4 +202,15 @@ func extractRefreshToken(cookies []*http.Cookie) string {
 	}
 
 	return c
+}
+
+// ValidateToken makes a request to validate tokens with the Vela server.
+func (svc *AuthenticationService) ValidateToken() (*Response, error) {
+	// set the API endpoint path we send the request to
+	u := "/validate-token"
+
+	// attempt to validate a server token
+	resp, err := svc.client.Call("GET", u, nil, nil)
+
+	return resp, err
 }

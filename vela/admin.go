@@ -1,10 +1,14 @@
-// Copyright (c) 2022 Target Brands, Inc. All rights reserved.
+// Copyright (c) 2023 Target Brands, Inc. All rights reserved.
 //
 // Use of this source code is governed by the LICENSE file in this repository.
 
 package vela
 
 import (
+	"errors"
+	"fmt"
+	"strings"
+
 	"github.com/go-vela/types/library"
 )
 
@@ -20,6 +24,7 @@ type (
 		Service    *AdminSvcService
 		Step       *AdminStepService
 		User       *AdminUserService
+		Worker     *AdminWorkerService
 	}
 
 	// AdminBuildService handles retrieving admin builds from
@@ -53,6 +58,10 @@ type (
 	// AdminUserService handles retrieving admin users from
 	// the server methods of the Vela API.
 	AdminUserService service
+
+	// AdminWorkerService handles managing admin worker functionality
+	// from the server methods of the Vela API.
+	AdminWorkerService service
 )
 
 // GetQueueOptions specifies the optional parameters to the
@@ -195,4 +204,23 @@ func (svc *AdminUserService) Update(u *library.User) (*library.User, *Response, 
 	resp, err := svc.client.Call("PUT", url, u, v)
 
 	return v, resp, err
+}
+
+// RegisterToken generates a worker registration token with the provided details.
+func (svc *AdminWorkerService) RegisterToken(hostname string) (*library.Token, *Response, error) {
+	// validate input
+	if strings.EqualFold(hostname, "") {
+		return nil, nil, errors.New("bad request, no hostname provided")
+	}
+
+	// set the API endpoint path we send the request to
+	url := fmt.Sprintf("/api/v1/admin/workers/%s/register-token", hostname)
+
+	// library Token type we want to return
+	t := new(library.Token)
+
+	// send request using client
+	resp, err := svc.client.Call("POST", url, nil, t)
+
+	return t, resp, err
 }

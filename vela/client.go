@@ -133,6 +133,7 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 		&AdminSvcService{client: c},
 		&AdminStepService{client: c},
 		&AdminUserService{client: c},
+		&AdminWorkerService{client: c},
 	}
 	c.Build = &BuildService{client: c}
 	c.Deployment = &DeploymentService{client: c}

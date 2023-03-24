@@ -204,3 +204,45 @@ func TestVela_Authentication_ExchangeTokens_BadInput(t *testing.T) {
 		t.Errorf("ExchangeTokens should not set Refresh Token")
 	}
 }
+
+func TestVela_Authentication_ValidateToken_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	c.Authentication.SetTokenAuth("foo")
+
+	// run test
+	resp, err := c.Authentication.ValidateToken()
+
+	if err != nil {
+		t.Errorf("ValidateToken returned error %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("ValidateToken returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+}
+
+func TestVela_Authentication_ValidateToken_NoToken(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	c.Authentication.SetTokenAuth("")
+
+	// run test
+	resp, err := c.Authentication.ValidateToken()
+
+	if err == nil {
+		t.Error("ValidateToken should have returned error")
+	}
+
+	if resp != nil {
+		t.Error("ValidateToken response should be nil")
+	}
+}
