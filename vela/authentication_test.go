@@ -116,6 +116,7 @@ func TestVela_Authentication_IsTokenAuthExpired_InvalidAuthType(t *testing.T) {
 
 	// run test
 	c.Authentication.SetAccessAndRefreshAuth("someAccessToken", "someRefreshToken")
+
 	expired, err = c.Authentication.IsTokenAuthExpired()
 	if err == nil {
 		t.Error("IsTokenAuthExpired did not return err")
