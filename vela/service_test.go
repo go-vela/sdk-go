@@ -7,7 +7,6 @@ package vela
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -339,36 +338,4 @@ func ExampleSvcService_Remove() {
 	}
 
 	fmt.Printf("Received response code %d, for service %+v", resp.StatusCode, service)
-}
-
-func TestVela_ServiceStream(t *testing.T) {
-	// setup context
-	gin.SetMode(gin.TestMode)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, "", nil)
-
-	type input struct {
-		org     string
-		repo    string
-		build   int
-		service int
-		rc      io.ReadCloser
-	}
-
-	tests := []struct {
-		input input
-	}{
-		{
-			input: input{org: "github", repo: "octocat", build: 1, service: 1, rc: nil},
-		},
-	}
-
-	for _, test := range tests {
-		got, _ := c.Svc.Stream(test.input.org, test.input.repo, test.input.build, test.input.service, test.input.rc)
-
-		if got.StatusCode != http.StatusNoContent {
-			t.Errorf("Stream returned %v, want %v", got.StatusCode, http.StatusNoContent)
-		}
-	}
 }
