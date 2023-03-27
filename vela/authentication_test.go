@@ -47,6 +47,86 @@ func TestVela_Authentication_SetAccessAndRefreshAuth(t *testing.T) {
 	}
 }
 
+func TestVela_Authentication_IsTokenAuthExpired_ValidAuthToken(t *testing.T) {
+	// setup types
+	c, _ := NewClient("http://localhost:8080", "", nil)
+
+	// run test
+	c.Authentication.SetTokenAuth(TestTokenGood)
+
+	expired, err := c.Authentication.IsTokenAuthExpired()
+	if err != nil {
+		t.Errorf("IsTokenAuthExpired returned err: %v", err)
+	}
+
+	if expired {
+		t.Error("IsTokenAuthExpired returned expired for expired token")
+	}
+}
+
+func TestVela_Authentication_IsTokenAuthExpired_ExpiredAuthToken(t *testing.T) {
+	// setup types
+	c, _ := NewClient("http://localhost:8080", "", nil)
+
+	// run test
+	c.Authentication.SetTokenAuth(TestTokenExpired)
+
+	expired, err := c.Authentication.IsTokenAuthExpired()
+	if err != nil {
+		t.Errorf("IsTokenAuthExpired returned err: %v", err)
+	}
+
+	if !expired {
+		t.Error("IsTokenAuthExpired did not return expired for expired token")
+	}
+}
+
+func TestVela_Authentication_IsTokenAuthExpired_InvalidAuthToken(t *testing.T) {
+	// setup types
+	c, _ := NewClient("http://localhost:8080", "", nil)
+
+	// run test
+	c.Authentication.SetTokenAuth("someToken")
+
+	expired, err := c.Authentication.IsTokenAuthExpired()
+	if err != nil {
+		t.Errorf("IsTokenAuthExpired returned err: %v", err)
+	}
+
+	if !expired {
+		t.Error("IsTokenAuthExpired did not return expired for invalid token")
+	}
+}
+
+func TestVela_Authentication_IsTokenAuthExpired_InvalidAuthType(t *testing.T) {
+	// setup types
+	c, _ := NewClient("http://localhost:8080", "", nil)
+
+	// run test
+	c.Authentication.SetPersonalAccessTokenAuth("somePersonalAccessToken")
+
+	expired, err := c.Authentication.IsTokenAuthExpired()
+	if err == nil {
+		t.Error("IsTokenAuthExpired did not return err")
+	}
+
+	if !expired {
+		t.Error("IsTokenAuthExpired did not return expired for invalid token type")
+	}
+
+	// run test
+	c.Authentication.SetAccessAndRefreshAuth("someAccessToken", "someRefreshToken")
+
+	expired, err = c.Authentication.IsTokenAuthExpired()
+	if err == nil {
+		t.Error("IsTokenAuthExpired did not return err")
+	}
+
+	if !expired {
+		t.Error("IsTokenAuthExpired did not return expired for invalid token type")
+	}
+}
+
 func TestVela_Authentication_RefreshAccessToken(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
