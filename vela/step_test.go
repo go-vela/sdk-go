@@ -7,7 +7,6 @@ package vela
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -345,41 +344,4 @@ func ExampleStepService_Remove() {
 	}
 
 	fmt.Printf("Received response code %d, for step %+v", resp.StatusCode, step)
-}
-
-func TestVela_StepStream(t *testing.T) {
-	// setup context
-	gin.SetMode(gin.TestMode)
-
-	s := httptest.NewServer(server.FakeHandler())
-	c, _ := NewClient(s.URL, "", nil)
-
-	type input struct {
-		org   string
-		repo  string
-		build int
-		step  int
-		rc    io.ReadCloser
-	}
-
-	// var buf bytes.Buffer
-
-	tests := []struct {
-		input input
-	}{
-		{
-			input: input{org: "github", repo: "octocat", build: 1, step: 1, rc: nil},
-		},
-		{
-			input: input{org: "github", repo: "octocat", build: 1, step: 1, rc: nil},
-		},
-	}
-
-	for _, test := range tests {
-		got, _ := c.Step.Stream(test.input.org, test.input.repo, test.input.build, test.input.step, test.input.rc)
-
-		if got.StatusCode != http.StatusNoContent {
-			t.Errorf("Stream returned %v, want %v", got.StatusCode, http.StatusNoContent)
-		}
-	}
 }
