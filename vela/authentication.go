@@ -6,6 +6,7 @@ package vela
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -71,6 +72,22 @@ func (svc *AuthenticationService) HasPersonalAccessTokenAuth() bool {
 // HasAccessAndRefreshAuth checks if the authentication type is oauth token pair.
 func (svc *AuthenticationService) HasAccessAndRefreshAuth() bool {
 	return svc.authType == AccessAndRefreshToken
+}
+
+// IsTokenAuthExpired returns whether or not the authentication token has expired.
+func (svc *AuthenticationService) IsTokenAuthExpired() (bool, error) {
+	// verify that the auth type is valid for this type of validation
+	if !svc.HasTokenAuth() {
+		return true, errors.New("client auth type is not set to auth token")
+	}
+
+	// verify a token exists in the client
+	if svc.token == nil {
+		return true, errors.New("no token in client")
+	}
+
+	// check auth token expiration
+	return IsTokenExpired(*svc.token), nil
 }
 
 // RefreshAccessToken uses the supplied refresh token to attempt and refresh
