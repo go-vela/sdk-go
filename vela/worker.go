@@ -29,9 +29,15 @@ func (svc *WorkerService) Get(hostname string) (*library.Worker, *Response, erro
 }
 
 // GetAll returns a list of all workers.
-func (svc *WorkerService) GetAll() (*[]library.Worker, *Response, error) {
+func (svc *WorkerService) GetAll(opt *ListOptions) (*[]library.Worker, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/workers"
+
+	// add optional arguments if supplied
+	u, err := addOptions(u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	// slice library Worker type we want to return
 	v := new([]library.Worker)
