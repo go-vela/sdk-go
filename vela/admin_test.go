@@ -16,6 +16,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types/library"
+	"github.com/go-vela/worker/mock/worker"
 )
 
 func TestAdmin_Build_Update_200(t *testing.T) {
@@ -381,17 +382,14 @@ func TestAdmin_Worker_Register_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
 
+	// create a mock server for the server
 	s := httptest.NewServer(server.FakeHandler())
+
+	// create a new SDK client for the server
 	c, _ := NewClient(s.URL, "", nil)
 
-	// set up new gin instance for fake worker
-	e := gin.New()
-
-	// mock endpoint for worker register call
-	e.POST("/register", func(c *gin.Context) { c.JSON(http.StatusOK, "worker registered successfully") })
-
-	// create a new test server
-	w := httptest.NewServer(e)
+	// create a mock server for the worker
+	w := httptest.NewServer(worker.FakeHandler())
 
 	_, resp, err := c.Admin.Worker.Register(w.URL, "abc")
 	if err != nil {
@@ -407,7 +405,10 @@ func TestAdmin_Worker_Register_Unreachable(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
 
+	// create a mock server for the server
 	s := httptest.NewServer(server.FakeHandler())
+
+	// create a new SDK client for the server
 	c, _ := NewClient(s.URL, "", nil)
 
 	_, _, err := c.Admin.Worker.Register("http://unreachable", "abc")
@@ -420,7 +421,10 @@ func TestAdmin_Worker_Register_BadClient(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
 
+	// create a mock server for the server
 	s := httptest.NewServer(server.FakeHandler())
+
+	// create a new SDK client for the server
 	c, _ := NewClient(s.URL, "", nil)
 
 	_, _, err := c.Admin.Worker.Register("", "abc")
