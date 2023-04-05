@@ -388,14 +388,18 @@ func TestAdmin_Worker_Register_200(t *testing.T) {
 	e := gin.New()
 
 	// mock endpoint for worker register call
-	e.GET("/register", registerWorker)
+	e.POST("/register", func(c *gin.Context) { c.JSON(http.StatusOK, "worker registered successfully") })
 
 	// create a new test server
 	w := httptest.NewServer(e)
 
-	_, _, err := c.Admin.Worker.Register(w.URL, "abc")
+	_, resp, err := c.Admin.Worker.Register(w.URL, "abc")
 	if err != nil {
 		t.Errorf("RegisterToken returned err: %v", err)
+	}
+
+	if resp == nil || resp.StatusCode != 200 {
+		t.Errorf("RegisterToken returned unexpected response: %d", resp.StatusCode)
 	}
 }
 
@@ -412,8 +416,15 @@ func TestAdmin_Worker_Register_Unreachable(t *testing.T) {
 	}
 }
 
-// registerWorker is a mock handler for the
-// register endpoint on a worker.
-func registerWorker(c *gin.Context) {
-	c.JSON(http.StatusOK, "worker registered successfully")
+func TestAdmin_Worker_Register_BadClient(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	_, _, err := c.Admin.Worker.Register("", "abc")
+	if err == nil {
+		t.Errorf("RegisterToken should have returned an error")
+	}
 }
