@@ -3,11 +3,12 @@ module github.com/go-vela/sdk-go
 go 1.19
 
 require (
-	github.com/buildkite/yaml v0.0.0-20181016232759-0caa5f0796e3
+	github.com/buildkite/yaml v0.0.0-20230306222819-0e4e032d4835
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.9.0
-	github.com/go-vela/server v0.18.2-0.20230323213747-5ffbe819aa29
+	github.com/go-vela/server v0.18.2-0.20230405140822-34164d0412e2
 	github.com/go-vela/types v0.18.2-0.20230321015315-6c723879639c
+	github.com/go-vela/worker v0.18.2-0.20230406165141-c76c2e460786
 	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/google/go-cmp v0.5.9
 	github.com/google/go-querystring v1.1.0
@@ -36,7 +37,7 @@ require (
 	golang.org/x/arch v0.0.0-20210923205945-b76863e36670 // indirect
 	golang.org/x/crypto v0.6.0 // indirect
 	golang.org/x/net v0.7.0 // indirect
-	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.7.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
