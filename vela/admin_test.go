@@ -396,10 +396,45 @@ func TestAdmin_Worker_Register_200(t *testing.T) {
 		t.Errorf("RegisterToken returned err: %v", err)
 	}
 
-	if resp == nil || resp.StatusCode != 200 {
+	if resp == nil {
+		t.Error("Response should not be nil")
+	}
+
+	if resp != nil && resp.StatusCode != http.StatusOK {
 		t.Errorf("RegisterToken returned unexpected response: %d", resp.StatusCode)
 	}
 }
+
+// TODO:
+// client should handle passing no token more gracefully
+// uncomment the following when that is in place
+//
+// func TestAdmin_Worker_Register_401(t *testing.T) {
+// 	// setup context
+// 	gin.SetMode(gin.TestMode)
+
+// 	// create a mock server for the server
+// 	s := httptest.NewServer(server.FakeHandler())
+
+// 	// create a new SDK client for the server
+// 	c, _ := NewClient(s.URL, "", nil)
+
+// 	// create a mock server for the worker
+// 	w := httptest.NewServer(worker.FakeHandler())
+
+// 	_, resp, err := c.Admin.Worker.Register(w.URL, "")
+// 	if err != nil {
+// 		t.Errorf("RegisterToken returned err: %v", err)
+// 	}
+
+// 	if resp == nil {
+// 		t.Error("Response should not be nil")
+// 	}
+
+// 	if resp != nil && resp.StatusCode != http.StatusUnauthorized {
+// 		t.Errorf("RegisterToken returned unexpected response: %d", resp.StatusCode)
+// 	}
+// }
 
 func TestAdmin_Worker_Register_Unreachable(t *testing.T) {
 	// setup context
