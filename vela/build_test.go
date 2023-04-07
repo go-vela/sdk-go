@@ -113,7 +113,7 @@ func TestBuild_GetLogs_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Build.GetLogs("github", "octocat", 1)
+	got, resp, err := c.Build.GetLogs("github", "octocat", 1, nil)
 
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
@@ -138,7 +138,7 @@ func TestBuild_GetLogs_404(t *testing.T) {
 	want := []library.Log{}
 
 	// run test
-	got, resp, err := c.Build.GetLogs("github", "octocat", 0)
+	got, resp, err := c.Build.GetLogs("github", "octocat", 0, nil)
 
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
@@ -523,7 +523,7 @@ func ExampleBuildService_GetLogs() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get for a build from the server
-	logs, resp, err := c.Build.GetLogs("github", "octocat", 1)
+	logs, resp, err := c.Build.GetLogs("github", "octocat", 1, nil)
 	if err != nil {
 		fmt.Println(err)
 	}

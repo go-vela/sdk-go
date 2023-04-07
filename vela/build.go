@@ -61,9 +61,15 @@ func (svc *BuildService) GetAll(org, repo string, opt *BuildListOptions) (*[]lib
 }
 
 // GetLogs returns the provided build logs.
-func (svc *BuildService) GetLogs(org, repo string, build int) (*[]library.Log, *Response, error) {
+func (svc *BuildService) GetLogs(org, repo string, build int, opt *ListOptions) (*[]library.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/logs", org, repo, build)
+
+	// add optional arguments if supplied
+	u, err := addOptions(u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	// slice database Log type we want to return
 	v := new([]library.Log)
