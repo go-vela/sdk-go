@@ -7,6 +7,7 @@ package vela
 import (
 	"errors"
 	"fmt"
+	"net/http"
 	"strings"
 
 	"github.com/go-vela/types/library"
@@ -223,4 +224,32 @@ func (svc *AdminWorkerService) RegisterToken(hostname string) (*library.Token, *
 	resp, err := svc.client.Call("POST", url, nil, t)
 
 	return t, resp, err
+}
+
+// Register sends a request to the worker endpoint with the given address
+// and registration token to register the worker in the system.
+func (svc *AdminWorkerService) Register(workerAddress, registrationToken string) (*string, *Response, error) {
+	// create a new Vela SDK client using the passed in address
+	// as the base URL to talk directly to the API on the worker
+	wClient, err := NewClient(workerAddress, "", nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	// use the passed in registration token as auth
+	wClient.Authentication.SetTokenAuth(registrationToken)
+
+	// string type we want to return
+	v := new(string)
+
+	// send request using worker client
+	resp, err := wClient.Worker.client.Call("POST", "/register", nil, v)
+
+	// we overwrite the regular success response
+	// because it doesn't make as much sense in this context
+	if resp != nil && resp.StatusCode == http.StatusOK {
+		*v = "worker registered successfully"
+	}
+
+	return v, resp, err
 }

@@ -16,6 +16,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types/library"
+	"github.com/go-vela/worker/mock/worker"
 )
 
 func TestAdmin_Build_Update_200(t *testing.T) {
@@ -374,5 +375,95 @@ func TestAdmin_Worker_RegistrationToken_NoHostname(t *testing.T) {
 	_, _, err := c.Admin.Worker.RegisterToken(hostname)
 	if err == nil {
 		t.Error("RegisterToken should have returned err")
+	}
+}
+
+func TestAdmin_Worker_Register_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	// create a mock server for the server
+	s := httptest.NewServer(server.FakeHandler())
+
+	// create a new SDK client for the server
+	c, _ := NewClient(s.URL, "", nil)
+
+	// create a mock server for the worker
+	w := httptest.NewServer(worker.FakeHandler())
+
+	_, resp, err := c.Admin.Worker.Register(w.URL, "abc")
+	if err != nil {
+		t.Errorf("RegisterToken returned err: %v", err)
+	}
+
+	if resp == nil {
+		t.Error("Response should not be nil")
+	}
+
+	if resp != nil && resp.StatusCode != http.StatusOK {
+		t.Errorf("RegisterToken returned unexpected response: %d", resp.StatusCode)
+	}
+}
+
+// TODO:
+// client should handle passing no token more gracefully
+// uncomment the following when that is in place
+//
+// func TestAdmin_Worker_Register_401(t *testing.T) {
+// 	// setup context
+// 	gin.SetMode(gin.TestMode)
+
+// 	// create a mock server for the server
+// 	s := httptest.NewServer(server.FakeHandler())
+
+// 	// create a new SDK client for the server
+// 	c, _ := NewClient(s.URL, "", nil)
+
+// 	// create a mock server for the worker
+// 	w := httptest.NewServer(worker.FakeHandler())
+
+// 	_, resp, err := c.Admin.Worker.Register(w.URL, "")
+// 	if err != nil {
+// 		t.Errorf("RegisterToken returned err: %v", err)
+// 	}
+
+// 	if resp == nil {
+// 		t.Error("Response should not be nil")
+// 	}
+
+// 	if resp != nil && resp.StatusCode != http.StatusUnauthorized {
+// 		t.Errorf("RegisterToken returned unexpected response: %d", resp.StatusCode)
+// 	}
+// }
+
+func TestAdmin_Worker_Register_Unreachable(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	// create a mock server for the server
+	s := httptest.NewServer(server.FakeHandler())
+
+	// create a new SDK client for the server
+	c, _ := NewClient(s.URL, "", nil)
+
+	_, _, err := c.Admin.Worker.Register("http://unreachable", "abc")
+	if err == nil {
+		t.Errorf("RegisterToken should have returned an error")
+	}
+}
+
+func TestAdmin_Worker_Register_BadClient(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	// create a mock server for the server
+	s := httptest.NewServer(server.FakeHandler())
+
+	// create a new SDK client for the server
+	c, _ := NewClient(s.URL, "", nil)
+
+	_, _, err := c.Admin.Worker.Register("", "abc")
+	if err == nil {
+		t.Errorf("RegisterToken should have returned an error")
 	}
 }
