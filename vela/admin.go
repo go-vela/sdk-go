@@ -247,8 +247,12 @@ func (svc *AdminWorkerService) Register(workerAddress, registrationToken string)
 
 	// we overwrite the regular success response
 	// because it doesn't make as much sense in this context
-	if resp != nil && resp.StatusCode == http.StatusOK {
-		*v = "worker registered successfully"
+	if resp != nil {
+		if resp.StatusCode == http.StatusOK {
+			*v = "worker registered successfully"
+		} else {
+			err = fmt.Errorf("unable to register worker at %s, received status code %d", workerAddress, resp.StatusCode)
+		}
 	}
 
 	return v, resp, err
