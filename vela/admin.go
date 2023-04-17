@@ -251,7 +251,7 @@ func (svc *AdminWorkerService) Register(workerAddress, registrationToken string)
 		if resp.StatusCode == http.StatusOK {
 			*v = "worker registered successfully"
 		} else {
-			err = fmt.Errorf("unable to register worker at %s, received status code %d", workerAddress, resp.StatusCode)
+			err = fmt.Errorf("received status code %d", resp.StatusCode)
 		}
 	}
 
