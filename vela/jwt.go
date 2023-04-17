@@ -7,7 +7,7 @@ package vela
 import (
 	"time"
 
-	jwt "github.com/golang-jwt/jwt/v4"
+	jwt "github.com/golang-jwt/jwt/v5"
 )
 
 // IsTokenExpired will parse the expiration of the the given
