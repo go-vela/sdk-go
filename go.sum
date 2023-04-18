@@ -30,8 +30,6 @@ github.com/go-vela/server v0.18.2-0.20230405140822-34164d0412e2 h1:KsxVnbFhpe8Qc
 github.com/go-vela/server v0.18.2-0.20230405140822-34164d0412e2/go.mod h1:b+7XeGHO4ynIinY9mpWb6ye9psdwHpsAqMWy5oC+zJ0=
 github.com/go-vela/types v0.18.2-0.20230407145744-676c45c911b5 h1:fkxgJa0ispCsLsUHaEImsLPFUhFRrAQPoA3a1XlARxQ=
 github.com/go-vela/types v0.18.2-0.20230407145744-676c45c911b5/go.mod h1:6MzMhLaXKSZ9wiJveieqnBd2+4ZMS7yv7+POGSITyS8=
-github.com/go-vela/worker v0.18.2-0.20230414205852-66791e03e03a h1:JG84FSAffkDajLusAUlHpW6UeYfn1623Dln7rXQWPSA=
-github.com/go-vela/worker v0.18.2-0.20230414205852-66791e03e03a/go.mod h1:IjSc7hc9uGSSw/TtPntIFbR25ftmiThJrQ588BgtYFk=
 github.com/goccy/go-json v0.10.0 h1:mXKd9Qw4NuzShiRlOXKews24ufknHO7gx30lsDyokKA=
 github.com/goccy/go-json v0.10.0/go.mod h1:6MelG93GURQebXPDq3khkgXZkazVtN9CRI+MGFi0w8I=
 github.com/golang-jwt/jwt/v5 v5.0.0 h1:1n1XNM9hk7O9mnQoNBGolZvzebBQ7p93ULHRc28XJUE=
@@ -77,6 +75,7 @@ github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=
 github.com/stretchr/testify v1.8.1/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o6fzry7u4=
 github.com/stretchr/testify v1.8.2 h1:+h33VjcLVPDHtOdpUCuF+7gSuG3yGIftsP1YvFihtJ8=
+github.com/stretchr/testify v1.8.2/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o6fzry7u4=
 github.com/twitchyliquid64/golang-asm v0.15.1 h1:SU5vSMR7hnwNxj24w34ZyCi/FmDZTkS4MhqMhdFk5YI=
 github.com/twitchyliquid64/golang-asm v0.15.1/go.mod h1:a1lVb/DtPvCB8fslRZhAngC2+aY1QWCk3Cedj/Gdt08=
 github.com/ugorji/go/codec v1.2.9 h1:rmenucSohSTiyL09Y+l2OCk+FrMxGMzho2+tjr5ticU=

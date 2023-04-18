@@ -8,7 +8,6 @@ require (
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-vela/server v0.18.2-0.20230405140822-34164d0412e2
 	github.com/go-vela/types v0.18.2-0.20230407145744-676c45c911b5
-	github.com/go-vela/worker v0.18.2-0.20230414205852-66791e03e03a
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/go-cmp v0.5.9
 	github.com/google/go-querystring v1.1.0
@@ -32,6 +31,7 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
+	github.com/stretchr/testify v1.8.2 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.9 // indirect
 	golang.org/x/arch v0.0.0-20210923205945-b76863e36670 // indirect
