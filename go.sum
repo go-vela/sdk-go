@@ -11,8 +11,8 @@ github.com/coreos/go-semver v0.3.1/go.mod h1:irMmmIw/7yzSRPWryHsK7EYSg09caPQL03V
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/drone/envsubst/v2 v2.0.0-20210730161058-179042472c46 h1:7QPwrLT79GlD5sizHf27aoY2RTvw62mO6x7mxkScNk0=
-github.com/drone/envsubst/v2 v2.0.0-20210730161058-179042472c46/go.mod h1:esf2rsHFNlZlxsqsZDojNBcnNs5REqIvRrWRHqX0vEU=
+github.com/drone/envsubst v1.0.3 h1:PCIBwNDYjs50AsLZPYdfhSATKaRg/FJmDc2D6+C2x8g=
+github.com/drone/envsubst v1.0.3/go.mod h1:N2jZmlMufstn1KEqvbHjw40h1KyTmnVzHcSc9bFiJ2g=
 github.com/ghodss/yaml v1.0.0 h1:wQHKEahhL6wmXdzwWG11gIVCkOv05bNOh+Rxn0yngAk=
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
 github.com/gin-contrib/sse v0.1.0 h1:Y/yl/+YNO8GZSjAhjMsSuLt29uWRFHdHYUb5lYOV9qE=
@@ -26,10 +26,10 @@ github.com/go-playground/universal-translator v0.18.1 h1:Bcnm0ZwsGyWbCzImXv+pAJn
 github.com/go-playground/universal-translator v0.18.1/go.mod h1:xekY+UJKNuX9WP91TpwSH2VMlDf28Uj24BCp08ZFTUY=
 github.com/go-playground/validator/v10 v10.11.2 h1:q3SHpufmypg+erIExEKUmsgmhDTyhcJ38oeKGACXohU=
 github.com/go-playground/validator/v10 v10.11.2/go.mod h1:NieE624vt4SCTJtD87arVLvdmjPAeV8BQlHtMnw9D7s=
-github.com/go-vela/server v0.19.1 h1:hqxYtEypmBmLcx17mH4sg0oB8Wlqfec4gFlENoVmOIg=
-github.com/go-vela/server v0.19.1/go.mod h1:/njKScAZl/TKkw0OiLNCMNZII0X//V4p2zWJqSIwUNk=
-github.com/go-vela/types v0.19.1 h1:HA5tFwju/o1QbzjhASiDJhvpHmLLmLR9e327kWp0MXg=
-github.com/go-vela/types v0.19.1/go.mod h1:BvqapqTPOfHeTLiFYMa/eAzYqnujdPEd358J8TXc7l0=
+github.com/go-vela/server v0.19.2 h1:b5kQLbQzzY1PQ2/GJN5MHCmlo4wS9C3cyy4fErOl4/o=
+github.com/go-vela/server v0.19.2/go.mod h1:N6ej04/c6kc/0sJK15jCLr3Au9L9Zs9TjcMtkJoyJx8=
+github.com/go-vela/types v0.19.2 h1:xU61CX2jdMuBCtLOg8a7Z2aEWYM1zZt37Ygx1oHGbjM=
+github.com/go-vela/types v0.19.2/go.mod h1:ZvDjYCKU36yJS3sLxPLCny/HLF1U6YtlOienzv/cXB4=
 github.com/goccy/go-json v0.10.0 h1:mXKd9Qw4NuzShiRlOXKews24ufknHO7gx30lsDyokKA=
 github.com/goccy/go-json v0.10.0/go.mod h1:6MelG93GURQebXPDq3khkgXZkazVtN9CRI+MGFi0w8I=
 github.com/golang-jwt/jwt/v5 v5.0.0 h1:1n1XNM9hk7O9mnQoNBGolZvzebBQ7p93ULHRc28XJUE=
