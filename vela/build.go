@@ -163,3 +163,17 @@ func (svc *BuildService) GetBuildToken(org, repo string, build int) (*library.To
 
 	return t, resp, err
 }
+
+// Get returns the provided build.
+func (svc *BuildService) GetCompiled(org, repo string, build int) (*library.Compiled, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/compiled", org, repo, build)
+
+	// library Build type we want to return
+	v := new(library.Compiled)
+
+	// send request using client
+	resp, err := svc.client.Call("GET", u, nil, v)
+
+	return v, resp, err
+}
