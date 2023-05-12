@@ -483,6 +483,53 @@ func TestBuild_GetBuildToken_400(t *testing.T) {
 	}
 }
 
+func TestBuild_GetBuildItinerary_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	data := []byte(server.BuildItineraryResp)
+
+	var want library.BuildItinerary
+	_ = json.Unmarshal(data, &want)
+
+	// run test
+	got, resp, err := c.Build.GetBuildItinerary("github", "octocat", 1)
+
+	if err != nil {
+		t.Errorf("GetBuildItinerary returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("GetBuildItinerary returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("GetBuildItinerary is %v, want %v", got, want)
+	}
+}
+
+func TestBuild_GetBuildItinerary_500(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	// run test
+	_, resp, err := c.Build.GetBuildItinerary("github", "octocat", 0)
+
+	if err == nil {
+		t.Errorf("GetBuildItinerary should have returned err, got: %v", resp.StatusCode)
+	}
+
+	if resp.StatusCode != http.StatusInternalServerError {
+		t.Errorf("GetBuildItinerary returned %v, want %v", resp.StatusCode, http.StatusInternalServerError)
+	}
+}
+
 func ExampleBuildService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
