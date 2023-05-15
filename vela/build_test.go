@@ -483,35 +483,35 @@ func TestBuild_GetBuildToken_400(t *testing.T) {
 	}
 }
 
-func TestBuild_GetBuildItinerary_200(t *testing.T) {
+func TestBuild_GetBuildExecutable_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	data := []byte(server.BuildItineraryResp)
+	data := []byte(server.BuildExecutableResp)
 
-	var want library.BuildItinerary
+	var want library.BuildExecutable
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Build.GetBuildItinerary("github", "octocat", 1)
+	got, resp, err := c.Build.GetBuildExecutable("github", "octocat", 1)
 
 	if err != nil {
-		t.Errorf("GetBuildItinerary returned err: %v", err)
+		t.Errorf("GetBuildExecutable returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		t.Errorf("GetBuildItinerary returned %v, want %v", resp.StatusCode, http.StatusOK)
+		t.Errorf("GetBuildExecutable returned %v, want %v", resp.StatusCode, http.StatusOK)
 	}
 
 	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("GetBuildItinerary is %v, want %v", got, want)
+		t.Errorf("GetBuildExecutable is %v, want %v", got, want)
 	}
 }
 
-func TestBuild_GetBuildItinerary_500(t *testing.T) {
+func TestBuild_GetBuildExecutable_500(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
 
@@ -519,14 +519,14 @@ func TestBuild_GetBuildItinerary_500(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Build.GetBuildItinerary("github", "octocat", 0)
+	_, resp, err := c.Build.GetBuildExecutable("github", "octocat", 0)
 
 	if err == nil {
-		t.Errorf("GetBuildItinerary should have returned err, got: %v", resp.StatusCode)
+		t.Errorf("GetBuildExecutable should have returned err, got: %v", resp.StatusCode)
 	}
 
 	if resp.StatusCode != http.StatusInternalServerError {
-		t.Errorf("GetBuildItinerary returned %v, want %v", resp.StatusCode, http.StatusInternalServerError)
+		t.Errorf("GetBuildExecutable returned %v, want %v", resp.StatusCode, http.StatusInternalServerError)
 	}
 }
 
