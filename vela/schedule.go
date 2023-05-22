@@ -7,19 +7,19 @@ package vela
 import (
 	"fmt"
 
-	"github.com/go-vela/server/api/types"
+	"github.com/go-vela/types/library"
 )
 
 // ScheduleService handles retrieving schedules from the server methods of the Vela API.
 type ScheduleService service
 
 // Get returns the provided schedule from the repo.
-func (svc *ScheduleService) Get(org, repo, schedule string) (*types.Schedule, *Response, error) {
+func (svc *ScheduleService) Get(org, repo, schedule string) (*library.Schedule, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/schedules/%s/%s/%s", org, repo, schedule)
 
 	// library Schedule type we want to return
-	v := new(types.Schedule)
+	v := new(library.Schedule)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -28,7 +28,7 @@ func (svc *ScheduleService) Get(org, repo, schedule string) (*types.Schedule, *R
 }
 
 // GetAll returns a list of all schedules from the repo.
-func (svc *ScheduleService) GetAll(org, repo string, opt *ListOptions) (*[]types.Schedule, *Response, error) {
+func (svc *ScheduleService) GetAll(org, repo string, opt *ListOptions) (*[]library.Schedule, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/schedules/%s/%s", org, repo)
 
@@ -39,7 +39,7 @@ func (svc *ScheduleService) GetAll(org, repo string, opt *ListOptions) (*[]types
 	}
 
 	// slice library Schedule type we want to return
-	v := new([]types.Schedule)
+	v := new([]library.Schedule)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -48,12 +48,12 @@ func (svc *ScheduleService) GetAll(org, repo string, opt *ListOptions) (*[]types
 }
 
 // Add constructs a schedule with the provided details.
-func (svc *ScheduleService) Add(org, repo string, s *types.Schedule) (*types.Schedule, *Response, error) {
+func (svc *ScheduleService) Add(org, repo string, s *library.Schedule) (*library.Schedule, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/schedules/%s/%s", org, repo)
 
 	// library Schedule type we want to return
-	v := new(types.Schedule)
+	v := new(library.Schedule)
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, s, v)
@@ -62,12 +62,12 @@ func (svc *ScheduleService) Add(org, repo string, s *types.Schedule) (*types.Sch
 }
 
 // Update modifies a schedule with the provided details.
-func (svc *ScheduleService) Update(org, repo string, s *types.Schedule) (*types.Schedule, *Response, error) {
+func (svc *ScheduleService) Update(org, repo string, s *library.Schedule) (*library.Schedule, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/schedules/%s/%s/%s", org, repo, s.GetName())
 
 	// library Schedule type we want to return
-	v := new(types.Schedule)
+	v := new(library.Schedule)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, s, v)
