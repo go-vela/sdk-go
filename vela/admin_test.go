@@ -15,6 +15,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-vela/server/mock/server"
+	"github.com/go-vela/types"
 	"github.com/go-vela/types/library"
 )
 
@@ -50,6 +51,68 @@ func TestAdmin_Build_Update_200(t *testing.T) {
 
 	if !reflect.DeepEqual(got, &want) {
 		t.Errorf("Build update is %v, want %v", got, want)
+	}
+}
+
+func TestAdmin_Clean_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	want := server.CleanResourcesResp
+
+	req := types.Error{
+		Message: String("msg"),
+	}
+
+	// run test
+	got, resp, err := c.Admin.Clean.Clean(&req, nil)
+
+	if err != nil {
+		t.Errorf("Clean returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Clean returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if !reflect.DeepEqual(*got, want) {
+		t.Errorf("Clean is %v, want %v", got, want)
+	}
+}
+
+func TestAdmin_Clean_Error(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	req := types.Error{
+		Message: String("msg"),
+	}
+
+	opt500 := CleanOptions{
+		Before: 1,
+	}
+
+	opt401 := CleanOptions{
+		Before: 2,
+	}
+
+	// run tests
+	_, resp, _ := c.Admin.Clean.Clean(&req, &opt500)
+
+	if resp.StatusCode != http.StatusInternalServerError {
+		t.Errorf("Clean returned %v, want %v", resp.StatusCode, http.StatusInternalServerError)
+	}
+
+	_, resp, _ = c.Admin.Clean.Clean(&req, &opt401)
+
+	if resp.StatusCode != http.StatusUnauthorized {
+		t.Errorf("Clean returned %v, want %v", resp.StatusCode, http.StatusUnauthorized)
 	}
 }
 

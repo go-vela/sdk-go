@@ -127,6 +127,7 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	c.Authorization = &AuthorizationService{client: c}
 	c.Admin = &AdminService{
 		&AdminBuildService{client: c},
+		&AdminCleanService{client: c},
 		&AdminDeploymentService{client: c},
 		&AdminHookService{client: c},
 		&AdminRepoService{client: c},
