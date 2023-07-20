@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/go-vela/types"
 	"github.com/go-vela/types/library"
 )
 
@@ -17,6 +18,7 @@ type (
 	// the server methods of the Vela API.
 	AdminService struct {
 		Build      *AdminBuildService
+		Clean      *AdminCleanService
 		Deployment *AdminDeploymentService
 		Hook       *AdminHookService
 		Repo       *AdminRepoService
@@ -30,6 +32,10 @@ type (
 	// AdminBuildService handles retrieving admin builds from
 	// the server methods of the Vela API.
 	AdminBuildService service
+
+	// AdminCleanService handles cleaning resources using
+	// the server methods of the Vela API.
+	AdminCleanService service
 
 	// AdminDeploymentService handles retrieving admin deployments from
 	// the server methods of the Vela API.
@@ -75,6 +81,12 @@ type GetQueueOptions struct {
 	ListOptions
 }
 
+// CleanOptions specifies the optional parameters to the
+// Clean.Clean method.
+type CleanOptions struct {
+	Before int64 `url:"before,omitempty"`
+}
+
 // Update modifies a build with the provided details.
 func (svc *AdminBuildService) Update(b *library.Build) (*library.Build, *Response, error) {
 	// set the API endpoint path we send the request to
@@ -85,6 +97,24 @@ func (svc *AdminBuildService) Update(b *library.Build) (*library.Build, *Respons
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, b, v)
+
+	return v, resp, err
+}
+
+// Clean sets build resources older than a specified time to a proper canceled / finished state with the provided message.
+func (svc *AdminCleanService) Clean(e *types.Error, opt *CleanOptions) (*string, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := "/api/v1/admin/clean"
+
+	// add optional arguments if supplied
+	u, err := addOptions(u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	v := new(string)
+
+	resp, err := svc.client.Call("PUT", u, e, v)
 
 	return v, resp, err
 }

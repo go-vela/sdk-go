@@ -88,7 +88,7 @@ func TestLog_AddService_201(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Log.AddService("github", "octocat", 1, 1, &req)
+	resp, err := c.Log.AddService("github", "octocat", 1, 1, &req)
 
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
@@ -96,10 +96,6 @@ func TestLog_AddService_201(t *testing.T) {
 
 	if resp.StatusCode != http.StatusCreated {
 		t.Errorf("Log returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Log add is %v, want %v", got, want)
 	}
 }
 
@@ -110,17 +106,12 @@ func TestLog_UpdateService_200(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	data := []byte(server.LogResp)
-
-	var want library.Log
-	_ = json.Unmarshal(data, &want)
-
 	req := library.Log{
 		Data: Bytes([]byte("Hello, World Manny")),
 	}
 
 	// run test
-	got, resp, err := c.Log.UpdateService("github", "octocat", 1, 1, &req)
+	resp, err := c.Log.UpdateService("github", "octocat", 1, 1, &req)
 
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
@@ -128,10 +119,6 @@ func TestLog_UpdateService_200(t *testing.T) {
 
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Log returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Log create is %v, want %v", got, want)
 	}
 }
 
@@ -142,14 +129,12 @@ func TestLog_UpdateService_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Log{}
-
 	req := library.Log{
 		Data: Bytes([]byte("Hello, World Manny")),
 	}
 
 	// run test
-	got, resp, err := c.Log.UpdateService("github", "not-found", 1, 0, &req)
+	resp, err := c.Log.UpdateService("github", "not-found", 1, 0, &req)
 
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
@@ -157,10 +142,6 @@ func TestLog_UpdateService_404(t *testing.T) {
 
 	if resp.StatusCode != http.StatusNotFound {
 		t.Errorf("Log returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Log  get is %v, want %v", got, want)
 	}
 }
 
@@ -272,7 +253,7 @@ func TestLog_AddStep_201(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Log.AddStep("github", "octocat", 1, 1, &req)
+	resp, err := c.Log.AddStep("github", "octocat", 1, 1, &req)
 
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
@@ -280,10 +261,6 @@ func TestLog_AddStep_201(t *testing.T) {
 
 	if resp.StatusCode != http.StatusCreated {
 		t.Errorf("Log returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Log add is %v, want %v", got, want)
 	}
 }
 
@@ -294,17 +271,12 @@ func TestLog_UpdateStep_200(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	data := []byte(server.LogResp)
-
-	var want library.Log
-	_ = json.Unmarshal(data, &want)
-
 	req := library.Log{
 		Data: Bytes([]byte("Hello, World Manny")),
 	}
 
 	// run test
-	got, resp, err := c.Log.UpdateStep("github", "octocat", 1, 1, &req)
+	resp, err := c.Log.UpdateStep("github", "octocat", 1, 1, &req)
 
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
@@ -312,10 +284,6 @@ func TestLog_UpdateStep_200(t *testing.T) {
 
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Log returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Log create is %v, want %v", got, want)
 	}
 }
 
@@ -326,14 +294,12 @@ func TestLog_UpdateStep_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Log{}
-
 	req := library.Log{
 		Data: Bytes([]byte("Hello, World Manny")),
 	}
 
 	// run test
-	got, resp, err := c.Log.UpdateStep("github", "not-found", 1, 0, &req)
+	resp, err := c.Log.UpdateStep("github", "not-found", 1, 0, &req)
 
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
@@ -341,10 +307,6 @@ func TestLog_UpdateStep_404(t *testing.T) {
 
 	if resp.StatusCode != http.StatusNotFound {
 		t.Errorf("Log returned %v, want %v", resp.StatusCode, http.StatusOK)
-	}
-
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Log  get is %v, want %v", got, want)
 	}
 }
 
@@ -414,12 +376,12 @@ func ExampleLogService_AddService() {
 	}
 
 	// Create the log in the server
-	log, resp, err := c.Log.AddService("github", "octocat", 1, 1, &req)
+	resp, err := c.Log.AddService("github", "octocat", 1, 1, &req)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Printf("Received response code %d, for log %+v", resp.StatusCode, log)
+	fmt.Printf("Received response code %d for log", resp.StatusCode)
 }
 
 func ExampleLogService_UpdateService() {
@@ -434,12 +396,12 @@ func ExampleLogService_UpdateService() {
 	}
 
 	// Update the log in the server
-	log, resp, err := c.Log.UpdateService("github", "octocat", 1, 1, &req)
+	resp, err := c.Log.UpdateService("github", "octocat", 1, 1, &req)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Printf("Received response code %d, for log %+v", resp.StatusCode, log)
+	fmt.Printf("Received response code %d, for log", resp.StatusCode)
 }
 
 func ExampleLogService_RemoveService() {
@@ -486,12 +448,12 @@ func ExampleLogService_AddStep() {
 	}
 
 	// Create the log in the server
-	log, resp, err := c.Log.AddStep("github", "octocat", 1, 1, &req)
+	resp, err := c.Log.AddStep("github", "octocat", 1, 1, &req)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Printf("Received response code %d, for log %+v", resp.StatusCode, log)
+	fmt.Printf("Received response code %d for log", resp.StatusCode)
 }
 
 func ExampleLogService_UpdateStep() {
@@ -506,12 +468,12 @@ func ExampleLogService_UpdateStep() {
 	}
 
 	// Update the log in the server
-	log, resp, err := c.Log.UpdateStep("github", "octocat", 1, 1, &req)
+	resp, err := c.Log.UpdateStep("github", "octocat", 1, 1, &req)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Printf("Received response code %d, for log %+v", resp.StatusCode, log)
+	fmt.Printf("Received response code %d for log", resp.StatusCode)
 }
 
 func ExampleLogService_RemoveStep() {

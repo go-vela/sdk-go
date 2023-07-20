@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Target Brands, Inc. All rights reserved.
+// Copyright (c) 2023 Target Brands, Inc. All rights reserved.
 //
 // Use of this source code is governed by the LICENSE file in this repository.
 
@@ -38,6 +38,7 @@ func TestVela_NewClient(t *testing.T) {
 	want.Authorization = &AuthorizationService{client: want}
 	want.Admin = &AdminService{
 		&AdminBuildService{client: want},
+		&AdminCleanService{client: want},
 		&AdminDeploymentService{client: want},
 		&AdminHookService{client: want},
 		&AdminRepoService{client: want},
@@ -54,6 +55,7 @@ func TestVela_NewClient(t *testing.T) {
 	want.Pipeline = &PipelineService{client: want}
 	want.Repo = &RepoService{client: want}
 	want.SCM = &SCMService{client: want}
+	want.Schedule = &ScheduleService{client: want}
 	want.Secret = &SecretService{client: want}
 	want.Step = &StepService{client: want}
 	want.Svc = &SvcService{client: want}

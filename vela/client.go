@@ -50,6 +50,7 @@ type (
 		Pipeline       *PipelineService
 		Repo           *RepoService
 		SCM            *SCMService
+		Schedule       *ScheduleService
 		Secret         *SecretService
 		Step           *StepService
 		Svc            *SvcService
@@ -126,6 +127,7 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	c.Authorization = &AuthorizationService{client: c}
 	c.Admin = &AdminService{
 		&AdminBuildService{client: c},
+		&AdminCleanService{client: c},
 		&AdminDeploymentService{client: c},
 		&AdminHookService{client: c},
 		&AdminRepoService{client: c},
@@ -142,6 +144,7 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	c.Pipeline = &PipelineService{client: c}
 	c.Repo = &RepoService{client: c}
 	c.SCM = &SCMService{client: c}
+	c.Schedule = &ScheduleService{client: c}
 	c.Secret = &SecretService{client: c}
 	c.Step = &StepService{client: c}
 	c.Svc = &SvcService{client: c}
