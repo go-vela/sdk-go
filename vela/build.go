@@ -40,7 +40,7 @@ func (svc *BuildService) Get(org, repo string, build int) (*library.Build, *Resp
 	return v, resp, err
 }
 
-// Get returns the provided build executable.
+// GetBuildExecutable returns the executable for the provided build.
 func (svc *BuildService) GetBuildExecutable(org, repo string, build int) (*library.BuildExecutable, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/executable", org, repo, build)
