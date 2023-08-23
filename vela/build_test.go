@@ -79,13 +79,13 @@ func TestBuildExecutable_Get_200(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	data := []byte(server.BuildResp)
+	data := []byte(server.BuildExecutableResp)
 
-	var want library.Build
+	var want library.BuildExecutable
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Build.Get("github", "octocat", 1)
+	got, resp, err := c.Build.GetBuildExecutable("github", "octocat", 1)
 
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
@@ -93,6 +93,31 @@ func TestBuildExecutable_Get_200(t *testing.T) {
 
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Build returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("Build get is %v, want %v", got, want)
+	}
+}
+
+func TestBuildExecutable_Get_500(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	want := library.BuildExecutable{}
+
+	// run test
+	got, resp, err := c.Build.GetBuildExecutable("github", "octocat", 0)
+
+	if err == nil {
+		t.Errorf("New returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusInternalServerError {
+		t.Errorf("Build returned %v, want %v", resp.StatusCode, http.StatusInternalServerError)
 	}
 
 	if !reflect.DeepEqual(got, &want) {

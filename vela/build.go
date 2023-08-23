@@ -41,12 +41,12 @@ func (svc *BuildService) Get(org, repo string, build int) (*library.Build, *Resp
 }
 
 // Get returns the provided build executable.
-func (svc *BuildService) GetBuildExecutable(org, repo string, build int) (*library.Build, *Response, error) {
+func (svc *BuildService) GetBuildExecutable(org, repo string, build int) (*library.BuildExecutable, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/executable", org, repo, build)
 
 	// library Build type we want to return
-	v := new(library.Build)
+	v := new(library.BuildExecutable)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
