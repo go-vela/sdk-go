@@ -236,21 +236,21 @@ func (svc *AdminUserService) Update(u *library.User) (*library.User, *Response, 
 	return v, resp, err
 }
 
-// RegisterToken generates a worker registration token with the provided details.
-func (svc *AdminWorkerService) RegisterToken(hostname string) (*library.Token, *Response, error) {
+// RegisterWorker generates a worker registration with the provided details.
+func (svc *AdminWorkerService) RegisterWorker(hostname string) (*library.WorkerRegistration, *Response, error) {
 	// validate input
 	if strings.EqualFold(hostname, "") {
 		return nil, nil, errors.New("bad request, no hostname provided")
 	}
 
 	// set the API endpoint path we send the request to
-	url := fmt.Sprintf("/api/v1/admin/workers/%s/register-token", hostname)
+	url := fmt.Sprintf("/api/v1/admin/workers/%s/register", hostname)
 
 	// library Token type we want to return
-	t := new(library.Token)
+	wr := new(library.WorkerRegistration)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", url, nil, t)
+	resp, err := svc.client.Call("POST", url, nil, wr)
 
-	return t, resp, err
+	return wr, resp, err
 }

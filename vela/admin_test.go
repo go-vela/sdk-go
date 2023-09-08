@@ -397,9 +397,9 @@ func TestAdmin_Worker_RegistrationToken_201(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	data := []byte(server.RegisterTokenResp)
+	data := []byte(server.WorkerRegistrationResp)
 
-	var want *library.Token
+	var want *library.WorkerRegistration
 
 	err := json.Unmarshal(data, &want)
 	if err != nil {
@@ -409,17 +409,17 @@ func TestAdmin_Worker_RegistrationToken_201(t *testing.T) {
 	hostname := "foo"
 
 	// run test
-	got, resp, err := c.Admin.Worker.RegisterToken(hostname)
+	got, resp, err := c.Admin.Worker.RegisterWorker(hostname)
 	if err != nil {
-		t.Errorf("RegisterToken returned err: %v", err)
+		t.Errorf("RegisterWorker returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusCreated {
-		t.Errorf("RegisterToken returned %v, want %v", resp.StatusCode, http.StatusCreated)
+		t.Errorf("RegisterWorker returned %v, want %v", resp.StatusCode, http.StatusCreated)
 	}
 
 	if diff := cmp.Diff(want, got); diff != "" {
-		t.Errorf("RegisterToken() mismatch (-want +got):\n%s", diff)
+		t.Errorf("RegisterWorker() mismatch (-want +got):\n%s", diff)
 	}
 }
 
@@ -434,7 +434,7 @@ func TestAdmin_Worker_RegistrationToken_NoHostname(t *testing.T) {
 	hostname := ""
 
 	// run test
-	_, _, err := c.Admin.Worker.RegisterToken(hostname)
+	_, _, err := c.Admin.Worker.RegisterWorker(hostname)
 	if err == nil {
 		t.Error("RegisterToken should have returned err")
 	}
