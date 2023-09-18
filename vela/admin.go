@@ -7,6 +7,7 @@ package vela
 import (
 	"errors"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"strings"
 
 	"github.com/go-vela/types"
@@ -252,5 +253,20 @@ func (svc *AdminWorkerService) RegisterToken(hostname string) (*library.Token, *
 	// send request using client
 	resp, err := svc.client.Call("POST", url, nil, t)
 
+	return t, resp, err
+}
+
+// GetQueueCreds fetches queue credentials based valid registration token.
+func (svc *AdminWorkerService) GetQueueCreds() (*library.QueueRegistration, *Response, error) {
+
+	// set the API endpoint path we send the request to
+	url := "/api/v1/queue-registration"
+
+	// library Token type we want to return
+	t := new(library.QueueRegistration)
+
+	// send request using client
+	resp, err := svc.client.Call("POST", url, nil, t)
+	logrus.Infof(" Queue cred %v: ", t)
 	return t, resp, err
 }
