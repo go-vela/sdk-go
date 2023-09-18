@@ -258,7 +258,7 @@ func (svc *AdminWorkerService) RegisterToken(hostname string) (*library.Token, *
 // GetQueueCreds fetches queue credentials based valid registration token.
 func (svc *AdminWorkerService) GetQueueCreds() (*library.QueueRegistration, *Response, error) {
 	// set the API endpoint path we send the request to
-	url := "/api/v1/queue-registration"
+	url := "/api/v1/queue/queue-registration"
 
 	// library Token type we want to return
 	t := new(library.QueueRegistration)
