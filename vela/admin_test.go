@@ -439,3 +439,34 @@ func TestAdmin_Worker_RegistrationToken_NoHostname(t *testing.T) {
 		t.Error("RegisterToken should have returned err")
 	}
 }
+
+func TestAdmin_Worker_GetQueueCreds_201(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	data := []byte(server.QueueRegistrationResp)
+
+	var want *library.QueueRegistration
+
+	err := json.Unmarshal(data, &want)
+	if err != nil {
+		t.Error(err)
+	}
+
+	// run test
+	got, resp, err := c.Admin.Worker.GetQueueCreds()
+	if err != nil {
+		t.Errorf("GetQueueCreds returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusCreated {
+		t.Errorf("GetQueueCreds returned %v, want %v", resp.StatusCode, http.StatusCreated)
+	}
+
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("GetQueueCreds() mismatch (-want +got):\n%s", diff)
+	}
+}
