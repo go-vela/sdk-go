@@ -244,7 +244,7 @@ func (svc *AdminWorkerService) RegisterToken(hostname string) (*library.Token, *
 	}
 
 	// set the API endpoint path we send the request to
-	url := fmt.Sprintf("/api/v1/admin/workers/%s/register-token", hostname)
+	url := fmt.Sprintf("/api/v1/admin/workers/%s/register", hostname)
 
 	// library Token type we want to return
 	t := new(library.Token)
@@ -258,7 +258,7 @@ func (svc *AdminWorkerService) RegisterToken(hostname string) (*library.Token, *
 // GetQueueCreds fetches queue credentials based valid registration token.
 func (svc *AdminWorkerService) GetQueueCreds() (*library.QueueRegistration, *Response, error) {
 	// set the API endpoint path we send the request to
-	url := "/api/v1/queue/queue-registration"
+	url := "/api/v1/queue/register"
 
 	// library Token type we want to return
 	t := new(library.QueueRegistration)
