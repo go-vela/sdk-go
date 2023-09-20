@@ -60,6 +60,7 @@ func TestVela_NewClient(t *testing.T) {
 	want.Step = &StepService{client: want}
 	want.Svc = &SvcService{client: want}
 	want.Worker = &WorkerService{client: want}
+	want.Queue = &QueueService{client: want}
 
 	// run test
 	got, err := NewClient(addr, "", nil)
