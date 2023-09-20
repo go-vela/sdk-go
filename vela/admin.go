@@ -264,7 +264,7 @@ func (svc *AdminWorkerService) GetQueueCreds() (*library.QueueRegistration, *Res
 	t := new(library.QueueRegistration)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", url, nil, t)
+	resp, err := svc.client.Call("GET", url, nil, t)
 
 	return t, resp, err
 }
