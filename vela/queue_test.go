@@ -21,9 +21,9 @@ func TestAdmin_Worker_GetQueueCreds_200(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 	c.Authentication.SetPersonalAccessTokenAuth("token")
-	data := []byte(server.QueueRegistrationResp)
+	data := []byte(server.QueueInfoResp)
 
-	var want *library.QueueRegistration
+	var want *library.QueueInfo
 
 	err := json.Unmarshal(data, &want)
 	if err != nil {
