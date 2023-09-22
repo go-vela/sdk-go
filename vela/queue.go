@@ -13,7 +13,7 @@ type QueueService service
 // GetQueueCreds fetches queue credentials based valid registration token.
 func (qvc *QueueService) GetQueueCreds() (*library.QueueRegistration, *Response, error) {
 	// set the API endpoint path we send the request to
-	url := "/api/v1/queue/register"
+	url := "/api/v1/queue/info"
 
 	// library Token type we want to return
 	t := new(library.QueueRegistration)
