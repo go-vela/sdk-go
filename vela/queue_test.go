@@ -10,7 +10,7 @@ import (
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types/library"
 	"github.com/google/go-cmp/cmp"
-	"net/http"
+	"net/http" //nolint:goimports
 	"net/http/httptest"
 	"testing"
 )
