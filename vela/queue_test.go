@@ -5,12 +5,12 @@
 package vela
 
 import (
-	"encoding/json"
+	"encoding/json" //nolint:goimports
 	"github.com/gin-gonic/gin"
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types/library"
 	"github.com/google/go-cmp/cmp"
-	"net/http" //nolint:goimports
+	"net/http"
 	"net/http/httptest"
 	"testing"
 )
