@@ -10,7 +10,7 @@ import "github.com/go-vela/types/library"
 // the server methods of the Vela API.
 type QueueService service
 
-// GetQueueCreds fetches queue credentials based valid registration token.
+// GetInfo fetches queue info, primarily used during worker onboarding.
 func (qvc *QueueService) GetInfo() (*library.QueueInfo, *Response, error) {
 	// set the API endpoint path we send the request to
 	url := "/api/v1/queue/info"
