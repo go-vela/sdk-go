@@ -11,7 +11,7 @@ import "github.com/go-vela/types/library"
 type QueueService service
 
 // GetQueueCreds fetches queue credentials based valid registration token.
-func (qvc *QueueService) GetQueueCreds() (*library.QueueInfo, *Response, error) {
+func (qvc *QueueService) GetInfo() (*library.QueueInfo, *Response, error) {
 	// set the API endpoint path we send the request to
 	url := "/api/v1/queue/info"
 
