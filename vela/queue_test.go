@@ -31,17 +31,17 @@ func TestAdmin_Worker_GetQueueCreds_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Queue.GetQueueCreds()
+	got, resp, err := c.Queue.GetInfo()
 	if err != nil {
 		t.Errorf("GetQueueCreds returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusCreated {
-		t.Errorf("GetQueueCreds returned %v, want %v", resp.StatusCode, http.StatusCreated)
+		t.Errorf("GetInfo returned %v, want %v", resp.StatusCode, http.StatusCreated)
 	}
 
 	if diff := cmp.Diff(want, got); diff != "" {
-		t.Errorf("GetQueueCreds() mismatch (-want +got):\n%s", diff)
+		t.Errorf("GetInfo mismatch (-want +got):\n%s", diff)
 	}
 }
 
@@ -52,11 +52,11 @@ func TestAdmin_Worker_GetQueueCreds_401(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Queue.GetQueueCreds()
+	_, resp, err := c.Queue.GetInfo()
 	if err == nil {
-		t.Errorf("getQueueCreds should have returned err %v", resp.StatusCode)
+		t.Errorf("GetInfo should have returned err %v", resp.StatusCode)
 	}
 	if resp.StatusCode != http.StatusUnauthorized {
-		t.Errorf("getQueueCreds returned %v, want %v", resp.StatusCode, http.StatusUnauthorized)
+		t.Errorf("GetInfo returned %v, want %v", resp.StatusCode, http.StatusUnauthorized)
 	}
 }
