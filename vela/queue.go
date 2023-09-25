@@ -6,7 +6,7 @@ package vela
 
 import "github.com/go-vela/types/library"
 
-// QueueService handles retrieving queue from
+// QueueService handles retrieving queue info from
 // the server methods of the Vela API.
 type QueueService service
 
