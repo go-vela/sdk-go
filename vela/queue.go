@@ -15,7 +15,7 @@ func (qvc *QueueService) GetInfo() (*library.QueueInfo, *Response, error) {
 	// set the API endpoint path we send the request to
 	url := "/api/v1/queue/info"
 
-	// library Token type we want to return
+	// library QueueInfo type we want to return
 	t := new(library.QueueInfo)
 
 	// send request using client
