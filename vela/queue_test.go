@@ -5,14 +5,15 @@
 package vela
 
 import (
-	"encoding/json" //nolint:goimports
+	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
 	"github.com/gin-gonic/gin"
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types/library"
 	"github.com/google/go-cmp/cmp"
-	"net/http"
-	"net/http/httptest"
-	"testing"
 )
 
 func TestAdmin_Worker_GetQueueCreds_200(t *testing.T) {
