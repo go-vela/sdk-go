@@ -34,7 +34,7 @@ func TestQueue_GetInfo_200(t *testing.T) {
 	// run test
 	got, resp, err := c.Queue.GetInfo()
 	if err != nil {
-		t.Errorf("GetQueueCreds returned err: %v", err)
+		t.Errorf("GetInfo returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusCreated {
