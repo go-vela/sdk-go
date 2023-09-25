@@ -46,7 +46,7 @@ func TestQueue_GetInfo_200(t *testing.T) {
 	}
 }
 
-func TestAdmin_Worker_GetQueueCreds_401(t *testing.T) {
+func TestQueue_GetInfo_401(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
