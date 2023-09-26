@@ -53,6 +53,7 @@ type (
 		Step           *StepService
 		Svc            *SvcService
 		Worker         *WorkerService
+		Queue          *QueueService
 	}
 
 	service struct {
@@ -147,6 +148,7 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	c.Step = &StepService{client: c}
 	c.Svc = &SvcService{client: c}
 	c.Worker = &WorkerService{client: c}
+	c.Queue = &QueueService{client: c}
 
 	return c, nil
 }
