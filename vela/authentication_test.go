@@ -326,3 +326,45 @@ func TestVela_Authentication_ValidateToken_NoToken(t *testing.T) {
 		t.Error("ValidateToken response should be nil")
 	}
 }
+
+func TestVela_Authentication_ValidateOAuthToken_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	c.Authentication.SetTokenAuth("foo")
+
+	// run test
+	resp, err := c.Authentication.ValidateOAuthToken()
+
+	if err != nil {
+		t.Errorf("ValidateOAuthToken returned error %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("ValidateOAuthToken returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+}
+
+func TestVela_Authentication_ValidateOAuthToken_NoToken(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	c.Authentication.SetTokenAuth("")
+
+	// run test
+	resp, err := c.Authentication.ValidateOAuthToken()
+
+	if err == nil {
+		t.Error("ValidateOAuthToken should have returned error")
+	}
+
+	if resp != nil {
+		t.Error("ValidateOAuthToken response should be nil")
+	}
+}
