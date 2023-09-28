@@ -229,3 +229,14 @@ func (svc *AuthenticationService) ValidateToken() (*Response, error) {
 
 	return resp, err
 }
+
+// ValidateOAuthToken makes a request to validate user oauth tokens with the Vela server.
+func (svc *AuthenticationService) ValidateOAuthToken() (*Response, error) {
+	// set the API endpoint path we send the request to
+	u := "/validate-oauth"
+
+	// attempt to validate an oauth token
+	resp, err := svc.client.Call("GET", u, nil, nil)
+
+	return resp, err
+}
