@@ -117,7 +117,7 @@ func TestHook_Add_201(t *testing.T) {
 		Error:    String(""),
 		Created:  Int64(1563474076),
 		Link:     String("https://github.com/github/octocat/settings/hooks/1"),
-		Branch:   String("master"),
+		Branch:   String("main"),
 		Host:     String("github.com"),
 	}
 
@@ -287,7 +287,7 @@ func ExampleHookService_Add() {
 		Error:    String(""),
 		Created:  Int64(1563474076),
 		Link:     String("https://github.com/github/octocat/settings/hooks/1"),
-		Branch:   String("master"),
+		Branch:   String("main"),
 		Host:     String("github.com"),
 	}
 
