@@ -112,7 +112,7 @@ func TestPipeline_Add_201(t *testing.T) {
 
 	req := library.Pipeline{
 		Commit:  String("48afb5bdc41ad69bf22588491333f7cf71135163"),
-		Ref:     String("refs/heads/master"),
+		Ref:     String("refs/heads/main"),
 		Type:    String("yaml"),
 		Version: String("1"),
 		Steps:   Bool(true),
@@ -472,7 +472,7 @@ func ExamplePipelineService_Add() {
 
 	req := library.Pipeline{
 		Commit:  String("48afb5bdc41ad69bf22588491333f7cf71135163"),
-		Ref:     String("refs/heads/master"),
+		Ref:     String("refs/heads/main"),
 		Type:    String("yaml"),
 		Version: String("1"),
 		Steps:   Bool(true),

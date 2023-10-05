@@ -128,7 +128,7 @@ func TestAdmin_Deployment_Update_200(t *testing.T) {
 
 	req := library.Deployment{
 		Commit:      String("48afb5bdc41ad69bf22588491333f7cf71135163"),
-		Ref:         String("refs/heads/master"),
+		Ref:         String("refs/heads/main"),
 		Task:        String("vela-deploy"),
 		Target:      String("production"),
 		Description: String("Deployment request from Vela"),
