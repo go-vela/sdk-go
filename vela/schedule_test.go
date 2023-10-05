@@ -12,6 +12,7 @@ import (
 
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types/library"
+	"github.com/google/go-cmp/cmp"
 )
 
 func TestSchedule_Get(t *testing.T) {
@@ -146,8 +147,8 @@ func TestSchedule_GetAll(t *testing.T) {
 				t.Errorf("GetAll for %s is %v, want %v", test.name, gotResp.StatusCode, test.wantResp)
 			}
 
-			if !reflect.DeepEqual(got, &test.want) {
-				t.Errorf("GetAll for %s is %v, want %v", test.name, *got, test.want)
+			if cmp.Equal(got, test.want) {
+				t.Errorf("GetAll for %s is %v, want %v", test.name, got, test.want)
 			}
 		})
 	}
