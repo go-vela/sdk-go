@@ -146,8 +146,8 @@ func TestSchedule_GetAll(t *testing.T) {
 				t.Errorf("GetAll for %s is %v, want %v", test.name, gotResp.StatusCode, test.wantResp)
 			}
 
-			if !reflect.DeepEqual(got, &test.want) {
-				t.Errorf("GetAll for %s is %v, want %v", test.name, *got, test.want)
+			if !reflect.DeepEqual(*got, test.want) {
+				t.Errorf("GetAll for %s is %v, want %v", test.name, got, test.want)
 			}
 		})
 	}
