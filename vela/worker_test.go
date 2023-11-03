@@ -10,6 +10,7 @@ import (
 	"reflect"
 	"testing"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types/library"
 
@@ -25,7 +26,7 @@ func TestWorker_Get_200(t *testing.T) {
 
 	data := []byte(server.WorkerResp)
 
-	var want library.Worker
+	var want api.Worker
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -51,7 +52,7 @@ func TestWorker_Get_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Worker{}
+	want := api.Worker{}
 
 	// run test
 	got, resp, err := c.Worker.Get("0")
@@ -78,7 +79,7 @@ func TestWorker_GetAll_200(t *testing.T) {
 
 	data := []byte(server.WorkersResp)
 
-	var want []library.Worker
+	var want []api.Worker
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -109,7 +110,7 @@ func TestWorker_Add_201(t *testing.T) {
 	var want library.Token
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Worker{
+	req := api.Worker{
 		ID:       Int64(1),
 		Hostname: String("worker_1"),
 		Address:  String("http://vela:8080"),
@@ -198,10 +199,10 @@ func TestWorker_Update_200(t *testing.T) {
 
 	data := []byte(server.WorkerResp)
 
-	var want library.Worker
+	var want api.Worker
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Worker{
+	req := api.Worker{
 		Active: Bool(true),
 	}
 
@@ -228,9 +229,9 @@ func TestWorker_Update_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Worker{}
+	want := api.Worker{}
 
-	req := library.Worker{
+	req := api.Worker{
 		Active: Bool(true),
 	}
 
@@ -327,7 +328,7 @@ func ExampleWorkerService_Add() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Worker{
+	req := api.Worker{
 		ID:       Int64(1),
 		Hostname: String("worker_1"),
 		Address:  String("http://vela:8080"),
@@ -374,7 +375,7 @@ func ExampleWorkerService_Update() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Worker{
+	req := api.Worker{
 		Active: Bool(false),
 	}
 

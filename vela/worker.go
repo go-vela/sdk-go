@@ -5,6 +5,7 @@ package vela
 import (
 	"fmt"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/types/library"
 )
 
@@ -13,12 +14,12 @@ import (
 type WorkerService service
 
 // Get returns the provided worker.
-func (svc *WorkerService) Get(hostname string) (*library.Worker, *Response, error) {
+func (svc *WorkerService) Get(hostname string) (*api.Worker, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/workers/%s", hostname)
 
-	// library Worker type we want to return
-	v := new(library.Worker)
+	// api Worker type we want to return
+	v := new(api.Worker)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -27,12 +28,12 @@ func (svc *WorkerService) Get(hostname string) (*library.Worker, *Response, erro
 }
 
 // GetAll returns a list of all workers.
-func (svc *WorkerService) GetAll() (*[]library.Worker, *Response, error) {
+func (svc *WorkerService) GetAll() (*[]api.Worker, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/workers"
 
 	// slice library Worker type we want to return
-	v := new([]library.Worker)
+	v := new([]api.Worker)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -41,7 +42,7 @@ func (svc *WorkerService) GetAll() (*[]library.Worker, *Response, error) {
 }
 
 // Add constructs a worker with the provided details.
-func (svc *WorkerService) Add(w *library.Worker) (*library.Token, *Response, error) {
+func (svc *WorkerService) Add(w *api.Worker) (*library.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/workers"
 
@@ -69,12 +70,12 @@ func (svc *WorkerService) RefreshAuth(worker string) (*library.Token, *Response,
 }
 
 // Update modifies a worker with the provided details.
-func (svc *WorkerService) Update(worker string, w *library.Worker) (*library.Worker, *Response, error) {
+func (svc *WorkerService) Update(worker string, w *api.Worker) (*api.Worker, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/workers/%s", worker)
 
 	// library Worker type we want to return
-	v := new(library.Worker)
+	v := new(api.Worker)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, w, v)
