@@ -6,8 +6,8 @@ require (
 	github.com/buildkite/yaml v0.0.0-20230306222819-0e4e032d4835
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.9.1
-	github.com/go-vela/server v0.21.1-0.20231102163307-a22bbad88237
-	github.com/go-vela/types v0.21.1-0.20231024201126-19101a5b1346
+	github.com/go-vela/server v0.22.0-rc1
+	github.com/go-vela/types v0.22.0-rc1
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/go-cmp v0.6.0
 	github.com/google/go-querystring v1.1.0
