@@ -6,8 +6,8 @@ require (
 	github.com/buildkite/yaml v0.0.0-20230306222819-0e4e032d4835
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.9.1
-	github.com/go-vela/server v0.22.0-rc2
-	github.com/go-vela/types v0.22.0-rc2
+	github.com/go-vela/server v0.22.0
+	github.com/go-vela/types v0.22.0
 	github.com/golang-jwt/jwt/v5 v5.1.0
 	github.com/google/go-cmp v0.6.0
 	github.com/google/go-querystring v1.1.0
@@ -37,10 +37,10 @@ require (
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	golang.org/x/arch v0.3.0 // indirect
-	golang.org/x/crypto v0.14.0 // indirect
-	golang.org/x/net v0.17.0 // indirect
-	golang.org/x/sys v0.13.0 // indirect
-	golang.org/x/text v0.13.0 // indirect
+	golang.org/x/crypto v0.15.0 // indirect
+	golang.org/x/net v0.18.0 // indirect
+	golang.org/x/sys v0.14.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
