@@ -82,7 +82,7 @@ func TestWorker_GetAll_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Worker.GetAll()
+	got, resp, err := c.Worker.GetAll(nil)
 
 	if err != nil {
 		t.Errorf("Worker get all returned err: %v", err)
@@ -312,7 +312,7 @@ func ExampleWorkerService_GetAll() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the workers from the server
-	workers, resp, err := c.Worker.GetAll()
+	workers, resp, err := c.Worker.GetAll(nil)
 	if err != nil {
 		fmt.Println(err)
 	}
