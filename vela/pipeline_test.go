@@ -596,8 +596,7 @@ func ExamplePipelineService_Validate() {
 
 	// create options for pipeline call
 	opts := &PipelineOptions{
-		Output:   "yaml", // default
-		Template: true,   // default
+		Output: "yaml", // default
 	}
 
 	// get templates for a pipeline from a repo from the server
