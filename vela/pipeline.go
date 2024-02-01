@@ -22,13 +22,6 @@ type PipelineOptions struct {
 	//
 	// Default: yaml
 	Output string `url:"output,omitempty"`
-
-	// Enables expanding templates when validating a pipeline.
-	//
-	// Can be: true or false
-	//
-	// Default: true
-	Template bool `url:"template,omitempty"`
 }
 
 // Get returns the provided pipeline.
