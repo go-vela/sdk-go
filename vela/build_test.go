@@ -456,6 +456,44 @@ func TestBuild_Cancel_404(t *testing.T) {
 	}
 }
 
+func TestBuild_Approve_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	// run test
+	got, err := c.Build.Approve("github", "octocat", 1)
+
+	if err != nil {
+		t.Errorf("New returned err: %v", err)
+	}
+
+	if got.StatusCode != http.StatusOK {
+		t.Errorf("Build returned %v, want %v", got.StatusCode, http.StatusOK)
+	}
+}
+
+func TestBuild_Approve_403(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	// run test
+	resp, err := c.Build.Approve("github", "octocat", 0)
+
+	if err == nil {
+		t.Errorf("New returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusForbidden {
+		t.Errorf("Build returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+}
+
 func TestBuild_GetBuildToken_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)

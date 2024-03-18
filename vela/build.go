@@ -162,6 +162,14 @@ func (svc *BuildService) Cancel(org, repo string, build int) (*library.Build, *R
 	return v, resp, err
 }
 
+// Approve takes the build provided and approves it as an admin.
+func (svc *BuildService) Approve(org, repo string, build int) (*Response, error) {
+	// set the API endpoint path we send the request to
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/approve", org, repo, build)
+
+	return svc.client.Call("POST", u, nil, nil)
+}
+
 // GetBuildToken returns an auth token for updating build resources.
 func (svc *BuildService) GetBuildToken(org, repo string, build int) (*library.Token, *Response, error) {
 	// set the API endpoint path we send the request to

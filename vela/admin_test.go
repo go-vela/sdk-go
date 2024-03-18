@@ -126,6 +126,8 @@ func TestAdmin_Deployment_Update_200(t *testing.T) {
 	var want library.Deployment
 	_ = json.Unmarshal(data, &want)
 
+	want.SetBuilds(nil)
+
 	req := library.Deployment{
 		Commit:      String("48afb5bdc41ad69bf22588491333f7cf71135163"),
 		Ref:         String("refs/heads/main"),

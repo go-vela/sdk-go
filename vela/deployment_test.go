@@ -28,6 +28,8 @@ func TestDeployment_Get_200(t *testing.T) {
 	var want library.Deployment
 	_ = json.Unmarshal(data, &want)
 
+	want.SetBuilds(nil)
+
 	// run test
 	got, resp, err := c.Deployment.Get("github", "octocat", 1)
 
@@ -108,6 +110,8 @@ func TestDeployment_Add_201(t *testing.T) {
 
 	var want library.Deployment
 	_ = json.Unmarshal(data, &want)
+
+	want.SetBuilds(nil)
 
 	req := library.Deployment{
 		Commit:      String("48afb5bdc41ad69bf22588491333f7cf71135163"),
