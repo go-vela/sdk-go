@@ -501,6 +501,7 @@ func (c *Client) Do(req *http.Request, respType interface{}) (*Response, error) 
 			// ensure response body is not empty so the user may inspect
 			// it further for debugging and troubleshooting
 			resp.Body = io.NopCloser(bytes.NewBuffer(body))
+
 			if err != nil {
 				// if error is present, we still return the response so the caller
 				// may inspect it further for debugging and troubleshooting
