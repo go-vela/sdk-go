@@ -26,6 +26,7 @@ type (
 		Step       *AdminStepService
 		User       *AdminUserService
 		Worker     *AdminWorkerService
+		Settings   *AdminSettingsService
 	}
 
 	// AdminBuildService handles retrieving admin builds from
@@ -239,7 +240,21 @@ func (svc *AdminUserService) Update(u *library.User) (*library.User, *Response, 
 	return v, resp, err
 }
 
-// Update modifies a build with the provided details.
+// Get retrieves the active platform settings.
+func (svc *AdminSettingsService) Get() (*api.Settings, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := "/api/v1/admin/settings"
+
+	// api Settings type we want to return
+	v := new(api.Settings)
+
+	// send request using client
+	resp, err := svc.client.Call("GET", u, nil, v)
+
+	return v, resp, err
+}
+
+// Update modifies platform settings with the provided details.
 func (svc *AdminSettingsService) Update(s *api.Settings) (*api.Settings, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/settings"
