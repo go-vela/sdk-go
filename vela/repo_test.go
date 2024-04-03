@@ -12,6 +12,7 @@ import (
 
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types/library"
+	"github.com/go-vela/types/library/actions"
 
 	"github.com/gin-gonic/gin"
 )
@@ -121,10 +122,7 @@ func TestRepo_Add_201(t *testing.T) {
 		Private:     Bool(false),
 		Trusted:     Bool(false),
 		Active:      Bool(true),
-		AllowPull:   Bool(false),
-		AllowPush:   Bool(true),
-		AllowDeploy: Bool(false),
-		AllowTag:    Bool(false),
+		AllowEvents: testEvents(),
 	}
 
 	// run test
@@ -159,10 +157,7 @@ func TestRepo_Update_200(t *testing.T) {
 		Private:     Bool(true),
 		Trusted:     Bool(true),
 		Active:      Bool(true),
-		AllowPull:   Bool(true),
-		AllowPush:   Bool(true),
-		AllowDeploy: Bool(true),
-		AllowTag:    Bool(true),
+		AllowEvents: testEvents(),
 	}
 
 	// run test
@@ -194,10 +189,7 @@ func TestRepo_Update_404(t *testing.T) {
 		Private:     Bool(true),
 		Trusted:     Bool(true),
 		Active:      Bool(true),
-		AllowPull:   Bool(true),
-		AllowPush:   Bool(true),
-		AllowDeploy: Bool(true),
-		AllowTag:    Bool(true),
+		AllowEvents: testEvents(),
 	}
 
 	// run test
@@ -381,10 +373,7 @@ func ExampleRepoService_Add() {
 		Private:     Bool(false),
 		Trusted:     Bool(false),
 		Active:      Bool(true),
-		AllowPull:   Bool(true),
-		AllowPush:   Bool(true),
-		AllowDeploy: Bool(false),
-		AllowTag:    Bool(false),
+		AllowEvents: testEvents(),
 	}
 
 	// Create the repo in the server
@@ -404,8 +393,7 @@ func ExampleRepoService_Update() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Repo{
-		AllowDeploy: Bool(true),
-		AllowTag:    Bool(true),
+		AllowEvents: testEvents(),
 	}
 
 	// Update the repo in the server
@@ -463,4 +451,31 @@ func ExampleRepoService_Chown() {
 	}
 
 	fmt.Printf("Received response code %d, for repo %+v", resp.StatusCode, repo)
+}
+
+func testEvents() *library.Events {
+	return &library.Events{
+		Push: &actions.Push{
+			Branch:       Bool(true),
+			Tag:          Bool(true),
+			DeleteBranch: Bool(true),
+			DeleteTag:    Bool(true),
+		},
+		PullRequest: &actions.Pull{
+			Opened:      Bool(true),
+			Edited:      Bool(true),
+			Synchronize: Bool(true),
+			Reopened:    Bool(true),
+		},
+		Deployment: &actions.Deploy{
+			Created: Bool(true),
+		},
+		Comment: &actions.Comment{
+			Created: Bool(true),
+			Edited:  Bool(true),
+		},
+		Schedule: &actions.Schedule{
+			Run: Bool(true),
+		},
+	}
 }
