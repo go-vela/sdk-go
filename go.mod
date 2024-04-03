@@ -7,7 +7,7 @@ require (
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-vela/server v0.23.0
-	github.com/go-vela/types v0.23.0
+	github.com/go-vela/types v0.23.4-0.20240402153726-f16c3e4cb5fb
 	github.com/golang-jwt/jwt/v5 v5.2.0
 	github.com/google/go-cmp v0.6.0
 	github.com/google/go-querystring v1.1.0

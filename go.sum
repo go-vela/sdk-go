@@ -34,6 +34,8 @@ github.com/go-vela/server v0.23.0 h1:N2mjIvvdojeOXkaTTwEa07oBhh3w+ab+Mly1MwQI56E
 github.com/go-vela/server v0.23.0/go.mod h1:rXy90z1Il3tvi1eBnT/eOGY8gervp401QdH0g0Gf+xA=
 github.com/go-vela/types v0.23.0 h1:CWICreHO4V9KqbE+AINkRJVwCZmggxOLIZh+e1n/XXA=
 github.com/go-vela/types v0.23.0/go.mod h1:AAqgxIw1aRBgPkE/5juGuiwh/JZuOtL8fcPaEkjFWwQ=
+github.com/go-vela/types v0.23.4-0.20240402153726-f16c3e4cb5fb h1:jHao/NNRswInMLEb0m1OJ84d1m/LGWMCmaeRqSDnWQY=
+github.com/go-vela/types v0.23.4-0.20240402153726-f16c3e4cb5fb/go.mod h1:mEF9dLkk00rUXf/t39n2WvXZgJbxnPEEWy+DHqIlRUo=
 github.com/goccy/go-json v0.10.2 h1:CrxCmQqYDkv1z7lO7Wbh2HN93uovUHgrECaO5ZrCXAU=
 github.com/goccy/go-json v0.10.2/go.mod h1:6MelG93GURQebXPDq3khkgXZkazVtN9CRI+MGFi0w8I=
 github.com/golang-jwt/jwt/v5 v5.2.0 h1:d/ix8ftRUorsN+5eMIlF4T6J8CAt9rch3My2winC1Jw=
