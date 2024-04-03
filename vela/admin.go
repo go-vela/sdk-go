@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"strings"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/types"
 	"github.com/go-vela/types/library"
 )
@@ -66,6 +67,10 @@ type (
 	// AdminWorkerService handles managing admin worker functionality
 	// from the server methods of the Vela API.
 	AdminWorkerService service
+
+	// AdminSettingsService handles managing admin settings functionality
+	// from the server methods of the Vela API.
+	AdminSettingsService service
 )
 
 // GetQueueOptions specifies the optional parameters to the
@@ -230,6 +235,20 @@ func (svc *AdminUserService) Update(u *library.User) (*library.User, *Response, 
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", url, u, v)
+
+	return v, resp, err
+}
+
+// Update modifies a build with the provided details.
+func (svc *AdminSettingsService) Update(s *api.Settings) (*api.Settings, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := "/api/v1/admin/settings"
+
+	// api Settings type we want to return
+	v := new(api.Settings)
+
+	// send request using client
+	resp, err := svc.client.Call("PUT", u, s, v)
 
 	return v, resp, err
 }
