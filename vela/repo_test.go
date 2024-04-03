@@ -121,10 +121,7 @@ func TestRepo_Add_201(t *testing.T) {
 		Private:     Bool(false),
 		Trusted:     Bool(false),
 		Active:      Bool(true),
-		AllowPull:   Bool(false),
-		AllowPush:   Bool(true),
-		AllowDeploy: Bool(false),
-		AllowTag:    Bool(false),
+		AllowEvents: testEvents(),
 	}
 
 	// run test
@@ -159,10 +156,7 @@ func TestRepo_Update_200(t *testing.T) {
 		Private:     Bool(true),
 		Trusted:     Bool(true),
 		Active:      Bool(true),
-		AllowPull:   Bool(true),
-		AllowPush:   Bool(true),
-		AllowDeploy: Bool(true),
-		AllowTag:    Bool(true),
+		AllowEvents: testEvents(),
 	}
 
 	// run test
@@ -194,10 +188,7 @@ func TestRepo_Update_404(t *testing.T) {
 		Private:     Bool(true),
 		Trusted:     Bool(true),
 		Active:      Bool(true),
-		AllowPull:   Bool(true),
-		AllowPush:   Bool(true),
-		AllowDeploy: Bool(true),
-		AllowTag:    Bool(true),
+		AllowEvents: testEvents(),
 	}
 
 	// run test
@@ -381,10 +372,7 @@ func ExampleRepoService_Add() {
 		Private:     Bool(false),
 		Trusted:     Bool(false),
 		Active:      Bool(true),
-		AllowPull:   Bool(true),
-		AllowPush:   Bool(true),
-		AllowDeploy: Bool(false),
-		AllowTag:    Bool(false),
+		AllowEvents: testEvents(),
 	}
 
 	// Create the repo in the server
@@ -404,8 +392,7 @@ func ExampleRepoService_Update() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Repo{
-		AllowDeploy: Bool(true),
-		AllowTag:    Bool(true),
+		AllowEvents: testEvents(),
 	}
 
 	// Update the repo in the server
