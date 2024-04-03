@@ -18,33 +18,6 @@ import (
 	"github.com/go-vela/types/library/actions"
 )
 
-func testEvents() *library.Events {
-	return &library.Events{
-		Push: &actions.Push{
-			Branch:       Bool(true),
-			Tag:          Bool(true),
-			DeleteBranch: Bool(true),
-			DeleteTag:    Bool(true),
-		},
-		PullRequest: &actions.Pull{
-			Opened:      Bool(true),
-			Edited:      Bool(true),
-			Synchronize: Bool(true),
-			Reopened:    Bool(true),
-		},
-		Deployment: &actions.Deploy{
-			Created: Bool(true),
-		},
-		Comment: &actions.Comment{
-			Created: Bool(true),
-			Edited:  Bool(true),
-		},
-		Schedule: &actions.Schedule{
-			Run: Bool(true),
-		},
-	}
-}
-
 func TestAdmin_Build_Update_200(t *testing.T) {
 	// setup context
 	gin.SetMode(gin.TestMode)
