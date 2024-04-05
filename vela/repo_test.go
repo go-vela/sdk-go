@@ -10,8 +10,8 @@ import (
 	"reflect"
 	"testing"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,7 +25,7 @@ func TestRepo_Get_200(t *testing.T) {
 
 	data := []byte(server.RepoResp)
 
-	var want library.Repo
+	var want api.Repo
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -51,7 +51,7 @@ func TestRepo_Get_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Repo{}
+	want := api.Repo{}
 
 	// run test
 	got, resp, err := c.Repo.Get("github", "not-found")
@@ -78,7 +78,7 @@ func TestRepo_GetAll_200(t *testing.T) {
 
 	data := []byte(server.ReposResp)
 
-	var want []library.Repo
+	var want []api.Repo
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -106,10 +106,10 @@ func TestRepo_Add_201(t *testing.T) {
 
 	data := []byte(server.RepoResp)
 
-	var want library.Repo
+	var want api.Repo
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Repo{
+	req := api.Repo{
 		Org:         String("github"),
 		Name:        String("octocat"),
 		FullName:    String("github/octocat"),
@@ -152,10 +152,10 @@ func TestRepo_Update_200(t *testing.T) {
 
 	data := []byte(server.RepoResp)
 
-	var want library.Repo
+	var want api.Repo
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Repo{
+	req := api.Repo{
 		Private:     Bool(true),
 		Trusted:     Bool(true),
 		Active:      Bool(true),
@@ -188,9 +188,9 @@ func TestRepo_Update_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Repo{}
+	want := api.Repo{}
 
-	req := library.Repo{
+	req := api.Repo{
 		Private:     Bool(true),
 		Trusted:     Bool(true),
 		Active:      Bool(true),
@@ -369,7 +369,7 @@ func ExampleRepoService_Add() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Repo{
+	req := api.Repo{
 		Org:         String("github"),
 		Name:        String("octocat"),
 		FullName:    String("github/octocat"),
@@ -403,7 +403,7 @@ func ExampleRepoService_Update() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Repo{
+	req := api.Repo{
 		AllowDeploy: Bool(true),
 		AllowTag:    Bool(true),
 	}

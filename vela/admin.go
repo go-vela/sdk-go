@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"strings"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/types"
 	"github.com/go-vela/types/library"
 )
@@ -165,12 +166,12 @@ func (svc *AdminHookService) Update(h *library.Hook) (*library.Hook, *Response, 
 }
 
 // Update modifies a repo with the provided details.
-func (svc *AdminRepoService) Update(r *library.Repo) (*library.Repo, *Response, error) {
+func (svc *AdminRepoService) Update(r *api.Repo) (*api.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/repo"
 
 	// library Repo type we want to return
-	v := new(library.Repo)
+	v := new(api.Repo)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, r, v)
