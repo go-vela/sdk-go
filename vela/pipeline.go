@@ -22,6 +22,16 @@ type PipelineOptions struct {
 	//
 	// Default: yaml
 	Output string `url:"output,omitempty"`
+
+	// Ruledata options
+	Branch  string   `url:"branch,omitempty"`
+	Comment string   `url:"comment,omitempty"`
+	Event   string   `url:"event,omitempty"`
+	Repo    string   `url:"repo,omitempty"`
+	Status  string   `url:"status,omitempty"`
+	Tag     string   `url:"tag,omitempty"`
+	Target  string   `url:"target,omitempty"`
+	Path    []string `url:"path,omitempty"`
 }
 
 // Get returns the provided pipeline.

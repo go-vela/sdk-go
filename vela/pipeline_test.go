@@ -531,13 +531,34 @@ func ExamplePipelineService_Compile() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	// create options for pipeline call
+	// create default options for pipeline call
 	opts := &PipelineOptions{
 		Output: "yaml", // default
 	}
 
 	// compile a pipeline from a repo from the server
 	pipeline, resp, err := c.Pipeline.Compile("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("Received response code %d, for pipeline %+v", resp.StatusCode, pipeline)
+
+	// create ruledata options for pipeline call
+	opts = &PipelineOptions{
+		Output:  "yaml", // default
+		Branch:  "main",
+		Comment: "comment",
+		Event:   "push",
+		Repo:    "octocat",
+		Status:  "success",
+		Tag:     "v1.0.0",
+		Target:  "production",
+		Path:    []string{"path/to/file", "README.md"},
+	}
+
+	// compile a pipeline from a repo from the server
+	pipeline, resp, err = c.Pipeline.Compile("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -564,6 +585,27 @@ func ExamplePipelineService_Expand() {
 	}
 
 	fmt.Printf("Received response code %d, for pipeline %+v", resp.StatusCode, pipeline)
+
+	// create ruledata options for pipeline call
+	opts = &PipelineOptions{
+		Output:  "yaml", // default
+		Branch:  "main",
+		Comment: "comment",
+		Event:   "push",
+		Repo:    "octocat",
+		Status:  "success",
+		Tag:     "v1.0.0",
+		Target:  "production",
+		Path:    []string{"path/to/file", "README.md"},
+	}
+
+	// compile a pipeline from a repo from the server
+	pipeline, resp, err = c.Pipeline.Expand("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("Received response code %d, for pipeline %+v", resp.StatusCode, pipeline)
 }
 
 func ExamplePipelineService_Templates() {
@@ -585,6 +627,27 @@ func ExamplePipelineService_Templates() {
 	}
 
 	fmt.Printf("Received response code %d, for pipeline %+v", resp.StatusCode, pipeline)
+
+	// create ruledata options for pipeline call
+	opts = &PipelineOptions{
+		Output:  "yaml", // default
+		Branch:  "main",
+		Comment: "comment",
+		Event:   "push",
+		Repo:    "octocat",
+		Status:  "success",
+		Tag:     "v1.0.0",
+		Target:  "production",
+		Path:    []string{"path/to/file", "README.md"},
+	}
+
+	// compile a pipeline from a repo from the server
+	pipeline, resp, err = c.Pipeline.Templates("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("Received response code %d, for pipeline %+v", resp.StatusCode, pipeline)
 }
 
 func ExamplePipelineService_Validate() {
@@ -601,6 +664,27 @@ func ExamplePipelineService_Validate() {
 
 	// get templates for a pipeline from a repo from the server
 	pipeline, resp, err := c.Pipeline.Validate("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("Received response code %d, for pipeline %+v", resp.StatusCode, pipeline)
+
+	// create ruledata options for pipeline call
+	opts = &PipelineOptions{
+		Output:  "yaml", // default
+		Branch:  "main",
+		Comment: "comment",
+		Event:   "push",
+		Repo:    "octocat",
+		Status:  "success",
+		Tag:     "v1.0.0",
+		Target:  "production",
+		Path:    []string{"path/to/file", "README.md"},
+	}
+
+	// compile a pipeline from a repo from the server
+	pipeline, resp, err = c.Pipeline.Validate("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", opts)
 	if err != nil {
 		fmt.Println(err)
 	}
