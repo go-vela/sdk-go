@@ -16,6 +16,7 @@ import (
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types"
 	"github.com/go-vela/types/library"
+	"github.com/go-vela/types/library/actions"
 )
 
 func TestAdmin_Build_Update_200(t *testing.T) {
@@ -200,13 +201,33 @@ func TestAdmin_Repo_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Repo{
-		Private:     Bool(true),
-		Trusted:     Bool(true),
-		Active:      Bool(true),
-		AllowPull:   Bool(true),
-		AllowPush:   Bool(true),
-		AllowDeploy: Bool(true),
-		AllowTag:    Bool(true),
+		Private: Bool(true),
+		Trusted: Bool(true),
+		Active:  Bool(true),
+		AllowEvents: &api.Events{
+			Push: &actions.Push{
+				Branch:       Bool(true),
+				Tag:          Bool(true),
+				DeleteBranch: Bool(true),
+				DeleteTag:    Bool(true),
+			},
+			PullRequest: &actions.Pull{
+				Opened:      Bool(true),
+				Edited:      Bool(true),
+				Synchronize: Bool(true),
+				Reopened:    Bool(true),
+			},
+			Deployment: &actions.Deploy{
+				Created: Bool(true),
+			},
+			Comment: &actions.Comment{
+				Created: Bool(true),
+				Edited:  Bool(true),
+			},
+			Schedule: &actions.Schedule{
+				Run: Bool(true),
+			},
+		},
 	}
 
 	// run test
@@ -238,10 +259,11 @@ func TestAdmin_Secret_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := library.Secret{
-		Name:   String("foo"),
-		Value:  String("bar"),
-		Events: &[]string{"barf", "foob"},
+		Name:        String("foo"),
+		Value:       String("bar"),
+		AllowEvents: testEvents(),
 	}
+
 	// run test
 	got, resp, err := c.Admin.Secret.Update(&req)
 

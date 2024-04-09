@@ -110,12 +110,12 @@ func TestSecret_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := library.Secret{
-		Org:    String("github"),
-		Repo:   String("octocat"),
-		Name:   String("foo"),
-		Value:  String("bar"),
-		Images: &[]string{"foo", "bar"},
-		Events: &[]string{"barf", "foob"},
+		Org:         String("github"),
+		Repo:        String("octocat"),
+		Name:        String("foo"),
+		Value:       String("bar"),
+		Images:      &[]string{"foo", "bar"},
+		AllowEvents: testEvents(),
 	}
 
 	// run test
@@ -147,9 +147,9 @@ func TestSecret_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := library.Secret{
-		Name:   String("foo"),
-		Value:  String("bar"),
-		Events: &[]string{"barf", "foob"},
+		Name:        String("foo"),
+		Value:       String("bar"),
+		AllowEvents: testEvents(),
 	}
 
 	// run test
@@ -178,9 +178,9 @@ func TestSecret_Update_404(t *testing.T) {
 	want := library.Secret{}
 
 	req := library.Secret{
-		Name:   String("foo"),
-		Value:  String("bar"),
-		Events: &[]string{"barf", "foob"},
+		Name:        String("foo"),
+		Value:       String("bar"),
+		AllowEvents: testEvents(),
 	}
 
 	// run test
@@ -277,10 +277,10 @@ func ExampleSecretService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Secret{
-		Name:   String("foo"),
-		Value:  String("bar"),
-		Images: &[]string{"foo", "bar"},
-		Events: &[]string{"foo", "bar"},
+		Name:        String("foo"),
+		Value:       String("bar"),
+		Images:      &[]string{"foo", "bar"},
+		AllowEvents: testEvents(),
 	}
 
 	// Create the secret in the server
@@ -300,9 +300,9 @@ func ExampleSecretService_Update() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := library.Secret{
-		Name:   String("foo"),
-		Value:  String("bar"),
-		Events: &[]string{"barf", "foob"},
+		Name:        String("foo"),
+		Value:       String("bar"),
+		AllowEvents: testEvents(),
 	}
 
 	// Update the secret in the server
