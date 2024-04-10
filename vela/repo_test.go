@@ -13,6 +13,7 @@ import (
 	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
 
+	"github.com/go-vela/types/library"
 	"github.com/go-vela/types/library/actions"
 
 	"github.com/gin-gonic/gin"
@@ -456,6 +457,34 @@ func ExampleRepoService_Chown() {
 
 func testEvents() *api.Events {
 	return &api.Events{
+		Push: &actions.Push{
+			Branch:       Bool(true),
+			Tag:          Bool(true),
+			DeleteBranch: Bool(true),
+			DeleteTag:    Bool(true),
+		},
+		PullRequest: &actions.Pull{
+			Opened:      Bool(true),
+			Edited:      Bool(true),
+			Synchronize: Bool(true),
+			Reopened:    Bool(true),
+		},
+		Deployment: &actions.Deploy{
+			Created: Bool(true),
+		},
+		Comment: &actions.Comment{
+			Created: Bool(true),
+			Edited:  Bool(true),
+		},
+		Schedule: &actions.Schedule{
+			Run: Bool(true),
+		},
+	}
+}
+
+// TODO: remove this once library.Secret is converted to api.Secret
+func testLibraryEvents() *library.Events {
+	return &library.Events{
 		Push: &actions.Push{
 			Branch:       Bool(true),
 			Tag:          Bool(true),

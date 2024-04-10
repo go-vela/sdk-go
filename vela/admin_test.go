@@ -261,7 +261,7 @@ func TestAdmin_Secret_Update_200(t *testing.T) {
 	req := library.Secret{
 		Name:        String("foo"),
 		Value:       String("bar"),
-		AllowEvents: testEvents(),
+		AllowEvents: testLibraryEvents(),
 	}
 
 	// run test
