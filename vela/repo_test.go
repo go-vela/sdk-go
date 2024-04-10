@@ -482,7 +482,7 @@ func testEvents() *api.Events {
 	}
 }
 
-// TODO: remove this once library.Secret is converted to api.Secret
+// TODO: remove this once library.Secret is converted to api.Secret.
 func testLibraryEvents() *library.Events {
 	return &library.Events{
 		Push: &actions.Push{
