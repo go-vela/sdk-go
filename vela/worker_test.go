@@ -10,11 +10,11 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/gin-gonic/gin"
+
 	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types/library"
-
-	"github.com/gin-gonic/gin"
 )
 
 func TestWorker_Get_200(t *testing.T) {

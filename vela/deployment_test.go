@@ -10,10 +10,10 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types/library"
-
-	"github.com/gin-gonic/gin"
 )
 
 func TestDeployment_Get_200(t *testing.T) {

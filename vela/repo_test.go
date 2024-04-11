@@ -10,14 +10,13 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/gin-gonic/gin"
+
 	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/api/types/actions"
 	"github.com/go-vela/server/mock/server"
-
 	"github.com/go-vela/types/library"
 	libraryActions "github.com/go-vela/types/library/actions"
-
-	"github.com/gin-gonic/gin"
 )
 
 func TestRepo_Get_200(t *testing.T) {
