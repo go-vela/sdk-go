@@ -15,10 +15,11 @@ import (
 	"time"
 
 	"github.com/buildkite/yaml"
-	"github.com/go-vela/sdk-go/version"
-	"github.com/go-vela/types"
 	"github.com/google/go-querystring/query"
 	"github.com/sirupsen/logrus"
+
+	"github.com/go-vela/sdk-go/version"
+	"github.com/go-vela/types"
 )
 
 const (
@@ -57,7 +58,6 @@ type (
 	}
 
 	service struct {
-		//nolint:structcheck // false positive
 		client *Client
 	}
 

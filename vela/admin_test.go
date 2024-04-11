@@ -9,9 +9,9 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/gin-gonic/gin"
 	"github.com/google/go-cmp/cmp"
 
-	"github.com/gin-gonic/gin"
 	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/api/types/actions"
 	"github.com/go-vela/server/mock/server"
