@@ -58,7 +58,6 @@ type (
 	}
 
 	service struct {
-		
 		client *Client
 	}
 
