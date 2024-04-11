@@ -1,12 +1,14 @@
 module github.com/go-vela/sdk-go
 
-go 1.21
+go 1.21.9
+
+toolchain go1.22.2
 
 require (
 	github.com/buildkite/yaml v0.0.0-20230306222819-0e4e032d4835
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.9.1
-	github.com/go-vela/server v0.23.4-0.20240410164628-1058d9696961
+	github.com/go-vela/server v0.23.4-0.20240411145541-132447406cf7
 	github.com/go-vela/types v0.23.4-0.20240405205548-f24f795ac0b7
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/google/go-cmp v0.6.0
