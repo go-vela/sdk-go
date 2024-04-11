@@ -12,6 +12,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 
 	"github.com/gin-gonic/gin"
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types"
 	"github.com/go-vela/types/library"
@@ -196,14 +197,14 @@ func TestAdmin_Repo_Update_200(t *testing.T) {
 
 	data := []byte(server.RepoResp)
 
-	var want library.Repo
+	var want api.Repo
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Repo{
+	req := api.Repo{
 		Private: Bool(true),
 		Trusted: Bool(true),
 		Active:  Bool(true),
-		AllowEvents: &library.Events{
+		AllowEvents: &api.Events{
 			Push: &actions.Push{
 				Branch:       Bool(true),
 				Tag:          Bool(true),
@@ -260,7 +261,7 @@ func TestAdmin_Secret_Update_200(t *testing.T) {
 	req := library.Secret{
 		Name:        String("foo"),
 		Value:       String("bar"),
-		AllowEvents: testEvents(),
+		AllowEvents: testLibraryEvents(),
 	}
 
 	// run test

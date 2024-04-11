@@ -115,7 +115,7 @@ func TestSecret_Add_201(t *testing.T) {
 		Name:        String("foo"),
 		Value:       String("bar"),
 		Images:      &[]string{"foo", "bar"},
-		AllowEvents: testEvents(),
+		AllowEvents: testLibraryEvents(),
 	}
 
 	// run test
@@ -149,7 +149,7 @@ func TestSecret_Update_200(t *testing.T) {
 	req := library.Secret{
 		Name:        String("foo"),
 		Value:       String("bar"),
-		AllowEvents: testEvents(),
+		AllowEvents: testLibraryEvents(),
 	}
 
 	// run test
@@ -180,7 +180,7 @@ func TestSecret_Update_404(t *testing.T) {
 	req := library.Secret{
 		Name:        String("foo"),
 		Value:       String("bar"),
-		AllowEvents: testEvents(),
+		AllowEvents: testLibraryEvents(),
 	}
 
 	// run test
@@ -280,7 +280,7 @@ func ExampleSecretService_Add() {
 		Name:        String("foo"),
 		Value:       String("bar"),
 		Images:      &[]string{"foo", "bar"},
-		AllowEvents: testEvents(),
+		AllowEvents: testLibraryEvents(),
 	}
 
 	// Create the secret in the server
@@ -302,7 +302,7 @@ func ExampleSecretService_Update() {
 	req := library.Secret{
 		Name:        String("foo"),
 		Value:       String("bar"),
-		AllowEvents: testEvents(),
+		AllowEvents: testLibraryEvents(),
 	}
 
 	// Update the secret in the server

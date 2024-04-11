@@ -5,7 +5,7 @@ package vela
 import (
 	"fmt"
 
-	"github.com/go-vela/types/library"
+	api "github.com/go-vela/server/api/types"
 )
 
 // RepoService handles retrieving repos from
@@ -13,12 +13,12 @@ import (
 type RepoService service
 
 // Get returns the provided repo.
-func (svc *RepoService) Get(org, repo string) (*library.Repo, *Response, error) {
+func (svc *RepoService) Get(org, repo string) (*api.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s", org, repo)
 
 	// library Repo type we want to return
-	v := new(library.Repo)
+	v := new(api.Repo)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -27,7 +27,7 @@ func (svc *RepoService) Get(org, repo string) (*library.Repo, *Response, error) 
 }
 
 // GetAll returns a list of all repos.
-func (svc *RepoService) GetAll(opt *ListOptions) (*[]library.Repo, *Response, error) {
+func (svc *RepoService) GetAll(opt *ListOptions) (*[]api.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/repos"
 
@@ -38,7 +38,7 @@ func (svc *RepoService) GetAll(opt *ListOptions) (*[]library.Repo, *Response, er
 	}
 
 	// slice library Repo type we want to return
-	v := new([]library.Repo)
+	v := new([]api.Repo)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -47,12 +47,12 @@ func (svc *RepoService) GetAll(opt *ListOptions) (*[]library.Repo, *Response, er
 }
 
 // Add constructs a repo with the provided details.
-func (svc *RepoService) Add(r *library.Repo) (*library.Repo, *Response, error) {
+func (svc *RepoService) Add(r *api.Repo) (*api.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/repos"
 
 	// library Repo type we want to return
-	v := new(library.Repo)
+	v := new(api.Repo)
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, r, v)
@@ -61,12 +61,12 @@ func (svc *RepoService) Add(r *library.Repo) (*library.Repo, *Response, error) {
 }
 
 // Update modifies a repo with the provided details.
-func (svc *RepoService) Update(org, repo string, r *library.Repo) (*library.Repo, *Response, error) {
+func (svc *RepoService) Update(org, repo string, r *api.Repo) (*api.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s", org, repo)
 
 	// library Repo type we want to return
-	v := new(library.Repo)
+	v := new(api.Repo)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, r, v)
