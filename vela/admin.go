@@ -222,12 +222,12 @@ func (svc *AdminStepService) Update(s *library.Step) (*library.Step, *Response, 
 }
 
 // Update modifies a user with the provided details.
-func (svc *AdminUserService) Update(u *library.User) (*library.User, *Response, error) {
+func (svc *AdminUserService) Update(u *api.User) (*api.User, *Response, error) {
 	// set the API endpoint path we send the request to
 	url := "/api/v1/admin/user"
 
 	// library User type we want to return
-	v := new(library.User)
+	v := new(api.User)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", url, u, v)

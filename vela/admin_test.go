@@ -359,10 +359,10 @@ func TestAdmin_User_Update_200(t *testing.T) {
 
 	data := []byte(server.UserResp)
 
-	var want library.User
+	var want api.User
 	_ = json.Unmarshal(data, &want)
 
-	req := library.User{
+	req := api.User{
 		Name: String("octocat"),
 	}
 
