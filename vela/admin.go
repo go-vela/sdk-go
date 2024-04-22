@@ -87,12 +87,12 @@ type CleanOptions struct {
 }
 
 // Update modifies a build with the provided details.
-func (svc *AdminBuildService) Update(b *library.Build) (*library.Build, *Response, error) {
+func (svc *AdminBuildService) Update(b *api.Build) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/build"
 
 	// library Build type we want to return
-	v := new(library.Build)
+	v := new(api.Build)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, b, v)
@@ -119,7 +119,7 @@ func (svc *AdminCleanService) Clean(e *types.Error, opt *CleanOptions) (*string,
 }
 
 // GetQueue returns the list of builds in pending and running status.
-func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]library.BuildQueue, *Response, error) {
+func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]api.QueueBuild, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/builds/queue"
 
@@ -130,7 +130,7 @@ func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]library.BuildQu
 	}
 
 	// BuildQueue type we want to return
-	v := new([]library.BuildQueue)
+	v := new([]api.QueueBuild)
 
 	resp, err := svc.client.Call("GET", u, nil, v)
 

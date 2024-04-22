@@ -5,6 +5,7 @@ package vela
 import (
 	"fmt"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/types/library"
 )
 
@@ -25,12 +26,12 @@ type BuildListOptions struct {
 }
 
 // Get returns the provided build.
-func (svc *BuildService) Get(org, repo string, build int) (*library.Build, *Response, error) {
+func (svc *BuildService) Get(org, repo string, build int) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, build)
 
 	// library Build type we want to return
-	v := new(library.Build)
+	v := new(api.Build)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -53,7 +54,7 @@ func (svc *BuildService) GetBuildExecutable(org, repo string, build int) (*libra
 }
 
 // GetAll returns a list of all builds.
-func (svc *BuildService) GetAll(org, repo string, opt *BuildListOptions) (*[]library.Build, *Response, error) {
+func (svc *BuildService) GetAll(org, repo string, opt *BuildListOptions) (*[]api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds", org, repo)
 
@@ -64,7 +65,7 @@ func (svc *BuildService) GetAll(org, repo string, opt *BuildListOptions) (*[]lib
 	}
 
 	// slice library Build type we want to return
-	v := new([]library.Build)
+	v := new([]api.Build)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -93,12 +94,12 @@ func (svc *BuildService) GetLogs(org, repo string, build int, opt *ListOptions) 
 }
 
 // Add constructs a build with the provided details.
-func (svc *BuildService) Add(org, repo string, b *library.Build) (*library.Build, *Response, error) {
+func (svc *BuildService) Add(b *api.Build) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds", org, repo)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds", b.GetRepo().GetOrg(), b.GetRepo().GetName())
 
 	// library Build type we want to return
-	v := new(library.Build)
+	v := new(api.Build)
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, b, v)
@@ -107,12 +108,12 @@ func (svc *BuildService) Add(org, repo string, b *library.Build) (*library.Build
 }
 
 // Update modifies a build with the provided details.
-func (svc *BuildService) Update(org, repo string, b *library.Build) (*library.Build, *Response, error) {
+func (svc *BuildService) Update(b *api.Build) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, b.GetNumber())
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", b.GetRepo().GetOrg(), b.GetRepo().GetName(), b.GetNumber())
 
 	// library Build type we want to return
-	v := new(library.Build)
+	v := new(api.Build)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, b, v)
@@ -135,12 +136,12 @@ func (svc *BuildService) Remove(org, repo string, build int) (*string, *Response
 }
 
 // Restart takes the build provided and restarts it.
-func (svc *BuildService) Restart(org, repo string, build int) (*library.Build, *Response, error) {
+func (svc *BuildService) Restart(org, repo string, build int) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, build)
 
 	// library Build type we want to return
-	v := new(library.Build)
+	v := new(api.Build)
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, nil, v)
@@ -149,12 +150,12 @@ func (svc *BuildService) Restart(org, repo string, build int) (*library.Build, *
 }
 
 // Cancel takes the build provided and cancels it.
-func (svc *BuildService) Cancel(org, repo string, build int) (*library.Build, *Response, error) {
+func (svc *BuildService) Cancel(org, repo string, build int) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/cancel", org, repo, build)
 
 	// library Build type we want to return
-	v := new(library.Build)
+	v := new(api.Build)
 
 	// send request using client
 	resp, err := svc.client.Call("DELETE", u, nil, v)
