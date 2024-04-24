@@ -28,10 +28,10 @@ func TestAdmin_Build_Update_200(t *testing.T) {
 
 	data := []byte(server.BuildResp)
 
-	var want library.Build
+	var want api.Build
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Build{
+	req := api.Build{
 		Number: Int(1),
 		Parent: Int(1),
 		Event:  String("push"),
@@ -391,7 +391,7 @@ func TestAdmin_Build_Queue_200(t *testing.T) {
 
 	data := []byte(server.BuildQueueResp)
 
-	var want *[]library.BuildQueue
+	var want *[]api.QueueBuild
 
 	err := json.Unmarshal(data, &want)
 	if err != nil {

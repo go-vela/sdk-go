@@ -13,6 +13,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types/library"
 )
@@ -26,7 +27,7 @@ func TestBuild_Get_200(t *testing.T) {
 
 	data := []byte(server.BuildResp)
 
-	var want library.Build
+	var want api.Build
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -52,7 +53,7 @@ func TestBuild_Get_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Build{}
+	want := api.Build{}
 
 	// run test
 	got, resp, err := c.Build.Get("github", "octocat", 0)
@@ -132,7 +133,7 @@ func TestBuild_GetAll_200(t *testing.T) {
 
 	data := []byte(server.BuildsResp)
 
-	var want []library.Build
+	var want []api.Build
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -213,11 +214,15 @@ func TestBuild_Add_201(t *testing.T) {
 
 	data := []byte(server.BuildResp)
 
-	var want library.Build
+	var want api.Build
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Build{
-		Number:       Int(1),
+	req := api.Build{
+		Number: Int(1),
+		Repo: &api.Repo{
+			Org:  String("github"),
+			Name: String("octocat"),
+		},
 		Parent:       Int(1),
 		Event:        String("push"),
 		Status:       String("created"),
@@ -245,7 +250,7 @@ func TestBuild_Add_201(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Build.Add("github", "octocat", &req)
+	got, resp, err := c.Build.Add(&req)
 
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
@@ -269,18 +274,22 @@ func TestBuild_Update_200(t *testing.T) {
 
 	data := []byte(server.BuildResp)
 
-	var want library.Build
+	var want api.Build
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Build{
+	req := api.Build{
 		Number: Int(1),
+		Repo: &api.Repo{
+			Org:  String("github"),
+			Name: String("octocat"),
+		},
 		Parent: Int(1),
 		Event:  String("push"),
 		Status: String("running"),
 	}
 
 	// run test
-	got, resp, err := c.Build.Update("github", "octocat", &req)
+	got, resp, err := c.Build.Update(&req)
 
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
@@ -302,17 +311,21 @@ func TestBuild_Update_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Build{}
+	want := api.Build{}
 
-	req := library.Build{
+	req := api.Build{
 		Number: Int(0),
+		Repo: &api.Repo{
+			Org:  String("github"),
+			Name: String("octocat"),
+		},
 		Parent: Int(1),
 		Event:  String("push"),
 		Status: String("running"),
 	}
 
 	// run test
-	got, resp, err := c.Build.Update("github", "octocat", &req)
+	got, resp, err := c.Build.Update(&req)
 
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
@@ -374,7 +387,7 @@ func TestBuild_Restart_200(t *testing.T) {
 
 	data := []byte(server.BuildResp)
 
-	var want library.Build
+	var want api.Build
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -400,7 +413,7 @@ func TestBuild_Restart_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Build{}
+	want := api.Build{}
 
 	// run test
 	got, resp, err := c.Build.Restart("github", "octocat", 0)
@@ -627,8 +640,9 @@ func ExampleBuildService_Add() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Build{
+	req := api.Build{
 		Number:       Int(1),
+		Repo:         &api.Repo{Org: String("github"), Name: String("octocat")},
 		Parent:       Int(1),
 		Event:        String("push"),
 		Status:       String("created"),
@@ -656,7 +670,7 @@ func ExampleBuildService_Add() {
 	}
 
 	// Create the build in the server
-	build, resp, err := c.Build.Add("github", "octocat", &req)
+	build, resp, err := c.Build.Add(&req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -671,13 +685,14 @@ func ExampleBuildService_Update() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Build{
+	req := api.Build{
+		Repo:   &api.Repo{Org: String("github"), Name: String("octocat")},
 		Status: String("error"),
 		Error:  String(""),
 	}
 
 	// Update the step in the server
-	build, resp, err := c.Build.Update("github", "octocat", &req)
+	build, resp, err := c.Build.Update(&req)
 	if err != nil {
 		fmt.Println(err)
 	}
