@@ -10,11 +10,13 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/gin-gonic/gin"
+
+	api "github.com/go-vela/server/api/types"
+	"github.com/go-vela/server/api/types/actions"
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types/library"
-	"github.com/go-vela/types/library/actions"
-
-	"github.com/gin-gonic/gin"
+	libraryActions "github.com/go-vela/types/library/actions"
 )
 
 func TestRepo_Get_200(t *testing.T) {
@@ -26,7 +28,7 @@ func TestRepo_Get_200(t *testing.T) {
 
 	data := []byte(server.RepoResp)
 
-	var want library.Repo
+	var want api.Repo
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -52,7 +54,7 @@ func TestRepo_Get_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Repo{}
+	want := api.Repo{}
 
 	// run test
 	got, resp, err := c.Repo.Get("github", "not-found")
@@ -79,7 +81,7 @@ func TestRepo_GetAll_200(t *testing.T) {
 
 	data := []byte(server.ReposResp)
 
-	var want []library.Repo
+	var want []api.Repo
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -107,10 +109,10 @@ func TestRepo_Add_201(t *testing.T) {
 
 	data := []byte(server.RepoResp)
 
-	var want library.Repo
+	var want api.Repo
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Repo{
+	req := api.Repo{
 		Org:         String("github"),
 		Name:        String("octocat"),
 		FullName:    String("github/octocat"),
@@ -150,10 +152,10 @@ func TestRepo_Update_200(t *testing.T) {
 
 	data := []byte(server.RepoResp)
 
-	var want library.Repo
+	var want api.Repo
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Repo{
+	req := api.Repo{
 		Private:     Bool(true),
 		Trusted:     Bool(true),
 		Active:      Bool(true),
@@ -183,9 +185,9 @@ func TestRepo_Update_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Repo{}
+	want := api.Repo{}
 
-	req := library.Repo{
+	req := api.Repo{
 		Private:     Bool(true),
 		Trusted:     Bool(true),
 		Active:      Bool(true),
@@ -361,7 +363,7 @@ func ExampleRepoService_Add() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Repo{
+	req := api.Repo{
 		Org:         String("github"),
 		Name:        String("octocat"),
 		FullName:    String("github/octocat"),
@@ -392,7 +394,7 @@ func ExampleRepoService_Update() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Repo{
+	req := api.Repo{
 		AllowEvents: testEvents(),
 	}
 
@@ -453,8 +455,8 @@ func ExampleRepoService_Chown() {
 	fmt.Printf("Received response code %d, for repo %+v", resp.StatusCode, repo)
 }
 
-func testEvents() *library.Events {
-	return &library.Events{
+func testEvents() *api.Events {
+	return &api.Events{
 		Push: &actions.Push{
 			Branch:       Bool(true),
 			Tag:          Bool(true),
@@ -475,6 +477,34 @@ func testEvents() *library.Events {
 			Edited:  Bool(true),
 		},
 		Schedule: &actions.Schedule{
+			Run: Bool(true),
+		},
+	}
+}
+
+// TODO: remove this once library.Secret is converted to api.Secret.
+func testLibraryEvents() *library.Events {
+	return &library.Events{
+		Push: &libraryActions.Push{
+			Branch:       Bool(true),
+			Tag:          Bool(true),
+			DeleteBranch: Bool(true),
+			DeleteTag:    Bool(true),
+		},
+		PullRequest: &libraryActions.Pull{
+			Opened:      Bool(true),
+			Edited:      Bool(true),
+			Synchronize: Bool(true),
+			Reopened:    Bool(true),
+		},
+		Deployment: &libraryActions.Deploy{
+			Created: Bool(true),
+		},
+		Comment: &libraryActions.Comment{
+			Created: Bool(true),
+			Edited:  Bool(true),
+		},
+		Schedule: &libraryActions.Schedule{
 			Run: Bool(true),
 		},
 	}

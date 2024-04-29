@@ -8,9 +8,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-vela/server/mock/server"
-
 	"github.com/gin-gonic/gin"
+
+	"github.com/go-vela/server/mock/server"
 )
 
 func TestSCM_Sync_200(t *testing.T) {

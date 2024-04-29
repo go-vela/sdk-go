@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	api "github.com/go-vela/server/api/types"
+	"github.com/go-vela/server/api/types/settings"
 	"github.com/go-vela/types"
 	"github.com/go-vela/types/library"
 )
@@ -92,12 +93,12 @@ type CleanOptions struct {
 }
 
 // Update modifies a build with the provided details.
-func (svc *AdminBuildService) Update(b *library.Build) (*library.Build, *Response, error) {
+func (svc *AdminBuildService) Update(b *api.Build) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/build"
 
 	// library Build type we want to return
-	v := new(library.Build)
+	v := new(api.Build)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, b, v)
@@ -124,7 +125,7 @@ func (svc *AdminCleanService) Clean(e *types.Error, opt *CleanOptions) (*string,
 }
 
 // GetQueue returns the list of builds in pending and running status.
-func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]library.BuildQueue, *Response, error) {
+func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]api.QueueBuild, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/builds/queue"
 
@@ -135,7 +136,7 @@ func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]library.BuildQu
 	}
 
 	// BuildQueue type we want to return
-	v := new([]library.BuildQueue)
+	v := new([]api.QueueBuild)
 
 	resp, err := svc.client.Call("GET", u, nil, v)
 
@@ -171,12 +172,12 @@ func (svc *AdminHookService) Update(h *library.Hook) (*library.Hook, *Response, 
 }
 
 // Update modifies a repo with the provided details.
-func (svc *AdminRepoService) Update(r *library.Repo) (*library.Repo, *Response, error) {
+func (svc *AdminRepoService) Update(r *api.Repo) (*api.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/repo"
 
 	// library Repo type we want to return
-	v := new(library.Repo)
+	v := new(api.Repo)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, r, v)
@@ -227,12 +228,12 @@ func (svc *AdminStepService) Update(s *library.Step) (*library.Step, *Response, 
 }
 
 // Update modifies a user with the provided details.
-func (svc *AdminUserService) Update(u *library.User) (*library.User, *Response, error) {
+func (svc *AdminUserService) Update(u *api.User) (*api.User, *Response, error) {
 	// set the API endpoint path we send the request to
 	url := "/api/v1/admin/user"
 
 	// library User type we want to return
-	v := new(library.User)
+	v := new(api.User)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", url, u, v)
@@ -241,12 +242,12 @@ func (svc *AdminUserService) Update(u *library.User) (*library.User, *Response, 
 }
 
 // Get retrieves the active platform settings.
-func (svc *AdminSettingsService) Get() (*api.Settings, *Response, error) {
+func (svc *AdminSettingsService) Get() (*settings.Platform, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/settings"
 
 	// api Settings type we want to return
-	v := new(api.Settings)
+	v := new(settings.Platform)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -255,12 +256,12 @@ func (svc *AdminSettingsService) Get() (*api.Settings, *Response, error) {
 }
 
 // Update modifies platform settings with the provided details.
-func (svc *AdminSettingsService) Update(s *api.Settings) (*api.Settings, *Response, error) {
+func (svc *AdminSettingsService) Update(s *settings.Platform) (*settings.Platform, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/settings"
 
 	// api Settings type we want to return
-	v := new(api.Settings)
+	v := new(settings.Platform)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, s, v)
