@@ -517,10 +517,10 @@ func TestAdmin_Settings_Update_200(t *testing.T) {
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Settings.Update returned %v, want %v", resp.StatusCode, http.StatusOK)
+		t.Errorf("Settings.Update returned response code %v, want %v", resp.StatusCode, http.StatusOK)
 	}
 
 	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Settings.Update update is %v, want %v", got, want)
+		t.Errorf("Settings.Update returned %v, want %v", got, want)
 	}
 }
