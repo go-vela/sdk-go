@@ -10,8 +10,8 @@ import (
 	"reflect"
 	"testing"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
 )
 
 func TestSchedule_Get(t *testing.T) {
@@ -21,7 +21,7 @@ func TestSchedule_Get(t *testing.T) {
 		t.Errorf("unable to create test client: %v", err)
 	}
 
-	var schedule library.Schedule
+	var schedule api.Schedule
 	err = json.Unmarshal([]byte(server.ScheduleResp), &schedule)
 	if err != nil {
 		t.Errorf("unable to create test schedule: %v", err)
@@ -36,7 +36,7 @@ func TestSchedule_Get(t *testing.T) {
 		failure  bool
 		name     string
 		args     args
-		want     *library.Schedule
+		want     *api.Schedule
 		wantResp int
 	}{
 		{
@@ -58,7 +58,7 @@ func TestSchedule_Get(t *testing.T) {
 				repo:     "octocat",
 				schedule: "not-found",
 			},
-			want:     new(library.Schedule),
+			want:     new(api.Schedule),
 			wantResp: http.StatusNotFound,
 		},
 	}
@@ -97,7 +97,7 @@ func TestSchedule_GetAll(t *testing.T) {
 		t.Errorf("unable to create test client: %v", err)
 	}
 
-	var schedules []library.Schedule
+	var schedules []api.Schedule
 	err = json.Unmarshal([]byte(server.SchedulesResp), &schedules)
 	if err != nil {
 		t.Errorf("unable to create test schedules: %v", err)
@@ -112,7 +112,7 @@ func TestSchedule_GetAll(t *testing.T) {
 		failure  bool
 		name     string
 		args     args
-		want     []library.Schedule
+		want     []api.Schedule
 		wantResp int
 	}{
 		{
@@ -161,7 +161,7 @@ func TestSchedule_Add(t *testing.T) {
 		t.Errorf("unable to create test client: %v", err)
 	}
 
-	var schedule library.Schedule
+	var schedule api.Schedule
 	err = json.Unmarshal([]byte(server.ScheduleResp), &schedule)
 	if err != nil {
 		t.Errorf("unable to create test schedule: %v", err)
@@ -170,13 +170,13 @@ func TestSchedule_Add(t *testing.T) {
 	type args struct {
 		org      string
 		repo     string
-		schedule *library.Schedule
+		schedule *api.Schedule
 	}
 	tests := []struct {
 		failure  bool
 		name     string
 		args     args
-		want     *library.Schedule
+		want     *api.Schedule
 		wantResp int
 	}{
 		{
@@ -185,7 +185,7 @@ func TestSchedule_Add(t *testing.T) {
 			args: args{
 				org:  "github",
 				repo: "octocat",
-				schedule: &library.Schedule{
+				schedule: &api.Schedule{
 					Active: Bool(true),
 					Name:   String("foo"),
 					Entry:  String("@weekly"),
@@ -229,7 +229,7 @@ func TestSchedule_Update(t *testing.T) {
 		t.Errorf("unable to create test client: %v", err)
 	}
 
-	var schedule library.Schedule
+	var schedule api.Schedule
 	err = json.Unmarshal([]byte(server.ScheduleResp), &schedule)
 	if err != nil {
 		t.Errorf("unable to create test schedule: %v", err)
@@ -238,13 +238,13 @@ func TestSchedule_Update(t *testing.T) {
 	type args struct {
 		org      string
 		repo     string
-		schedule *library.Schedule
+		schedule *api.Schedule
 	}
 	tests := []struct {
 		failure  bool
 		name     string
 		args     args
-		want     *library.Schedule
+		want     *api.Schedule
 		wantResp int
 	}{
 		{
@@ -253,7 +253,7 @@ func TestSchedule_Update(t *testing.T) {
 			args: args{
 				org:  "github",
 				repo: "octocat",
-				schedule: &library.Schedule{
+				schedule: &api.Schedule{
 					Active: Bool(true),
 					Name:   String("foo"),
 					Entry:  String("@weekly"),
@@ -268,11 +268,11 @@ func TestSchedule_Update(t *testing.T) {
 			args: args{
 				org:  "github",
 				repo: "octocat",
-				schedule: &library.Schedule{
+				schedule: &api.Schedule{
 					Name: String("not-found"),
 				},
 			},
-			want:     new(library.Schedule),
+			want:     new(api.Schedule),
 			wantResp: http.StatusNotFound,
 		},
 	}
@@ -420,7 +420,7 @@ func ExampleScheduleService_Add() {
 	// set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Schedule{
+	req := api.Schedule{
 		Active: Bool(true),
 		Name:   String("nightly"),
 		Entry:  String("0 0 * * *"),
@@ -445,7 +445,7 @@ func ExampleScheduleService_Update() {
 	// set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Schedule{
+	req := api.Schedule{
 		Active: Bool(false),
 		Name:   String("nightly"),
 		Entry:  String("0 0 * * *"),
