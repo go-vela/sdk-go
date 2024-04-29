@@ -14,6 +14,7 @@ import (
 
 	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/api/types/actions"
+	"github.com/go-vela/server/api/types/settings"
 	"github.com/go-vela/server/mock/server"
 	"github.com/go-vela/types"
 	"github.com/go-vela/types/library"
@@ -460,5 +461,66 @@ func TestAdmin_Worker_RegistrationToken_NoHostname(t *testing.T) {
 	_, _, err := c.Admin.Worker.RegisterToken(hostname)
 	if err == nil {
 		t.Error("RegisterToken should have returned err")
+	}
+}
+
+func TestAdmin_Settings_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	data := []byte(server.SettingsResp)
+
+	var want *settings.Platform
+
+	err := json.Unmarshal(data, &want)
+	if err != nil {
+		t.Error(err)
+	}
+
+	// run test
+	got, resp, err := c.Admin.Settings.Get()
+	if err != nil {
+		t.Errorf("Settings.Get returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Settings.Get returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("Settings.Get() mismatch (-want +got):\n%s", diff)
+	}
+}
+
+func TestAdmin_Settings_Update_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	data := []byte(server.UpdateSettingsResp)
+
+	var want settings.Platform
+	_ = json.Unmarshal(data, &want)
+
+	req := settings.Platform{}
+
+	// run test
+	got, resp, err := c.Admin.Settings.Update(&req)
+
+	if err != nil {
+		t.Errorf("Settings.Update returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Settings.Update returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("Settings.Update update is %v, want %v", got, want)
 	}
 }
