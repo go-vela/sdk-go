@@ -25,6 +25,11 @@ type BuildListOptions struct {
 	ListOptions
 }
 
+type RequestTokenOptions struct {
+	Image   string `url:"image,omitempty"`
+	Request string `url:"request,omitempty"`
+}
+
 // Get returns the provided build.
 func (svc *BuildService) Get(org, repo string, build int) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
@@ -175,6 +180,26 @@ func (svc *BuildService) Approve(org, repo string, build int) (*Response, error)
 func (svc *BuildService) GetBuildToken(org, repo string, build int) (*library.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/token", org, repo, build)
+
+	// library Token type we want to return
+	t := new(library.Token)
+
+	// send request using client
+	resp, err := svc.client.Call("GET", u, nil, t)
+
+	return t, resp, err
+}
+
+// GetIDRequestToken returns an auth token for updating build resources.
+func (svc *BuildService) GetIDRequestToken(org, repo string, build int, opt RequestTokenOptions) (*library.Token, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/id_request_token", org, repo, build)
+
+	// add optional arguments if supplied
+	u, err := addOptions(u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	// library Token type we want to return
 	t := new(library.Token)
