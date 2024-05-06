@@ -22,10 +22,13 @@ func TestDashboard_Get_200(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	data := []byte(server.DashboardResp)
+	data := []byte(server.DashCardResp)
 
-	var want api.Dashboard
-	_ = json.Unmarshal(data, &want)
+	var want api.DashCard
+	err := json.Unmarshal(data, &want)
+	if err != nil {
+		t.Errorf("unable to unmarshal data: %v", err)
+	}
 
 	// run test
 	got, resp, err := c.Dashboard.Get("c976470d-34c1-49b2-9a98-1035871c576b")
@@ -50,7 +53,7 @@ func TestDashboard_Get_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := api.Dashboard{}
+	want := api.DashCard{}
 
 	// run test
 	got, resp, err := c.Dashboard.Get("0")
@@ -75,9 +78,9 @@ func TestDashboard_GetAllUser_200(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	data := []byte(server.DashboardsResp)
+	data := []byte(server.DashCardsResp)
 
-	var want []api.Dashboard
+	var want []api.DashCard
 	_ = json.Unmarshal(data, &want)
 
 	// run test

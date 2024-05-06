@@ -13,12 +13,12 @@ import (
 type DashboardService service
 
 // Get returns the provided Dashboard.
-func (svc *DashboardService) Get(dashboard string) (*api.Dashboard, *Response, error) {
+func (svc *DashboardService) Get(dashboard string) (*api.DashCard, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/dashboards/%s", dashboard)
 
 	// API Dashboard type we want to return
-	v := new(api.Dashboard)
+	v := new(api.DashCard)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -27,12 +27,12 @@ func (svc *DashboardService) Get(dashboard string) (*api.Dashboard, *Response, e
 }
 
 // GetAll returns a list of all dashboards for the authenticated user.
-func (svc *DashboardService) GetAllUser() (*[]api.Dashboard, *Response, error) {
+func (svc *DashboardService) GetAllUser() (*[]api.DashCard, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/user/dashboards"
 
 	// slice library Dashboard type we want to return
-	v := new([]api.Dashboard)
+	v := new([]api.DashCard)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
