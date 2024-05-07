@@ -43,6 +43,7 @@ type (
 		Authentication *AuthenticationService
 		Authorization  *AuthorizationService
 		Build          *BuildService
+		Dashboard      *DashboardService
 		Deployment     *DeploymentService
 		Hook           *HookService
 		Log            *LogService
@@ -138,6 +139,7 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 		&AdminWorkerService{client: c},
 	}
 	c.Build = &BuildService{client: c}
+	c.Dashboard = &DashboardService{client: c}
 	c.Deployment = &DeploymentService{client: c}
 	c.Hook = &HookService{client: c}
 	c.Log = &LogService{client: c}
