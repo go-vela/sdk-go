@@ -59,7 +59,7 @@ func TestDashboard_Get_404(t *testing.T) {
 	got, resp, err := c.Dashboard.Get("0")
 
 	if err == nil {
-		t.Errorf("New returned err: %v", err)
+		t.Errorf("Get returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusNotFound {
@@ -87,15 +87,15 @@ func TestDashboard_GetAllUser_200(t *testing.T) {
 	got, resp, err := c.Dashboard.GetAllUser()
 
 	if err != nil {
-		t.Errorf("New returned err: %v", err)
+		t.Errorf("GetAllUser returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		t.Errorf("GetAll returned %v, want %v", resp.StatusCode, http.StatusOK)
+		t.Errorf("GetAllUser returned %v, want %v", resp.StatusCode, http.StatusOK)
 	}
 
 	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("GetAll is %v, want %v", got, want)
+		t.Errorf("GetAllUser is %v, want %v", got, want)
 	}
 }
 
@@ -115,7 +115,7 @@ func TestDashboard_Add_201(t *testing.T) {
 	got, resp, err := c.Dashboard.Add(&want)
 
 	if err != nil {
-		t.Errorf("New returned err: %v", err)
+		t.Errorf("Add returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusCreated {
@@ -143,14 +143,14 @@ func TestDashboard_Update_200(t *testing.T) {
 	got, resp, err := c.Dashboard.Update(&want)
 
 	if err != nil {
-		t.Errorf("New returned err: %v", err)
+		t.Errorf("Update returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Repo returned %v, want %v", resp.StatusCode, http.StatusOK)
+		t.Errorf("Update returned %v, want %v", resp.StatusCode, http.StatusOK)
 	}
 
 	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Repo create is %v, want %v", got, want)
+		t.Errorf("Update is %v, want %v", got, want)
 	}
 }
