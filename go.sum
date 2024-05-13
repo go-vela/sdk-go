@@ -30,8 +30,8 @@ github.com/go-playground/universal-translator v0.18.1 h1:Bcnm0ZwsGyWbCzImXv+pAJn
 github.com/go-playground/universal-translator v0.18.1/go.mod h1:xekY+UJKNuX9WP91TpwSH2VMlDf28Uj24BCp08ZFTUY=
 github.com/go-playground/validator/v10 v10.14.0 h1:vgvQWe3XCz3gIeFDm/HnTIbj6UGmg/+t63MyGU2n5js=
 github.com/go-playground/validator/v10 v10.14.0/go.mod h1:9iXMNT7sEkjXb0I+enO7QXmzG6QCsPWY4zveKFVRSyU=
-github.com/go-vela/server v0.23.4-0.20240508133721-300ca456e3bb h1:nzDitT5zNk5k49n/oEESPwL8xwLWf5iLLJDJkT3Vwik=
-github.com/go-vela/server v0.23.4-0.20240508133721-300ca456e3bb/go.mod h1:2KcNYX+DfNH/aWwu0pu89Gj9+wAm3S70VMy53/LMZjs=
+github.com/go-vela/server v0.23.4-0.20240513143405-93571138ad3f h1:d2J/3+wCmP9gKjGZPvn2A4eQuvqz3Occw+B361ByzpI=
+github.com/go-vela/server v0.23.4-0.20240513143405-93571138ad3f/go.mod h1:tnymHBBZZFdiVYlXNg4AG87F7iWChFiIqI9Q+zLD9YY=
 github.com/go-vela/types v0.23.4-0.20240417135026-fb4a95c30338 h1:I0v47dOdAvjX7lOFN4s28uONChmluD6TNgFL1hpav60=
 github.com/go-vela/types v0.23.4-0.20240417135026-fb4a95c30338/go.mod h1:vISsYDdjz9RPEK6qZ+MxtrdZEjTVU4K30NomB3826u8=
 github.com/goccy/go-json v0.10.2 h1:CrxCmQqYDkv1z7lO7Wbh2HN93uovUHgrECaO5ZrCXAU=

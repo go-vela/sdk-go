@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	api "github.com/go-vela/server/api/types"
+	"github.com/go-vela/server/api/types/settings"
 	"github.com/go-vela/types"
 	"github.com/go-vela/types/library"
 )
@@ -26,6 +27,7 @@ type (
 		Step       *AdminStepService
 		User       *AdminUserService
 		Worker     *AdminWorkerService
+		Settings   *AdminSettingsService
 	}
 
 	// AdminBuildService handles retrieving admin builds from
@@ -67,6 +69,10 @@ type (
 	// AdminWorkerService handles managing admin worker functionality
 	// from the server methods of the Vela API.
 	AdminWorkerService service
+
+	// AdminSettingsService handles managing admin settings functionality
+	// from the server methods of the Vela API.
+	AdminSettingsService service
 )
 
 // GetQueueOptions specifies the optional parameters to the
@@ -231,6 +237,49 @@ func (svc *AdminUserService) Update(u *api.User) (*api.User, *Response, error) {
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", url, u, v)
+
+	return v, resp, err
+}
+
+// Get retrieves the active platform settings.
+func (svc *AdminSettingsService) Get() (*settings.Platform, *Response, error) {
+	// set the API endpoint path we send the request to
+	//nolint:goconst // ignore
+	u := "/api/v1/admin/settings"
+
+	// api Settings type we want to return
+	v := new(settings.Platform)
+
+	// send request using client
+	resp, err := svc.client.Call("GET", u, nil, v)
+
+	return v, resp, err
+}
+
+// Update modifies platform settings with the provided details.
+func (svc *AdminSettingsService) Update(s *settings.Platform) (*settings.Platform, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := "/api/v1/admin/settings"
+
+	// api Settings type we want to return
+	v := new(settings.Platform)
+
+	// send request using client
+	resp, err := svc.client.Call("PUT", u, s, v)
+
+	return v, resp, err
+}
+
+// Restore returns the platform settings to the server's environment-provided defaults.
+func (svc *AdminSettingsService) Restore() (*settings.Platform, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := "/api/v1/admin/settings"
+
+	// api Settings type we want to return
+	v := new(settings.Platform)
+
+	// send request using client
+	resp, err := svc.client.Call("DELETE", u, nil, v)
 
 	return v, resp, err
 }
