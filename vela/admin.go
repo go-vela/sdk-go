@@ -244,6 +244,7 @@ func (svc *AdminUserService) Update(u *api.User) (*api.User, *Response, error) {
 // Get retrieves the active platform settings.
 func (svc *AdminSettingsService) Get() (*settings.Platform, *Response, error) {
 	// set the API endpoint path we send the request to
+	//nolint:goconst // ignore
 	u := "/api/v1/admin/settings"
 
 	// api Settings type we want to return
@@ -258,6 +259,7 @@ func (svc *AdminSettingsService) Get() (*settings.Platform, *Response, error) {
 // Update modifies platform settings with the provided details.
 func (svc *AdminSettingsService) Update(s *settings.Platform) (*settings.Platform, *Response, error) {
 	// set the API endpoint path we send the request to
+	//nolint:goconst // ignore
 	u := "/api/v1/admin/settings"
 
 	// api Settings type we want to return
@@ -272,6 +274,7 @@ func (svc *AdminSettingsService) Update(s *settings.Platform) (*settings.Platfor
 // Restore returns the platform settings to the server's environment-provided defaults.
 func (svc *AdminSettingsService) Restore() (*settings.Platform, *Response, error) {
 	// set the API endpoint path we send the request to
+	//nolint:goconst // ignore
 	u := "/api/v1/admin/settings"
 
 	// api Settings type we want to return
