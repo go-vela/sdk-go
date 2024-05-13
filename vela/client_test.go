@@ -48,6 +48,7 @@ func TestVela_NewClient(t *testing.T) {
 		&AdminSettingsService{client: want},
 	}
 	want.Build = &BuildService{client: want}
+	want.Dashboard = &DashboardService{client: want}
 	want.Deployment = &DeploymentService{client: want}
 	want.Hook = &HookService{client: want}
 	want.Log = &LogService{client: want}

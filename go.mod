@@ -6,8 +6,8 @@ require (
 	github.com/buildkite/yaml v0.0.0-20230306222819-0e4e032d4835
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.9.1
-	github.com/go-vela/server v0.23.4-0.20240424144436-b55aa2bb3684
-	github.com/go-vela/types v0.23.4-0.20240405205548-f24f795ac0b7
+	github.com/go-vela/server v0.23.4-0.20240513143405-93571138ad3f
+	github.com/go-vela/types v0.23.4-0.20240417135026-fb4a95c30338
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/google/go-cmp v0.6.0
 	github.com/google/go-querystring v1.1.0
@@ -46,5 +46,3 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-replace github.com/go-vela/server => ../server
