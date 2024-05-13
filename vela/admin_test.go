@@ -524,3 +524,31 @@ func TestAdmin_Settings_Update_200(t *testing.T) {
 		t.Errorf("Settings.Update returned %v, want %v", got, want)
 	}
 }
+
+func TestAdmin_Settings_Restore_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	data := []byte(server.RestoreSettingsResp)
+
+	var want settings.Platform
+	_ = json.Unmarshal(data, &want)
+
+	// run test
+	got, resp, err := c.Admin.Settings.Restore()
+
+	if err != nil {
+		t.Errorf("Settings.Restore returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Settings.Restore returned response code %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("Settings.Restore returned %v, want %v", got, want)
+	}
+}

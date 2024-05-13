@@ -269,6 +269,20 @@ func (svc *AdminSettingsService) Update(s *settings.Platform) (*settings.Platfor
 	return v, resp, err
 }
 
+// Restore returns the platform settings to the server's environment-provided defaults.
+func (svc *AdminSettingsService) Restore() (*settings.Platform, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := "/api/v1/admin/settings"
+
+	// api Settings type we want to return
+	v := new(settings.Platform)
+
+	// send request using client
+	resp, err := svc.client.Call("DELETE", u, nil, v)
+
+	return v, resp, err
+}
+
 // RegisterToken generates a worker registration token with the provided details.
 func (svc *AdminWorkerService) RegisterToken(hostname string) (*library.Token, *Response, error) {
 	// validate input
