@@ -8,8 +8,8 @@ require (
 	github.com/buildkite/yaml v0.0.0-20230306222819-0e4e032d4835
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.9.1
-	github.com/go-vela/server v0.23.4-0.20240424144436-b55aa2bb3684
-	github.com/go-vela/types v0.23.4-0.20240405205548-f24f795ac0b7
+	github.com/go-vela/server v0.23.4-0.20240513143405-93571138ad3f
+	github.com/go-vela/types v0.23.4-0.20240516161114-57d6b8f77b10
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/google/go-cmp v0.6.0
 	github.com/google/go-querystring v1.1.0
@@ -19,6 +19,7 @@ require (
 require (
 	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
+	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/drone/envsubst v1.0.3 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
@@ -36,8 +37,11 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
+	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
+	github.com/urfave/cli/v2 v2.27.1 // indirect
+	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.21.0 // indirect
 	golang.org/x/net v0.22.0 // indirect

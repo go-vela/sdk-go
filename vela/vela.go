@@ -18,6 +18,10 @@ func Int(v int) *int { return &v }
 // integer value to store v and returns a pointer to it.
 func Int64(v int64) *int64 { return &v }
 
+// UInt64 is a helper routine that allocates a new unsigned 64 bit
+// integer value to store v and returns a pointer to it.
+func UInt64(v uint64) *uint64 { return &v }
+
 // String is a helper routine that allocates a new string
 // value to store v and returns a pointer to it.
 func String(v string) *string { return &v }
