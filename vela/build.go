@@ -25,6 +25,8 @@ type BuildListOptions struct {
 	ListOptions
 }
 
+// RequestTokenOptions specifies the required parameters to the
+// Build.GetIDRequestToken method.
 type RequestTokenOptions struct {
 	Image    string `url:"image,omitempty"`
 	Request  string `url:"request,omitempty"`
