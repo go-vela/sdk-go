@@ -26,8 +26,9 @@ type BuildListOptions struct {
 }
 
 type RequestTokenOptions struct {
-	Image   string `url:"image,omitempty"`
-	Request string `url:"request,omitempty"`
+	Image    string `url:"image,omitempty"`
+	Request  string `url:"request,omitempty"`
+	Commands bool   `url:"commands,omitempty"`
 }
 
 // Get returns the provided build.
