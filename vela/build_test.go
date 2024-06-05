@@ -585,6 +585,112 @@ func TestBuild_GetBuildToken_400(t *testing.T) {
 	}
 }
 
+func TestBuild_GetIDRequestToken_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	data := []byte(server.IDTokenRequestTokenResp)
+
+	var want library.Token
+	_ = json.Unmarshal(data, &want)
+
+	// run test
+	got, resp, err := c.Build.GetIDRequestToken("github", "octocat", 1, nil)
+
+	if err != nil {
+		t.Errorf("GetIDRequestToken returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Build returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("GetIDRequestToken is %v, want %v", got, want)
+	}
+}
+
+func TestBuild_GetIDRequestToken_400(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	var want library.Token
+
+	// run test
+	got, resp, err := c.Build.GetIDRequestToken("github", "octocat", 0, nil)
+
+	if err != nil {
+		t.Errorf("GetIDRequestToken returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusBadRequest {
+		t.Errorf("Build returned %v, want %v", resp.StatusCode, http.StatusBadRequest)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("GetIdRequestToken is %v, want %v", got, want)
+	}
+}
+
+func TestBuild_GetIDToken_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	data := []byte(server.IDTokenResp)
+
+	var want library.Token
+	_ = json.Unmarshal(data, &want)
+
+	// run test
+	got, resp, err := c.Build.GetIDToken("github", "octocat", 1, nil)
+
+	if err != nil {
+		t.Errorf("GetIDToken returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Build returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("GetIDToken is %v, want %v", got, want)
+	}
+}
+
+func TestBuild_GetIDToken_400(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	var want library.Token
+
+	// run test
+	got, resp, err := c.Build.GetIDToken("github", "octocat", 0, nil)
+
+	if err != nil {
+		t.Errorf("GetIDToken returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusBadRequest {
+		t.Errorf("Build returned %v, want %v", resp.StatusCode, http.StatusBadRequest)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("GetIdToken is %v, want %v", got, want)
+	}
+}
+
 func ExampleBuildService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)

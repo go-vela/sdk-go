@@ -33,6 +33,12 @@ type RequestTokenOptions struct {
 	Commands bool   `url:"commands,omitempty"`
 }
 
+// IDTokenOptions specifies the required parameters to the
+// Build.GetIDToken method.
+type IDTokenOptions struct {
+	Audience []string `url:"audience,omitempty"`
+}
+
 // Get returns the provided build.
 func (svc *BuildService) Get(org, repo string, build int) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
@@ -194,9 +200,29 @@ func (svc *BuildService) GetBuildToken(org, repo string, build int) (*library.To
 }
 
 // GetIDRequestToken returns an id request token for integrating with build OIDC.
-func (svc *BuildService) GetIDRequestToken(org, repo string, build int, opt RequestTokenOptions) (*library.Token, *Response, error) {
+func (svc *BuildService) GetIDRequestToken(org, repo string, build int, opt *RequestTokenOptions) (*library.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/id_request_token", org, repo, build)
+
+	// add optional arguments if supplied
+	u, err := addOptions(u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	// library Token type we want to return
+	t := new(library.Token)
+
+	// send request using client
+	resp, err := svc.client.Call("GET", u, nil, t)
+
+	return t, resp, err
+}
+
+// GetIDToken returns an ID token corresponding to the request token during a build.
+func (svc *BuildService) GetIDToken(org, repo string, build int, opt *IDTokenOptions) (*library.Token, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/id_token", org, repo, build)
 
 	// add optional arguments if supplied
 	u, err := addOptions(u, opt)

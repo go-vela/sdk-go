@@ -6,7 +6,7 @@ require (
 	github.com/buildkite/yaml v0.0.0-20230306222819-0e4e032d4835
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.9.1
-	github.com/go-vela/server v0.23.4-0.20240530142519-36983c65c8e4
+	github.com/go-vela/server v0.23.4-0.20240605145932-a0b14ae60d76
 	github.com/go-vela/types v0.23.4-0.20240516161114-57d6b8f77b10
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/google/go-cmp v0.6.0

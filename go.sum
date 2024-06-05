@@ -35,11 +35,8 @@ github.com/go-playground/universal-translator v0.18.1 h1:Bcnm0ZwsGyWbCzImXv+pAJn
 github.com/go-playground/universal-translator v0.18.1/go.mod h1:xekY+UJKNuX9WP91TpwSH2VMlDf28Uj24BCp08ZFTUY=
 github.com/go-playground/validator/v10 v10.14.0 h1:vgvQWe3XCz3gIeFDm/HnTIbj6UGmg/+t63MyGU2n5js=
 github.com/go-playground/validator/v10 v10.14.0/go.mod h1:9iXMNT7sEkjXb0I+enO7QXmzG6QCsPWY4zveKFVRSyU=
-<<<<<<< HEAD
-=======
-github.com/go-vela/server v0.23.4-0.20240530142519-36983c65c8e4 h1:5sDKoDdX5izPVr9H+dmH8HLxTKdIqVb25wmGF4pp1BM=
-github.com/go-vela/server v0.23.4-0.20240530142519-36983c65c8e4/go.mod h1:LXCP+IpHA1YdvZrgcbjoR2H0WfIywXCq+UrJ1cru0NM=
->>>>>>> dbc985a46c132499eefef44e30f97a7b6c5e8b06
+github.com/go-vela/server v0.23.4-0.20240605145932-a0b14ae60d76 h1:KqE35llJw9lytC+KfK139f4cqihlWaHWs0mvMTmc0wE=
+github.com/go-vela/server v0.23.4-0.20240605145932-a0b14ae60d76/go.mod h1:LXCP+IpHA1YdvZrgcbjoR2H0WfIywXCq+UrJ1cru0NM=
 github.com/go-vela/types v0.23.4-0.20240516161114-57d6b8f77b10 h1:VQxIqxpJKIOzRnMi4z/d+EOo7jc5PXCnlUvZZl5ajzA=
 github.com/go-vela/types v0.23.4-0.20240516161114-57d6b8f77b10/go.mod h1:vISsYDdjz9RPEK6qZ+MxtrdZEjTVU4K30NomB3826u8=
 github.com/goccy/go-json v0.10.2 h1:CrxCmQqYDkv1z7lO7Wbh2HN93uovUHgrECaO5ZrCXAU=
@@ -124,10 +121,7 @@ github.com/urfave/cli/v2 v2.27.1 h1:8xSQ6szndafKVRmfyeUMxkNUJQMjL1F2zmsZ+qHpfho=
 github.com/urfave/cli/v2 v2.27.1/go.mod h1:8qnjx1vcq5s2/wpsqoZFndg2CE5tNFyrTvS6SinrnYQ=
 github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 h1:bAn7/zixMGCfxrRTfdpNzjtPYqr8smhKouy9mxVdGPU=
 github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673/go.mod h1:N3UwUGtsrSj3ccvlPHLoLsHnpR27oXr4ZE984MbSER8=
-<<<<<<< HEAD
-=======
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
->>>>>>> dbc985a46c132499eefef44e30f97a7b6c5e8b06
 golang.org/x/arch v0.0.0-20210923205945-b76863e36670/go.mod h1:5om86z9Hs0C8fWVUuoMHwpExlXzs5Tkyp9hOrfG7pp8=
 golang.org/x/arch v0.3.0 h1:02VY4/ZcO/gBOH6PUaoiptASxtXU10jazRCP865E97k=
 golang.org/x/arch v0.3.0/go.mod h1:5om86z9Hs0C8fWVUuoMHwpExlXzs5Tkyp9hOrfG7pp8=
