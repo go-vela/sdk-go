@@ -25,9 +25,12 @@ type BuildListOptions struct {
 	ListOptions
 }
 
+// RequestTokenOptions specifies the required parameters to the
+// Build.GetIDRequestToken method.
 type RequestTokenOptions struct {
-	Image   string `url:"image,omitempty"`
-	Request string `url:"request,omitempty"`
+	Image    string `url:"image,omitempty"`
+	Request  string `url:"request,omitempty"`
+	Commands bool   `url:"commands,omitempty"`
 }
 
 // Get returns the provided build.
@@ -190,7 +193,7 @@ func (svc *BuildService) GetBuildToken(org, repo string, build int) (*library.To
 	return t, resp, err
 }
 
-// GetIDRequestToken returns an auth token for updating build resources.
+// GetIDRequestToken returns an id request token for integrating with build OIDC.
 func (svc *BuildService) GetIDRequestToken(org, repo string, build int, opt RequestTokenOptions) (*library.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/id_request_token", org, repo, build)
