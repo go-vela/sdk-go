@@ -511,8 +511,9 @@ func (c *Client) Do(req *http.Request, respType interface{}) (*Response, error) 
 				return response, err
 			}
 
-			// check if the content type is YAML
-			if strings.Contains(resp.Header.Get("Content-Type"), "application/x-yaml") {
+			// check if the content type is YAML (or deprecated x-yaml)
+			if strings.Contains(resp.Header.Get("Content-Type"), "application/yaml") ||
+				strings.Contains(resp.Header.Get("Content-Type"), "application/x-yaml") {
 				// unmarshal the body as YAML to the return object
 				_ = yaml.Unmarshal(body, respType)
 			} else {
