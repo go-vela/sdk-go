@@ -1,0 +1,61 @@
+name: Bump Version
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  BumpVersion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 0
+
+      - name: Check if release is a release candidate
+        run: |
+          if [[ "${{ github.event.release.tag_name }}" =~ -rc[0-9]+$ ]]; then
+            echo "This is a release candidate. Skipping version bump."
+            echo "skip=true" >> $GITHUB_ENV
+          else
+            echo "skip=false" >> $GITHUB_ENV
+          fi
+
+      - name: Check if minor version was incremented
+        if: env.skip == 'false'
+        run: |
+          VERSION_MINOR_OLD=$(grep -oP 'VersionMinor int64 = \K[0-9]+' version/version.go)
+          VERSION_MINOR_NEW=$(echo "${{ github.event.release.tag_name }}" | cut -d. -f2)
+          if [[ "$VERSION_MINOR_NEW" -lt "$VERSION_MINOR_OLD" ]]; then
+            echo "The minor version was not incremented in the release tag. Skipping version bump."
+            echo "skip=true" >> $GITHUB_ENV
+          fi
+
+      - name: Bump minor version and push changes
+        if: env.skip == 'false'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          VERSION_MINOR=$(echo "${{ github.event.release.tag_name }}" | cut -d. -f2)
+          NEW_VERSION_MINOR=$((VERSION_MINOR + 1))
+          echo "NEW_VERSION_MINOR=$NEW_VERSION_MINOR" >> $GITHUB_ENV
+          git switch -c bump-minor-version-to-$NEW_VERSION_MINOR
+          sed -i "s|VersionMinor int64 = [0-9]*|VersionMinor int64 = $NEW_VERSION_MINOR|" version/version.go
+          git commit -am "bump version"
+          git push origin bump-minor-version-to-$NEW_VERSION_MINOR
+
+      - name: Create Pull Request
+        if: env.skip == 'false'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const { owner, repo } = context.repo
+            const pullRequest = await github.rest.pulls.create({
+              owner,
+              repo,
+              title: `Bump minor version to ${process.env.NEW_VERSION_MINOR}`,
+              head: `bump-minor-version-to-${process.env.NEW_VERSION_MINOR}`,
+              base: 'main',
+              body: `This PR increments the VersionMinor value in version.go to ${process.env.NEW_VERSION_MINOR}.`,
+            })
