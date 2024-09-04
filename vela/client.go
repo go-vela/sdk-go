@@ -131,6 +131,7 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 		&AdminCleanService{client: c},
 		&AdminDeploymentService{client: c},
 		&AdminHookService{client: c},
+		&AdminOIDCService{client: c},
 		&AdminRepoService{client: c},
 		&AdminSecretService{client: c},
 		&AdminSvcService{client: c},
