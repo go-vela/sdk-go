@@ -39,6 +39,7 @@ func TestVela_NewClient(t *testing.T) {
 		&AdminCleanService{client: want},
 		&AdminDeploymentService{client: want},
 		&AdminHookService{client: want},
+		&AdminOIDCService{client: want},
 		&AdminRepoService{client: want},
 		&AdminSecretService{client: want},
 		&AdminSvcService{client: want},

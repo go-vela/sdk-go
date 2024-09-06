@@ -21,6 +21,7 @@ type (
 		Clean      *AdminCleanService
 		Deployment *AdminDeploymentService
 		Hook       *AdminHookService
+		OIDC       *AdminOIDCService
 		Repo       *AdminRepoService
 		Secret     *AdminSecretService
 		Service    *AdminSvcService
@@ -45,6 +46,9 @@ type (
 	// AdminHookService handles retrieving admin hooks from
 	// the server methods of the Vela API.
 	AdminHookService service
+
+	// AdminOIDCService handles key rotation for OpenID Connect.
+	AdminOIDCService service
 
 	// AdminRepoService handles retrieving admin repos from
 	// the server methods of the Vela API.
@@ -301,4 +305,17 @@ func (svc *AdminWorkerService) RegisterToken(hostname string) (*library.Token, *
 	resp, err := svc.client.Call("POST", url, nil, t)
 
 	return t, resp, err
+}
+
+// RotateOIDCKeys sends a request to rotate the private keys used for creating ID tokens.
+func (svc *AdminOIDCService) RotateOIDCKeys() (*string, *Response, error) {
+	// set the API endpoint path we send the request to
+	url := "/api/v1/admin/rotate_oidc_keys"
+
+	v := new(string)
+
+	// send request using client
+	resp, err := svc.client.Call("POST", url, nil, v)
+
+	return v, resp, err
 }
