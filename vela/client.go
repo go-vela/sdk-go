@@ -54,6 +54,7 @@ type (
 		Secret         *SecretService
 		Step           *StepService
 		Svc            *SvcService
+		User           *UserService
 		Worker         *WorkerService
 		Queue          *QueueService
 	}
@@ -152,6 +153,7 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	c.Secret = &SecretService{client: c}
 	c.Step = &StepService{client: c}
 	c.Svc = &SvcService{client: c}
+	c.User = &UserService{client: c}
 	c.Worker = &WorkerService{client: c}
 	c.Queue = &QueueService{client: c}
 
