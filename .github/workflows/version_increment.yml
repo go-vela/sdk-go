@@ -54,7 +54,7 @@ jobs:
             const pullRequest = await github.rest.pulls.create({
               owner,
               repo,
-              title: `Bump minor version to ${process.env.NEW_VERSION_MINOR}`,
+              title: `chore: bump minor version to ${process.env.NEW_VERSION_MINOR}`,
               head: `bump-minor-version-to-${process.env.NEW_VERSION_MINOR}`,
               base: 'main',
               body: `This PR increments the VersionMinor value in version.go to ${process.env.NEW_VERSION_MINOR}.`,
