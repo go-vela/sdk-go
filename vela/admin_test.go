@@ -552,3 +552,47 @@ func TestAdmin_Settings_Restore_200(t *testing.T) {
 		t.Errorf("Settings.Restore returned %v, want %v", got, want)
 	}
 }
+
+func TestAdmin_OIDC_RotateKeys_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	want := "keys rotated successfully"
+
+	// run test
+	got, resp, err := c.Admin.OIDC.RotateOIDCKeys()
+	if err != nil {
+		t.Errorf("RotateOIDCKeys returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("RotateOIDCKeys returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if diff := cmp.Diff(&want, got); diff != "" {
+		t.Errorf("RotateOIDCKeys() mismatch (-want +got):\n%s", diff)
+	}
+}
+
+func TestAdmin_OIDC_RotateKeys_Unauthorized(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	c.Authentication.SetTokenAuth("invalid")
+
+	// run test
+	_, resp, err := c.Admin.OIDC.RotateOIDCKeys()
+	if err == nil {
+		t.Error("RotateOIDCKeys should have returned err")
+	}
+
+	if resp.StatusCode != http.StatusUnauthorized {
+		t.Errorf("RotateOIDCKeys returned %v, want %v", resp.StatusCode, http.StatusUnauthorized)
+	}
+}

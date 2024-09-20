@@ -39,6 +39,7 @@ func TestVela_NewClient(t *testing.T) {
 		&AdminCleanService{client: want},
 		&AdminDeploymentService{client: want},
 		&AdminHookService{client: want},
+		&AdminOIDCService{client: want},
 		&AdminRepoService{client: want},
 		&AdminSecretService{client: want},
 		&AdminSvcService{client: want},
@@ -59,6 +60,7 @@ func TestVela_NewClient(t *testing.T) {
 	want.Secret = &SecretService{client: want}
 	want.Step = &StepService{client: want}
 	want.Svc = &SvcService{client: want}
+	want.User = &UserService{client: want}
 	want.Worker = &WorkerService{client: want}
 	want.Queue = &QueueService{client: want}
 
