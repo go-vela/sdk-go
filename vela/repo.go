@@ -115,3 +115,17 @@ func (svc *RepoService) Chown(org, repo string) (*string, *Response, error) {
 
 	return v, resp, err
 }
+
+// InstallHTMLURL retrieves installation HTML URL for a repo.
+func (svc *RepoService) InstallHTMLURL(org, repo string) (*string, *Response, error) {
+	// set the API endpoint path we send the request to
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/install/html_url", org, repo)
+
+	// string type we want to return
+	v := new(string)
+
+	// send request using client
+	resp, err := svc.client.Call("GET", u, nil, v)
+
+	return v, resp, err
+}
