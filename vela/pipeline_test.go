@@ -13,9 +13,9 @@ import (
 	yml "github.com/buildkite/yaml"
 	"github.com/gin-gonic/gin"
 
+	api "github.com/go-vela/server/api/types"
+	"github.com/go-vela/server/compiler/types/yaml"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
-	"github.com/go-vela/types/yaml"
 )
 
 func TestPipeline_Get_200(t *testing.T) {
@@ -27,7 +27,7 @@ func TestPipeline_Get_200(t *testing.T) {
 
 	data := []byte(server.PipelineResp)
 
-	var want library.Pipeline
+	var want api.Pipeline
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -53,7 +53,7 @@ func TestPipeline_Get_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Pipeline{}
+	want := api.Pipeline{}
 
 	// run test
 	got, resp, err := c.Pipeline.Get("github", "octocat", "0")
@@ -80,7 +80,7 @@ func TestPipeline_GetAll_200(t *testing.T) {
 
 	data := []byte(server.PipelinesResp)
 
-	var want []library.Pipeline
+	var want []api.Pipeline
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -108,10 +108,10 @@ func TestPipeline_Add_201(t *testing.T) {
 
 	data := []byte(server.PipelineResp)
 
-	var want library.Pipeline
+	var want api.Pipeline
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Pipeline{
+	req := api.Pipeline{
 		Commit:  String("48afb5bdc41ad69bf22588491333f7cf71135163"),
 		Ref:     String("refs/heads/main"),
 		Type:    String("yaml"),
@@ -144,10 +144,10 @@ func TestPipeline_Update_200(t *testing.T) {
 
 	data := []byte(server.PipelineResp)
 
-	var want library.Pipeline
+	var want api.Pipeline
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Pipeline{
+	req := api.Pipeline{
 		Commit: String("48afb5bdc41ad69bf22588491333f7cf71135163"),
 		Type:   String("yaml"),
 	}
@@ -175,9 +175,9 @@ func TestPipeline_Update_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Pipeline{}
+	want := api.Pipeline{}
 
-	req := library.Pipeline{
+	req := api.Pipeline{
 		Commit: String("0"),
 	}
 
@@ -471,7 +471,7 @@ func ExamplePipelineService_Add() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Pipeline{
+	req := api.Pipeline{
 		Commit:  String("48afb5bdc41ad69bf22588491333f7cf71135163"),
 		Ref:     String("refs/heads/main"),
 		Type:    String("yaml"),
@@ -495,7 +495,7 @@ func ExamplePipelineService_Update() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Pipeline{
+	req := api.Pipeline{
 		Commit: String("48afb5bdc41ad69bf22588491333f7cf71135163"),
 		Type:   String("yaml"),
 	}

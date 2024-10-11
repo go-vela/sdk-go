@@ -126,12 +126,10 @@ func TestAdmin_Deployment_Update_200(t *testing.T) {
 
 	data := []byte(server.DeploymentResp)
 
-	var want library.Deployment
+	var want api.Deployment
 	_ = json.Unmarshal(data, &want)
 
-	want.SetBuilds(nil)
-
-	req := library.Deployment{
+	req := api.Deployment{
 		Commit:      String("48afb5bdc41ad69bf22588491333f7cf71135163"),
 		Ref:         String("refs/heads/main"),
 		Task:        String("vela-deploy"),
@@ -164,10 +162,10 @@ func TestAdmin_Hook_Update_200(t *testing.T) {
 
 	data := []byte(server.HookResp)
 
-	var want library.Hook
+	var want api.Hook
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Hook{
+	req := api.Hook{
 		Number: Int(1),
 		Event:  String("push"),
 		Status: String("success"),
