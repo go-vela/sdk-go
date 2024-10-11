@@ -11,9 +11,10 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/go-cmp/cmp"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
 )
 
 func TestDeployment_Get_200(t *testing.T) {
@@ -25,10 +26,8 @@ func TestDeployment_Get_200(t *testing.T) {
 
 	data := []byte(server.DeploymentResp)
 
-	var want library.Deployment
+	var want api.Deployment
 	_ = json.Unmarshal(data, &want)
-
-	want.SetBuilds(nil)
 
 	// run test
 	got, resp, err := c.Deployment.Get("github", "octocat", 1)
@@ -41,8 +40,8 @@ func TestDeployment_Get_200(t *testing.T) {
 		t.Errorf("Get returned %v, want %v", resp.StatusCode, http.StatusOK)
 	}
 
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Get is %v, want %v", got, want)
+	if diff := cmp.Diff(&want, got); diff != "" {
+		t.Errorf("Get mismatch (-want +got):\n%s", diff)
 	}
 }
 
@@ -53,7 +52,7 @@ func TestDeployment_Get_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Deployment{}
+	want := api.Deployment{}
 
 	// run test
 	got, resp, err := c.Deployment.Get("github", "octocat", 0)
@@ -80,7 +79,7 @@ func TestDeployment_GetAll_200(t *testing.T) {
 
 	data := []byte(server.DeploymentsResp)
 
-	var want []library.Deployment
+	var want []api.Deployment
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -108,12 +107,10 @@ func TestDeployment_Add_201(t *testing.T) {
 
 	data := []byte(server.DeploymentResp)
 
-	var want library.Deployment
+	var want api.Deployment
 	_ = json.Unmarshal(data, &want)
 
-	want.SetBuilds(nil)
-
-	req := library.Deployment{
+	req := api.Deployment{
 		Commit:      String("48afb5bdc41ad69bf22588491333f7cf71135163"),
 		Ref:         String("refs/heads/main"),
 		Task:        String("vela-deploy"),
@@ -176,7 +173,7 @@ func ExampleDeploymentService_Add() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Deployment{
+	req := api.Deployment{
 		Commit:      String("48afb5bdc41ad69bf22588491333f7cf71135163"),
 		Ref:         String("refs/heads/main"),
 		Task:        String("vela-deploy"),

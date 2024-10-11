@@ -148,12 +148,12 @@ func (svc *AdminBuildService) GetQueue(opt *GetQueueOptions) (*[]api.QueueBuild,
 }
 
 // Update modifies a deployment with the provided details.
-func (svc *AdminDeploymentService) Update(d *library.Deployment) (*library.Deployment, *Response, error) {
+func (svc *AdminDeploymentService) Update(d *api.Deployment) (*api.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/deployment"
 
 	// library Deployment type we want to return
-	v := new(library.Deployment)
+	v := new(api.Deployment)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, d, v)
@@ -162,12 +162,12 @@ func (svc *AdminDeploymentService) Update(d *library.Deployment) (*library.Deplo
 }
 
 // Update modifies a hook with the provided details.
-func (svc *AdminHookService) Update(h *library.Hook) (*library.Hook, *Response, error) {
+func (svc *AdminHookService) Update(h *api.Hook) (*api.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/hook"
 
 	// library Hook type we want to return
-	v := new(library.Hook)
+	v := new(api.Hook)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, h, v)
