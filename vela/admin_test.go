@@ -254,13 +254,13 @@ func TestAdmin_Secret_Update_200(t *testing.T) {
 
 	data := []byte(server.SecretResp)
 
-	var want library.Secret
+	var want api.Secret
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Secret{
+	req := api.Secret{
 		Name:        String("foo"),
 		Value:       String("bar"),
-		AllowEvents: testLibraryEvents(),
+		AllowEvents: testEvents(),
 	}
 
 	// run test
@@ -288,10 +288,10 @@ func TestAdmin_Service_Update_200(t *testing.T) {
 
 	data := []byte(server.ServiceResp)
 
-	var want library.Service
+	var want api.Service
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Service{
+	req := api.Service{
 		Number:   Int(1),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
@@ -323,10 +323,10 @@ func TestAdmin_Step_Update_200(t *testing.T) {
 
 	data := []byte(server.StepResp)
 
-	var want library.Step
+	var want api.Step
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Step{
+	req := api.Step{
 		Number:   Int(1),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),

@@ -13,8 +13,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
 )
 
 func TestService_Get_200(t *testing.T) {
@@ -26,7 +26,7 @@ func TestService_Get_200(t *testing.T) {
 
 	data := []byte(server.ServiceResp)
 
-	var want library.Service
+	var want api.Service
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -52,7 +52,7 @@ func TestService_Get_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Service{}
+	want := api.Service{}
 
 	// run test
 	got, resp, err := c.Svc.Get("github", "octocat", 1, 0)
@@ -79,7 +79,7 @@ func TestService_GetAll_200(t *testing.T) {
 
 	data := []byte(server.ServicesResp)
 
-	var want []library.Service
+	var want []api.Service
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -107,10 +107,10 @@ func TestService_Add_201(t *testing.T) {
 
 	data := []byte(server.ServiceResp)
 
-	var want library.Service
+	var want api.Service
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Service{
+	req := api.Service{
 		Number:   Int(1),
 		Name:     String("clone"),
 		Status:   String("created"),
@@ -146,10 +146,10 @@ func TestService_Update_201(t *testing.T) {
 
 	data := []byte(server.ServiceResp)
 
-	var want library.Service
+	var want api.Service
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Service{
+	req := api.Service{
 		Number:   Int(1),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
@@ -179,9 +179,9 @@ func TestService_Update_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Service{}
+	want := api.Service{}
 
-	req := library.Service{
+	req := api.Service{
 		Number:   Int(0),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
@@ -281,7 +281,7 @@ func ExampleSvcService_Add() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Service{
+	req := api.Service{
 		Number:   Int(1),
 		Name:     String("clone"),
 		Status:   String("pending"),
@@ -308,7 +308,7 @@ func ExampleSvcService_Update() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Service{
+	req := api.Service{
 		Status: String("error"),
 		Error:  String("Something in the runtime broke"),
 	}
