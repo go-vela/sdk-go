@@ -15,8 +15,6 @@ import (
 	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/api/types/actions"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
-	libraryActions "github.com/go-vela/types/library/actions"
 )
 
 func TestRepo_Get_200(t *testing.T) {
@@ -477,34 +475,6 @@ func testEvents() *api.Events {
 			Edited:  Bool(true),
 		},
 		Schedule: &actions.Schedule{
-			Run: Bool(true),
-		},
-	}
-}
-
-// TODO: remove this once library.Secret is converted to api.Secret.
-func testLibraryEvents() *library.Events {
-	return &library.Events{
-		Push: &libraryActions.Push{
-			Branch:       Bool(true),
-			Tag:          Bool(true),
-			DeleteBranch: Bool(true),
-			DeleteTag:    Bool(true),
-		},
-		PullRequest: &libraryActions.Pull{
-			Opened:      Bool(true),
-			Edited:      Bool(true),
-			Synchronize: Bool(true),
-			Reopened:    Bool(true),
-		},
-		Deployment: &libraryActions.Deploy{
-			Created: Bool(true),
-		},
-		Comment: &libraryActions.Comment{
-			Created: Bool(true),
-			Edited:  Bool(true),
-		},
-		Schedule: &libraryActions.Schedule{
 			Run: Bool(true),
 		},
 	}

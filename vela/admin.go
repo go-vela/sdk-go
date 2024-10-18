@@ -190,12 +190,12 @@ func (svc *AdminRepoService) Update(r *api.Repo) (*api.Repo, *Response, error) {
 }
 
 // Update modifies a secret with the provided details.
-func (svc *AdminSecretService) Update(s *library.Secret) (*library.Secret, *Response, error) {
+func (svc *AdminSecretService) Update(s *api.Secret) (*api.Secret, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/secret"
 
 	// library Secret type we want to return
-	v := new(library.Secret)
+	v := new(api.Secret)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, s, v)
@@ -204,12 +204,12 @@ func (svc *AdminSecretService) Update(s *library.Secret) (*library.Secret, *Resp
 }
 
 // Update modifies a service with the provided details.
-func (svc *AdminSvcService) Update(s *library.Service) (*library.Service, *Response, error) {
+func (svc *AdminSvcService) Update(s *api.Service) (*api.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/service"
 
 	// library Service type we want to return
-	v := new(library.Service)
+	v := new(api.Service)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, s, v)
@@ -218,12 +218,12 @@ func (svc *AdminSvcService) Update(s *library.Service) (*library.Service, *Respo
 }
 
 // Update modifies a step with the provided details.
-func (svc *AdminStepService) Update(s *library.Step) (*library.Step, *Response, error) {
+func (svc *AdminStepService) Update(s *api.Step) (*api.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/step"
 
 	// library Step type we want to return
-	v := new(library.Step)
+	v := new(api.Step)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, s, v)

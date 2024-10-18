@@ -11,9 +11,10 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/go-cmp/cmp"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
 )
 
 func TestSecret_Get_200(t *testing.T) {
@@ -25,7 +26,7 @@ func TestSecret_Get_200(t *testing.T) {
 
 	data := []byte(server.SecretResp)
 
-	var want library.Secret
+	var want api.Secret
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -39,8 +40,8 @@ func TestSecret_Get_200(t *testing.T) {
 		t.Errorf("Secret returned %v, want %v", resp.StatusCode, http.StatusOK)
 	}
 
-	if !reflect.DeepEqual(got, &want) {
-		t.Errorf("Secret get is %v, want %v", got, want)
+	if diff := cmp.Diff(&want, got); diff != "" {
+		t.Errorf("Secret get mismatch (-want +got):\n%s", diff)
 	}
 }
 
@@ -51,7 +52,7 @@ func TestSecret_Get_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Secret{}
+	want := api.Secret{}
 
 	// run test
 	got, resp, err := c.Secret.Get("native", "repo", "github", "not-found", "not-found")
@@ -78,7 +79,7 @@ func TestSecret_GetAll_200(t *testing.T) {
 
 	data := []byte(server.SecretsResp)
 
-	var want []library.Secret
+	var want []api.Secret
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -106,16 +107,16 @@ func TestSecret_Add_201(t *testing.T) {
 
 	data := []byte(server.SecretResp)
 
-	var want library.Secret
+	var want api.Secret
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Secret{
+	req := api.Secret{
 		Org:         String("github"),
 		Repo:        String("octocat"),
 		Name:        String("foo"),
 		Value:       String("bar"),
 		Images:      &[]string{"foo", "bar"},
-		AllowEvents: testLibraryEvents(),
+		AllowEvents: testEvents(),
 	}
 
 	// run test
@@ -143,13 +144,13 @@ func TestSecret_Update_200(t *testing.T) {
 
 	data := []byte(server.SecretResp)
 
-	var want library.Secret
+	var want api.Secret
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Secret{
+	req := api.Secret{
 		Name:        String("foo"),
 		Value:       String("bar"),
-		AllowEvents: testLibraryEvents(),
+		AllowEvents: testEvents(),
 	}
 
 	// run test
@@ -175,12 +176,12 @@ func TestSecret_Update_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Secret{}
+	want := api.Secret{}
 
-	req := library.Secret{
+	req := api.Secret{
 		Name:        String("foo"),
 		Value:       String("bar"),
-		AllowEvents: testLibraryEvents(),
+		AllowEvents: testEvents(),
 	}
 
 	// run test
@@ -276,11 +277,11 @@ func ExampleSecretService_Add() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Secret{
+	req := api.Secret{
 		Name:        String("foo"),
 		Value:       String("bar"),
 		Images:      &[]string{"foo", "bar"},
-		AllowEvents: testLibraryEvents(),
+		AllowEvents: testEvents(),
 	}
 
 	// Create the secret in the server
@@ -299,10 +300,10 @@ func ExampleSecretService_Update() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Secret{
+	req := api.Secret{
 		Name:        String("foo"),
 		Value:       String("bar"),
-		AllowEvents: testLibraryEvents(),
+		AllowEvents: testEvents(),
 	}
 
 	// Update the secret in the server
