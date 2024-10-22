@@ -39,7 +39,7 @@ func (svc *PipelineService) Get(org, repo, ref string) (*api.Pipeline, *Response
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s", org, repo, ref)
 
-	// library Pipeline type we want to return
+	// API Pipeline type we want to return
 	v := new(api.Pipeline)
 
 	// send request using client
@@ -59,7 +59,7 @@ func (svc *PipelineService) GetAll(org, repo string, opt *ListOptions) (*[]api.P
 		return nil, nil, err
 	}
 
-	// slice library Pipeline type we want to return
+	// slice API Pipeline type we want to return
 	v := new([]api.Pipeline)
 
 	// send request using client
@@ -73,7 +73,7 @@ func (svc *PipelineService) Add(org, repo string, h *api.Pipeline) (*api.Pipelin
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s", org, repo)
 
-	// library Pipeline type we want to return
+	// API Pipeline type we want to return
 	v := new(api.Pipeline)
 
 	// send request using client
@@ -87,7 +87,7 @@ func (svc *PipelineService) Update(org, repo string, p *api.Pipeline) (*api.Pipe
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s", org, repo, p.GetCommit())
 
-	// library Pipeline type we want to return
+	// API Pipeline type we want to return
 	v := new(api.Pipeline)
 
 	// send request using client

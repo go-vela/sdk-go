@@ -6,7 +6,6 @@ import (
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
-	"github.com/go-vela/types/library"
 )
 
 // BuildService handles retrieving builds from
@@ -44,7 +43,7 @@ func (svc *BuildService) Get(org, repo string, build int) (*api.Build, *Response
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, build)
 
-	// library Build type we want to return
+	// API Build type we want to return
 	v := new(api.Build)
 
 	// send request using client
@@ -54,12 +53,12 @@ func (svc *BuildService) Get(org, repo string, build int) (*api.Build, *Response
 }
 
 // GetBuildExecutable returns the executable for the provided build.
-func (svc *BuildService) GetBuildExecutable(org, repo string, build int) (*library.BuildExecutable, *Response, error) {
+func (svc *BuildService) GetBuildExecutable(org, repo string, build int) (*api.BuildExecutable, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/executable", org, repo, build)
 
-	// library Build type we want to return
-	v := new(library.BuildExecutable)
+	// API Build type we want to return
+	v := new(api.BuildExecutable)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -78,7 +77,7 @@ func (svc *BuildService) GetAll(org, repo string, opt *BuildListOptions) (*[]api
 		return nil, nil, err
 	}
 
-	// slice library Build type we want to return
+	// slice API Build type we want to return
 	v := new([]api.Build)
 
 	// send request using client
@@ -88,7 +87,7 @@ func (svc *BuildService) GetAll(org, repo string, opt *BuildListOptions) (*[]api
 }
 
 // GetLogs returns the provided build logs.
-func (svc *BuildService) GetLogs(org, repo string, build int, opt *ListOptions) (*[]library.Log, *Response, error) {
+func (svc *BuildService) GetLogs(org, repo string, build int, opt *ListOptions) (*[]api.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/logs", org, repo, build)
 
@@ -99,7 +98,7 @@ func (svc *BuildService) GetLogs(org, repo string, build int, opt *ListOptions) 
 	}
 
 	// slice database Log type we want to return
-	v := new([]library.Log)
+	v := new([]api.Log)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -112,7 +111,7 @@ func (svc *BuildService) Add(b *api.Build) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds", b.GetRepo().GetOrg(), b.GetRepo().GetName())
 
-	// library Build type we want to return
+	// API Build type we want to return
 	v := new(api.Build)
 
 	// send request using client
@@ -126,7 +125,7 @@ func (svc *BuildService) Update(b *api.Build) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", b.GetRepo().GetOrg(), b.GetRepo().GetName(), b.GetNumber())
 
-	// library Build type we want to return
+	// API Build type we want to return
 	v := new(api.Build)
 
 	// send request using client
@@ -154,7 +153,7 @@ func (svc *BuildService) Restart(org, repo string, build int) (*api.Build, *Resp
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, build)
 
-	// library Build type we want to return
+	// API Build type we want to return
 	v := new(api.Build)
 
 	// send request using client
@@ -168,7 +167,7 @@ func (svc *BuildService) Cancel(org, repo string, build int) (*api.Build, *Respo
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/cancel", org, repo, build)
 
-	// library Build type we want to return
+	// API Build type we want to return
 	v := new(api.Build)
 
 	// send request using client
@@ -186,12 +185,12 @@ func (svc *BuildService) Approve(org, repo string, build int) (*Response, error)
 }
 
 // GetBuildToken returns an auth token for updating build resources.
-func (svc *BuildService) GetBuildToken(org, repo string, build int) (*library.Token, *Response, error) {
+func (svc *BuildService) GetBuildToken(org, repo string, build int) (*api.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/token", org, repo, build)
 
-	// library Token type we want to return
-	t := new(library.Token)
+	// API Token type we want to return
+	t := new(api.Token)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, t)
@@ -200,7 +199,7 @@ func (svc *BuildService) GetBuildToken(org, repo string, build int) (*library.To
 }
 
 // GetIDRequestToken returns an id request token for integrating with build OIDC.
-func (svc *BuildService) GetIDRequestToken(org, repo string, build int, opt *RequestTokenOptions) (*library.Token, *Response, error) {
+func (svc *BuildService) GetIDRequestToken(org, repo string, build int, opt *RequestTokenOptions) (*api.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/id_request_token", org, repo, build)
 
@@ -210,8 +209,8 @@ func (svc *BuildService) GetIDRequestToken(org, repo string, build int, opt *Req
 		return nil, nil, err
 	}
 
-	// library Token type we want to return
-	t := new(library.Token)
+	// API Token type we want to return
+	t := new(api.Token)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, t)
@@ -220,7 +219,7 @@ func (svc *BuildService) GetIDRequestToken(org, repo string, build int, opt *Req
 }
 
 // GetIDToken returns an ID token corresponding to the request token during a build.
-func (svc *BuildService) GetIDToken(org, repo string, build int, opt *IDTokenOptions) (*library.Token, *Response, error) {
+func (svc *BuildService) GetIDToken(org, repo string, build int, opt *IDTokenOptions) (*api.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/id_token", org, repo, build)
 
@@ -230,8 +229,8 @@ func (svc *BuildService) GetIDToken(org, repo string, build int, opt *IDTokenOpt
 		return nil, nil, err
 	}
 
-	// library Token type we want to return
-	t := new(library.Token)
+	// API Token type we want to return
+	t := new(api.Token)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, t)

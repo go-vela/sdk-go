@@ -11,8 +11,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/go-cmp/cmp"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
 )
 
 func TestQueue_GetInfo_200(t *testing.T) {
@@ -23,7 +23,7 @@ func TestQueue_GetInfo_200(t *testing.T) {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 	data := []byte(server.QueueInfoResp)
 
-	var want *library.QueueInfo
+	var want *api.QueueInfo
 
 	err := json.Unmarshal(data, &want)
 	if err != nil {

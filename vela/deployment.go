@@ -17,7 +17,7 @@ func (svc *DeploymentService) Get(org, repo string, deployment int) (*api.Deploy
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/deployments/%s/%s/%d", org, repo, deployment)
 
-	// library Deployment type we want to return
+	// API Deployment type we want to return
 	v := new(api.Deployment)
 
 	// send request using client
@@ -37,7 +37,7 @@ func (svc *DeploymentService) GetAll(org, repo string, opt *ListOptions) (*[]api
 		return nil, nil, err
 	}
 
-	// slice library Deployment type we want to return
+	// slice API Deployment type we want to return
 	v := new([]api.Deployment)
 
 	// send request using client
@@ -51,7 +51,7 @@ func (svc *DeploymentService) Add(org, repo string, d *api.Deployment) (*api.Dep
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/deployments/%s/%s", org, repo)
 
-	// library Deployment type we want to return
+	// API Deployment type we want to return
 	v := new(api.Deployment)
 
 	// send request using client

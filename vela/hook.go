@@ -17,7 +17,7 @@ func (svc *HookService) Get(org, repo string, hook int) (*api.Hook, *Response, e
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s/%d", org, repo, hook)
 
-	// library Hook type we want to return
+	// API Hook type we want to return
 	v := new(api.Hook)
 
 	// send request using client
@@ -37,7 +37,7 @@ func (svc *HookService) GetAll(org, repo string, opt *ListOptions) (*[]api.Hook,
 		return nil, nil, err
 	}
 
-	// slice library Hook type we want to return
+	// slice API Hook type we want to return
 	v := new([]api.Hook)
 
 	// send request using client
@@ -51,7 +51,7 @@ func (svc *HookService) Add(org, repo string, h *api.Hook) (*api.Hook, *Response
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s", org, repo)
 
-	// library Hook type we want to return
+	// API Hook type we want to return
 	v := new(api.Hook)
 
 	// send request using client
@@ -65,7 +65,7 @@ func (svc *HookService) Update(org, repo string, h *api.Hook) (*api.Hook, *Respo
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s/%d", org, repo, h.GetNumber())
 
-	// library Hook type we want to return
+	// API Hook type we want to return
 	v := new(api.Hook)
 
 	// send request using client

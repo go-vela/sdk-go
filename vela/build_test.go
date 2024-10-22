@@ -15,7 +15,6 @@ import (
 
 	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
 )
 
 func TestBuild_Get_200(t *testing.T) {
@@ -80,7 +79,7 @@ func TestBuildExecutable_Get_200(t *testing.T) {
 
 	data := []byte(server.BuildExecutableResp)
 
-	var want library.BuildExecutable
+	var want api.BuildExecutable
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -106,7 +105,7 @@ func TestBuildExecutable_Get_500(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.BuildExecutable{}
+	want := api.BuildExecutable{}
 
 	// run test
 	got, resp, err := c.Build.GetBuildExecutable("github", "octocat", 0)
@@ -161,7 +160,7 @@ func TestBuild_GetLogs_200(t *testing.T) {
 
 	data := []byte(server.BuildLogsResp)
 
-	var want []library.Log
+	var want []api.Log
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -187,7 +186,7 @@ func TestBuild_GetLogs_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := []library.Log{}
+	want := []api.Log{}
 
 	// run test
 	got, resp, err := c.Build.GetLogs("github", "octocat", 0, nil)
@@ -516,7 +515,7 @@ func TestBuild_GetBuildToken_200(t *testing.T) {
 
 	data := []byte(server.BuildTokenResp)
 
-	var want library.Token
+	var want api.Token
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -542,7 +541,7 @@ func TestBuild_GetBuildToken_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	var want library.Token
+	var want api.Token
 
 	// run test
 	got, resp, err := c.Build.GetBuildToken("github", "octocat", 0)
@@ -567,7 +566,7 @@ func TestBuild_GetBuildToken_400(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	var want library.Token
+	var want api.Token
 
 	// run test
 	got, resp, err := c.Build.GetBuildToken("github", "octocat", 2)
@@ -594,7 +593,7 @@ func TestBuild_GetIDRequestToken_200(t *testing.T) {
 
 	data := []byte(server.IDTokenRequestTokenResp)
 
-	var want library.Token
+	var want api.Token
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -620,7 +619,7 @@ func TestBuild_GetIDRequestToken_400(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	var want library.Token
+	var want api.Token
 
 	// run test
 	got, resp, err := c.Build.GetIDRequestToken("github", "octocat", 0, nil)
@@ -647,7 +646,7 @@ func TestBuild_GetIDToken_200(t *testing.T) {
 
 	data := []byte(server.IDTokenResp)
 
-	var want library.Token
+	var want api.Token
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -673,7 +672,7 @@ func TestBuild_GetIDToken_400(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	var want library.Token
+	var want api.Token
 
 	// run test
 	got, resp, err := c.Build.GetIDToken("github", "octocat", 0, nil)

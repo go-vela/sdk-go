@@ -17,7 +17,7 @@ func (svc *RepoService) Get(org, repo string) (*api.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s", org, repo)
 
-	// library Repo type we want to return
+	// API Repo type we want to return
 	v := new(api.Repo)
 
 	// send request using client
@@ -37,7 +37,7 @@ func (svc *RepoService) GetAll(opt *ListOptions) (*[]api.Repo, *Response, error)
 		return nil, nil, err
 	}
 
-	// slice library Repo type we want to return
+	// slice API Repo type we want to return
 	v := new([]api.Repo)
 
 	// send request using client
@@ -51,7 +51,7 @@ func (svc *RepoService) Add(r *api.Repo) (*api.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/repos"
 
-	// library Repo type we want to return
+	// API Repo type we want to return
 	v := new(api.Repo)
 
 	// send request using client
@@ -65,7 +65,7 @@ func (svc *RepoService) Update(org, repo string, r *api.Repo) (*api.Repo, *Respo
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s", org, repo)
 
-	// library Repo type we want to return
+	// API Repo type we want to return
 	v := new(api.Repo)
 
 	// send request using client

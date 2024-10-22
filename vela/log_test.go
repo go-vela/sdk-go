@@ -12,8 +12,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
 )
 
 func TestLog_GetService_200(t *testing.T) {
@@ -25,7 +25,7 @@ func TestLog_GetService_200(t *testing.T) {
 
 	data := []byte(server.LogResp)
 
-	var want library.Log
+	var want api.Log
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -51,7 +51,7 @@ func TestLog_GetService_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Log{}
+	want := api.Log{}
 
 	// run test
 	got, resp, err := c.Log.GetService("github", "octocat", 1, 0)
@@ -78,10 +78,10 @@ func TestLog_AddService_201(t *testing.T) {
 
 	data := []byte(server.LogResp)
 
-	var want library.Log
+	var want api.Log
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Log{
+	req := api.Log{
 		Data: Bytes([]byte("Hello, World")),
 	}
 
@@ -104,7 +104,7 @@ func TestLog_UpdateService_200(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	req := library.Log{
+	req := api.Log{
 		Data: Bytes([]byte("Hello, World Manny")),
 	}
 
@@ -127,7 +127,7 @@ func TestLog_UpdateService_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	req := library.Log{
+	req := api.Log{
 		Data: Bytes([]byte("Hello, World Manny")),
 	}
 
@@ -190,7 +190,7 @@ func TestLog_GetStep_200(t *testing.T) {
 
 	data := []byte(server.LogResp)
 
-	var want library.Log
+	var want api.Log
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -216,7 +216,7 @@ func TestLog_GetStep_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Log{}
+	want := api.Log{}
 
 	// run test
 	got, resp, err := c.Log.GetStep("github", "octocat", 1, 0)
@@ -243,10 +243,10 @@ func TestLog_AddStep_201(t *testing.T) {
 
 	data := []byte(server.LogResp)
 
-	var want library.Log
+	var want api.Log
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Log{
+	req := api.Log{
 		Data: Bytes([]byte("Hello, World")),
 	}
 
@@ -269,7 +269,7 @@ func TestLog_UpdateStep_200(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	req := library.Log{
+	req := api.Log{
 		Data: Bytes([]byte("Hello, World Manny")),
 	}
 
@@ -292,7 +292,7 @@ func TestLog_UpdateStep_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	req := library.Log{
+	req := api.Log{
 		Data: Bytes([]byte("Hello, World Manny")),
 	}
 
@@ -369,7 +369,7 @@ func ExampleLogService_AddService() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Log{
+	req := api.Log{
 		Data: Bytes([]byte("Hello World")),
 	}
 
@@ -389,7 +389,7 @@ func ExampleLogService_UpdateService() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Log{
+	req := api.Log{
 		Data: Bytes([]byte("Hello World")),
 	}
 
@@ -441,7 +441,7 @@ func ExampleLogService_AddStep() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Log{
+	req := api.Log{
 		Data: Bytes([]byte("Hello World")),
 	}
 
@@ -461,7 +461,7 @@ func ExampleLogService_UpdateStep() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Log{
+	req := api.Log{
 		Data: Bytes([]byte("Hello World")),
 	}
 

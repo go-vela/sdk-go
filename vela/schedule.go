@@ -16,7 +16,7 @@ func (svc *ScheduleService) Get(org, repo, schedule string) (*api.Schedule, *Res
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/schedules/%s/%s/%s", org, repo, schedule)
 
-	// library Schedule type we want to return
+	// API Schedule type we want to return
 	v := new(api.Schedule)
 
 	// send request using client
@@ -36,7 +36,7 @@ func (svc *ScheduleService) GetAll(org, repo string, opt *ListOptions) (*[]api.S
 		return nil, nil, err
 	}
 
-	// slice library Schedule type we want to return
+	// slice API Schedule type we want to return
 	v := new([]api.Schedule)
 
 	// send request using client
@@ -50,7 +50,7 @@ func (svc *ScheduleService) Add(org, repo string, s *api.Schedule) (*api.Schedul
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/schedules/%s/%s", org, repo)
 
-	// library Schedule type we want to return
+	// API Schedule type we want to return
 	v := new(api.Schedule)
 
 	// send request using client
@@ -64,7 +64,7 @@ func (svc *ScheduleService) Update(org, repo string, s *api.Schedule) (*api.Sche
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/schedules/%s/%s/%s", org, repo, s.GetName())
 
-	// library Schedule type we want to return
+	// API Schedule type we want to return
 	v := new(api.Schedule)
 
 	// send request using client
