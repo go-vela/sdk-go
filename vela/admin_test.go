@@ -16,8 +16,6 @@ import (
 	"github.com/go-vela/server/api/types/actions"
 	"github.com/go-vela/server/api/types/settings"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types"
-	"github.com/go-vela/types/library"
 )
 
 func TestAdmin_Build_Update_200(t *testing.T) {
@@ -64,7 +62,7 @@ func TestAdmin_Clean_200(t *testing.T) {
 
 	want := server.CleanResourcesResp
 
-	req := types.Error{
+	req := api.Error{
 		Message: String("msg"),
 	}
 
@@ -91,7 +89,7 @@ func TestAdmin_Clean_Error(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	req := types.Error{
+	req := api.Error{
 		Message: String("msg"),
 	}
 
@@ -421,7 +419,7 @@ func TestAdmin_Worker_RegistrationToken_201(t *testing.T) {
 
 	data := []byte(server.RegisterTokenResp)
 
-	var want *library.Token
+	var want *api.Token
 
 	err := json.Unmarshal(data, &want)
 	if err != nil {

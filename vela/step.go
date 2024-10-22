@@ -18,7 +18,7 @@ func (svc *StepService) Get(org, repo string, build, step int) (*api.Step, *Resp
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d", org, repo, build, step)
 
-	// library Step type we want to return
+	// API Step type we want to return
 	v := new(api.Step)
 
 	// send request using client
@@ -38,7 +38,7 @@ func (svc *StepService) GetAll(org, repo string, build int, opt *ListOptions) (*
 		return nil, nil, err
 	}
 
-	// slice library Step type we want to return
+	// slice API Step type we want to return
 	v := new([]api.Step)
 
 	// send request using client
@@ -52,7 +52,7 @@ func (svc *StepService) Add(org, repo string, build int, s *api.Step) (*api.Step
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps", org, repo, build)
 
-	// library Step type we want to return
+	// API Step type we want to return
 	v := new(api.Step)
 
 	// send request using client
@@ -66,7 +66,7 @@ func (svc *StepService) Update(org, repo string, build int, s *api.Step) (*api.S
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d", org, repo, build, s.GetNumber())
 
-	// library Step type we want to return
+	// API Step type we want to return
 	v := new(api.Step)
 
 	// send request using client

@@ -9,8 +9,6 @@ import (
 
 	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/api/types/settings"
-	"github.com/go-vela/types"
-	"github.com/go-vela/types/library"
 )
 
 type (
@@ -101,7 +99,7 @@ func (svc *AdminBuildService) Update(b *api.Build) (*api.Build, *Response, error
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/build"
 
-	// library Build type we want to return
+	// API Build type we want to return
 	v := new(api.Build)
 
 	// send request using client
@@ -111,7 +109,7 @@ func (svc *AdminBuildService) Update(b *api.Build) (*api.Build, *Response, error
 }
 
 // Clean sets build resources older than a specified time to a proper canceled / finished state with the provided message.
-func (svc *AdminCleanService) Clean(e *types.Error, opt *CleanOptions) (*string, *Response, error) {
+func (svc *AdminCleanService) Clean(e *api.Error, opt *CleanOptions) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/clean"
 
@@ -152,7 +150,7 @@ func (svc *AdminDeploymentService) Update(d *api.Deployment) (*api.Deployment, *
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/deployment"
 
-	// library Deployment type we want to return
+	// API Deployment type we want to return
 	v := new(api.Deployment)
 
 	// send request using client
@@ -166,7 +164,7 @@ func (svc *AdminHookService) Update(h *api.Hook) (*api.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/hook"
 
-	// library Hook type we want to return
+	// API Hook type we want to return
 	v := new(api.Hook)
 
 	// send request using client
@@ -180,7 +178,7 @@ func (svc *AdminRepoService) Update(r *api.Repo) (*api.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/repo"
 
-	// library Repo type we want to return
+	// API Repo type we want to return
 	v := new(api.Repo)
 
 	// send request using client
@@ -194,7 +192,7 @@ func (svc *AdminSecretService) Update(s *api.Secret) (*api.Secret, *Response, er
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/secret"
 
-	// library Secret type we want to return
+	// API Secret type we want to return
 	v := new(api.Secret)
 
 	// send request using client
@@ -208,7 +206,7 @@ func (svc *AdminSvcService) Update(s *api.Service) (*api.Service, *Response, err
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/service"
 
-	// library Service type we want to return
+	// API Service type we want to return
 	v := new(api.Service)
 
 	// send request using client
@@ -222,7 +220,7 @@ func (svc *AdminStepService) Update(s *api.Step) (*api.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/admin/step"
 
-	// library Step type we want to return
+	// API Step type we want to return
 	v := new(api.Step)
 
 	// send request using client
@@ -236,7 +234,7 @@ func (svc *AdminUserService) Update(u *api.User) (*api.User, *Response, error) {
 	// set the API endpoint path we send the request to
 	url := "/api/v1/admin/user"
 
-	// library User type we want to return
+	// API User type we want to return
 	v := new(api.User)
 
 	// send request using client
@@ -289,7 +287,7 @@ func (svc *AdminSettingsService) Restore() (*settings.Platform, *Response, error
 }
 
 // RegisterToken generates a worker registration token with the provided details.
-func (svc *AdminWorkerService) RegisterToken(hostname string) (*library.Token, *Response, error) {
+func (svc *AdminWorkerService) RegisterToken(hostname string) (*api.Token, *Response, error) {
 	// validate input
 	if strings.EqualFold(hostname, "") {
 		return nil, nil, errors.New("bad request, no hostname provided")
@@ -298,8 +296,8 @@ func (svc *AdminWorkerService) RegisterToken(hostname string) (*library.Token, *
 	// set the API endpoint path we send the request to
 	url := fmt.Sprintf("/api/v1/admin/workers/%s/register", hostname)
 
-	// library Token type we want to return
-	t := new(library.Token)
+	// API Token type we want to return
+	t := new(api.Token)
 
 	// send request using client
 	resp, err := svc.client.Call("POST", url, nil, t)

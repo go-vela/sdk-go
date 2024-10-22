@@ -18,7 +18,7 @@ func (svc *SvcService) Get(org, repo string, build, service int) (*api.Service, 
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d", org, repo, build, service)
 
-	// library Service type we want to return
+	// API Service type we want to return
 	v := new(api.Service)
 
 	// send request using client
@@ -38,7 +38,7 @@ func (svc *SvcService) GetAll(org, repo string, build int, opt *ListOptions) (*[
 		return nil, nil, err
 	}
 
-	// slice library Service type we want to return
+	// slice API Service type we want to return
 	v := new([]api.Service)
 
 	// send request using client
@@ -52,7 +52,7 @@ func (svc *SvcService) Add(org, repo string, build int, s *api.Service) (*api.Se
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services", org, repo, build)
 
-	// library Service type we want to return
+	// API Service type we want to return
 	v := new(api.Service)
 
 	// send request using client
@@ -66,7 +66,7 @@ func (svc *SvcService) Update(org, repo string, build int, s *api.Service) (*api
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d", org, repo, build, s.GetNumber())
 
-	// library Service type we want to return
+	// API Service type we want to return
 	v := new(api.Service)
 
 	// send request using client

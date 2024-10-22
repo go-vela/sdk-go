@@ -17,7 +17,7 @@ func (svc *SecretService) Get(engine, sType, org, name, secret string) (*api.Sec
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/secrets/%s/%s/%s/%s/%s", engine, sType, org, name, secret)
 
-	// library Secret type we want to return
+	// API Secret type we want to return
 	v := new(api.Secret)
 
 	// send request using client
@@ -37,7 +37,7 @@ func (svc *SecretService) GetAll(engine, sType, org, name string, opt *ListOptio
 		return nil, nil, err
 	}
 
-	// slice library Secret type we want to return
+	// slice API Secret type we want to return
 	v := new([]api.Secret)
 
 	// send request using client
@@ -51,7 +51,7 @@ func (svc *SecretService) Add(engine, sType, org, name string, s *api.Secret) (*
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/secrets/%s/%s/%s/%s", engine, sType, org, name)
 
-	// library Secret type we want to return
+	// API Secret type we want to return
 	v := new(api.Secret)
 
 	// send request using client
@@ -65,7 +65,7 @@ func (svc *SecretService) Update(engine, sType, org, name string, s *api.Secret)
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/secrets/%s/%s/%s/%s/%s", engine, sType, org, name, s.GetName())
 
-	// library Secret type we want to return
+	// API Secret type we want to return
 	v := new(api.Secret)
 
 	// send request using client

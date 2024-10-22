@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/go-vela/types/constants"
-	"github.com/go-vela/types/library"
+	api "github.com/go-vela/server/api/types"
+	"github.com/go-vela/server/constants"
 )
 
 type AuthenticationType int
@@ -94,7 +94,7 @@ func (svc *AuthenticationService) RefreshAccessToken(refreshToken string) (*Resp
 	// set the API endpoint path we send the request to
 	u := "/token-refresh"
 
-	v := new(library.Token)
+	v := new(api.Token)
 
 	// building a custom request -
 	// we can't use svc.client.NewRequest because
@@ -139,7 +139,7 @@ func (svc *AuthenticationService) AuthenticateWithToken(token string) (string, *
 	}
 
 	// will hold access token
-	v := new(library.Token)
+	v := new(api.Token)
 
 	// building a custom request -
 	// we can't use svc.client.NewRequest because
@@ -172,7 +172,7 @@ func (svc *AuthenticationService) ExchangeTokens(opt *OAuthExchangeOptions) (str
 	u := "/authenticate"
 
 	// will hold access token
-	v := new(library.Token)
+	v := new(api.Token)
 
 	// check required arguments
 	if len(opt.Code) == 0 || len(opt.State) == 0 {

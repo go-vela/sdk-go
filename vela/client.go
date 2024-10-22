@@ -19,7 +19,7 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"github.com/go-vela/sdk-go/version"
-	"github.com/go-vela/types"
+	api "github.com/go-vela/server/api/types"
 )
 
 const (
@@ -538,7 +538,7 @@ func CheckResponse(r *http.Response) error {
 	}
 
 	// custom response type
-	resp := types.Error{}
+	resp := api.Error{}
 
 	// read all bytes from response body
 	b, _ := io.ReadAll(r.Body)

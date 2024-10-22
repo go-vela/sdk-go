@@ -14,7 +14,6 @@ import (
 
 	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
 )
 
 func TestWorker_Get_200(t *testing.T) {
@@ -107,7 +106,7 @@ func TestWorker_Add_201(t *testing.T) {
 
 	data := []byte(server.AddWorkerResp)
 
-	var want library.Token
+	var want api.Token
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Worker{
@@ -148,7 +147,7 @@ func TestWorker_RefreshAuth_200(t *testing.T) {
 
 	data := []byte(server.AddWorkerResp)
 
-	var want library.Token
+	var want api.Token
 	_ = json.Unmarshal(data, &want)
 
 	worker := "worker_1"
