@@ -14,7 +14,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	api "github.com/go-vela/server/api/types"
-	"github.com/go-vela/server/compiler/types/yaml"
+	"github.com/go-vela/server/compiler/types/yaml/yaml"
 	"github.com/go-vela/server/mock/server"
 )
 
@@ -32,7 +32,6 @@ func TestPipeline_Get_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Pipeline.Get("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163")
-
 	if err != nil {
 		t.Errorf("Get returned err: %v", err)
 	}
@@ -85,7 +84,6 @@ func TestPipeline_GetAll_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Pipeline.GetAll("github", "octocat", nil)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -121,7 +119,6 @@ func TestPipeline_Add_201(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Pipeline.Add("github", "octocat", &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -154,7 +151,6 @@ func TestPipeline_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Pipeline.Update("github", "octocat", &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -206,7 +202,6 @@ func TestPipeline_Remove_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Pipeline.Remove("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163")
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -249,7 +244,6 @@ func TestPipeline_Compile_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Pipeline.Compile("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
-
 	if err != nil {
 		t.Errorf("Compile returned err: %v", err)
 	}
@@ -302,7 +296,6 @@ func TestPipeline_Expand_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Pipeline.Expand("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
-
 	if err != nil {
 		t.Errorf("Expand returned err: %v", err)
 	}
@@ -355,7 +348,6 @@ func TestPipeline_Templates_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Pipeline.Templates("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
-
 	if err != nil {
 		t.Errorf("Templates returned err: %v", err)
 	}
@@ -403,7 +395,6 @@ func TestPipeline_Validate_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Pipeline.Validate("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
-
 	if err != nil {
 		t.Errorf("Validate returned err: %v", err)
 	}
