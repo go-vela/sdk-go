@@ -6,7 +6,6 @@ import (
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
-	"github.com/go-vela/types/library"
 )
 
 // WorkerService handles retrieving workers from
@@ -46,7 +45,7 @@ func (svc *WorkerService) GetAll(opt *WorkerListOptions) (*[]api.Worker, *Respon
 		return nil, nil, err
 	}
 
-	// slice library Worker type we want to return
+	// slice API Worker type we want to return
 	v := new([]api.Worker)
 
 	// send request using client
@@ -56,12 +55,12 @@ func (svc *WorkerService) GetAll(opt *WorkerListOptions) (*[]api.Worker, *Respon
 }
 
 // Add constructs a worker with the provided details.
-func (svc *WorkerService) Add(w *api.Worker) (*library.Token, *Response, error) {
+func (svc *WorkerService) Add(w *api.Worker) (*api.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/workers"
 
-	// library Token type we want to return
-	v := new(library.Token)
+	// API Token type we want to return
+	v := new(api.Token)
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, w, v)
@@ -70,12 +69,12 @@ func (svc *WorkerService) Add(w *api.Worker) (*library.Token, *Response, error) 
 }
 
 // RefreshAuth exchanges a worker token for a new one.
-func (svc *WorkerService) RefreshAuth(worker string) (*library.Token, *Response, error) {
+func (svc *WorkerService) RefreshAuth(worker string) (*api.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/workers/%s/refresh", worker)
 
-	// library Token type we want to return
-	v := new(library.Token)
+	// API Token type we want to return
+	v := new(api.Token)
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, nil, v)
@@ -88,7 +87,7 @@ func (svc *WorkerService) Update(worker string, w *api.Worker) (*api.Worker, *Re
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/workers/%s", worker)
 
-	// library Worker type we want to return
+	// API Worker type we want to return
 	v := new(api.Worker)
 
 	// send request using client

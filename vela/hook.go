@@ -5,7 +5,7 @@ package vela
 import (
 	"fmt"
 
-	"github.com/go-vela/types/library"
+	api "github.com/go-vela/server/api/types"
 )
 
 // HookService handles retrieving hooks from
@@ -13,12 +13,12 @@ import (
 type HookService service
 
 // Get returns the provided hook.
-func (svc *HookService) Get(org, repo string, hook int) (*library.Hook, *Response, error) {
+func (svc *HookService) Get(org, repo string, hook int) (*api.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s/%d", org, repo, hook)
 
-	// library Hook type we want to return
-	v := new(library.Hook)
+	// API Hook type we want to return
+	v := new(api.Hook)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -27,7 +27,7 @@ func (svc *HookService) Get(org, repo string, hook int) (*library.Hook, *Respons
 }
 
 // GetAll returns a list of all hooks.
-func (svc *HookService) GetAll(org, repo string, opt *ListOptions) (*[]library.Hook, *Response, error) {
+func (svc *HookService) GetAll(org, repo string, opt *ListOptions) (*[]api.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s", org, repo)
 
@@ -37,8 +37,8 @@ func (svc *HookService) GetAll(org, repo string, opt *ListOptions) (*[]library.H
 		return nil, nil, err
 	}
 
-	// slice library Hook type we want to return
-	v := new([]library.Hook)
+	// slice API Hook type we want to return
+	v := new([]api.Hook)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -47,12 +47,12 @@ func (svc *HookService) GetAll(org, repo string, opt *ListOptions) (*[]library.H
 }
 
 // Add constructs a hook with the provided details.
-func (svc *HookService) Add(org, repo string, h *library.Hook) (*library.Hook, *Response, error) {
+func (svc *HookService) Add(org, repo string, h *api.Hook) (*api.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s", org, repo)
 
-	// library Hook type we want to return
-	v := new(library.Hook)
+	// API Hook type we want to return
+	v := new(api.Hook)
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, h, v)
@@ -61,12 +61,12 @@ func (svc *HookService) Add(org, repo string, h *library.Hook) (*library.Hook, *
 }
 
 // Update modifies a hook with the provided details.
-func (svc *HookService) Update(org, repo string, h *library.Hook) (*library.Hook, *Response, error) {
+func (svc *HookService) Update(org, repo string, h *api.Hook) (*api.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s/%d", org, repo, h.GetNumber())
 
-	// library Hook type we want to return
-	v := new(library.Hook)
+	// API Hook type we want to return
+	v := new(api.Hook)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, h, v)

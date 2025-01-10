@@ -13,8 +13,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
 )
 
 func TestStep_Get_200(t *testing.T) {
@@ -26,7 +26,7 @@ func TestStep_Get_200(t *testing.T) {
 
 	data := []byte(server.StepResp)
 
-	var want library.Step
+	var want api.Step
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -52,7 +52,7 @@ func TestStep_Get_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Step{}
+	want := api.Step{}
 
 	// run test
 	got, resp, err := c.Step.Get("github", "octocat", 1, 0)
@@ -79,7 +79,7 @@ func TestStep_GetAll_200(t *testing.T) {
 
 	data := []byte(server.StepsResp)
 
-	var want []library.Step
+	var want []api.Step
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -107,10 +107,10 @@ func TestStep_Add_201(t *testing.T) {
 
 	data := []byte(server.StepResp)
 
-	var want library.Step
+	var want api.Step
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Step{
+	req := api.Step{
 		Number:       Int(1),
 		Name:         String("clone"),
 		Status:       String("created"),
@@ -149,10 +149,10 @@ func TestStep_Update_201(t *testing.T) {
 
 	data := []byte(server.StepResp)
 
-	var want library.Step
+	var want api.Step
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Step{
+	req := api.Step{
 		Number:   Int(1),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
@@ -182,9 +182,9 @@ func TestStep_Update_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Step{}
+	want := api.Step{}
 
-	req := library.Step{
+	req := api.Step{
 		Number:   Int(0),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
@@ -284,7 +284,7 @@ func ExampleStepService_Add() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Step{
+	req := api.Step{
 		Number:       Int(1),
 		Name:         String("clone"),
 		Status:       String("pending"),
@@ -314,7 +314,7 @@ func ExampleStepService_Update() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Step{
+	req := api.Step{
 		Status: String("error"),
 		Error:  String("Something in the runtime broke"),
 	}

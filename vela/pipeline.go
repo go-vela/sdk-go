@@ -5,8 +5,8 @@ package vela
 import (
 	"fmt"
 
-	"github.com/go-vela/types/library"
-	"github.com/go-vela/types/yaml"
+	api "github.com/go-vela/server/api/types"
+	"github.com/go-vela/server/compiler/types/yaml/yaml"
 )
 
 // PipelineService handles retrieving pipelines from
@@ -35,12 +35,12 @@ type PipelineOptions struct {
 }
 
 // Get returns the provided pipeline.
-func (svc *PipelineService) Get(org, repo, ref string) (*library.Pipeline, *Response, error) {
+func (svc *PipelineService) Get(org, repo, ref string) (*api.Pipeline, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s", org, repo, ref)
 
-	// library Pipeline type we want to return
-	v := new(library.Pipeline)
+	// API Pipeline type we want to return
+	v := new(api.Pipeline)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -49,7 +49,7 @@ func (svc *PipelineService) Get(org, repo, ref string) (*library.Pipeline, *Resp
 }
 
 // GetAll returns a list of all pipelines.
-func (svc *PipelineService) GetAll(org, repo string, opt *ListOptions) (*[]library.Pipeline, *Response, error) {
+func (svc *PipelineService) GetAll(org, repo string, opt *ListOptions) (*[]api.Pipeline, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s", org, repo)
 
@@ -59,8 +59,8 @@ func (svc *PipelineService) GetAll(org, repo string, opt *ListOptions) (*[]libra
 		return nil, nil, err
 	}
 
-	// slice library Pipeline type we want to return
-	v := new([]library.Pipeline)
+	// slice API Pipeline type we want to return
+	v := new([]api.Pipeline)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -69,12 +69,12 @@ func (svc *PipelineService) GetAll(org, repo string, opt *ListOptions) (*[]libra
 }
 
 // Add constructs a pipeline with the provided details.
-func (svc *PipelineService) Add(org, repo string, h *library.Pipeline) (*library.Pipeline, *Response, error) {
+func (svc *PipelineService) Add(org, repo string, h *api.Pipeline) (*api.Pipeline, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s", org, repo)
 
-	// library Pipeline type we want to return
-	v := new(library.Pipeline)
+	// API Pipeline type we want to return
+	v := new(api.Pipeline)
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, h, v)
@@ -83,12 +83,12 @@ func (svc *PipelineService) Add(org, repo string, h *library.Pipeline) (*library
 }
 
 // Update modifies a pipeline with the provided details.
-func (svc *PipelineService) Update(org, repo string, p *library.Pipeline) (*library.Pipeline, *Response, error) {
+func (svc *PipelineService) Update(org, repo string, p *api.Pipeline) (*api.Pipeline, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s", org, repo, p.GetCommit())
 
-	// library Pipeline type we want to return
-	v := new(library.Pipeline)
+	// API Pipeline type we want to return
+	v := new(api.Pipeline)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, p, v)

@@ -6,7 +6,7 @@ package vela
 import (
 	"fmt"
 
-	"github.com/go-vela/types/library"
+	api "github.com/go-vela/server/api/types"
 )
 
 // SvcService handles retrieving services for builds
@@ -14,12 +14,12 @@ import (
 type SvcService service
 
 // Get returns the provided service.
-func (svc *SvcService) Get(org, repo string, build, service int) (*library.Service, *Response, error) {
+func (svc *SvcService) Get(org, repo string, build, service int) (*api.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d", org, repo, build, service)
 
-	// library Service type we want to return
-	v := new(library.Service)
+	// API Service type we want to return
+	v := new(api.Service)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -28,7 +28,7 @@ func (svc *SvcService) Get(org, repo string, build, service int) (*library.Servi
 }
 
 // GetAll returns a list of all services.
-func (svc *SvcService) GetAll(org, repo string, build int, opt *ListOptions) (*[]library.Service, *Response, error) {
+func (svc *SvcService) GetAll(org, repo string, build int, opt *ListOptions) (*[]api.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services", org, repo, build)
 
@@ -38,8 +38,8 @@ func (svc *SvcService) GetAll(org, repo string, build int, opt *ListOptions) (*[
 		return nil, nil, err
 	}
 
-	// slice library Service type we want to return
-	v := new([]library.Service)
+	// slice API Service type we want to return
+	v := new([]api.Service)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -48,12 +48,12 @@ func (svc *SvcService) GetAll(org, repo string, build int, opt *ListOptions) (*[
 }
 
 // Add constructs a service with the provided details.
-func (svc *SvcService) Add(org, repo string, build int, s *library.Service) (*library.Service, *Response, error) {
+func (svc *SvcService) Add(org, repo string, build int, s *api.Service) (*api.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services", org, repo, build)
 
-	// library Service type we want to return
-	v := new(library.Service)
+	// API Service type we want to return
+	v := new(api.Service)
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, s, v)
@@ -62,12 +62,12 @@ func (svc *SvcService) Add(org, repo string, build int, s *library.Service) (*li
 }
 
 // Update modifies a service with the provided details.
-func (svc *SvcService) Update(org, repo string, build int, s *library.Service) (*library.Service, *Response, error) {
+func (svc *SvcService) Update(org, repo string, build int, s *api.Service) (*api.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d", org, repo, build, s.GetNumber())
 
-	// library Service type we want to return
-	v := new(library.Service)
+	// API Service type we want to return
+	v := new(api.Service)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, s, v)

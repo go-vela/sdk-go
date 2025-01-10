@@ -5,7 +5,7 @@ package vela
 import (
 	"fmt"
 
-	"github.com/go-vela/types/library"
+	api "github.com/go-vela/server/api/types"
 )
 
 // DeploymentService handles retrieving deployments from
@@ -13,12 +13,12 @@ import (
 type DeploymentService service
 
 // Get returns the provided deployment.
-func (svc *DeploymentService) Get(org, repo string, deployment int) (*library.Deployment, *Response, error) {
+func (svc *DeploymentService) Get(org, repo string, deployment int) (*api.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/deployments/%s/%s/%d", org, repo, deployment)
 
-	// library Deployment type we want to return
-	v := new(library.Deployment)
+	// API Deployment type we want to return
+	v := new(api.Deployment)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -27,7 +27,7 @@ func (svc *DeploymentService) Get(org, repo string, deployment int) (*library.De
 }
 
 // GetAll returns a list of all deployments.
-func (svc *DeploymentService) GetAll(org, repo string, opt *ListOptions) (*[]library.Deployment, *Response, error) {
+func (svc *DeploymentService) GetAll(org, repo string, opt *ListOptions) (*[]api.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/deployments/%s/%s", org, repo)
 
@@ -37,8 +37,8 @@ func (svc *DeploymentService) GetAll(org, repo string, opt *ListOptions) (*[]lib
 		return nil, nil, err
 	}
 
-	// slice library Deployment type we want to return
-	v := new([]library.Deployment)
+	// slice API Deployment type we want to return
+	v := new([]api.Deployment)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -47,12 +47,12 @@ func (svc *DeploymentService) GetAll(org, repo string, opt *ListOptions) (*[]lib
 }
 
 // Add constructs a deployment with the provided details.
-func (svc *DeploymentService) Add(org, repo string, d *library.Deployment) (*library.Deployment, *Response, error) {
+func (svc *DeploymentService) Add(org, repo string, d *api.Deployment) (*api.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/deployments/%s/%s", org, repo)
 
-	// library Deployment type we want to return
-	v := new(library.Deployment)
+	// API Deployment type we want to return
+	v := new(api.Deployment)
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, d, v)

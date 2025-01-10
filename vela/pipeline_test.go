@@ -13,9 +13,9 @@ import (
 	yml "github.com/buildkite/yaml"
 	"github.com/gin-gonic/gin"
 
+	api "github.com/go-vela/server/api/types"
+	"github.com/go-vela/server/compiler/types/yaml/yaml"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
-	"github.com/go-vela/types/yaml"
 )
 
 func TestPipeline_Get_200(t *testing.T) {
@@ -27,12 +27,11 @@ func TestPipeline_Get_200(t *testing.T) {
 
 	data := []byte(server.PipelineResp)
 
-	var want library.Pipeline
+	var want api.Pipeline
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Pipeline.Get("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163")
-
 	if err != nil {
 		t.Errorf("Get returned err: %v", err)
 	}
@@ -53,7 +52,7 @@ func TestPipeline_Get_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Pipeline{}
+	want := api.Pipeline{}
 
 	// run test
 	got, resp, err := c.Pipeline.Get("github", "octocat", "0")
@@ -80,12 +79,11 @@ func TestPipeline_GetAll_200(t *testing.T) {
 
 	data := []byte(server.PipelinesResp)
 
-	var want []library.Pipeline
+	var want []api.Pipeline
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Pipeline.GetAll("github", "octocat", nil)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -108,10 +106,10 @@ func TestPipeline_Add_201(t *testing.T) {
 
 	data := []byte(server.PipelineResp)
 
-	var want library.Pipeline
+	var want api.Pipeline
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Pipeline{
+	req := api.Pipeline{
 		Commit:  String("48afb5bdc41ad69bf22588491333f7cf71135163"),
 		Ref:     String("refs/heads/main"),
 		Type:    String("yaml"),
@@ -121,7 +119,6 @@ func TestPipeline_Add_201(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Pipeline.Add("github", "octocat", &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -144,17 +141,16 @@ func TestPipeline_Update_200(t *testing.T) {
 
 	data := []byte(server.PipelineResp)
 
-	var want library.Pipeline
+	var want api.Pipeline
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Pipeline{
+	req := api.Pipeline{
 		Commit: String("48afb5bdc41ad69bf22588491333f7cf71135163"),
 		Type:   String("yaml"),
 	}
 
 	// run test
 	got, resp, err := c.Pipeline.Update("github", "octocat", &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -175,9 +171,9 @@ func TestPipeline_Update_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Pipeline{}
+	want := api.Pipeline{}
 
-	req := library.Pipeline{
+	req := api.Pipeline{
 		Commit: String("0"),
 	}
 
@@ -206,7 +202,6 @@ func TestPipeline_Remove_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Pipeline.Remove("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163")
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -249,7 +244,6 @@ func TestPipeline_Compile_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Pipeline.Compile("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
-
 	if err != nil {
 		t.Errorf("Compile returned err: %v", err)
 	}
@@ -302,7 +296,6 @@ func TestPipeline_Expand_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Pipeline.Expand("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
-
 	if err != nil {
 		t.Errorf("Expand returned err: %v", err)
 	}
@@ -355,7 +348,6 @@ func TestPipeline_Templates_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Pipeline.Templates("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
-
 	if err != nil {
 		t.Errorf("Templates returned err: %v", err)
 	}
@@ -403,7 +395,6 @@ func TestPipeline_Validate_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Pipeline.Validate("github", "octocat", "48afb5bdc41ad69bf22588491333f7cf71135163", nil)
-
 	if err != nil {
 		t.Errorf("Validate returned err: %v", err)
 	}
@@ -471,7 +462,7 @@ func ExamplePipelineService_Add() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Pipeline{
+	req := api.Pipeline{
 		Commit:  String("48afb5bdc41ad69bf22588491333f7cf71135163"),
 		Ref:     String("refs/heads/main"),
 		Type:    String("yaml"),
@@ -495,7 +486,7 @@ func ExamplePipelineService_Update() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Pipeline{
+	req := api.Pipeline{
 		Commit: String("48afb5bdc41ad69bf22588491333f7cf71135163"),
 		Type:   String("yaml"),
 	}

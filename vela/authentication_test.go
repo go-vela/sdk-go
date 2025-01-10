@@ -10,8 +10,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
 )
 
 func TestVela_Authentication_SetTokenAuth(t *testing.T) {
@@ -135,7 +135,7 @@ func TestVela_Authentication_RefreshAccessToken(t *testing.T) {
 
 	data := []byte(server.TokenRefreshResp)
 
-	var want library.Token
+	var want api.Token
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -163,7 +163,7 @@ func TestVela_Authentication_AuthenticateWithToken(t *testing.T) {
 
 	data := []byte(server.TokenRefreshResp)
 
-	var want library.Token
+	var want api.Token
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -214,7 +214,7 @@ func TestVela_Authentication_ExchangeTokens(t *testing.T) {
 
 	data := []byte(server.TokenRefreshResp)
 
-	var want library.Token
+	var want api.Token
 	_ = json.Unmarshal(data, &want)
 
 	// create options

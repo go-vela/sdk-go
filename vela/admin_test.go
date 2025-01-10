@@ -16,8 +16,6 @@ import (
 	"github.com/go-vela/server/api/types/actions"
 	"github.com/go-vela/server/api/types/settings"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types"
-	"github.com/go-vela/types/library"
 )
 
 func TestAdmin_Build_Update_200(t *testing.T) {
@@ -64,7 +62,7 @@ func TestAdmin_Clean_200(t *testing.T) {
 
 	want := server.CleanResourcesResp
 
-	req := types.Error{
+	req := api.Error{
 		Message: String("msg"),
 	}
 
@@ -91,7 +89,7 @@ func TestAdmin_Clean_Error(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	req := types.Error{
+	req := api.Error{
 		Message: String("msg"),
 	}
 
@@ -126,12 +124,10 @@ func TestAdmin_Deployment_Update_200(t *testing.T) {
 
 	data := []byte(server.DeploymentResp)
 
-	var want library.Deployment
+	var want api.Deployment
 	_ = json.Unmarshal(data, &want)
 
-	want.SetBuilds(nil)
-
-	req := library.Deployment{
+	req := api.Deployment{
 		Commit:      String("48afb5bdc41ad69bf22588491333f7cf71135163"),
 		Ref:         String("refs/heads/main"),
 		Task:        String("vela-deploy"),
@@ -164,10 +160,10 @@ func TestAdmin_Hook_Update_200(t *testing.T) {
 
 	data := []byte(server.HookResp)
 
-	var want library.Hook
+	var want api.Hook
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Hook{
+	req := api.Hook{
 		Number: Int(1),
 		Event:  String("push"),
 		Status: String("success"),
@@ -256,13 +252,13 @@ func TestAdmin_Secret_Update_200(t *testing.T) {
 
 	data := []byte(server.SecretResp)
 
-	var want library.Secret
+	var want api.Secret
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Secret{
+	req := api.Secret{
 		Name:        String("foo"),
 		Value:       String("bar"),
-		AllowEvents: testLibraryEvents(),
+		AllowEvents: testEvents(),
 	}
 
 	// run test
@@ -290,10 +286,10 @@ func TestAdmin_Service_Update_200(t *testing.T) {
 
 	data := []byte(server.ServiceResp)
 
-	var want library.Service
+	var want api.Service
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Service{
+	req := api.Service{
 		Number:   Int(1),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
@@ -325,10 +321,10 @@ func TestAdmin_Step_Update_200(t *testing.T) {
 
 	data := []byte(server.StepResp)
 
-	var want library.Step
+	var want api.Step
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Step{
+	req := api.Step{
 		Number:   Int(1),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
@@ -423,7 +419,7 @@ func TestAdmin_Worker_RegistrationToken_201(t *testing.T) {
 
 	data := []byte(server.RegisterTokenResp)
 
-	var want *library.Token
+	var want *api.Token
 
 	err := json.Unmarshal(data, &want)
 	if err != nil {

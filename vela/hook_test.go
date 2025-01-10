@@ -12,8 +12,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
-	"github.com/go-vela/types/library"
 )
 
 func TestHook_Get_200(t *testing.T) {
@@ -25,7 +25,7 @@ func TestHook_Get_200(t *testing.T) {
 
 	data := []byte(server.HookResp)
 
-	var want library.Hook
+	var want api.Hook
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -51,7 +51,7 @@ func TestHook_Get_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Hook{}
+	want := api.Hook{}
 
 	// run test
 	got, resp, err := c.Hook.Get("github", "octocat", 0)
@@ -78,7 +78,7 @@ func TestHook_GetAll_200(t *testing.T) {
 
 	data := []byte(server.HooksResp)
 
-	var want []library.Hook
+	var want []api.Hook
 	_ = json.Unmarshal(data, &want)
 
 	// run test
@@ -106,10 +106,10 @@ func TestHook_Add_201(t *testing.T) {
 
 	data := []byte(server.HookResp)
 
-	var want library.Hook
+	var want api.Hook
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Hook{
+	req := api.Hook{
 		Number:   Int(1),
 		SourceID: String("c8da1302-07d6-11ea-882f-4893bca275b8"),
 		Event:    String("push"),
@@ -146,10 +146,10 @@ func TestHook_Update_200(t *testing.T) {
 
 	data := []byte(server.HookResp)
 
-	var want library.Hook
+	var want api.Hook
 	_ = json.Unmarshal(data, &want)
 
-	req := library.Hook{
+	req := api.Hook{
 		Number: Int(1),
 		Event:  String("push"),
 		Status: String("success"),
@@ -178,9 +178,9 @@ func TestHook_Update_404(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
-	want := library.Hook{}
+	want := api.Hook{}
 
-	req := library.Hook{
+	req := api.Hook{
 		Number: Int(0),
 		Event:  String("push"),
 		Status: String("running"),
@@ -279,7 +279,7 @@ func ExampleHookService_Add() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Hook{
+	req := api.Hook{
 		Number:   Int(1),
 		SourceID: String("c8da1302-07d6-11ea-882f-4893bca275b8"),
 		Event:    String("push"),
@@ -307,7 +307,7 @@ func ExampleHookService_Update() {
 	// Set new token in existing client
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
-	req := library.Hook{
+	req := api.Hook{
 		Status: String("error"),
 		Error:  String(""),
 	}

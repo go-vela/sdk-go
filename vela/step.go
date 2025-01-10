@@ -6,7 +6,7 @@ package vela
 import (
 	"fmt"
 
-	"github.com/go-vela/types/library"
+	api "github.com/go-vela/server/api/types"
 )
 
 // StepService handles retrieving steps for builds
@@ -14,12 +14,12 @@ import (
 type StepService service
 
 // Get returns the provided step.
-func (svc *StepService) Get(org, repo string, build, step int) (*library.Step, *Response, error) {
+func (svc *StepService) Get(org, repo string, build, step int) (*api.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d", org, repo, build, step)
 
-	// library Step type we want to return
-	v := new(library.Step)
+	// API Step type we want to return
+	v := new(api.Step)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -28,7 +28,7 @@ func (svc *StepService) Get(org, repo string, build, step int) (*library.Step, *
 }
 
 // GetAll returns a list of all steps.
-func (svc *StepService) GetAll(org, repo string, build int, opt *ListOptions) (*[]library.Step, *Response, error) {
+func (svc *StepService) GetAll(org, repo string, build int, opt *ListOptions) (*[]api.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps", org, repo, build)
 
@@ -38,8 +38,8 @@ func (svc *StepService) GetAll(org, repo string, build int, opt *ListOptions) (*
 		return nil, nil, err
 	}
 
-	// slice library Step type we want to return
-	v := new([]library.Step)
+	// slice API Step type we want to return
+	v := new([]api.Step)
 
 	// send request using client
 	resp, err := svc.client.Call("GET", u, nil, v)
@@ -48,12 +48,12 @@ func (svc *StepService) GetAll(org, repo string, build int, opt *ListOptions) (*
 }
 
 // Add constructs a step with the provided details.
-func (svc *StepService) Add(org, repo string, build int, s *library.Step) (*library.Step, *Response, error) {
+func (svc *StepService) Add(org, repo string, build int, s *api.Step) (*api.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps", org, repo, build)
 
-	// library Step type we want to return
-	v := new(library.Step)
+	// API Step type we want to return
+	v := new(api.Step)
 
 	// send request using client
 	resp, err := svc.client.Call("POST", u, s, v)
@@ -62,12 +62,12 @@ func (svc *StepService) Add(org, repo string, build int, s *library.Step) (*libr
 }
 
 // Update modifies a step with the provided details.
-func (svc *StepService) Update(org, repo string, build int, s *library.Step) (*library.Step, *Response, error) {
+func (svc *StepService) Update(org, repo string, build int, s *api.Step) (*api.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d", org, repo, build, s.GetNumber())
 
-	// library Step type we want to return
-	v := new(library.Step)
+	// API Step type we want to return
+	v := new(api.Step)
 
 	// send request using client
 	resp, err := svc.client.Call("PUT", u, s, v)

@@ -31,7 +31,7 @@ func (svc *DashboardService) GetAllUser() (*[]api.DashCard, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/user/dashboards"
 
-	// slice library Dashboard type we want to return
+	// slice API Dashboard type we want to return
 	v := new([]api.DashCard)
 
 	// send request using client
