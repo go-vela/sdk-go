@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
-	"github.com/go-vela/server/compiler/types/yaml"
+	"github.com/go-vela/server/compiler/types/yaml/yaml"
 )
 
 // PipelineService handles retrieving pipelines from
