@@ -41,8 +41,8 @@ github.com/go-playground/universal-translator v0.18.1 h1:Bcnm0ZwsGyWbCzImXv+pAJn
 github.com/go-playground/universal-translator v0.18.1/go.mod h1:xekY+UJKNuX9WP91TpwSH2VMlDf28Uj24BCp08ZFTUY=
 github.com/go-playground/validator/v10 v10.23.0 h1:/PwmTwZhS0dPkav3cdK9kV1FsAmrL8sThn8IHr/sO+o=
 github.com/go-playground/validator/v10 v10.23.0/go.mod h1:dbuPbCMFw/DrkbEynArYaCwl3amGuJotoKCe95atGMM=
-github.com/go-vela/server v0.26.0-rc2 h1:Mh1KfEyGEa4m1sWx8J4fKZG+8xIzssPjas/qsBB2Dxg=
-github.com/go-vela/server v0.26.0-rc2/go.mod h1:dIhVbcswLXxQx1DVIJm6zbvJbONZPdp4AOZ/wbhg0eA=
+github.com/go-vela/server v0.26.0-rc4 h1:HsCzi7AhQMIoIKSSZApycUVOD5zD/0OdZ27uu9j3bi8=
+github.com/go-vela/server v0.26.0-rc4/go.mod h1:dIhVbcswLXxQx1DVIJm6zbvJbONZPdp4AOZ/wbhg0eA=
 github.com/goccy/go-json v0.10.4 h1:JSwxQzIqKfmFX1swYPpUThQZp/Ka4wzJdK0LWVytLPM=
 github.com/goccy/go-json v0.10.4/go.mod h1:oq7eo15ShAhp70Anwd5lgX2pLfOS3QCiwU/PULtXL6M=
 github.com/golang-jwt/jwt/v5 v5.2.1 h1:OuVbFODueb089Lh128TAcimifWaLhJwVflnrgM17wHk=
