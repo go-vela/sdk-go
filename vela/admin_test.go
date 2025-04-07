@@ -290,7 +290,7 @@ func TestAdmin_Service_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Service{
-		Number:   Ptr(1),
+		Number:   Int32(1),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
 		Finished: Int64(1563475419),
@@ -325,7 +325,7 @@ func TestAdmin_Step_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Step{
-		Number:   Ptr(1),
+		Number:   Int32(1),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
 		Finished: Int64(1563475419),
