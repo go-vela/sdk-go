@@ -53,7 +53,7 @@ func (svc *BuildService) Get(org, repo string, build int) (*api.Build, *Response
 }
 
 // GetBuildExecutable returns the executable for the provided build.
-func (svc *BuildService) GetBuildExecutable(org, repo string, build int) (*api.BuildExecutable, *Response, error) {
+func (svc *BuildService) GetBuildExecutable(org, repo string, build int64) (*api.BuildExecutable, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/executable", org, repo, build)
 
@@ -185,7 +185,7 @@ func (svc *BuildService) Approve(org, repo string, build int) (*Response, error)
 }
 
 // GetBuildToken returns an auth token for updating build resources.
-func (svc *BuildService) GetBuildToken(org, repo string, build int) (*api.Token, *Response, error) {
+func (svc *BuildService) GetBuildToken(org, repo string, build int64) (*api.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/token", org, repo, build)
 
@@ -199,7 +199,7 @@ func (svc *BuildService) GetBuildToken(org, repo string, build int) (*api.Token,
 }
 
 // GetIDRequestToken returns an id request token for integrating with build OIDC.
-func (svc *BuildService) GetIDRequestToken(org, repo string, build int, opt *RequestTokenOptions) (*api.Token, *Response, error) {
+func (svc *BuildService) GetIDRequestToken(org, repo string, build int64, opt *RequestTokenOptions) (*api.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/id_request_token", org, repo, build)
 
