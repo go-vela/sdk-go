@@ -27,6 +27,7 @@ type (
 		User       *AdminUserService
 		Worker     *AdminWorkerService
 		Settings   *AdminSettingsService
+		Storage    *AdminStorageService
 	}
 
 	// AdminBuildService handles retrieving admin builds from
@@ -75,6 +76,10 @@ type (
 	// AdminSettingsService handles managing admin settings functionality
 	// from the server methods of the Vela API.
 	AdminSettingsService service
+
+	// AdminStorageService handles retrieving storage info from
+	// the server methods of the Vela API.
+	AdminStorageService service
 )
 
 // GetQueueOptions specifies the optional parameters to the

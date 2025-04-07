@@ -141,6 +141,7 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 		&AdminUserService{client: c},
 		&AdminWorkerService{client: c},
 		&AdminSettingsService{client: c},
+		&AdminStorageService{client: c},
 	}
 	c.Build = &BuildService{client: c}
 	c.Dashboard = &DashboardService{client: c}
@@ -552,5 +553,5 @@ func CheckResponse(r *http.Response) error {
 		return nil
 	}
 
-	return fmt.Errorf(*resp.Message)
+	return fmt.Errorf("%v", *resp.Message)
 }

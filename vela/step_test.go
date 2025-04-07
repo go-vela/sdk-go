@@ -111,11 +111,11 @@ func TestStep_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Step{
-		Number:       Int(1),
+		Number:       Ptr(1),
 		Name:         String("clone"),
 		Status:       String("created"),
 		Error:        String(""),
-		ExitCode:     Int(0),
+		ExitCode:     Ptr(0),
 		Created:      Int64(1563475419),
 		Started:      Int64(0),
 		Finished:     Int64(0),
@@ -153,7 +153,7 @@ func TestStep_Update_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Step{
-		Number:   Int(1),
+		Number:   Ptr(1),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
 		Finished: Int64(1563475419),
@@ -185,7 +185,7 @@ func TestStep_Update_404(t *testing.T) {
 	want := api.Step{}
 
 	req := api.Step{
-		Number:   Int(0),
+		Number:   Ptr(0),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
 		Finished: Int64(1563475419),
@@ -285,11 +285,11 @@ func ExampleStepService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Step{
-		Number:       Int(1),
+		Number:       Ptr(1),
 		Name:         String("clone"),
 		Status:       String("pending"),
 		Error:        String(""),
-		ExitCode:     Int(0),
+		ExitCode:     Ptr(0),
 		Created:      Int64(time.Now().UTC().Unix()),
 		Started:      Int64(0),
 		Finished:     Int64(0),

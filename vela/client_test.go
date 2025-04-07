@@ -47,6 +47,7 @@ func TestVela_NewClient(t *testing.T) {
 		&AdminUserService{client: want},
 		&AdminWorkerService{client: want},
 		&AdminSettingsService{client: want},
+		&AdminStorageService{client: want},
 	}
 	want.Build = &BuildService{client: want}
 	want.Dashboard = &DashboardService{client: want}
@@ -63,6 +64,7 @@ func TestVela_NewClient(t *testing.T) {
 	want.User = &UserService{client: want}
 	want.Worker = &WorkerService{client: want}
 	want.Queue = &QueueService{client: want}
+	want.Storage = &StorageService{client: want}
 
 	// run test
 	got, err := NewClient(addr, "", nil)
