@@ -57,7 +57,6 @@ type (
 		User           *UserService
 		Worker         *WorkerService
 		Queue          *QueueService
-		Storage        *StorageService
 	}
 
 	service struct {
@@ -141,7 +140,6 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 		&AdminUserService{client: c},
 		&AdminWorkerService{client: c},
 		&AdminSettingsService{client: c},
-		&AdminStorageService{client: c},
 	}
 	c.Build = &BuildService{client: c}
 	c.Dashboard = &DashboardService{client: c}
@@ -158,7 +156,6 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	c.User = &UserService{client: c}
 	c.Worker = &WorkerService{client: c}
 	c.Queue = &QueueService{client: c}
-	c.Storage = &StorageService{client: c}
 
 	return c, nil
 }

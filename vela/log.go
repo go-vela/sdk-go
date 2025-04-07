@@ -88,7 +88,7 @@ func (svc *LogService) AddStep(org, repo string, build, step int, l *api.Log) (*
 }
 
 // UpdateStep modifies a step log with the provided details.
-func (svc *LogService) UpdateStep(org, repo string, build, step int, l *api.Log) (*Response, error) {
+func (svc *LogService) UpdateStep(org, repo string, build int64, step int32, l *api.Log) (*Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, build, step)
 
