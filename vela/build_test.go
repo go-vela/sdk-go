@@ -217,12 +217,12 @@ func TestBuild_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Build{
-		Number: Int(1),
+		Number: Int64(1),
 		Repo: &api.Repo{
 			Org:  String("github"),
 			Name: String("octocat"),
 		},
-		Parent:       Int(1),
+		Parent:       Int64(1),
 		Event:        String("push"),
 		Status:       String("created"),
 		Error:        String(""),
@@ -277,12 +277,12 @@ func TestBuild_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Build{
-		Number: Int(1),
+		Number: Int64(1),
 		Repo: &api.Repo{
 			Org:  String("github"),
 			Name: String("octocat"),
 		},
-		Parent: Int(1),
+		Parent: Int64(1),
 		Event:  String("push"),
 		Status: String("running"),
 	}
@@ -313,12 +313,12 @@ func TestBuild_Update_404(t *testing.T) {
 	want := api.Build{}
 
 	req := api.Build{
-		Number: Int(0),
+		Number: Int64(0),
 		Repo: &api.Repo{
 			Org:  String("github"),
 			Name: String("octocat"),
 		},
-		Parent: Int(1),
+		Parent: Int64(1),
 		Event:  String("push"),
 		Status: String("running"),
 	}
@@ -746,9 +746,9 @@ func ExampleBuildService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Build{
-		Number:       Int(1),
+		Number:       Int64(1),
 		Repo:         &api.Repo{Org: String("github"), Name: String("octocat")},
-		Parent:       Int(1),
+		Parent:       Int64(1),
 		Event:        String("push"),
 		Status:       String("created"),
 		Error:        String(""),

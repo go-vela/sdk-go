@@ -110,7 +110,7 @@ func TestHook_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Hook{
-		Number:   Int(1),
+		Number:   Int64(1),
 		SourceID: String("c8da1302-07d6-11ea-882f-4893bca275b8"),
 		Event:    String("push"),
 		Status:   String("created"),
@@ -150,7 +150,7 @@ func TestHook_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Hook{
-		Number: Int(1),
+		Number: Int64(1),
 		Event:  String("push"),
 		Status: String("success"),
 	}
@@ -181,7 +181,7 @@ func TestHook_Update_404(t *testing.T) {
 	want := api.Hook{}
 
 	req := api.Hook{
-		Number: Int(0),
+		Number: Int64(0),
 		Event:  String("push"),
 		Status: String("running"),
 	}
@@ -280,7 +280,7 @@ func ExampleHookService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Hook{
-		Number:   Int(1),
+		Number:   Int64(1),
 		SourceID: String("c8da1302-07d6-11ea-882f-4893bca275b8"),
 		Event:    String("push"),
 		Status:   String("created"),

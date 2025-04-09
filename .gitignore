@@ -22,6 +22,7 @@
 
 # IntelliJ project folder
 .idea/
+.DS_Store
 
 # IntelliJ project files
 *.iml

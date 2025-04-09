@@ -550,5 +550,5 @@ func CheckResponse(r *http.Response) error {
 		return nil
 	}
 
-	return fmt.Errorf(*resp.Message)
+	return fmt.Errorf("%v", *resp.Message)
 }
