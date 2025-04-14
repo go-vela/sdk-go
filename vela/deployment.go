@@ -13,7 +13,7 @@ import (
 type DeploymentService service
 
 // Get returns the provided deployment.
-func (svc *DeploymentService) Get(org, repo string, deployment int) (*api.Deployment, *Response, error) {
+func (svc *DeploymentService) Get(org, repo string, deployment int64) (*api.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/deployments/%s/%s/%d", org, repo, deployment)
 
