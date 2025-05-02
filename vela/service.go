@@ -14,7 +14,7 @@ import (
 type SvcService service
 
 // Get returns the provided service.
-func (svc *SvcService) Get(org, repo string, build, service int) (*api.Service, *Response, error) {
+func (svc *SvcService) Get(org, repo string, build int64, service int32) (*api.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d", org, repo, build, service)
 
@@ -28,7 +28,7 @@ func (svc *SvcService) Get(org, repo string, build, service int) (*api.Service, 
 }
 
 // GetAll returns a list of all services.
-func (svc *SvcService) GetAll(org, repo string, build int, opt *ListOptions) (*[]api.Service, *Response, error) {
+func (svc *SvcService) GetAll(org, repo string, build int64, opt *ListOptions) (*[]api.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services", org, repo, build)
 
