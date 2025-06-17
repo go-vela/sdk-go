@@ -13,7 +13,7 @@ import (
 type TestReportService service
 
 // Add constructs a test report with the provided details.
-func (svc *TestReportService) Add(org, repo string, build int, t *api.TestReport) (*api.TestReport, *Response, error) {
+func (svc *TestReportService) Add(org, repo string, build int64) (*api.TestReport, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/reports/testreport", org, repo, build)
 
@@ -21,7 +21,7 @@ func (svc *TestReportService) Add(org, repo string, build int, t *api.TestReport
 	tr := new(api.TestReport)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, t, tr)
+	resp, err := svc.client.Call("POST", u, nil, tr)
 
 	return tr, resp, err
 }
