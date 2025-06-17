@@ -58,6 +58,7 @@ type (
 		Worker         *WorkerService
 		Queue          *QueueService
 		Storage        *StorageService
+		TestReport     *TestReportService
 	}
 
 	service struct {
@@ -159,6 +160,7 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	c.Worker = &WorkerService{client: c}
 	c.Queue = &QueueService{client: c}
 	c.Storage = &StorageService{client: c}
+	c.TestReport = &TestReportService{client: c}
 
 	return c, nil
 }
