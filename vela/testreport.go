@@ -4,7 +4,6 @@ package vela
 
 import (
 	"fmt"
-
 	api "github.com/go-vela/server/api/types"
 )
 
