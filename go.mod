@@ -3,7 +3,6 @@ module github.com/go-vela/sdk-go
 go 1.24.4
 
 require (
-	github.com/buildkite/yaml v0.0.0-20230306222819-0e4e032d4835
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.10.1
 	github.com/go-vela/server v0.27.0-rc1
@@ -11,11 +10,13 @@ require (
 	github.com/google/go-cmp v0.7.0
 	github.com/google/go-querystring v1.1.0
 	github.com/sirupsen/logrus v1.9.3
+	go.yaml.in/yaml/v3 v3.0.4
 )
 
 require (
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
+	github.com/buildkite/yaml v0.0.0-20230306222819-0e4e032d4835 // indirect
 	github.com/bytedance/sonic v1.13.3 // indirect
 	github.com/bytedance/sonic/loader v0.2.4 // indirect
 	github.com/cloudwego/base64x v0.1.5 // indirect
@@ -51,7 +52,6 @@ require (
 	github.com/ugorji/go/codec v1.3.0 // indirect
 	github.com/urfave/cli/v3 v3.3.8 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
-	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/arch v0.18.0 // indirect
 	golang.org/x/crypto v0.39.0 // indirect
 	golang.org/x/net v0.41.0 // indirect
