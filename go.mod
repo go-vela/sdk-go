@@ -5,8 +5,8 @@ go 1.24.2
 require (
 	github.com/buildkite/yaml v0.0.0-20230306222819-0e4e032d4835
 	github.com/coreos/go-semver v0.3.1
-	github.com/gin-gonic/gin v1.10.0
-	github.com/go-vela/server v0.26.5-0.20250506201518-be3567becf02
+	github.com/gin-gonic/gin v1.10.1
+	github.com/go-vela/server 2cca8340d011
 	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/google/go-cmp v0.7.0
 	github.com/google/go-querystring v1.1.0
