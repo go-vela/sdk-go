@@ -111,11 +111,11 @@ func TestService_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Service{
-		Number:   Int(1),
+		Number:   Int32(1),
 		Name:     String("clone"),
 		Status:   String("created"),
 		Error:    String(""),
-		ExitCode: Int(0),
+		ExitCode: Int32(0),
 		Created:  Int64(1563475419),
 		Started:  Int64(0),
 		Finished: Int64(0),
@@ -150,7 +150,7 @@ func TestService_Update_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Service{
-		Number:   Int(1),
+		Number:   Int32(1),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
 		Finished: Int64(1563475419),
@@ -182,7 +182,7 @@ func TestService_Update_404(t *testing.T) {
 	want := api.Service{}
 
 	req := api.Service{
-		Number:   Int(0),
+		Number:   Int32(0),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
 		Finished: Int64(1563475419),
@@ -282,11 +282,11 @@ func ExampleSvcService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Service{
-		Number:   Int(1),
+		Number:   Int32(1),
 		Name:     String("clone"),
 		Status:   String("pending"),
 		Error:    String(""),
-		ExitCode: Int(0),
+		ExitCode: Int32(0),
 		Created:  Int64(time.Now().UTC().Unix()),
 		Started:  Int64(0),
 		Finished: Int64(0),

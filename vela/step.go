@@ -14,7 +14,7 @@ import (
 type StepService service
 
 // Get returns the provided step.
-func (svc *StepService) Get(org, repo string, build, step int) (*api.Step, *Response, error) {
+func (svc *StepService) Get(org, repo string, build int64, step int32) (*api.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d", org, repo, build, step)
 
@@ -28,7 +28,7 @@ func (svc *StepService) Get(org, repo string, build, step int) (*api.Step, *Resp
 }
 
 // GetAll returns a list of all steps.
-func (svc *StepService) GetAll(org, repo string, build int, opt *ListOptions) (*[]api.Step, *Response, error) {
+func (svc *StepService) GetAll(org, repo string, build int64, opt *ListOptions) (*[]api.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps", org, repo, build)
 
@@ -62,7 +62,7 @@ func (svc *StepService) Add(org, repo string, build int, s *api.Step) (*api.Step
 }
 
 // Update modifies a step with the provided details.
-func (svc *StepService) Update(org, repo string, build int, s *api.Step) (*api.Step, *Response, error) {
+func (svc *StepService) Update(org, repo string, build int64, s *api.Step) (*api.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d", org, repo, build, s.GetNumber())
 

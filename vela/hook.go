@@ -13,7 +13,7 @@ import (
 type HookService service
 
 // Get returns the provided hook.
-func (svc *HookService) Get(org, repo string, hook int) (*api.Hook, *Response, error) {
+func (svc *HookService) Get(org, repo string, hook int64) (*api.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s/%d", org, repo, hook)
 
@@ -75,7 +75,7 @@ func (svc *HookService) Update(org, repo string, h *api.Hook) (*api.Hook, *Respo
 }
 
 // Remove deletes the provided hook.
-func (svc *HookService) Remove(org, repo string, hook int) (*string, *Response, error) {
+func (svc *HookService) Remove(org, repo string, hook int64) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s/%d", org, repo, hook)
 

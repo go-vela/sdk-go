@@ -39,7 +39,7 @@ type IDTokenOptions struct {
 }
 
 // Get returns the provided build.
-func (svc *BuildService) Get(org, repo string, build int) (*api.Build, *Response, error) {
+func (svc *BuildService) Get(org, repo string, build int64) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, build)
 
@@ -53,7 +53,7 @@ func (svc *BuildService) Get(org, repo string, build int) (*api.Build, *Response
 }
 
 // GetBuildExecutable returns the executable for the provided build.
-func (svc *BuildService) GetBuildExecutable(org, repo string, build int) (*api.BuildExecutable, *Response, error) {
+func (svc *BuildService) GetBuildExecutable(org, repo string, build int64) (*api.BuildExecutable, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/executable", org, repo, build)
 
@@ -87,7 +87,7 @@ func (svc *BuildService) GetAll(org, repo string, opt *BuildListOptions) (*[]api
 }
 
 // GetLogs returns the provided build logs.
-func (svc *BuildService) GetLogs(org, repo string, build int, opt *ListOptions) (*[]api.Log, *Response, error) {
+func (svc *BuildService) GetLogs(org, repo string, build int64, opt *ListOptions) (*[]api.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/logs", org, repo, build)
 
@@ -149,7 +149,7 @@ func (svc *BuildService) Remove(org, repo string, build int) (*string, *Response
 }
 
 // Restart takes the build provided and restarts it.
-func (svc *BuildService) Restart(org, repo string, build int) (*api.Build, *Response, error) {
+func (svc *BuildService) Restart(org, repo string, build int64) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, build)
 
@@ -163,7 +163,7 @@ func (svc *BuildService) Restart(org, repo string, build int) (*api.Build, *Resp
 }
 
 // Cancel takes the build provided and cancels it.
-func (svc *BuildService) Cancel(org, repo string, build int) (*api.Build, *Response, error) {
+func (svc *BuildService) Cancel(org, repo string, build int64) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/cancel", org, repo, build)
 
@@ -177,7 +177,7 @@ func (svc *BuildService) Cancel(org, repo string, build int) (*api.Build, *Respo
 }
 
 // Approve takes the build provided and approves it as an admin.
-func (svc *BuildService) Approve(org, repo string, build int) (*Response, error) {
+func (svc *BuildService) Approve(org, repo string, build int64) (*Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/approve", org, repo, build)
 
@@ -185,7 +185,7 @@ func (svc *BuildService) Approve(org, repo string, build int) (*Response, error)
 }
 
 // GetBuildToken returns an auth token for updating build resources.
-func (svc *BuildService) GetBuildToken(org, repo string, build int) (*api.Token, *Response, error) {
+func (svc *BuildService) GetBuildToken(org, repo string, build int64) (*api.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/token", org, repo, build)
 
@@ -199,7 +199,7 @@ func (svc *BuildService) GetBuildToken(org, repo string, build int) (*api.Token,
 }
 
 // GetIDRequestToken returns an id request token for integrating with build OIDC.
-func (svc *BuildService) GetIDRequestToken(org, repo string, build int, opt *RequestTokenOptions) (*api.Token, *Response, error) {
+func (svc *BuildService) GetIDRequestToken(org, repo string, build int64, opt *RequestTokenOptions) (*api.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/id_request_token", org, repo, build)
 

@@ -31,8 +31,8 @@ func TestAdmin_Build_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Build{
-		Number: Int(1),
-		Parent: Int(1),
+		Number: Int64(1),
+		Parent: Int64(1),
 		Event:  String("push"),
 		Status: String("running"),
 	}
@@ -164,7 +164,7 @@ func TestAdmin_Hook_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Hook{
-		Number: Int(1),
+		Number: Int64(1),
 		Event:  String("push"),
 		Status: String("success"),
 	}
@@ -290,7 +290,7 @@ func TestAdmin_Service_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Service{
-		Number:   Int(1),
+		Number:   Int32(1),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
 		Finished: Int64(1563475419),
@@ -325,7 +325,7 @@ func TestAdmin_Step_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Step{
-		Number:   Int(1),
+		Number:   Int32(1),
 		Status:   String("finished"),
 		Started:  Int64(1563475419),
 		Finished: Int64(1563475419),

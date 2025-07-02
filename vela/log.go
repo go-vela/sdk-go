@@ -13,7 +13,7 @@ import (
 type LogService service
 
 // GetService returns the provided service log.
-func (svc *LogService) GetService(org, repo string, build, service int) (*api.Log, *Response, error) {
+func (svc *LogService) GetService(org, repo string, build int64, service int32) (*api.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, build, service)
 
@@ -38,7 +38,7 @@ func (svc *LogService) AddService(org, repo string, build, service int, l *api.L
 }
 
 // UpdateService modifies a service log with the provided details.
-func (svc *LogService) UpdateService(org, repo string, build, service int, l *api.Log) (*Response, error) {
+func (svc *LogService) UpdateService(org, repo string, build int64, service int32, l *api.Log) (*Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, build, service)
 
@@ -63,7 +63,7 @@ func (svc *LogService) RemoveService(org, repo string, build, service int) (*str
 }
 
 // GetStep returns the provided step log.
-func (svc *LogService) GetStep(org, repo string, build, step int) (*api.Log, *Response, error) {
+func (svc *LogService) GetStep(org, repo string, build int64, step int32) (*api.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, build, step)
 
@@ -88,7 +88,7 @@ func (svc *LogService) AddStep(org, repo string, build, step int, l *api.Log) (*
 }
 
 // UpdateStep modifies a step log with the provided details.
-func (svc *LogService) UpdateStep(org, repo string, build, step int, l *api.Log) (*Response, error) {
+func (svc *LogService) UpdateStep(org, repo string, build int64, step int32, l *api.Log) (*Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, build, step)
 
