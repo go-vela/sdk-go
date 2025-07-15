@@ -35,7 +35,7 @@ func (svc *TestReportService) Update(org, repo string, build int64, tr *api.Test
 	_tr := new(api.TestReport)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, nil, _tr)
+	resp, err := svc.client.Call("PUT", u, tr, _tr)
 
-	return tr, resp, err
+	return _tr, resp, err
 }

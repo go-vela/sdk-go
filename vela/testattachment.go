@@ -35,7 +35,7 @@ func (svc *TestAttachmentService) Update(org, repo string, build int64, ta *api.
 	_ta := new(api.TestAttachment)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, nil, _ta)
+	resp, err := svc.client.Call("PUT", u, ta, _ta)
 
-	return ta, resp, err
+	return _ta, resp, err
 }
