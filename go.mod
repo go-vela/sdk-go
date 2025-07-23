@@ -5,7 +5,7 @@ go 1.24.4
 require (
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.10.1
-	github.com/go-vela/server v0.27.0-rc1
+	github.com/go-vela/server v0.27.0-rc2
 	github.com/golang-jwt/jwt/v5 v5.2.3
 	github.com/google/go-cmp v0.7.0
 	github.com/google/go-querystring v1.1.0
@@ -53,10 +53,10 @@ require (
 	github.com/urfave/cli/v3 v3.3.8 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
 	golang.org/x/arch v0.18.0 // indirect
-	golang.org/x/crypto v0.39.0 // indirect
+	golang.org/x/crypto v0.40.0 // indirect
 	golang.org/x/net v0.41.0 // indirect
-	golang.org/x/sys v0.33.0 // indirect
-	golang.org/x/text v0.26.0 // indirect
+	golang.org/x/sys v0.34.0 // indirect
+	golang.org/x/text v0.27.0 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
