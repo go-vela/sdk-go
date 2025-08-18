@@ -26,11 +26,11 @@ func TestWorker_Get_200(t *testing.T) {
 	data := []byte(server.WorkerResp)
 
 	var want api.Worker
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Worker.Get("worker_1")
-
 	if err != nil {
 		t.Errorf("Worker get returned err: %v", err)
 	}
@@ -55,7 +55,6 @@ func TestWorker_Get_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Worker.Get("0")
-
 	if err == nil {
 		t.Errorf("Worker get returned err: %v", err)
 	}
@@ -79,11 +78,11 @@ func TestWorker_GetAll_200(t *testing.T) {
 	data := []byte(server.WorkersResp)
 
 	var want []api.Worker
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Worker.GetAll(nil)
-
 	if err != nil {
 		t.Errorf("Worker get all returned err: %v", err)
 	}
@@ -107,6 +106,7 @@ func TestWorker_Add_201(t *testing.T) {
 	data := []byte(server.AddWorkerResp)
 
 	var want api.Token
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Worker{
@@ -124,7 +124,6 @@ func TestWorker_Add_201(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Worker.Add(&req)
-
 	if err != nil {
 		t.Errorf("Worker add returned err: %v", err)
 	}
@@ -148,13 +147,13 @@ func TestWorker_RefreshAuth_200(t *testing.T) {
 	data := []byte(server.AddWorkerResp)
 
 	var want api.Token
+
 	_ = json.Unmarshal(data, &want)
 
 	worker := "worker_1"
 
 	// run test
 	got, resp, err := c.Worker.RefreshAuth(worker)
-
 	if err != nil {
 		t.Errorf("Worker RefreshAuth returned err: %v", err)
 	}
@@ -179,7 +178,6 @@ func TestWorker_RefreshAuth_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Worker.RefreshAuth(worker)
-
 	if err == nil {
 		t.Error("Worker RefreshAuth should have returned err")
 	}
@@ -199,6 +197,7 @@ func TestWorker_Update_200(t *testing.T) {
 	data := []byte(server.WorkerResp)
 
 	var want api.Worker
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Worker{
@@ -207,7 +206,6 @@ func TestWorker_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Worker.Update("worker_1", &req)
-
 	if err != nil {
 		t.Errorf("Worker update returned err: %v", err)
 	}
@@ -236,7 +234,6 @@ func TestWorker_Update_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Worker.Update("0", &req)
-
 	if err == nil {
 		t.Errorf("Worker update returned err: %v", err)
 	}
@@ -259,7 +256,6 @@ func TestWorker_Remove_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Worker.Remove("worker_1")
-
 	if err != nil {
 		t.Errorf("Worker remove returned err: %v", err)
 	}
@@ -278,7 +274,6 @@ func TestWorker_Remove_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Worker.Remove("0")
-
 	if err == nil {
 		t.Errorf("Worker remove returned err: %v", err)
 	}

@@ -16,12 +16,14 @@ import (
 
 func TestSchedule_Get(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
+
 	c, err := NewClient(s.URL, "", nil)
 	if err != nil {
 		t.Errorf("unable to create test client: %v", err)
 	}
 
 	var schedule api.Schedule
+
 	err = json.Unmarshal([]byte(server.ScheduleResp), &schedule)
 	if err != nil {
 		t.Errorf("unable to create test schedule: %v", err)
@@ -32,6 +34,7 @@ func TestSchedule_Get(t *testing.T) {
 		repo     string
 		schedule string
 	}
+
 	tests := []struct {
 		failure  bool
 		name     string
@@ -91,13 +94,16 @@ func TestSchedule_Get(t *testing.T) {
 
 func TestSchedule_GetAll(t *testing.T) {
 	t.Skip() // server.SchedulesResp is a poorly formatted string. TODO: fix in v0.24
+
 	s := httptest.NewServer(server.FakeHandler())
+
 	c, err := NewClient(s.URL, "", nil)
 	if err != nil {
 		t.Errorf("unable to create test client: %v", err)
 	}
 
 	var schedules []api.Schedule
+
 	err = json.Unmarshal([]byte(server.SchedulesResp), &schedules)
 	if err != nil {
 		t.Errorf("unable to create test schedules: %v", err)
@@ -108,6 +114,7 @@ func TestSchedule_GetAll(t *testing.T) {
 		repo string
 		opts *ListOptions
 	}
+
 	tests := []struct {
 		failure  bool
 		name     string
@@ -156,12 +163,14 @@ func TestSchedule_GetAll(t *testing.T) {
 
 func TestSchedule_Add(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
+
 	c, err := NewClient(s.URL, "", nil)
 	if err != nil {
 		t.Errorf("unable to create test client: %v", err)
 	}
 
 	var schedule api.Schedule
+
 	err = json.Unmarshal([]byte(server.ScheduleResp), &schedule)
 	if err != nil {
 		t.Errorf("unable to create test schedule: %v", err)
@@ -172,6 +181,7 @@ func TestSchedule_Add(t *testing.T) {
 		repo     string
 		schedule *api.Schedule
 	}
+
 	tests := []struct {
 		failure  bool
 		name     string
@@ -224,12 +234,14 @@ func TestSchedule_Add(t *testing.T) {
 
 func TestSchedule_Update(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
+
 	c, err := NewClient(s.URL, "", nil)
 	if err != nil {
 		t.Errorf("unable to create test client: %v", err)
 	}
 
 	var schedule api.Schedule
+
 	err = json.Unmarshal([]byte(server.ScheduleResp), &schedule)
 	if err != nil {
 		t.Errorf("unable to create test schedule: %v", err)
@@ -240,6 +252,7 @@ func TestSchedule_Update(t *testing.T) {
 		repo     string
 		schedule *api.Schedule
 	}
+
 	tests := []struct {
 		failure  bool
 		name     string
@@ -305,6 +318,7 @@ func TestSchedule_Update(t *testing.T) {
 
 func TestSchedule_Remove(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
+
 	c, err := NewClient(s.URL, "", nil)
 	if err != nil {
 		t.Errorf("unable to create test client: %v", err)
@@ -315,6 +329,7 @@ func TestSchedule_Remove(t *testing.T) {
 		repo     string
 		schedule string
 	}
+
 	tests := []struct {
 		failure  bool
 		name     string

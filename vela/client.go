@@ -240,6 +240,17 @@ func (c *Client) addAuthentication(req *http.Request) error {
 		token = *c.Authentication.token
 	}
 
+	if c.Authentication.HasBuildTokenAuth() {
+		token = *c.Authentication.token
+
+		scmTkn := *c.Authentication.scmToken
+		if len(scmTkn) == 0 {
+			return fmt.Errorf("scm token has no value")
+		}
+
+		req.Header.Add("Token", *c.Authentication.scmToken)
+	}
+
 	// make sure token is not empty
 	if len(token) == 0 {
 		return fmt.Errorf("token has no value")

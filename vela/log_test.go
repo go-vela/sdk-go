@@ -26,11 +26,11 @@ func TestLog_GetService_200(t *testing.T) {
 	data := []byte(server.LogResp)
 
 	var want api.Log
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Log.GetService("github", "octocat", 1, 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -55,7 +55,6 @@ func TestLog_GetService_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Log.GetService("github", "octocat", 1, 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -79,6 +78,7 @@ func TestLog_AddService_201(t *testing.T) {
 	data := []byte(server.LogResp)
 
 	var want api.Log
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Log{
@@ -87,7 +87,6 @@ func TestLog_AddService_201(t *testing.T) {
 
 	// run test
 	resp, err := c.Log.AddService("github", "octocat", 1, 1, &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -110,7 +109,6 @@ func TestLog_UpdateService_200(t *testing.T) {
 
 	// run test
 	resp, err := c.Log.UpdateService("github", "octocat", 1, 1, &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -133,7 +131,6 @@ func TestLog_UpdateService_404(t *testing.T) {
 
 	// run test
 	resp, err := c.Log.UpdateService("github", "not-found", 1, 0, &req)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -152,7 +149,6 @@ func TestLog_RemoveService_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Log.RemoveService("github", "octocat", 1, 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -171,7 +167,6 @@ func TestLog_RemoveService_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Log.RemoveService("github", "octocat", 1, 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -191,11 +186,11 @@ func TestLog_GetStep_200(t *testing.T) {
 	data := []byte(server.LogResp)
 
 	var want api.Log
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Log.GetStep("github", "octocat", 1, 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -220,7 +215,6 @@ func TestLog_GetStep_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Log.GetStep("github", "octocat", 1, 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -244,6 +238,7 @@ func TestLog_AddStep_201(t *testing.T) {
 	data := []byte(server.LogResp)
 
 	var want api.Log
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Log{
@@ -252,7 +247,6 @@ func TestLog_AddStep_201(t *testing.T) {
 
 	// run test
 	resp, err := c.Log.AddStep("github", "octocat", 1, 1, &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -275,7 +269,6 @@ func TestLog_UpdateStep_200(t *testing.T) {
 
 	// run test
 	resp, err := c.Log.UpdateStep("github", "octocat", 1, 1, &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -298,7 +291,6 @@ func TestLog_UpdateStep_404(t *testing.T) {
 
 	// run test
 	resp, err := c.Log.UpdateStep("github", "not-found", 1, 0, &req)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -317,7 +309,6 @@ func TestLog_RemoveStep_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Log.RemoveStep("github", "octocat", 1, 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -336,7 +327,6 @@ func TestLog_RemoveStep_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Log.RemoveStep("github", "octocat", 1, 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}

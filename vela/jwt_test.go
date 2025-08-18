@@ -80,7 +80,6 @@ func makeSampleToken(c jwt.Claims) string {
 
 	// get the signing string (header + claims)
 	s, e := t.SigningString()
-
 	if e != nil {
 		return ""
 	}

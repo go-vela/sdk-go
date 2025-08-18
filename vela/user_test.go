@@ -25,11 +25,11 @@ func TestUser_Get_200(t *testing.T) {
 	data := []byte(server.UserResp)
 
 	var want api.User
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.User.Get("octocat")
-
 	if err != nil {
 		t.Errorf("User Get returned err: %v", err)
 	}
@@ -54,7 +54,6 @@ func TestUser_Get_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.User.Get("not-found")
-
 	if err == nil {
 		t.Errorf("User Get should have returned err")
 	}
@@ -78,6 +77,7 @@ func TestUser_Update_200(t *testing.T) {
 	data := []byte(server.UserResp)
 
 	var want api.User
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.User{
@@ -86,7 +86,6 @@ func TestUser_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.User.Update("octocat", &req)
-
 	if err != nil {
 		t.Errorf("User Update returned err: %v", err)
 	}
@@ -115,7 +114,6 @@ func TestUser_Update_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.User.Update("not-found", &req)
-
 	if err == nil {
 		t.Errorf("User Update should have returned err")
 	}
@@ -139,11 +137,11 @@ func TestCurrentUser_Get_200(t *testing.T) {
 	data := []byte(server.UserResp)
 
 	var want api.User
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.User.GetCurrent()
-
 	if err != nil {
 		t.Errorf("User GetCurrent returned err: %v", err)
 	}
@@ -170,7 +168,6 @@ func TestUser_GetCurrent_401(t *testing.T) {
 
 	// run test
 	got, resp, err := c.User.GetCurrent()
-
 	if err == nil {
 		t.Errorf("User GetCurrent should have returned err")
 	}
@@ -194,6 +191,7 @@ func TestUser_UpdateCurrent_200(t *testing.T) {
 	data := []byte(server.UserResp)
 
 	var want api.User
+
 	_ = json.Unmarshal(data, &want)
 
 	favorites := []string{"github/octocat"}
@@ -204,7 +202,6 @@ func TestUser_UpdateCurrent_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.User.UpdateCurrent(&req)
-
 	if err != nil {
 		t.Errorf("User UpdateCurrent returned err: %v", err)
 	}
@@ -237,7 +234,6 @@ func TestUser_UpdateCurrent_401(t *testing.T) {
 
 	// run test
 	got, resp, err := c.User.UpdateCurrent(&req)
-
 	if err == nil {
 		t.Errorf("User UpdateCurrent should have returned err")
 	}

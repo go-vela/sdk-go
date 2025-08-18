@@ -63,11 +63,13 @@ func TestAuthorizationService_GetLoginURL(t *testing.T) {
 			svc := &AuthorizationService{
 				client: tt.fields.client,
 			}
+
 			got, err := svc.GetLoginURL(tt.args.opt)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("AuthorizationService.GetLoginURL() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
+
 			if got != tt.want {
 				t.Errorf("AuthorizationService.GetLoginURL() = %v, want %v", got, tt.want)
 			}

@@ -27,11 +27,11 @@ func TestStep_Get_200(t *testing.T) {
 	data := []byte(server.StepResp)
 
 	var want api.Step
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Step.Get("github", "octocat", 1, 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -56,7 +56,6 @@ func TestStep_Get_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Step.Get("github", "octocat", 1, 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -80,11 +79,11 @@ func TestStep_GetAll_200(t *testing.T) {
 	data := []byte(server.StepsResp)
 
 	var want []api.Step
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Step.GetAll("github", "octocat", 1, nil)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -108,6 +107,7 @@ func TestStep_Add_201(t *testing.T) {
 	data := []byte(server.StepResp)
 
 	var want api.Step
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Step{
@@ -126,7 +126,6 @@ func TestStep_Add_201(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Step.Add("github", "octocat", 1, &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -150,6 +149,7 @@ func TestStep_Update_201(t *testing.T) {
 	data := []byte(server.StepResp)
 
 	var want api.Step
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Step{
@@ -161,7 +161,6 @@ func TestStep_Update_201(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Step.Update("github", "octocat", 1, &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -193,7 +192,6 @@ func TestStep_Update_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Step.Update("github", "not-found", 0, &req)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -216,7 +214,6 @@ func TestStep_Remove_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Step.Remove("github", "octocat", 1, 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -235,7 +232,6 @@ func TestStep_Remove_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Step.Remove("github", "octocat", 1, 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}

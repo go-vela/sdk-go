@@ -27,11 +27,11 @@ func TestService_Get_200(t *testing.T) {
 	data := []byte(server.ServiceResp)
 
 	var want api.Service
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Svc.Get("github", "octocat", 1, 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -56,7 +56,6 @@ func TestService_Get_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Svc.Get("github", "octocat", 1, 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -80,11 +79,11 @@ func TestService_GetAll_200(t *testing.T) {
 	data := []byte(server.ServicesResp)
 
 	var want []api.Service
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Svc.GetAll("github", "octocat", 1, nil)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -108,6 +107,7 @@ func TestService_Add_201(t *testing.T) {
 	data := []byte(server.ServiceResp)
 
 	var want api.Service
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Service{
@@ -123,7 +123,6 @@ func TestService_Add_201(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Svc.Add("github", "octocat", 1, &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -147,6 +146,7 @@ func TestService_Update_201(t *testing.T) {
 	data := []byte(server.ServiceResp)
 
 	var want api.Service
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Service{
@@ -158,7 +158,6 @@ func TestService_Update_201(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Svc.Update("github", "octocat", 1, &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -190,7 +189,6 @@ func TestService_Update_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Svc.Update("github", "not-found", 0, &req)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -213,7 +211,6 @@ func TestService_Remove_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Svc.Remove("github", "octocat", 1, 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -232,7 +229,6 @@ func TestService_Remove_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Svc.Remove("github", "octocat", 1, 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}

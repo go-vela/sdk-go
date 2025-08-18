@@ -20,6 +20,7 @@ const (
 	AuthenticationToken AuthenticationType = iota + 1
 	PersonalAccessToken
 	AccessAndRefreshToken
+	BuildToken
 )
 
 // AuthenticationService contains
@@ -30,6 +31,7 @@ type AuthenticationService struct {
 	personalAccessToken *string
 	accessToken         *string
 	refreshToken        *string
+	scmToken            *string
 	authType            AuthenticationType
 }
 
@@ -37,6 +39,13 @@ type AuthenticationService struct {
 func (svc *AuthenticationService) SetTokenAuth(token string) {
 	svc.token = String(token)
 	svc.authType = AuthenticationToken
+}
+
+// SetBuildTokenAuth sets the authentication type and the two tokens used.
+func (svc *AuthenticationService) SetBuildTokenAuth(buildTkn, scmTkn string) {
+	svc.token = String(buildTkn)
+	svc.scmToken = String(scmTkn)
+	svc.authType = BuildToken
 }
 
 // SetPersonalAccessTokenAuth sets the authentication type as personal access token.
@@ -60,6 +69,11 @@ func (svc *AuthenticationService) HasAuth() bool {
 // HasTokenAuth checks if the authentication type is a plain token.
 func (svc *AuthenticationService) HasTokenAuth() bool {
 	return svc.authType == AuthenticationToken
+}
+
+// HasBuildTokenAuth checks if the authentication type is a build and scm token.
+func (svc *AuthenticationService) HasBuildTokenAuth() bool {
+	return svc.authType == BuildToken
 }
 
 // HasPersonalAccessTokenAuth checks if the authentication type is a personal access token.

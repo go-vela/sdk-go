@@ -27,11 +27,11 @@ func TestRepo_Get_200(t *testing.T) {
 	data := []byte(server.RepoResp)
 
 	var want api.Repo
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Repo.Get("github", "octocat")
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -56,7 +56,6 @@ func TestRepo_Get_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Repo.Get("github", "not-found")
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -80,11 +79,11 @@ func TestRepo_GetAll_200(t *testing.T) {
 	data := []byte(server.ReposResp)
 
 	var want []api.Repo
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Repo.GetAll(nil)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -108,6 +107,7 @@ func TestRepo_Add_201(t *testing.T) {
 	data := []byte(server.RepoResp)
 
 	var want api.Repo
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Repo{
@@ -127,7 +127,6 @@ func TestRepo_Add_201(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Repo.Add(&req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -151,6 +150,7 @@ func TestRepo_Update_200(t *testing.T) {
 	data := []byte(server.RepoResp)
 
 	var want api.Repo
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Repo{
@@ -162,7 +162,6 @@ func TestRepo_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Repo.Update("github", "octocat", &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -194,7 +193,6 @@ func TestRepo_Update_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Repo.Update("github", "not-found", &req)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -217,7 +215,6 @@ func TestRepo_Remove_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Repo.Remove("github", "octocat")
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -236,7 +233,6 @@ func TestRepo_Remove_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Repo.Remove("github", "not-found")
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -255,7 +251,6 @@ func TestRepo_Repair_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Repo.Repair("github", "octocat")
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -274,7 +269,6 @@ func TestRepo_Repair_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Repo.Repair("github", "not-found")
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -293,7 +287,6 @@ func TestRepo_Chown_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Repo.Chown("github", "octocat")
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -312,7 +305,6 @@ func TestRepo_Chown_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Repo.Chown("github", "not-found")
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
