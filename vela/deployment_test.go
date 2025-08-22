@@ -27,11 +27,11 @@ func TestDeployment_Get_200(t *testing.T) {
 	data := []byte(server.DeploymentResp)
 
 	var want api.Deployment
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Deployment.Get("github", "octocat", 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -56,7 +56,6 @@ func TestDeployment_Get_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Deployment.Get("github", "octocat", 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -80,11 +79,11 @@ func TestDeployment_GetAll_200(t *testing.T) {
 	data := []byte(server.DeploymentsResp)
 
 	var want []api.Deployment
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Deployment.GetAll("github", "octocat", nil)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -108,6 +107,7 @@ func TestDeployment_Add_201(t *testing.T) {
 	data := []byte(server.DeploymentResp)
 
 	var want api.Deployment
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Deployment{
@@ -120,7 +120,6 @@ func TestDeployment_Add_201(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Deployment.Add("github", "octocat", &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}

@@ -27,11 +27,11 @@ func TestSecret_Get_200(t *testing.T) {
 	data := []byte(server.SecretResp)
 
 	var want api.Secret
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Secret.Get("native", "repo", "github", "octocat", "foo")
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -56,7 +56,6 @@ func TestSecret_Get_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Secret.Get("native", "repo", "github", "not-found", "not-found")
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -80,11 +79,11 @@ func TestSecret_GetAll_200(t *testing.T) {
 	data := []byte(server.SecretsResp)
 
 	var want []api.Secret
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Secret.GetAll("native", "repo", "github", "octocat", nil)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -108,6 +107,7 @@ func TestSecret_Add_201(t *testing.T) {
 	data := []byte(server.SecretResp)
 
 	var want api.Secret
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Secret{
@@ -121,7 +121,6 @@ func TestSecret_Add_201(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Secret.Add("native", "repo", "github", "octocat", &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -145,6 +144,7 @@ func TestSecret_Update_200(t *testing.T) {
 	data := []byte(server.SecretResp)
 
 	var want api.Secret
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Secret{
@@ -155,7 +155,6 @@ func TestSecret_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Secret.Update("native", "repo", "github", "octocat", &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -186,7 +185,6 @@ func TestSecret_Update_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Secret.Update("native", "repo", "github", "not-found", &req)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -209,7 +207,6 @@ func TestSecret_Remove_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Secret.Remove("native", "repo", "github", "octocat", "foo")
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -228,7 +225,6 @@ func TestSecret_Remove_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Secret.Remove("native", "repo", "github", "not-found", "not-found")
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}

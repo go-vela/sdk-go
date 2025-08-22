@@ -26,11 +26,11 @@ func TestHook_Get_200(t *testing.T) {
 	data := []byte(server.HookResp)
 
 	var want api.Hook
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Hook.Get("github", "octocat", 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -55,7 +55,6 @@ func TestHook_Get_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Hook.Get("github", "octocat", 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -79,11 +78,11 @@ func TestHook_GetAll_200(t *testing.T) {
 	data := []byte(server.HooksResp)
 
 	var want []api.Hook
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Hook.GetAll("github", "octocat", nil)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -107,6 +106,7 @@ func TestHook_Add_201(t *testing.T) {
 	data := []byte(server.HookResp)
 
 	var want api.Hook
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Hook{
@@ -123,7 +123,6 @@ func TestHook_Add_201(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Hook.Add("github", "octocat", &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -147,6 +146,7 @@ func TestHook_Update_200(t *testing.T) {
 	data := []byte(server.HookResp)
 
 	var want api.Hook
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Hook{
@@ -157,7 +157,6 @@ func TestHook_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Hook.Update("github", "octocat", &req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -188,7 +187,6 @@ func TestHook_Update_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Hook.Update("github", "octocat", &req)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -211,7 +209,6 @@ func TestHook_Remove_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Hook.Remove("github", "octocat", 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -230,7 +227,6 @@ func TestHook_Remove_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Hook.Remove("github", "octocat", 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
