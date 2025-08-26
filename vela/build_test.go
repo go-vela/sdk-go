@@ -27,11 +27,11 @@ func TestBuild_Get_200(t *testing.T) {
 	data := []byte(server.BuildResp)
 
 	var want api.Build
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Build.Get("github", "octocat", 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -56,7 +56,6 @@ func TestBuild_Get_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Build.Get("github", "octocat", 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -80,11 +79,11 @@ func TestBuildExecutable_Get_200(t *testing.T) {
 	data := []byte(server.BuildExecutableResp)
 
 	var want api.BuildExecutable
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Build.GetBuildExecutable("github", "octocat", 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -109,7 +108,6 @@ func TestBuildExecutable_Get_500(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Build.GetBuildExecutable("github", "octocat", 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -133,11 +131,11 @@ func TestBuild_GetAll_200(t *testing.T) {
 	data := []byte(server.BuildsResp)
 
 	var want []api.Build
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Build.GetAll("github", "octocat", nil)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -161,11 +159,11 @@ func TestBuild_GetLogs_200(t *testing.T) {
 	data := []byte(server.BuildLogsResp)
 
 	var want []api.Log
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Build.GetLogs("github", "octocat", 1, nil)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -190,7 +188,6 @@ func TestBuild_GetLogs_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Build.GetLogs("github", "octocat", 0, nil)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -214,6 +211,7 @@ func TestBuild_Add_201(t *testing.T) {
 	data := []byte(server.BuildResp)
 
 	var want api.Build
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Build{
@@ -250,7 +248,6 @@ func TestBuild_Add_201(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Build.Add(&req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -274,6 +271,7 @@ func TestBuild_Update_200(t *testing.T) {
 	data := []byte(server.BuildResp)
 
 	var want api.Build
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Build{
@@ -289,7 +287,6 @@ func TestBuild_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Build.Update(&req)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -325,7 +322,6 @@ func TestBuild_Update_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Build.Update(&req)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -348,7 +344,6 @@ func TestBuild_Remove_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Build.Remove("github", "octocat", 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -367,7 +362,6 @@ func TestBuild_Remove_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Build.Remove("github", "octocat", 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -387,11 +381,11 @@ func TestBuild_Restart_200(t *testing.T) {
 	data := []byte(server.BuildResp)
 
 	var want api.Build
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Build.Restart("github", "octocat", 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -416,7 +410,6 @@ func TestBuild_Restart_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Build.Restart("github", "octocat", 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -439,7 +432,6 @@ func TestBuild_Cancel_200(t *testing.T) {
 
 	// run test
 	_, got, err := c.Build.Cancel("github", "octocat", 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -458,7 +450,6 @@ func TestBuild_Cancel_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.Build.Cancel("github", "octocat", 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -477,7 +468,6 @@ func TestBuild_Approve_200(t *testing.T) {
 
 	// run test
 	got, err := c.Build.Approve("github", "octocat", 1)
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -496,7 +486,6 @@ func TestBuild_Approve_403(t *testing.T) {
 
 	// run test
 	resp, err := c.Build.Approve("github", "octocat", 0)
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -516,11 +505,11 @@ func TestBuild_GetBuildToken_200(t *testing.T) {
 	data := []byte(server.BuildTokenResp)
 
 	var want api.Token
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Build.GetBuildToken("github", "octocat", 1)
-
 	if err != nil {
 		t.Errorf("GetBuildToken returned err: %v", err)
 	}
@@ -545,7 +534,6 @@ func TestBuild_GetBuildToken_404(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Build.GetBuildToken("github", "octocat", 0)
-
 	if err != nil {
 		t.Errorf("GetBuildToken returned err: %v", err)
 	}
@@ -570,7 +558,6 @@ func TestBuild_GetBuildToken_400(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Build.GetBuildToken("github", "octocat", 2)
-
 	if err != nil {
 		t.Errorf("GetBuildToken returned err: %v", err)
 	}
@@ -594,11 +581,11 @@ func TestBuild_GetIDRequestToken_200(t *testing.T) {
 	data := []byte(server.IDTokenRequestTokenResp)
 
 	var want api.Token
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Build.GetIDRequestToken("github", "octocat", 1, nil)
-
 	if err != nil {
 		t.Errorf("GetIDRequestToken returned err: %v", err)
 	}
@@ -623,7 +610,6 @@ func TestBuild_GetIDRequestToken_400(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Build.GetIDRequestToken("github", "octocat", 0, nil)
-
 	if err != nil {
 		t.Errorf("GetIDRequestToken returned err: %v", err)
 	}
@@ -647,11 +633,11 @@ func TestBuild_GetIDToken_200(t *testing.T) {
 	data := []byte(server.IDTokenResp)
 
 	var want api.Token
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Build.GetIDToken("github", "octocat", 1, nil)
-
 	if err != nil {
 		t.Errorf("GetIDToken returned err: %v", err)
 	}
@@ -676,7 +662,6 @@ func TestBuild_GetIDToken_400(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Build.GetIDToken("github", "octocat", 0, nil)
-
 	if err != nil {
 		t.Errorf("GetIDToken returned err: %v", err)
 	}

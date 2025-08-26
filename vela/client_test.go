@@ -262,6 +262,41 @@ func TestVela_addAuthentication(t *testing.T) {
 	}
 }
 
+func TestVela_addAuthentication_BuildToken(t *testing.T) {
+	// setup types
+	wantBuild := "Bearer foobar"
+	wantScm := "baz"
+
+	c, err := NewClient("http://localhost:8080", "", nil)
+	if err != nil {
+		t.Errorf("Unable to create new client: %v", err)
+	}
+
+	r, err := http.NewRequestWithContext(context.Background(), "GET", "http://localhost:8080/health", nil)
+	if err != nil {
+		t.Errorf("Unable to create new request: %v", err)
+	}
+
+	// run test
+	c.Authentication.SetBuildTokenAuth("foobar", "baz")
+
+	err = c.addAuthentication(r)
+	if err != nil {
+		t.Error("addAuthentication should not have errored")
+	}
+
+	gotBuild := r.Header.Get("Authorization")
+	gotScm := r.Header.Get("Token")
+
+	if gotBuild != wantBuild {
+		t.Errorf("addAuthentication BuildToken is %v, want %v", gotBuild, wantBuild)
+	}
+
+	if gotScm != wantScm {
+		t.Errorf("addAuthentication SCM Token is %v, want %v", gotScm, wantScm)
+	}
+}
+
 func TestVela_addAuthentication_AccessAndRefresh_GoodToken(t *testing.T) {
 	// setup types
 	testToken := TestTokenGood
@@ -475,9 +510,11 @@ func TestVela_NewRequest(t *testing.T) {
 						test.input.body.(io.ReadCloser),
 					)
 				}
+
 				if err != nil {
 					t.Errorf("Unable to create new request: %v", err)
 				}
+
 				test.want.Header.Add("Content-Type", "application/json")
 				test.want.Header.Add("Authorization", "Bearer foobar")
 				test.want.Header.Add("User-Agent", c.UserAgent)

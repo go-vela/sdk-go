@@ -28,6 +28,7 @@ func TestAdmin_Build_Update_200(t *testing.T) {
 	data := []byte(server.BuildResp)
 
 	var want api.Build
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Build{
@@ -39,7 +40,6 @@ func TestAdmin_Build_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Admin.Build.Update(&req)
-
 	if err != nil {
 		t.Errorf("Build returned err: %v", err)
 	}
@@ -68,7 +68,6 @@ func TestAdmin_Clean_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Admin.Clean.Clean(&req, nil)
-
 	if err != nil {
 		t.Errorf("Clean returned err: %v", err)
 	}
@@ -125,6 +124,7 @@ func TestAdmin_Deployment_Update_200(t *testing.T) {
 	data := []byte(server.DeploymentResp)
 
 	var want api.Deployment
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Deployment{
@@ -137,7 +137,6 @@ func TestAdmin_Deployment_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Admin.Deployment.Update(&req)
-
 	if err != nil {
 		t.Errorf("Deployment returned err: %v", err)
 	}
@@ -161,6 +160,7 @@ func TestAdmin_Hook_Update_200(t *testing.T) {
 	data := []byte(server.HookResp)
 
 	var want api.Hook
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Hook{
@@ -171,7 +171,6 @@ func TestAdmin_Hook_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Admin.Hook.Update(&req)
-
 	if err != nil {
 		t.Errorf("Hook returned err: %v", err)
 	}
@@ -195,6 +194,7 @@ func TestAdmin_Repo_Update_200(t *testing.T) {
 	data := []byte(server.RepoResp)
 
 	var want api.Repo
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Repo{
@@ -229,7 +229,6 @@ func TestAdmin_Repo_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Admin.Repo.Update(&req)
-
 	if err != nil {
 		t.Errorf("Repo returned err: %v", err)
 	}
@@ -253,6 +252,7 @@ func TestAdmin_Secret_Update_200(t *testing.T) {
 	data := []byte(server.SecretResp)
 
 	var want api.Secret
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Secret{
@@ -263,7 +263,6 @@ func TestAdmin_Secret_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Admin.Secret.Update(&req)
-
 	if err != nil {
 		t.Errorf("Secret returned err: %v", err)
 	}
@@ -287,6 +286,7 @@ func TestAdmin_Service_Update_200(t *testing.T) {
 	data := []byte(server.ServiceResp)
 
 	var want api.Service
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Service{
@@ -298,7 +298,6 @@ func TestAdmin_Service_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Admin.Service.Update(&req)
-
 	if err != nil {
 		t.Errorf("Service returned err: %v", err)
 	}
@@ -322,6 +321,7 @@ func TestAdmin_Step_Update_200(t *testing.T) {
 	data := []byte(server.StepResp)
 
 	var want api.Step
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Step{
@@ -333,7 +333,6 @@ func TestAdmin_Step_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Admin.Step.Update(&req)
-
 	if err != nil {
 		t.Errorf("Step returned err: %v", err)
 	}
@@ -357,6 +356,7 @@ func TestAdmin_User_Update_200(t *testing.T) {
 	data := []byte(server.UserResp)
 
 	var want api.User
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.User{
@@ -365,7 +365,6 @@ func TestAdmin_User_Update_200(t *testing.T) {
 
 	// run test
 	got, resp, err := c.Admin.User.Update(&req)
-
 	if err != nil {
 		t.Errorf("User returned err: %v", err)
 	}
@@ -501,13 +500,13 @@ func TestAdmin_Settings_Update_200(t *testing.T) {
 	data := []byte(server.UpdateSettingsResp)
 
 	var want settings.Platform
+
 	_ = json.Unmarshal(data, &want)
 
 	req := settings.Platform{}
 
 	// run test
 	got, resp, err := c.Admin.Settings.Update(&req)
-
 	if err != nil {
 		t.Errorf("Settings.Update returned err: %v", err)
 	}
@@ -531,11 +530,11 @@ func TestAdmin_Settings_Restore_200(t *testing.T) {
 	data := []byte(server.RestoreSettingsResp)
 
 	var want settings.Platform
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
 	got, resp, err := c.Admin.Settings.Restore()
-
 	if err != nil {
 		t.Errorf("Settings.Restore returned err: %v", err)
 	}

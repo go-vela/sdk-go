@@ -21,6 +21,7 @@ func TestQueue_GetInfo_200(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 	c.Authentication.SetPersonalAccessTokenAuth("token")
+
 	data := []byte(server.QueueInfoResp)
 
 	var want *api.QueueInfo
@@ -56,6 +57,7 @@ func TestQueue_GetInfo_401(t *testing.T) {
 	if err == nil {
 		t.Errorf("GetInfo should have returned err %v", resp.StatusCode)
 	}
+
 	if resp.StatusCode != http.StatusUnauthorized {
 		t.Errorf("GetInfo returned %v, want %v", resp.StatusCode, http.StatusUnauthorized)
 	}

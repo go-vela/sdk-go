@@ -21,7 +21,6 @@ func TestSCM_Sync_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.SCM.Sync("github", "octocat")
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -39,7 +38,6 @@ func TestSCM_Sync_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.SCM.Sync("github", "not-found")
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -57,7 +55,6 @@ func TestSCM_SyncAll_200(t *testing.T) {
 
 	// run test
 	_, resp, err := c.SCM.SyncAll("github")
-
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -75,7 +72,6 @@ func TestSCM_SyncAll_404(t *testing.T) {
 
 	// run test
 	_, resp, err := c.SCM.SyncAll("not-found")
-
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
