@@ -32,7 +32,7 @@ func TestDashboard_Get_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Dashboard.Get("c976470d-34c1-49b2-9a98-1035871c576b")
+	got, resp, err := c.Dashboard.Get(t.Context(), "c976470d-34c1-49b2-9a98-1035871c576b")
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -56,7 +56,7 @@ func TestDashboard_Get_404(t *testing.T) {
 	want := api.DashCard{}
 
 	// run test
-	got, resp, err := c.Dashboard.Get("0")
+	got, resp, err := c.Dashboard.Get(t.Context(), "0")
 	if err == nil {
 		t.Errorf("Get returned err: %v", err)
 	}
@@ -84,7 +84,7 @@ func TestDashboard_GetAllUser_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Dashboard.GetAllUser()
+	got, resp, err := c.Dashboard.GetAllUser(t.Context())
 	if err != nil {
 		t.Errorf("GetAllUser returned err: %v", err)
 	}
@@ -112,7 +112,7 @@ func TestDashboard_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Dashboard.Add(&want)
+	got, resp, err := c.Dashboard.Add(t.Context(), &want)
 	if err != nil {
 		t.Errorf("Add returned err: %v", err)
 	}
@@ -140,7 +140,7 @@ func TestDashboard_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Dashboard.Update(&want)
+	got, resp, err := c.Dashboard.Update(t.Context(), &want)
 	if err != nil {
 		t.Errorf("Update returned err: %v", err)
 	}

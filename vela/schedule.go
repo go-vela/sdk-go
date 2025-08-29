@@ -3,6 +3,7 @@
 package vela
 
 import (
+	"context"
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
@@ -12,7 +13,7 @@ import (
 type ScheduleService service
 
 // Get returns the provided schedule from the repo.
-func (svc *ScheduleService) Get(org, repo, schedule string) (*api.Schedule, *Response, error) {
+func (svc *ScheduleService) Get(ctx context.Context, org, repo, schedule string) (*api.Schedule, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/schedules/%s/%s/%s", org, repo, schedule)
 
@@ -20,13 +21,13 @@ func (svc *ScheduleService) Get(org, repo, schedule string) (*api.Schedule, *Res
 	v := new(api.Schedule)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // GetAll returns a list of all schedules from the repo.
-func (svc *ScheduleService) GetAll(org, repo string, opt *ListOptions) (*[]api.Schedule, *Response, error) {
+func (svc *ScheduleService) GetAll(ctx context.Context, org, repo string, opt *ListOptions) (*[]api.Schedule, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/schedules/%s/%s", org, repo)
 
@@ -40,13 +41,13 @@ func (svc *ScheduleService) GetAll(org, repo string, opt *ListOptions) (*[]api.S
 	v := new([]api.Schedule)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // Add constructs a schedule with the provided details.
-func (svc *ScheduleService) Add(org, repo string, s *api.Schedule) (*api.Schedule, *Response, error) {
+func (svc *ScheduleService) Add(ctx context.Context, org, repo string, s *api.Schedule) (*api.Schedule, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/schedules/%s/%s", org, repo)
 
@@ -54,13 +55,13 @@ func (svc *ScheduleService) Add(org, repo string, s *api.Schedule) (*api.Schedul
 	v := new(api.Schedule)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, s, v)
+	resp, err := svc.client.Call(ctx, "POST", u, s, v)
 
 	return v, resp, err
 }
 
 // Update modifies a schedule with the provided details.
-func (svc *ScheduleService) Update(org, repo string, s *api.Schedule) (*api.Schedule, *Response, error) {
+func (svc *ScheduleService) Update(ctx context.Context, org, repo string, s *api.Schedule) (*api.Schedule, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/schedules/%s/%s/%s", org, repo, s.GetName())
 
@@ -68,13 +69,13 @@ func (svc *ScheduleService) Update(org, repo string, s *api.Schedule) (*api.Sche
 	v := new(api.Schedule)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, s, v)
+	resp, err := svc.client.Call(ctx, "PUT", u, s, v)
 
 	return v, resp, err
 }
 
 // Remove deletes the provided schedule.
-func (svc *ScheduleService) Remove(org, repo, schedule string) (*string, *Response, error) {
+func (svc *ScheduleService) Remove(ctx context.Context, org, repo, schedule string) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/schedules/%s/%s/%s", org, repo, schedule)
 
@@ -82,7 +83,7 @@ func (svc *ScheduleService) Remove(org, repo, schedule string) (*string, *Respon
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v)
+	resp, err := svc.client.Call(ctx, "DELETE", u, nil, v)
 
 	return v, resp, err
 }
