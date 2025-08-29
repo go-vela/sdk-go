@@ -4,6 +4,7 @@
 package vela
 
 import (
+	"context"
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
@@ -14,7 +15,7 @@ import (
 type SvcService service
 
 // Get returns the provided service.
-func (svc *SvcService) Get(org, repo string, build int64, service int32) (*api.Service, *Response, error) {
+func (svc *SvcService) Get(ctx context.Context, org, repo string, build int64, service int32) (*api.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d", org, repo, build, service)
 
@@ -22,13 +23,13 @@ func (svc *SvcService) Get(org, repo string, build int64, service int32) (*api.S
 	v := new(api.Service)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // GetAll returns a list of all services.
-func (svc *SvcService) GetAll(org, repo string, build int64, opt *ListOptions) (*[]api.Service, *Response, error) {
+func (svc *SvcService) GetAll(ctx context.Context, org, repo string, build int64, opt *ListOptions) (*[]api.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services", org, repo, build)
 
@@ -42,13 +43,13 @@ func (svc *SvcService) GetAll(org, repo string, build int64, opt *ListOptions) (
 	v := new([]api.Service)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // Add constructs a service with the provided details.
-func (svc *SvcService) Add(org, repo string, build int, s *api.Service) (*api.Service, *Response, error) {
+func (svc *SvcService) Add(ctx context.Context, org, repo string, build int, s *api.Service) (*api.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services", org, repo, build)
 
@@ -56,13 +57,13 @@ func (svc *SvcService) Add(org, repo string, build int, s *api.Service) (*api.Se
 	v := new(api.Service)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, s, v)
+	resp, err := svc.client.Call(ctx, "POST", u, s, v)
 
 	return v, resp, err
 }
 
 // Update modifies a service with the provided details.
-func (svc *SvcService) Update(org, repo string, build int64, s *api.Service) (*api.Service, *Response, error) {
+func (svc *SvcService) Update(ctx context.Context, org, repo string, build int64, s *api.Service) (*api.Service, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d", org, repo, build, s.GetNumber())
 
@@ -70,13 +71,13 @@ func (svc *SvcService) Update(org, repo string, build int64, s *api.Service) (*a
 	v := new(api.Service)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, s, v)
+	resp, err := svc.client.Call(ctx, "PUT", u, s, v)
 
 	return v, resp, err
 }
 
 // Remove deletes the provided service.
-func (svc *SvcService) Remove(org, repo string, build, service int) (*string, *Response, error) {
+func (svc *SvcService) Remove(ctx context.Context, org, repo string, build, service int) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d", org, repo, build, service)
 
@@ -84,7 +85,7 @@ func (svc *SvcService) Remove(org, repo string, build, service int) (*string, *R
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v)
+	resp, err := svc.client.Call(ctx, "DELETE", u, nil, v)
 
 	return v, resp, err
 }

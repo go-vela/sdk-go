@@ -4,6 +4,7 @@
 package vela
 
 import (
+	"context"
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
@@ -14,7 +15,7 @@ import (
 type StepService service
 
 // Get returns the provided step.
-func (svc *StepService) Get(org, repo string, build int64, step int32) (*api.Step, *Response, error) {
+func (svc *StepService) Get(ctx context.Context, org, repo string, build int64, step int32) (*api.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d", org, repo, build, step)
 
@@ -22,13 +23,13 @@ func (svc *StepService) Get(org, repo string, build int64, step int32) (*api.Ste
 	v := new(api.Step)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // GetAll returns a list of all steps.
-func (svc *StepService) GetAll(org, repo string, build int64, opt *ListOptions) (*[]api.Step, *Response, error) {
+func (svc *StepService) GetAll(ctx context.Context, org, repo string, build int64, opt *ListOptions) (*[]api.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps", org, repo, build)
 
@@ -42,13 +43,13 @@ func (svc *StepService) GetAll(org, repo string, build int64, opt *ListOptions) 
 	v := new([]api.Step)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // Add constructs a step with the provided details.
-func (svc *StepService) Add(org, repo string, build int, s *api.Step) (*api.Step, *Response, error) {
+func (svc *StepService) Add(ctx context.Context, org, repo string, build int, s *api.Step) (*api.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps", org, repo, build)
 
@@ -56,13 +57,13 @@ func (svc *StepService) Add(org, repo string, build int, s *api.Step) (*api.Step
 	v := new(api.Step)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, s, v)
+	resp, err := svc.client.Call(ctx, "POST", u, s, v)
 
 	return v, resp, err
 }
 
 // Update modifies a step with the provided details.
-func (svc *StepService) Update(org, repo string, build int64, s *api.Step) (*api.Step, *Response, error) {
+func (svc *StepService) Update(ctx context.Context, org, repo string, build int64, s *api.Step) (*api.Step, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d", org, repo, build, s.GetNumber())
 
@@ -70,13 +71,13 @@ func (svc *StepService) Update(org, repo string, build int64, s *api.Step) (*api
 	v := new(api.Step)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, s, v)
+	resp, err := svc.client.Call(ctx, "PUT", u, s, v)
 
 	return v, resp, err
 }
 
 // Remove deletes the provided step.
-func (svc *StepService) Remove(org, repo string, build, step int) (*string, *Response, error) {
+func (svc *StepService) Remove(ctx context.Context, org, repo string, build, step int) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d", org, repo, build, step)
 
@@ -84,7 +85,7 @@ func (svc *StepService) Remove(org, repo string, build, step int) (*string, *Res
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v)
+	resp, err := svc.client.Call(ctx, "DELETE", u, nil, v)
 
 	return v, resp, err
 }

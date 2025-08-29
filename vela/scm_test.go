@@ -3,6 +3,7 @@
 package vela
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -20,7 +21,7 @@ func TestSCM_Sync_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.SCM.Sync("github", "octocat")
+	_, resp, err := c.SCM.Sync(t.Context(), "github", "octocat")
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -37,7 +38,7 @@ func TestSCM_Sync_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.SCM.Sync("github", "not-found")
+	_, resp, err := c.SCM.Sync(t.Context(), "github", "not-found")
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -54,7 +55,7 @@ func TestSCM_SyncAll_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.SCM.SyncAll("github")
+	_, resp, err := c.SCM.SyncAll(t.Context(), "github")
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -71,7 +72,7 @@ func TestSCM_SyncAll_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.SCM.SyncAll("not-found")
+	_, resp, err := c.SCM.SyncAll(t.Context(), "not-found")
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -89,7 +90,7 @@ func ExampleSCMService_Sync() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Change orgship of the repo in the server
-	repo, resp, err := c.SCM.Sync("github", "octocat")
+	repo, resp, err := c.SCM.Sync(context.Background(), "github", "octocat")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -105,7 +106,7 @@ func ExampleSCMService_SyncAll() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Change orgship of the repo in the server
-	org, resp, err := c.SCM.SyncAll("github")
+	org, resp, err := c.SCM.SyncAll(context.Background(), "github")
 	if err != nil {
 		fmt.Println(err)
 	}
