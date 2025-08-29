@@ -3,7 +3,6 @@
 package vela
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -32,7 +31,7 @@ func TestSecret_Get_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Secret.Get(t.Context(), "native", "repo", "github", "octocat", "foo")
+	got, resp, err := c.Secret.Get("native", "repo", "github", "octocat", "foo")
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -56,7 +55,7 @@ func TestSecret_Get_404(t *testing.T) {
 	want := api.Secret{}
 
 	// run test
-	got, resp, err := c.Secret.Get(t.Context(), "native", "repo", "github", "not-found", "not-found")
+	got, resp, err := c.Secret.Get("native", "repo", "github", "not-found", "not-found")
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -84,7 +83,7 @@ func TestSecret_GetAll_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Secret.GetAll(t.Context(), "native", "repo", "github", "octocat", nil)
+	got, resp, err := c.Secret.GetAll("native", "repo", "github", "octocat", nil)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -121,7 +120,7 @@ func TestSecret_Add_201(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Secret.Add(t.Context(), "native", "repo", "github", "octocat", &req)
+	got, resp, err := c.Secret.Add("native", "repo", "github", "octocat", &req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -155,7 +154,7 @@ func TestSecret_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Secret.Update(t.Context(), "native", "repo", "github", "octocat", &req)
+	got, resp, err := c.Secret.Update("native", "repo", "github", "octocat", &req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -185,7 +184,7 @@ func TestSecret_Update_404(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Secret.Update(t.Context(), "native", "repo", "github", "not-found", &req)
+	got, resp, err := c.Secret.Update("native", "repo", "github", "not-found", &req)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -207,7 +206,7 @@ func TestSecret_Remove_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Secret.Remove(t.Context(), "native", "repo", "github", "octocat", "foo")
+	_, resp, err := c.Secret.Remove("native", "repo", "github", "octocat", "foo")
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -225,7 +224,7 @@ func TestSecret_Remove_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Secret.Remove(t.Context(), "native", "repo", "github", "not-found", "not-found")
+	_, resp, err := c.Secret.Remove("native", "repo", "github", "not-found", "not-found")
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -243,7 +242,7 @@ func ExampleSecretService_Get() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get the secret from the server
-	secret, resp, err := c.Secret.Get(context.Background(), "native", "repo", "github", "octocat", "foo")
+	secret, resp, err := c.Secret.Get("native", "repo", "github", "octocat", "foo")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -259,7 +258,7 @@ func ExampleSecretService_GetAll() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the secrets from the server
-	secrets, resp, err := c.Secret.GetAll(context.Background(), "native", "repo", "github", "octocat", nil)
+	secrets, resp, err := c.Secret.GetAll("native", "repo", "github", "octocat", nil)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -282,7 +281,7 @@ func ExampleSecretService_Add() {
 	}
 
 	// Create the secret in the server
-	secret, resp, err := c.Secret.Add(context.Background(), "native", "repo", "github", "octocat", &req)
+	secret, resp, err := c.Secret.Add("native", "repo", "github", "octocat", &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -304,7 +303,7 @@ func ExampleSecretService_Update() {
 	}
 
 	// Update the secret in the server
-	secret, resp, err := c.Secret.Update(context.Background(), "native", "repo", "github", "octocat", &req)
+	secret, resp, err := c.Secret.Update("native", "repo", "github", "octocat", &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -320,7 +319,7 @@ func ExampleSecretService_Remove() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the secret in the server
-	secret, resp, err := c.Secret.Remove(context.Background(), "native", "repo", "github", "octocat", "foo")
+	secret, resp, err := c.Secret.Remove("native", "repo", "github", "octocat", "foo")
 	if err != nil {
 		fmt.Println(err)
 	}

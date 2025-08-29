@@ -155,7 +155,7 @@ func TestVela_Authentication_RefreshAccessToken(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	resp, err := c.Authentication.RefreshAccessToken(t.Context(), "refreshToken")
+	resp, err := c.Authentication.RefreshAccessToken("refreshToken")
 	if err != nil {
 		t.Errorf("RefreshAccessToken returned err: %v", err)
 	}
@@ -183,7 +183,7 @@ func TestVela_Authentication_AuthenticateWithToken(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	at, resp, err := c.Authentication.AuthenticateWithToken(t.Context(), "personalaccesstoken")
+	at, resp, err := c.Authentication.AuthenticateWithToken("personalaccesstoken")
 	if err != nil {
 		t.Errorf("AuthenticateWithToken returned err: %v", err)
 	}
@@ -205,7 +205,7 @@ func TestVela_Authentication_AuthenticateWithToken_NoToken(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Authentication.AuthenticateWithToken(t.Context(), "")
+	_, resp, err := c.Authentication.AuthenticateWithToken("")
 	if err == nil {
 		t.Errorf("AuthenticateWithToken should have returned error")
 	}
@@ -242,7 +242,7 @@ func TestVela_Authentication_ExchangeTokens(t *testing.T) {
 	wantRefresh := "refresh"
 
 	// run test
-	at, rt, resp, err := c.Authentication.ExchangeTokens(t.Context(), opt)
+	at, rt, resp, err := c.Authentication.ExchangeTokens(opt)
 	if err != nil {
 		t.Errorf("ExchangeTokens returned err: %v", err)
 	}
@@ -279,7 +279,7 @@ func TestVela_Authentication_ExchangeTokens_BadInput(t *testing.T) {
 	opt := &OAuthExchangeOptions{}
 
 	// run test
-	_, _, resp, err := c.Authentication.ExchangeTokens(t.Context(), opt)
+	_, _, resp, err := c.Authentication.ExchangeTokens(opt)
 	if err == nil {
 		t.Errorf("ExchangeTokens should have returned error: %v", err)
 	}
@@ -307,7 +307,7 @@ func TestVela_Authentication_ValidateToken_200(t *testing.T) {
 	c.Authentication.SetTokenAuth("foo")
 
 	// run test
-	resp, err := c.Authentication.ValidateToken(t.Context())
+	resp, err := c.Authentication.ValidateToken()
 	if err != nil {
 		t.Errorf("ValidateToken returned error %v", err)
 	}
@@ -327,7 +327,7 @@ func TestVela_Authentication_ValidateToken_NoToken(t *testing.T) {
 	c.Authentication.SetTokenAuth("")
 
 	// run test
-	resp, err := c.Authentication.ValidateToken(t.Context())
+	resp, err := c.Authentication.ValidateToken()
 	if err == nil {
 		t.Error("ValidateToken should have returned error")
 	}
@@ -347,7 +347,7 @@ func TestVela_Authentication_ValidateOAuthToken_200(t *testing.T) {
 	c.Authentication.SetTokenAuth("foo")
 
 	// run test
-	resp, err := c.Authentication.ValidateOAuthToken(t.Context())
+	resp, err := c.Authentication.ValidateOAuthToken()
 	if err != nil {
 		t.Errorf("ValidateOAuthToken returned error %v", err)
 	}
@@ -367,7 +367,7 @@ func TestVela_Authentication_ValidateOAuthToken_NoToken(t *testing.T) {
 	c.Authentication.SetTokenAuth("")
 
 	// run test
-	resp, err := c.Authentication.ValidateOAuthToken(t.Context())
+	resp, err := c.Authentication.ValidateOAuthToken()
 	if err == nil {
 		t.Error("ValidateOAuthToken should have returned error")
 	}

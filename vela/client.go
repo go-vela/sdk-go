@@ -4,7 +4,6 @@ package vela
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -192,7 +191,7 @@ func (c *Client) buildURLForRequest(urlStr string) (string, error) {
 }
 
 // addAuthentication adds the necessary authentication to the request.
-func (c *Client) addAuthentication(ctx context.Context, req *http.Request) error {
+func (c *Client) addAuthentication(req *http.Request) error {
 	// token that will be sent with the request depending on auth type
 	token := ""
 
@@ -213,7 +212,7 @@ func (c *Client) addAuthentication(ctx context.Context, req *http.Request) error
 			// send API call to refresh the access token to Vela
 			//
 			// https://pkg.go.dev/github.com/go-vela/sdk-go/vela?tab=doc#AuthenticationService.RefreshAccessToken
-			_, err := c.Authentication.RefreshAccessToken(ctx, *c.Authentication.refreshToken)
+			_, err := c.Authentication.RefreshAccessToken(*c.Authentication.refreshToken)
 			if err != nil {
 				return err
 			}
@@ -228,7 +227,7 @@ func (c *Client) addAuthentication(ctx context.Context, req *http.Request) error
 		// send API call to exchange token for access token to Vela
 		//
 		// https://pkg.go.dev/github.com/go-vela/sdk-go/vela?tab=doc#AuthenticationService.AuthenticateWithToken
-		at, _, err := c.Authentication.AuthenticateWithToken(ctx, *c.Authentication.personalAccessToken)
+		at, _, err := c.Authentication.AuthenticateWithToken(*c.Authentication.personalAccessToken)
 		if err != nil {
 			return err
 		}
@@ -294,7 +293,7 @@ func addOptions(s string, opt interface{}) (string, error) {
 // in which case it is resolved relative to the baseURL of the Client.
 // Relative URLs should always be specified without a preceding slash.
 // If specified, the value pointed to by body is JSON encoded and included as the request body.
-func (c *Client) NewRequest(ctx context.Context, method, url string, body any) (*http.Request, error) {
+func (c *Client) NewRequest(method, url string, body interface{}) (*http.Request, error) {
 	// build url for request
 	u, err := c.buildURLForRequest(url)
 	if err != nil {
@@ -308,7 +307,7 @@ func (c *Client) NewRequest(ctx context.Context, method, url string, body any) (
 	switch body := body.(type) {
 	// io.ReadCloser is used for streaming endpoints
 	case io.ReadCloser:
-		req, err = http.NewRequestWithContext(ctx, method, u, body)
+		req, err = http.NewRequest(method, u, body)
 		if err != nil {
 			return nil, err
 		}
@@ -327,7 +326,7 @@ func (c *Client) NewRequest(ctx context.Context, method, url string, body any) (
 		}
 
 		// create new http request from built url and body
-		req, err = http.NewRequestWithContext(ctx, method, u, buf)
+		req, err = http.NewRequest(method, u, buf)
 		if err != nil {
 			return nil, err
 		}
@@ -335,7 +334,7 @@ func (c *Client) NewRequest(ctx context.Context, method, url string, body any) (
 
 	// apply authentication to request if client is set
 	if c.Authentication.HasAuth() {
-		err = c.addAuthentication(ctx, req)
+		err = c.addAuthentication(req)
 		if err != nil {
 			return nil, err
 		}
@@ -429,9 +428,9 @@ func (r *Response) populatePageValues() {
 // respType is the type that the HTTP response will resolve to.
 //
 // For more information read https://github.com/google/go-github/issues/234
-func (c *Client) Call(ctx context.Context, method, url string, body, respType interface{}) (*Response, error) {
+func (c *Client) Call(method, url string, body, respType interface{}) (*Response, error) {
 	// create new request from parameters
-	req, err := c.NewRequest(ctx, method, url, body)
+	req, err := c.NewRequest(method, url, body)
 	if err != nil {
 		return nil, err
 	}
@@ -459,9 +458,9 @@ func (c *Client) Call(ctx context.Context, method, url string, body, respType in
 // headers is a map of HTTP headers.
 //
 // For more information read https://github.com/google/go-github/issues/234
-func (c *Client) CallWithHeaders(ctx context.Context, method, url string, body, respType interface{}, headers map[string]string) (*Response, error) {
+func (c *Client) CallWithHeaders(method, url string, body, respType interface{}, headers map[string]string) (*Response, error) {
 	// create new request from parameters
-	req, err := c.NewRequest(ctx, method, url, body)
+	req, err := c.NewRequest(method, url, body)
 	if err != nil {
 		return nil, err
 	}

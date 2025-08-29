@@ -3,7 +3,6 @@
 package vela
 
 import (
-	"context"
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
@@ -36,7 +35,7 @@ type PipelineOptions struct {
 }
 
 // Get returns the provided pipeline.
-func (svc *PipelineService) Get(ctx context.Context, org, repo, ref string) (*api.Pipeline, *Response, error) {
+func (svc *PipelineService) Get(org, repo, ref string) (*api.Pipeline, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s", org, repo, ref)
 
@@ -44,13 +43,13 @@ func (svc *PipelineService) Get(ctx context.Context, org, repo, ref string) (*ap
 	v := new(api.Pipeline)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // GetAll returns a list of all pipelines.
-func (svc *PipelineService) GetAll(ctx context.Context, org, repo string, opt *ListOptions) (*[]api.Pipeline, *Response, error) {
+func (svc *PipelineService) GetAll(org, repo string, opt *ListOptions) (*[]api.Pipeline, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s", org, repo)
 
@@ -64,13 +63,13 @@ func (svc *PipelineService) GetAll(ctx context.Context, org, repo string, opt *L
 	v := new([]api.Pipeline)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // Add constructs a pipeline with the provided details.
-func (svc *PipelineService) Add(ctx context.Context, org, repo string, h *api.Pipeline) (*api.Pipeline, *Response, error) {
+func (svc *PipelineService) Add(org, repo string, h *api.Pipeline) (*api.Pipeline, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s", org, repo)
 
@@ -78,13 +77,13 @@ func (svc *PipelineService) Add(ctx context.Context, org, repo string, h *api.Pi
 	v := new(api.Pipeline)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "POST", u, h, v)
+	resp, err := svc.client.Call("POST", u, h, v)
 
 	return v, resp, err
 }
 
 // Update modifies a pipeline with the provided details.
-func (svc *PipelineService) Update(ctx context.Context, org, repo string, p *api.Pipeline) (*api.Pipeline, *Response, error) {
+func (svc *PipelineService) Update(org, repo string, p *api.Pipeline) (*api.Pipeline, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s", org, repo, p.GetCommit())
 
@@ -92,13 +91,13 @@ func (svc *PipelineService) Update(ctx context.Context, org, repo string, p *api
 	v := new(api.Pipeline)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "PUT", u, p, v)
+	resp, err := svc.client.Call("PUT", u, p, v)
 
 	return v, resp, err
 }
 
 // Remove deletes the provided pipeline.
-func (svc *PipelineService) Remove(ctx context.Context, org, repo string, pipeline string) (*string, *Response, error) {
+func (svc *PipelineService) Remove(org, repo string, pipeline string) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s", org, repo, pipeline)
 
@@ -106,13 +105,13 @@ func (svc *PipelineService) Remove(ctx context.Context, org, repo string, pipeli
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "DELETE", u, nil, v)
+	resp, err := svc.client.Call("DELETE", u, nil, v)
 
 	return v, resp, err
 }
 
 // Compile returns the provided fully compiled pipeline.
-func (svc *PipelineService) Compile(ctx context.Context, org, repo, ref string, opt *PipelineOptions) (*yaml.Build, *Response, error) {
+func (svc *PipelineService) Compile(org, repo, ref string, opt *PipelineOptions) (*yaml.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s/compile", org, repo, ref)
 
@@ -126,13 +125,13 @@ func (svc *PipelineService) Compile(ctx context.Context, org, repo, ref string, 
 	v := new(yaml.Build)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "POST", u, nil, v)
+	resp, err := svc.client.Call("POST", u, nil, v)
 
 	return v, resp, err
 }
 
 // Expand returns the provided pipeline fully compiled.
-func (svc *PipelineService) Expand(ctx context.Context, org, repo, ref string, opt *PipelineOptions) (*yaml.Build, *Response, error) {
+func (svc *PipelineService) Expand(org, repo, ref string, opt *PipelineOptions) (*yaml.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s/expand", org, repo, ref)
 
@@ -146,13 +145,13 @@ func (svc *PipelineService) Expand(ctx context.Context, org, repo, ref string, o
 	v := new(yaml.Build)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "POST", u, nil, v)
+	resp, err := svc.client.Call("POST", u, nil, v)
 
 	return v, resp, err
 }
 
 // Templates returns the provided templates for a pipeline.
-func (svc *PipelineService) Templates(ctx context.Context, org, repo, ref string, opt *PipelineOptions) (map[string]*yaml.Template, *Response, error) {
+func (svc *PipelineService) Templates(org, repo, ref string, opt *PipelineOptions) (map[string]*yaml.Template, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s/templates", org, repo, ref)
 
@@ -166,13 +165,13 @@ func (svc *PipelineService) Templates(ctx context.Context, org, repo, ref string
 	v := make(map[string]*yaml.Template)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // Validate returns the validation status of the provided pipeline.
-func (svc *PipelineService) Validate(ctx context.Context, org, repo, ref string, opt *PipelineOptions) (*string, *Response, error) {
+func (svc *PipelineService) Validate(org, repo, ref string, opt *PipelineOptions) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/pipelines/%s/%s/%s/validate", org, repo, ref)
 
@@ -186,12 +185,12 @@ func (svc *PipelineService) Validate(ctx context.Context, org, repo, ref string,
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "POST", u, nil, v)
+	resp, err := svc.client.Call("POST", u, nil, v)
 
 	return v, resp, err
 }
 
-func (svc *PipelineService) ValidateRaw(ctx context.Context, b64Pipeline string, opt *PipelineOptions) (*string, *Response, error) {
+func (svc *PipelineService) ValidateRaw(b64Pipeline string, opt *PipelineOptions) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/pipeline/raw"
 
@@ -205,7 +204,7 @@ func (svc *PipelineService) ValidateRaw(ctx context.Context, b64Pipeline string,
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "POST", u, b64Pipeline, v)
+	resp, err := svc.client.Call("POST", u, b64Pipeline, v)
 
 	return v, resp, err
 }

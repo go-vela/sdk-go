@@ -3,7 +3,6 @@
 package vela
 
 import (
-	"context"
 	"fmt"
 )
 
@@ -12,19 +11,19 @@ import (
 type SCMService service
 
 // Sync synchronizes a repo between the database and the SCM.
-func (svc *SCMService) Sync(ctx context.Context, org, repo string) (*string, *Response, error) {
+func (svc *SCMService) Sync(org, repo string) (*string, *Response, error) {
 	u := fmt.Sprintf("/api/v1/scm/repos/%s/%s/sync", org, repo)
 	v := new(string)
-	resp, err := svc.client.Call(ctx, "PATCH", u, nil, v)
+	resp, err := svc.client.Call("PATCH", u, nil, v)
 
 	return v, resp, err
 }
 
 // Sync synchronizes all org repos between the database and the SCM.
-func (svc *SCMService) SyncAll(ctx context.Context, org string) (*string, *Response, error) {
+func (svc *SCMService) SyncAll(org string) (*string, *Response, error) {
 	u := fmt.Sprintf("/api/v1/scm/orgs/%s/sync", org)
 	v := new(string)
-	resp, err := svc.client.Call(ctx, "PATCH", u, nil, v)
+	resp, err := svc.client.Call("PATCH", u, nil, v)
 
 	return v, resp, err
 }

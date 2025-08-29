@@ -3,7 +3,6 @@
 package vela
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -31,7 +30,7 @@ func TestWorker_Get_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Worker.Get(t.Context(), "worker_1")
+	got, resp, err := c.Worker.Get("worker_1")
 	if err != nil {
 		t.Errorf("Worker get returned err: %v", err)
 	}
@@ -55,7 +54,7 @@ func TestWorker_Get_404(t *testing.T) {
 	want := api.Worker{}
 
 	// run test
-	got, resp, err := c.Worker.Get(t.Context(), "0")
+	got, resp, err := c.Worker.Get("0")
 	if err == nil {
 		t.Errorf("Worker get returned err: %v", err)
 	}
@@ -83,7 +82,7 @@ func TestWorker_GetAll_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Worker.GetAll(t.Context(), nil)
+	got, resp, err := c.Worker.GetAll(nil)
 	if err != nil {
 		t.Errorf("Worker get all returned err: %v", err)
 	}
@@ -124,7 +123,7 @@ func TestWorker_Add_201(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Worker.Add(t.Context(), &req)
+	got, resp, err := c.Worker.Add(&req)
 	if err != nil {
 		t.Errorf("Worker add returned err: %v", err)
 	}
@@ -154,7 +153,7 @@ func TestWorker_RefreshAuth_200(t *testing.T) {
 	worker := "worker_1"
 
 	// run test
-	got, resp, err := c.Worker.RefreshAuth(t.Context(), worker)
+	got, resp, err := c.Worker.RefreshAuth(worker)
 	if err != nil {
 		t.Errorf("Worker RefreshAuth returned err: %v", err)
 	}
@@ -178,7 +177,7 @@ func TestWorker_RefreshAuth_404(t *testing.T) {
 	worker := "0"
 
 	// run test
-	_, resp, err := c.Worker.RefreshAuth(t.Context(), worker)
+	_, resp, err := c.Worker.RefreshAuth(worker)
 	if err == nil {
 		t.Error("Worker RefreshAuth should have returned err")
 	}
@@ -206,7 +205,7 @@ func TestWorker_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Worker.Update(t.Context(), "worker_1", &req)
+	got, resp, err := c.Worker.Update("worker_1", &req)
 	if err != nil {
 		t.Errorf("Worker update returned err: %v", err)
 	}
@@ -234,7 +233,7 @@ func TestWorker_Update_404(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Worker.Update(t.Context(), "0", &req)
+	got, resp, err := c.Worker.Update("0", &req)
 	if err == nil {
 		t.Errorf("Worker update returned err: %v", err)
 	}
@@ -256,7 +255,7 @@ func TestWorker_Remove_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Worker.Remove(t.Context(), "worker_1")
+	_, resp, err := c.Worker.Remove("worker_1")
 	if err != nil {
 		t.Errorf("Worker remove returned err: %v", err)
 	}
@@ -274,7 +273,7 @@ func TestWorker_Remove_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Worker.Remove(t.Context(), "0")
+	_, resp, err := c.Worker.Remove("0")
 	if err == nil {
 		t.Errorf("Worker remove returned err: %v", err)
 	}
@@ -292,7 +291,7 @@ func ExampleWorkerService_Get() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a worker from the server
-	worker, resp, err := c.Worker.Get(context.Background(), "worker_1")
+	worker, resp, err := c.Worker.Get("worker_1")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -308,7 +307,7 @@ func ExampleWorkerService_GetAll() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the workers from the server
-	workers, resp, err := c.Worker.GetAll(context.Background(), nil)
+	workers, resp, err := c.Worker.GetAll(nil)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -337,7 +336,7 @@ func ExampleWorkerService_Add() {
 	}
 
 	// Create the worker in the server
-	worker, resp, err := c.Worker.Add(context.Background(), &req)
+	worker, resp, err := c.Worker.Add(&req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -355,7 +354,7 @@ func ExampleWorkerService_RefreshAuth() {
 	worker := "worker_1"
 
 	// Refresh a worker token with the server
-	_, resp, err := c.Worker.RefreshAuth(context.Background(), worker)
+	_, resp, err := c.Worker.RefreshAuth(worker)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -375,7 +374,7 @@ func ExampleWorkerService_Update() {
 	}
 
 	// Update the worker in the server
-	worker, resp, err := c.Worker.Update(context.Background(), "worker_1", &req)
+	worker, resp, err := c.Worker.Update("worker_1", &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -391,7 +390,7 @@ func ExampleWorkerService_Remove() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the worker in the server
-	worker, resp, err := c.Worker.Remove(context.Background(), "worker_1")
+	worker, resp, err := c.Worker.Remove("worker_1")
 	if err != nil {
 		fmt.Println(err)
 	}

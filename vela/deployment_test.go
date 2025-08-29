@@ -3,7 +3,6 @@
 package vela
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -32,7 +31,7 @@ func TestDeployment_Get_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Deployment.Get(t.Context(), "github", "octocat", 1)
+	got, resp, err := c.Deployment.Get("github", "octocat", 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -56,7 +55,7 @@ func TestDeployment_Get_404(t *testing.T) {
 	want := api.Deployment{}
 
 	// run test
-	got, resp, err := c.Deployment.Get(t.Context(), "github", "octocat", 0)
+	got, resp, err := c.Deployment.Get("github", "octocat", 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -84,7 +83,7 @@ func TestDeployment_GetAll_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Deployment.GetAll(t.Context(), "github", "octocat", nil)
+	got, resp, err := c.Deployment.GetAll("github", "octocat", nil)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -120,7 +119,7 @@ func TestDeployment_Add_201(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Deployment.Add(t.Context(), "github", "octocat", &req)
+	got, resp, err := c.Deployment.Add("github", "octocat", &req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -142,7 +141,7 @@ func ExampleDeploymentService_Get() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a build from the server
-	deployment, resp, err := c.Deployment.Get(context.Background(), "github", "octocat", 1)
+	deployment, resp, err := c.Deployment.Get("github", "octocat", 1)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -158,7 +157,7 @@ func ExampleDeploymentService_GetAll() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the deployments from the server
-	deployments, resp, err := c.Deployment.GetAll(context.Background(), "github", "octocat", nil)
+	deployments, resp, err := c.Deployment.GetAll("github", "octocat", nil)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -182,7 +181,7 @@ func ExampleDeploymentService_Add() {
 	}
 
 	// Create the deployment in the server
-	deployment, resp, err := c.Deployment.Add(context.Background(), "github", "octocat", &req)
+	deployment, resp, err := c.Deployment.Add("github", "octocat", &req)
 	if err != nil {
 		fmt.Println(err)
 	}

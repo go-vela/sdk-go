@@ -3,7 +3,6 @@
 package vela
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -32,7 +31,7 @@ func TestRepo_Get_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Repo.Get(t.Context(), "github", "octocat")
+	got, resp, err := c.Repo.Get("github", "octocat")
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -56,7 +55,7 @@ func TestRepo_Get_404(t *testing.T) {
 	want := api.Repo{}
 
 	// run test
-	got, resp, err := c.Repo.Get(t.Context(), "github", "not-found")
+	got, resp, err := c.Repo.Get("github", "not-found")
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -84,7 +83,7 @@ func TestRepo_GetAll_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Repo.GetAll(t.Context(), nil)
+	got, resp, err := c.Repo.GetAll(nil)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -127,7 +126,7 @@ func TestRepo_Add_201(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Repo.Add(t.Context(), &req)
+	got, resp, err := c.Repo.Add(&req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -162,7 +161,7 @@ func TestRepo_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Repo.Update(t.Context(), "github", "octocat", &req)
+	got, resp, err := c.Repo.Update("github", "octocat", &req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -193,7 +192,7 @@ func TestRepo_Update_404(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Repo.Update(t.Context(), "github", "not-found", &req)
+	got, resp, err := c.Repo.Update("github", "not-found", &req)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -215,7 +214,7 @@ func TestRepo_Remove_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Repo.Remove(t.Context(), "github", "octocat")
+	_, resp, err := c.Repo.Remove("github", "octocat")
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -233,7 +232,7 @@ func TestRepo_Remove_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Repo.Remove(t.Context(), "github", "not-found")
+	_, resp, err := c.Repo.Remove("github", "not-found")
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -251,7 +250,7 @@ func TestRepo_Repair_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Repo.Repair(t.Context(), "github", "octocat")
+	_, resp, err := c.Repo.Repair("github", "octocat")
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -269,7 +268,7 @@ func TestRepo_Repair_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Repo.Repair(t.Context(), "github", "not-found")
+	_, resp, err := c.Repo.Repair("github", "not-found")
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -287,7 +286,7 @@ func TestRepo_Chown_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Repo.Chown(t.Context(), "github", "octocat")
+	_, resp, err := c.Repo.Chown("github", "octocat")
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -305,7 +304,7 @@ func TestRepo_Chown_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Repo.Chown(t.Context(), "github", "not-found")
+	_, resp, err := c.Repo.Chown("github", "not-found")
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -323,7 +322,7 @@ func ExampleRepoService_Get() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a repo from the server
-	repo, resp, err := c.Repo.Get(context.Background(), "github", "octocat")
+	repo, resp, err := c.Repo.Get("github", "octocat")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -339,7 +338,7 @@ func ExampleRepoService_GetAll() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the repos from the server
-	repos, resp, err := c.Repo.GetAll(context.Background(), nil)
+	repos, resp, err := c.Repo.GetAll(nil)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -370,7 +369,7 @@ func ExampleRepoService_Add() {
 	}
 
 	// Create the repo in the server
-	repo, resp, err := c.Repo.Add(context.Background(), &req)
+	repo, resp, err := c.Repo.Add(&req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -390,7 +389,7 @@ func ExampleRepoService_Update() {
 	}
 
 	// Update the repo in the server
-	repo, resp, err := c.Repo.Update(context.Background(), "github", "octocat", &req)
+	repo, resp, err := c.Repo.Update("github", "octocat", &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -406,7 +405,7 @@ func ExampleRepoService_Remove() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the repo in the server
-	repo, resp, err := c.Repo.Remove(context.Background(), "github", "octocat")
+	repo, resp, err := c.Repo.Remove("github", "octocat")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -422,7 +421,7 @@ func ExampleRepoService_Repair() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Repair the repo in the server
-	repo, resp, err := c.Repo.Repair(context.Background(), "github", "octocat")
+	repo, resp, err := c.Repo.Repair("github", "octocat")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -438,7 +437,7 @@ func ExampleRepoService_Chown() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Change orgship of the repo in the server
-	repo, resp, err := c.Repo.Chown(context.Background(), "github", "octocat")
+	repo, resp, err := c.Repo.Chown("github", "octocat")
 	if err != nil {
 		fmt.Println(err)
 	}

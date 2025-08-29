@@ -39,7 +39,7 @@ func TestAdmin_Build_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Build.Update(t.Context(), &req)
+	got, resp, err := c.Admin.Build.Update(&req)
 	if err != nil {
 		t.Errorf("Build returned err: %v", err)
 	}
@@ -67,7 +67,7 @@ func TestAdmin_Clean_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Clean.Clean(t.Context(), &req, nil)
+	got, resp, err := c.Admin.Clean.Clean(&req, nil)
 	if err != nil {
 		t.Errorf("Clean returned err: %v", err)
 	}
@@ -101,13 +101,13 @@ func TestAdmin_Clean_Error(t *testing.T) {
 	}
 
 	// run tests
-	_, resp, _ := c.Admin.Clean.Clean(t.Context(), &req, &opt500)
+	_, resp, _ := c.Admin.Clean.Clean(&req, &opt500)
 
 	if resp.StatusCode != http.StatusInternalServerError {
 		t.Errorf("Clean returned %v, want %v", resp.StatusCode, http.StatusInternalServerError)
 	}
 
-	_, resp, _ = c.Admin.Clean.Clean(t.Context(), &req, &opt401)
+	_, resp, _ = c.Admin.Clean.Clean(&req, &opt401)
 
 	if resp.StatusCode != http.StatusUnauthorized {
 		t.Errorf("Clean returned %v, want %v", resp.StatusCode, http.StatusUnauthorized)
@@ -136,7 +136,7 @@ func TestAdmin_Deployment_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Deployment.Update(t.Context(), &req)
+	got, resp, err := c.Admin.Deployment.Update(&req)
 	if err != nil {
 		t.Errorf("Deployment returned err: %v", err)
 	}
@@ -170,7 +170,7 @@ func TestAdmin_Hook_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Hook.Update(t.Context(), &req)
+	got, resp, err := c.Admin.Hook.Update(&req)
 	if err != nil {
 		t.Errorf("Hook returned err: %v", err)
 	}
@@ -228,7 +228,7 @@ func TestAdmin_Repo_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Repo.Update(t.Context(), &req)
+	got, resp, err := c.Admin.Repo.Update(&req)
 	if err != nil {
 		t.Errorf("Repo returned err: %v", err)
 	}
@@ -262,7 +262,7 @@ func TestAdmin_Secret_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Secret.Update(t.Context(), &req)
+	got, resp, err := c.Admin.Secret.Update(&req)
 	if err != nil {
 		t.Errorf("Secret returned err: %v", err)
 	}
@@ -297,7 +297,7 @@ func TestAdmin_Service_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Service.Update(t.Context(), &req)
+	got, resp, err := c.Admin.Service.Update(&req)
 	if err != nil {
 		t.Errorf("Service returned err: %v", err)
 	}
@@ -332,7 +332,7 @@ func TestAdmin_Step_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Step.Update(t.Context(), &req)
+	got, resp, err := c.Admin.Step.Update(&req)
 	if err != nil {
 		t.Errorf("Step returned err: %v", err)
 	}
@@ -364,7 +364,7 @@ func TestAdmin_User_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.User.Update(t.Context(), &req)
+	got, resp, err := c.Admin.User.Update(&req)
 	if err != nil {
 		t.Errorf("User returned err: %v", err)
 	}
@@ -395,7 +395,7 @@ func TestAdmin_Build_Queue_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Build.GetQueue(t.Context(), &GetQueueOptions{})
+	got, resp, err := c.Admin.Build.GetQueue(&GetQueueOptions{})
 	if err != nil {
 		t.Errorf("GetQueue returned err: %v", err)
 	}
@@ -428,7 +428,7 @@ func TestAdmin_Worker_RegistrationToken_201(t *testing.T) {
 	hostname := "foo"
 
 	// run test
-	got, resp, err := c.Admin.Worker.RegisterToken(t.Context(), hostname)
+	got, resp, err := c.Admin.Worker.RegisterToken(hostname)
 	if err != nil {
 		t.Errorf("RegisterToken returned err: %v", err)
 	}
@@ -453,7 +453,7 @@ func TestAdmin_Worker_RegistrationToken_NoHostname(t *testing.T) {
 	hostname := ""
 
 	// run test
-	_, _, err := c.Admin.Worker.RegisterToken(t.Context(), hostname)
+	_, _, err := c.Admin.Worker.RegisterToken(hostname)
 	if err == nil {
 		t.Error("RegisterToken should have returned err")
 	}
@@ -476,7 +476,7 @@ func TestAdmin_Settings_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Settings.Get(t.Context())
+	got, resp, err := c.Admin.Settings.Get()
 	if err != nil {
 		t.Errorf("Settings.Get returned err: %v", err)
 	}
@@ -506,7 +506,7 @@ func TestAdmin_Settings_Update_200(t *testing.T) {
 	req := settings.Platform{}
 
 	// run test
-	got, resp, err := c.Admin.Settings.Update(t.Context(), &req)
+	got, resp, err := c.Admin.Settings.Update(&req)
 	if err != nil {
 		t.Errorf("Settings.Update returned err: %v", err)
 	}
@@ -534,7 +534,7 @@ func TestAdmin_Settings_Restore_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Admin.Settings.Restore(t.Context())
+	got, resp, err := c.Admin.Settings.Restore()
 	if err != nil {
 		t.Errorf("Settings.Restore returned err: %v", err)
 	}
@@ -558,7 +558,7 @@ func TestAdmin_OIDC_RotateKeys_200(t *testing.T) {
 	want := "keys rotated successfully"
 
 	// run test
-	got, resp, err := c.Admin.OIDC.RotateOIDCKeys(t.Context())
+	got, resp, err := c.Admin.OIDC.RotateOIDCKeys()
 	if err != nil {
 		t.Errorf("RotateOIDCKeys returned err: %v", err)
 	}
@@ -582,7 +582,7 @@ func TestAdmin_OIDC_RotateKeys_Unauthorized(t *testing.T) {
 	c.Authentication.SetTokenAuth("invalid")
 
 	// run test
-	_, resp, err := c.Admin.OIDC.RotateOIDCKeys(t.Context())
+	_, resp, err := c.Admin.OIDC.RotateOIDCKeys()
 	if err == nil {
 		t.Error("RotateOIDCKeys should have returned err")
 	}

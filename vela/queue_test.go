@@ -32,7 +32,7 @@ func TestQueue_GetInfo_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Queue.GetInfo(t.Context())
+	got, resp, err := c.Queue.GetInfo()
 	if err != nil {
 		t.Errorf("GetInfo returned err: %v", err)
 	}
@@ -53,7 +53,7 @@ func TestQueue_GetInfo_401(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Queue.GetInfo(t.Context())
+	_, resp, err := c.Queue.GetInfo()
 	if err == nil {
 		t.Errorf("GetInfo should have returned err %v", resp.StatusCode)
 	}

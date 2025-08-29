@@ -3,7 +3,6 @@
 package vela
 
 import (
-	"context"
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
@@ -40,7 +39,7 @@ type IDTokenOptions struct {
 }
 
 // Get returns the provided build.
-func (svc *BuildService) Get(ctx context.Context, org, repo string, build int64) (*api.Build, *Response, error) {
+func (svc *BuildService) Get(org, repo string, build int64) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, build)
 
@@ -48,13 +47,13 @@ func (svc *BuildService) Get(ctx context.Context, org, repo string, build int64)
 	v := new(api.Build)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // GetBuildExecutable returns the executable for the provided build.
-func (svc *BuildService) GetBuildExecutable(ctx context.Context, org, repo string, build int64) (*api.BuildExecutable, *Response, error) {
+func (svc *BuildService) GetBuildExecutable(org, repo string, build int64) (*api.BuildExecutable, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/executable", org, repo, build)
 
@@ -62,13 +61,13 @@ func (svc *BuildService) GetBuildExecutable(ctx context.Context, org, repo strin
 	v := new(api.BuildExecutable)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // GetAll returns a list of all builds.
-func (svc *BuildService) GetAll(ctx context.Context, org, repo string, opt *BuildListOptions) (*[]api.Build, *Response, error) {
+func (svc *BuildService) GetAll(org, repo string, opt *BuildListOptions) (*[]api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds", org, repo)
 
@@ -82,13 +81,13 @@ func (svc *BuildService) GetAll(ctx context.Context, org, repo string, opt *Buil
 	v := new([]api.Build)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // GetLogs returns the provided build logs.
-func (svc *BuildService) GetLogs(ctx context.Context, org, repo string, build int64, opt *ListOptions) (*[]api.Log, *Response, error) {
+func (svc *BuildService) GetLogs(org, repo string, build int64, opt *ListOptions) (*[]api.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/logs", org, repo, build)
 
@@ -102,13 +101,13 @@ func (svc *BuildService) GetLogs(ctx context.Context, org, repo string, build in
 	v := new([]api.Log)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // Add constructs a build with the provided details.
-func (svc *BuildService) Add(ctx context.Context, b *api.Build) (*api.Build, *Response, error) {
+func (svc *BuildService) Add(b *api.Build) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds", b.GetRepo().GetOrg(), b.GetRepo().GetName())
 
@@ -116,13 +115,13 @@ func (svc *BuildService) Add(ctx context.Context, b *api.Build) (*api.Build, *Re
 	v := new(api.Build)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "POST", u, b, v)
+	resp, err := svc.client.Call("POST", u, b, v)
 
 	return v, resp, err
 }
 
 // Update modifies a build with the provided details.
-func (svc *BuildService) Update(ctx context.Context, b *api.Build) (*api.Build, *Response, error) {
+func (svc *BuildService) Update(b *api.Build) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", b.GetRepo().GetOrg(), b.GetRepo().GetName(), b.GetNumber())
 
@@ -130,13 +129,13 @@ func (svc *BuildService) Update(ctx context.Context, b *api.Build) (*api.Build, 
 	v := new(api.Build)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "PUT", u, b, v)
+	resp, err := svc.client.Call("PUT", u, b, v)
 
 	return v, resp, err
 }
 
 // Remove deletes the provided build.
-func (svc *BuildService) Remove(ctx context.Context, org, repo string, build int) (*string, *Response, error) {
+func (svc *BuildService) Remove(org, repo string, build int) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, build)
 
@@ -144,13 +143,13 @@ func (svc *BuildService) Remove(ctx context.Context, org, repo string, build int
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "DELETE", u, nil, v)
+	resp, err := svc.client.Call("DELETE", u, nil, v)
 
 	return v, resp, err
 }
 
 // Restart takes the build provided and restarts it.
-func (svc *BuildService) Restart(ctx context.Context, org, repo string, build int64) (*api.Build, *Response, error) {
+func (svc *BuildService) Restart(org, repo string, build int64) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d", org, repo, build)
 
@@ -158,13 +157,13 @@ func (svc *BuildService) Restart(ctx context.Context, org, repo string, build in
 	v := new(api.Build)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "POST", u, nil, v)
+	resp, err := svc.client.Call("POST", u, nil, v)
 
 	return v, resp, err
 }
 
 // Cancel takes the build provided and cancels it.
-func (svc *BuildService) Cancel(ctx context.Context, org, repo string, build int64) (*api.Build, *Response, error) {
+func (svc *BuildService) Cancel(org, repo string, build int64) (*api.Build, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/cancel", org, repo, build)
 
@@ -172,21 +171,21 @@ func (svc *BuildService) Cancel(ctx context.Context, org, repo string, build int
 	v := new(api.Build)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "DELETE", u, nil, v)
+	resp, err := svc.client.Call("DELETE", u, nil, v)
 
 	return v, resp, err
 }
 
 // Approve takes the build provided and approves it as an admin.
-func (svc *BuildService) Approve(ctx context.Context, org, repo string, build int64) (*Response, error) {
+func (svc *BuildService) Approve(org, repo string, build int64) (*Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/approve", org, repo, build)
 
-	return svc.client.Call(ctx, "POST", u, nil, nil)
+	return svc.client.Call("POST", u, nil, nil)
 }
 
 // GetBuildToken returns an auth token for updating build resources.
-func (svc *BuildService) GetBuildToken(ctx context.Context, org, repo string, build int64) (*api.Token, *Response, error) {
+func (svc *BuildService) GetBuildToken(org, repo string, build int64) (*api.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/token", org, repo, build)
 
@@ -194,13 +193,13 @@ func (svc *BuildService) GetBuildToken(ctx context.Context, org, repo string, bu
 	t := new(api.Token)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "GET", u, nil, t)
+	resp, err := svc.client.Call("GET", u, nil, t)
 
 	return t, resp, err
 }
 
 // GetIDRequestToken returns an id request token for integrating with build OIDC.
-func (svc *BuildService) GetIDRequestToken(ctx context.Context, org, repo string, build int64, opt *RequestTokenOptions) (*api.Token, *Response, error) {
+func (svc *BuildService) GetIDRequestToken(org, repo string, build int64, opt *RequestTokenOptions) (*api.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/id_request_token", org, repo, build)
 
@@ -214,13 +213,13 @@ func (svc *BuildService) GetIDRequestToken(ctx context.Context, org, repo string
 	t := new(api.Token)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "GET", u, nil, t)
+	resp, err := svc.client.Call("GET", u, nil, t)
 
 	return t, resp, err
 }
 
 // GetIDToken returns an ID token corresponding to the request token during a build.
-func (svc *BuildService) GetIDToken(ctx context.Context, org, repo string, build int, opt *IDTokenOptions) (*api.Token, *Response, error) {
+func (svc *BuildService) GetIDToken(org, repo string, build int, opt *IDTokenOptions) (*api.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/id_token", org, repo, build)
 
@@ -234,7 +233,7 @@ func (svc *BuildService) GetIDToken(ctx context.Context, org, repo string, build
 	t := new(api.Token)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "GET", u, nil, t)
+	resp, err := svc.client.Call("GET", u, nil, t)
 
 	return t, resp, err
 }

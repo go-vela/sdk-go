@@ -3,7 +3,6 @@
 package vela
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -31,7 +30,7 @@ func TestLog_GetService_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Log.GetService(t.Context(), "github", "octocat", 1, 1)
+	got, resp, err := c.Log.GetService("github", "octocat", 1, 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -55,7 +54,7 @@ func TestLog_GetService_404(t *testing.T) {
 	want := api.Log{}
 
 	// run test
-	got, resp, err := c.Log.GetService(t.Context(), "github", "octocat", 1, 0)
+	got, resp, err := c.Log.GetService("github", "octocat", 1, 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -87,7 +86,7 @@ func TestLog_AddService_201(t *testing.T) {
 	}
 
 	// run test
-	resp, err := c.Log.AddService(t.Context(), "github", "octocat", 1, 1, &req)
+	resp, err := c.Log.AddService("github", "octocat", 1, 1, &req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -109,7 +108,7 @@ func TestLog_UpdateService_200(t *testing.T) {
 	}
 
 	// run test
-	resp, err := c.Log.UpdateService(t.Context(), "github", "octocat", 1, 1, &req)
+	resp, err := c.Log.UpdateService("github", "octocat", 1, 1, &req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -131,7 +130,7 @@ func TestLog_UpdateService_404(t *testing.T) {
 	}
 
 	// run test
-	resp, err := c.Log.UpdateService(t.Context(), "github", "not-found", 1, 0, &req)
+	resp, err := c.Log.UpdateService("github", "not-found", 1, 0, &req)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -149,7 +148,7 @@ func TestLog_RemoveService_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Log.RemoveService(t.Context(), "github", "octocat", 1, 1)
+	_, resp, err := c.Log.RemoveService("github", "octocat", 1, 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -167,7 +166,7 @@ func TestLog_RemoveService_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Log.RemoveService(t.Context(), "github", "octocat", 1, 0)
+	_, resp, err := c.Log.RemoveService("github", "octocat", 1, 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -191,7 +190,7 @@ func TestLog_GetStep_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Log.GetStep(t.Context(), "github", "octocat", 1, 1)
+	got, resp, err := c.Log.GetStep("github", "octocat", 1, 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -215,7 +214,7 @@ func TestLog_GetStep_404(t *testing.T) {
 	want := api.Log{}
 
 	// run test
-	got, resp, err := c.Log.GetStep(t.Context(), "github", "octocat", 1, 0)
+	got, resp, err := c.Log.GetStep("github", "octocat", 1, 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -247,7 +246,7 @@ func TestLog_AddStep_201(t *testing.T) {
 	}
 
 	// run test
-	resp, err := c.Log.AddStep(t.Context(), "github", "octocat", 1, 1, &req)
+	resp, err := c.Log.AddStep("github", "octocat", 1, 1, &req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -269,7 +268,7 @@ func TestLog_UpdateStep_200(t *testing.T) {
 	}
 
 	// run test
-	resp, err := c.Log.UpdateStep(t.Context(), "github", "octocat", 1, 1, &req)
+	resp, err := c.Log.UpdateStep("github", "octocat", 1, 1, &req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -291,7 +290,7 @@ func TestLog_UpdateStep_404(t *testing.T) {
 	}
 
 	// run test
-	resp, err := c.Log.UpdateStep(t.Context(), "github", "not-found", 1, 0, &req)
+	resp, err := c.Log.UpdateStep("github", "not-found", 1, 0, &req)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -309,7 +308,7 @@ func TestLog_RemoveStep_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Log.RemoveStep(t.Context(), "github", "octocat", 1, 1)
+	_, resp, err := c.Log.RemoveStep("github", "octocat", 1, 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -327,7 +326,7 @@ func TestLog_RemoveStep_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Log.RemoveStep(t.Context(), "github", "octocat", 1, 0)
+	_, resp, err := c.Log.RemoveStep("github", "octocat", 1, 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -345,7 +344,7 @@ func ExampleLogService_GetService() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a log from the server
-	log, resp, err := c.Log.GetService(context.Background(), "github", "octocat", 1, 1)
+	log, resp, err := c.Log.GetService("github", "octocat", 1, 1)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -365,7 +364,7 @@ func ExampleLogService_AddService() {
 	}
 
 	// Create the log in the server
-	resp, err := c.Log.AddService(context.Background(), "github", "octocat", 1, 1, &req)
+	resp, err := c.Log.AddService("github", "octocat", 1, 1, &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -385,7 +384,7 @@ func ExampleLogService_UpdateService() {
 	}
 
 	// Update the log in the server
-	resp, err := c.Log.UpdateService(context.Background(), "github", "octocat", 1, 1, &req)
+	resp, err := c.Log.UpdateService("github", "octocat", 1, 1, &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -401,7 +400,7 @@ func ExampleLogService_RemoveService() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the log in the server
-	log, resp, err := c.Log.RemoveService(context.Background(), "github", "octocat", 1, 1)
+	log, resp, err := c.Log.RemoveService("github", "octocat", 1, 1)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -417,7 +416,7 @@ func ExampleLogService_GetStep() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a log from the server
-	log, resp, err := c.Log.GetStep(context.Background(), "github", "octocat", 1, 1)
+	log, resp, err := c.Log.GetStep("github", "octocat", 1, 1)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -437,7 +436,7 @@ func ExampleLogService_AddStep() {
 	}
 
 	// Create the log in the server
-	resp, err := c.Log.AddStep(context.Background(), "github", "octocat", 1, 1, &req)
+	resp, err := c.Log.AddStep("github", "octocat", 1, 1, &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -457,7 +456,7 @@ func ExampleLogService_UpdateStep() {
 	}
 
 	// Update the log in the server
-	resp, err := c.Log.UpdateStep(context.Background(), "github", "octocat", 1, 1, &req)
+	resp, err := c.Log.UpdateStep("github", "octocat", 1, 1, &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -473,7 +472,7 @@ func ExampleLogService_RemoveStep() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the log in the server
-	log, resp, err := c.Log.RemoveStep(context.Background(), "github", "octocat", 1, 1)
+	log, resp, err := c.Log.RemoveStep("github", "octocat", 1, 1)
 	if err != nil {
 		fmt.Println(err)
 	}

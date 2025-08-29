@@ -3,7 +3,6 @@
 package vela
 
 import (
-	"context"
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
@@ -22,7 +21,7 @@ type WorkerListOptions struct {
 }
 
 // Get returns the provided worker.
-func (svc *WorkerService) Get(ctx context.Context, hostname string) (*api.Worker, *Response, error) {
+func (svc *WorkerService) Get(hostname string) (*api.Worker, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/workers/%s", hostname)
 
@@ -30,13 +29,13 @@ func (svc *WorkerService) Get(ctx context.Context, hostname string) (*api.Worker
 	v := new(api.Worker)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // GetAll returns a list of all workers.
-func (svc *WorkerService) GetAll(ctx context.Context, opt *WorkerListOptions) (*[]api.Worker, *Response, error) {
+func (svc *WorkerService) GetAll(opt *WorkerListOptions) (*[]api.Worker, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/workers"
 
@@ -50,13 +49,13 @@ func (svc *WorkerService) GetAll(ctx context.Context, opt *WorkerListOptions) (*
 	v := new([]api.Worker)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
+	resp, err := svc.client.Call("GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // Add constructs a worker with the provided details.
-func (svc *WorkerService) Add(ctx context.Context, w *api.Worker) (*api.Token, *Response, error) {
+func (svc *WorkerService) Add(w *api.Worker) (*api.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/workers"
 
@@ -64,13 +63,13 @@ func (svc *WorkerService) Add(ctx context.Context, w *api.Worker) (*api.Token, *
 	v := new(api.Token)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "POST", u, w, v)
+	resp, err := svc.client.Call("POST", u, w, v)
 
 	return v, resp, err
 }
 
 // RefreshAuth exchanges a worker token for a new one.
-func (svc *WorkerService) RefreshAuth(ctx context.Context, worker string) (*api.Token, *Response, error) {
+func (svc *WorkerService) RefreshAuth(worker string) (*api.Token, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/workers/%s/refresh", worker)
 
@@ -78,13 +77,13 @@ func (svc *WorkerService) RefreshAuth(ctx context.Context, worker string) (*api.
 	v := new(api.Token)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "POST", u, nil, v)
+	resp, err := svc.client.Call("POST", u, nil, v)
 
 	return v, resp, err
 }
 
 // Update modifies a worker with the provided details.
-func (svc *WorkerService) Update(ctx context.Context, worker string, w *api.Worker) (*api.Worker, *Response, error) {
+func (svc *WorkerService) Update(worker string, w *api.Worker) (*api.Worker, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/workers/%s", worker)
 
@@ -92,13 +91,13 @@ func (svc *WorkerService) Update(ctx context.Context, worker string, w *api.Work
 	v := new(api.Worker)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "PUT", u, w, v)
+	resp, err := svc.client.Call("PUT", u, w, v)
 
 	return v, resp, err
 }
 
 // Remove deletes the provided worker.
-func (svc *WorkerService) Remove(ctx context.Context, worker string) (*string, *Response, error) {
+func (svc *WorkerService) Remove(worker string) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/workers/%s", worker)
 
@@ -106,7 +105,7 @@ func (svc *WorkerService) Remove(ctx context.Context, worker string) (*string, *
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call(ctx, "DELETE", u, nil, v)
+	resp, err := svc.client.Call("DELETE", u, nil, v)
 
 	return v, resp, err
 }
