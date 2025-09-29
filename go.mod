@@ -5,7 +5,7 @@ go 1.24.5
 require (
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.10.1
-	github.com/go-vela/server v0.27.1
+	github.com/go-vela/server v0.27.3-0.20250929162825-a9dc2bb27fbd
 	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/google/go-cmp v0.7.0
 	github.com/google/go-querystring v1.1.0
@@ -47,9 +47,8 @@ require (
 	github.com/lestrrat-go/option/v2 v2.0.0 // indirect
 	github.com/mailru/easyjson v0.9.0 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/minio/crc64nvme v1.0.1 // indirect
 	github.com/minio/md5-simd v1.1.2 // indirect
-	github.com/minio/minio-go/v7 v7.0.89 // indirect
+	github.com/minio/minio-go/v7 v7.0.83 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.3-0.20250322232337-35a7c28c31ee // indirect
 	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
