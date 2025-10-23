@@ -5,7 +5,7 @@ go 1.24.5
 require (
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.10.1
-	github.com/go-vela/server v0.27.3-0.20250929162825-a9dc2bb27fbd
+	github.com/go-vela/server v0.27.3-0.20251023181434-3790af6cb5db
 	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/google/go-cmp v0.7.0
 	github.com/google/go-querystring v1.1.0
