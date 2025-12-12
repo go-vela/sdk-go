@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/gin-gonic/gin"
 
@@ -34,7 +35,7 @@ func TestVela_Authentication_SetBuildTokenAuth(t *testing.T) {
 	// setup types
 	c, _ := NewClient("http://localhost:8080", "", nil)
 
-	c.Authentication.SetBuildTokenAuth("buildToken", "scmToken")
+	c.Authentication.SetBuildTokenAuth("buildToken", "scmToken", 0)
 
 	if !c.Authentication.HasAuth() {
 		t.Errorf("SetBuildTokenAuth did not set an authentication type")
@@ -42,6 +43,24 @@ func TestVela_Authentication_SetBuildTokenAuth(t *testing.T) {
 
 	if !c.Authentication.HasBuildTokenAuth() {
 		t.Errorf("SetBuildTokenAuth did not set BuildToken type")
+	}
+
+	if c.Authentication.IsSCMTokenExpired() {
+		t.Errorf("SetBuildTokenAuth did not set SCM token expiration correctly")
+	}
+
+	c.Authentication.SetBuildTokenAuth("buildToken", "scmToken", time.Now().Add(1*time.Hour).Unix())
+
+	if !c.Authentication.HasAuth() {
+		t.Errorf("SetBuildTokenAuth did not set an authentication type")
+	}
+
+	if !c.Authentication.HasBuildTokenAuth() {
+		t.Errorf("SetBuildTokenAuth did not set BuildToken type")
+	}
+
+	if c.Authentication.IsSCMTokenExpired() {
+		t.Errorf("SetBuildTokenAuth did not set SCM token expiration correctly")
 	}
 }
 
@@ -166,6 +185,55 @@ func TestVela_Authentication_RefreshAccessToken(t *testing.T) {
 
 	if *c.Authentication.accessToken != want.GetToken() {
 		t.Errorf("RefreshAccessToken didn't return token")
+	}
+}
+
+func TestVela_Authentication_RefreshInstallToken(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+
+	c, err := NewClient(s.URL, "", nil)
+	if err != nil {
+		t.Errorf("Failed to create client: %v", err)
+	}
+
+	c.Authentication.SetBuildTokenAuth("bt", "scmToken", time.Now().Add(-1*time.Minute).Unix())
+
+	data := []byte(server.InstallTokenResp)
+
+	var want api.Token
+
+	_ = json.Unmarshal(data, &want)
+
+	repo := new(api.Repo)
+	repo.SetFullName("org/repo")
+
+	build := new(api.Build)
+	build.SetRepo(repo)
+	build.SetNumber(1)
+
+	// run test
+	resp, err := c.Authentication.RefreshInstallToken(t.Context(), build)
+	if err != nil {
+		t.Errorf("RefreshInstallToken returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("RefreshInstallToken returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if *c.Authentication.scmToken != want.GetToken() {
+		t.Errorf("RefreshInstallToken didn't return token")
+	}
+
+	c.Authentication.SetBuildTokenAuth("bt", "", 0)
+
+	// run test
+	_, err = c.Authentication.RefreshInstallToken(t.Context(), build)
+	if err == nil {
+		t.Errorf("RefreshInstallToken should have returned err")
 	}
 }
 
