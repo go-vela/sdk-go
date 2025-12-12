@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"time"
 
 	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/constants"
@@ -33,6 +34,7 @@ type AuthenticationService struct {
 	refreshToken        *string
 	scmToken            *string
 	authType            AuthenticationType
+	scmTokenExp         *int64
 }
 
 // SetTokenAuth sets the authentication type as a plain token.
@@ -42,9 +44,15 @@ func (svc *AuthenticationService) SetTokenAuth(token string) {
 }
 
 // SetBuildTokenAuth sets the authentication type and the two tokens used.
-func (svc *AuthenticationService) SetBuildTokenAuth(buildTkn, scmTkn string) {
+func (svc *AuthenticationService) SetBuildTokenAuth(buildTkn, scmTkn string, scmTokenExp int64) {
 	svc.token = String(buildTkn)
 	svc.scmToken = String(scmTkn)
+
+	// set expiration if provided - only for installation tokens
+	if scmTokenExp > 0 {
+		svc.scmTokenExp = &scmTokenExp
+	}
+
 	svc.authType = BuildToken
 }
 
@@ -102,6 +110,16 @@ func (svc *AuthenticationService) IsTokenAuthExpired() (bool, error) {
 	return IsTokenExpired(*svc.token), nil
 }
 
+// IsSCMTokenExpired checks if the SCM token has expired.
+func (svc *AuthenticationService) IsSCMTokenExpired() bool {
+	// 5 minute buffer
+	if svc.scmTokenExp != nil && time.Now().Unix() >= (*svc.scmTokenExp-300) {
+		return true
+	}
+
+	return false
+}
+
 // RefreshAccessToken uses the supplied refresh token to attempt and refresh
 // the access token.
 func (svc *AuthenticationService) RefreshAccessToken(ctx context.Context, refreshToken string) (*Response, error) {
@@ -136,6 +154,22 @@ func (svc *AuthenticationService) RefreshAccessToken(ctx context.Context, refres
 
 	// set the received access token
 	svc.accessToken = v.Token
+
+	return resp, err
+}
+
+// RefreshInstallToken refreshes the SCM install token for a build.
+func (svc *AuthenticationService) RefreshInstallToken(ctx context.Context, build *api.Build) (*Response, error) {
+	// set the API endpoint path we send the request to
+	u := fmt.Sprintf("/api/v1/repos/%s/builds/%d/install_token", build.GetRepo().GetFullName(), build.GetNumber())
+
+	v := new(api.Token)
+
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
+
+	// set the received access token
+	svc.scmToken = v.Token
+	svc.scmTokenExp = v.Expiration
 
 	return resp, err
 }

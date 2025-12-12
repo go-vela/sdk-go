@@ -5,7 +5,7 @@ go 1.24.4
 require (
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.10.1
-	github.com/go-vela/server v0.27.1
+	github.com/go-vela/server v0.27.3-0.20251211201119-b9d1f069a10b
 	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/google/go-cmp v0.7.0
 	github.com/google/go-querystring v1.1.0
@@ -16,7 +16,6 @@ require (
 require (
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
-	github.com/buildkite/yaml v0.0.0-20230306222819-0e4e032d4835 // indirect
 	github.com/bytedance/sonic v1.13.3 // indirect
 	github.com/bytedance/sonic/loader v0.2.4 // indirect
 	github.com/cloudwego/base64x v0.1.5 // indirect
