@@ -3,6 +3,8 @@
 package vela
 
 import (
+	"context"
+
 	api "github.com/go-vela/server/api/types"
 )
 
@@ -11,7 +13,7 @@ import (
 type StorageService service
 
 // GetInfo fetches queue info, primarily used during worker onboarding.
-func (svc *StorageService) GetInfo() (*api.StorageInfo, *Response, error) {
+func (svc *StorageService) GetInfo(ctx context.Context) (*api.StorageInfo, *Response, error) {
 	// set the API endpoint path we send the request to
 	url := "/api/v1/storage/info"
 
@@ -19,7 +21,7 @@ func (svc *StorageService) GetInfo() (*api.StorageInfo, *Response, error) {
 	t := new(api.StorageInfo)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", url, nil, t)
+	resp, err := svc.client.Call(ctx, "GET", url, nil, t)
 
 	return t, resp, err
 }

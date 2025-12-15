@@ -28,7 +28,7 @@ func TestStorage_GetInfo_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Storage.GetInfo()
+	got, resp, err := c.Storage.GetInfo(t.Context())
 	if err != nil {
 		t.Errorf("GetInfo returned err: %v", err)
 	}
@@ -49,7 +49,7 @@ func TestStorage_GetInfo_401(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Storage.GetInfo()
+	_, resp, err := c.Storage.GetInfo(t.Context())
 	if err == nil {
 		t.Errorf("GetInfo should have returned err %v", resp.StatusCode)
 	}

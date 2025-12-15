@@ -3,6 +3,7 @@
 package vela
 
 import (
+	"context"
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
@@ -13,7 +14,7 @@ import (
 type TestReportService service
 
 // Add constructs a test report with the provided details.
-func (svc *TestReportService) Add(org, repo string, build int64) (*api.TestReport, *Response, error) {
+func (svc *TestReportService) Add(ctx context.Context, org, repo string, build int64) (*api.TestReport, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/reports/testreport", org, repo, build)
 
@@ -21,13 +22,13 @@ func (svc *TestReportService) Add(org, repo string, build int64) (*api.TestRepor
 	tr := new(api.TestReport)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, nil, tr)
+	resp, err := svc.client.Call(ctx,"POST", u, nil, tr)
 
 	return tr, resp, err
 }
 
 // Update modifies a step with the provided details.
-func (svc *TestReportService) Update(org, repo string, build int64, tr *api.TestReport) (*api.TestReport, *Response, error) {
+func (svc *TestReportService) Update(ctx context.Context, org, repo string, build int64, tr *api.TestReport) (*api.TestReport, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/reports/testreport", org, repo, build)
 
@@ -35,7 +36,7 @@ func (svc *TestReportService) Update(org, repo string, build int64, tr *api.Test
 	_tr := new(api.TestReport)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, tr, _tr)
+	resp, err := svc.client.Call(ctx,"PUT", u, tr, _tr)
 
 	return _tr, resp, err
 }

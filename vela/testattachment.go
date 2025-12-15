@@ -3,6 +3,7 @@
 package vela
 
 import (
+	"context"
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
@@ -13,7 +14,7 @@ import (
 type TestAttachmentService service
 
 // Add constructs a test attachment with the provided details.
-func (svc *TestAttachmentService) Add(org, repo string, build int64) (*api.TestAttachment, *Response, error) {
+func (svc *TestAttachmentService) Add(ctx context.Context, org, repo string, build int64) (*api.TestAttachment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/reports/testattachment", org, repo, build)
 
@@ -21,13 +22,13 @@ func (svc *TestAttachmentService) Add(org, repo string, build int64) (*api.TestA
 	ta := new(api.TestAttachment)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, nil, ta)
+	resp, err := svc.client.Call(ctx, "POST", u, nil, ta)
 
 	return ta, resp, err
 }
 
 // Update modifies a step with the provided details.
-func (svc *TestAttachmentService) Update(org, repo string, build int64, ta *api.TestAttachment) (*api.TestAttachment, *Response, error) {
+func (svc *TestAttachmentService) Update(ctx context.Context, org, repo string, build int64, ta *api.TestAttachment) (*api.TestAttachment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/reports/testattachment", org, repo, build)
 
@@ -35,7 +36,7 @@ func (svc *TestAttachmentService) Update(org, repo string, build int64, ta *api.
 	_ta := new(api.TestAttachment)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, ta, _ta)
+	resp, err := svc.client.Call(ctx, "PUT", u, ta, _ta)
 
 	return _ta, resp, err
 }
