@@ -77,7 +77,7 @@ type (
 	// from the server methods of the Vela API.
 	AdminSettingsService service
 
-	// AdminStorageSettingsService handles managing admin storage settings functionality
+	// AdminStorageSettingsService handles managing admin storage settings functionality.
 	AdminStorageSettingsService service
 )
 

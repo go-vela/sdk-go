@@ -2,13 +2,14 @@ package vela
 
 import (
 	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
 	"github.com/gin-gonic/gin"
 	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
 	"github.com/google/go-cmp/cmp"
-	"net/http"
-	"net/http/httptest"
-	"testing"
 )
 
 func TestStorage_GetInfo_200(t *testing.T) {
@@ -16,8 +17,8 @@ func TestStorage_GetInfo_200(t *testing.T) {
 
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
-	c.Authentication.SetPersonalAccessTokenAuth("token")
 	data := []byte(server.StorageInfoResp)
+	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	var want *api.StorageInfo
 

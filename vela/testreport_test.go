@@ -1,14 +1,17 @@
+// SPDX-License-Identifier: Apache-2.0
+
 package vela
 
 import (
 	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
 	"github.com/gin-gonic/gin"
 	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/mock/server"
 	"github.com/google/go-cmp/cmp"
-	"net/http"
-	"net/http/httptest"
-	"testing"
 )
 
 func TestReport_Add_200(t *testing.T) {
