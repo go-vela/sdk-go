@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"time"
 
 	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/constants"
@@ -33,6 +34,7 @@ type AuthenticationService struct {
 	refreshToken        *string
 	scmToken            *string
 	authType            AuthenticationType
+	scmTokenExp         *int64
 }
 
 // SetTokenAuth sets the authentication type as a plain token.
@@ -42,9 +44,15 @@ func (svc *AuthenticationService) SetTokenAuth(token string) {
 }
 
 // SetBuildTokenAuth sets the authentication type and the two tokens used.
-func (svc *AuthenticationService) SetBuildTokenAuth(buildTkn, scmTkn string) {
+func (svc *AuthenticationService) SetBuildTokenAuth(buildTkn, scmTkn string, scmTokenExp int64) {
 	svc.token = String(buildTkn)
 	svc.scmToken = String(scmTkn)
+
+	// set expiration if provided - only for installation tokens
+	if scmTokenExp > 0 {
+		svc.scmTokenExp = &scmTokenExp
+	}
+
 	svc.authType = BuildToken
 }
 
@@ -102,9 +110,19 @@ func (svc *AuthenticationService) IsTokenAuthExpired() (bool, error) {
 	return IsTokenExpired(*svc.token), nil
 }
 
+// IsSCMTokenExpired checks if the SCM token has expired.
+func (svc *AuthenticationService) IsSCMTokenExpired() bool {
+	// 5 minute buffer
+	if svc.scmTokenExp != nil && time.Now().Unix() >= (*svc.scmTokenExp-300) {
+		return true
+	}
+
+	return false
+}
+
 // RefreshAccessToken uses the supplied refresh token to attempt and refresh
 // the access token.
-func (svc *AuthenticationService) RefreshAccessToken(refreshToken string) (*Response, error) {
+func (svc *AuthenticationService) RefreshAccessToken(ctx context.Context, refreshToken string) (*Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/token-refresh"
 
@@ -118,7 +136,7 @@ func (svc *AuthenticationService) RefreshAccessToken(refreshToken string) (*Resp
 		return nil, err
 	}
 
-	req, err := http.NewRequestWithContext(context.Background(), "GET", url, nil)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -140,10 +158,26 @@ func (svc *AuthenticationService) RefreshAccessToken(refreshToken string) (*Resp
 	return resp, err
 }
 
+// RefreshInstallToken refreshes the SCM install token for a build.
+func (svc *AuthenticationService) RefreshInstallToken(ctx context.Context, build *api.Build) (*Response, error) {
+	// set the API endpoint path we send the request to
+	u := fmt.Sprintf("/api/v1/repos/%s/builds/%d/install_token", build.GetRepo().GetFullName(), build.GetNumber())
+
+	v := new(api.Token)
+
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
+
+	// set the received access token
+	svc.scmToken = v.Token
+	svc.scmTokenExp = v.Expiration
+
+	return resp, err
+}
+
 // AuthenticateWithToken attempts to authenticate with the provided token, typically
 // a personal access token created in the source provider, eg. GitHub. It will
 // return a short-lived Vela Access Token, if successful.
-func (svc *AuthenticationService) AuthenticateWithToken(token string) (string, *Response, error) {
+func (svc *AuthenticationService) AuthenticateWithToken(ctx context.Context, token string) (string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/authenticate/token"
 
@@ -164,7 +198,7 @@ func (svc *AuthenticationService) AuthenticateWithToken(token string) (string, *
 	}
 
 	// create a new request that we can attach a header to
-	req, err := http.NewRequestWithContext(context.Background(), "POST", url, nil)
+	req, err := http.NewRequestWithContext(ctx, "POST", url, nil)
 	if err != nil {
 		return "", nil, err
 	}
@@ -181,7 +215,7 @@ func (svc *AuthenticationService) AuthenticateWithToken(token string) (string, *
 // ExchangeTokens handles the last part of the OAuth flow. It uses the supplied
 // code and state values to attempt to exchange them for Vela Access and
 // Refresh tokens.
-func (svc *AuthenticationService) ExchangeTokens(opt *OAuthExchangeOptions) (string, string, *Response, error) {
+func (svc *AuthenticationService) ExchangeTokens(ctx context.Context, opt *OAuthExchangeOptions) (string, string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/authenticate"
 
@@ -200,7 +234,7 @@ func (svc *AuthenticationService) ExchangeTokens(opt *OAuthExchangeOptions) (str
 	}
 
 	// attempt to exchange code + state for tokens
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 	if err != nil {
 		return "", "", resp, err
 	}
@@ -234,23 +268,23 @@ func extractRefreshToken(cookies []*http.Cookie) string {
 }
 
 // ValidateToken makes a request to validate tokens with the Vela server.
-func (svc *AuthenticationService) ValidateToken() (*Response, error) {
+func (svc *AuthenticationService) ValidateToken(ctx context.Context) (*Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/validate-token"
 
 	// attempt to validate a server token
-	resp, err := svc.client.Call("GET", u, nil, nil)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, nil)
 
 	return resp, err
 }
 
 // ValidateOAuthToken makes a request to validate user oauth tokens with the Vela server.
-func (svc *AuthenticationService) ValidateOAuthToken() (*Response, error) {
+func (svc *AuthenticationService) ValidateOAuthToken(ctx context.Context) (*Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/validate-oauth"
 
 	// attempt to validate an oauth token
-	resp, err := svc.client.Call("GET", u, nil, nil)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, nil)
 
 	return resp, err
 }

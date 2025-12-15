@@ -3,6 +3,7 @@
 package vela
 
 import (
+	"context"
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
@@ -13,7 +14,7 @@ import (
 type RepoService service
 
 // Get returns the provided repo.
-func (svc *RepoService) Get(org, repo string) (*api.Repo, *Response, error) {
+func (svc *RepoService) Get(ctx context.Context, org, repo string) (*api.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s", org, repo)
 
@@ -21,13 +22,13 @@ func (svc *RepoService) Get(org, repo string) (*api.Repo, *Response, error) {
 	v := new(api.Repo)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // GetAll returns a list of all repos.
-func (svc *RepoService) GetAll(opt *ListOptions) (*[]api.Repo, *Response, error) {
+func (svc *RepoService) GetAll(ctx context.Context, opt *ListOptions) (*[]api.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/repos"
 
@@ -41,13 +42,13 @@ func (svc *RepoService) GetAll(opt *ListOptions) (*[]api.Repo, *Response, error)
 	v := new([]api.Repo)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // Add constructs a repo with the provided details.
-func (svc *RepoService) Add(r *api.Repo) (*api.Repo, *Response, error) {
+func (svc *RepoService) Add(ctx context.Context, r *api.Repo) (*api.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := "/api/v1/repos"
 
@@ -55,13 +56,13 @@ func (svc *RepoService) Add(r *api.Repo) (*api.Repo, *Response, error) {
 	v := new(api.Repo)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, r, v)
+	resp, err := svc.client.Call(ctx, "POST", u, r, v)
 
 	return v, resp, err
 }
 
 // Update modifies a repo with the provided details.
-func (svc *RepoService) Update(org, repo string, r *api.Repo) (*api.Repo, *Response, error) {
+func (svc *RepoService) Update(ctx context.Context, org, repo string, r *api.Repo) (*api.Repo, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s", org, repo)
 
@@ -69,13 +70,13 @@ func (svc *RepoService) Update(org, repo string, r *api.Repo) (*api.Repo, *Respo
 	v := new(api.Repo)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, r, v)
+	resp, err := svc.client.Call(ctx, "PUT", u, r, v)
 
 	return v, resp, err
 }
 
 // Remove deletes the provided repo.
-func (svc *RepoService) Remove(org, repo string) (*string, *Response, error) {
+func (svc *RepoService) Remove(ctx context.Context, org, repo string) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s", org, repo)
 
@@ -83,13 +84,13 @@ func (svc *RepoService) Remove(org, repo string) (*string, *Response, error) {
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v)
+	resp, err := svc.client.Call(ctx, "DELETE", u, nil, v)
 
 	return v, resp, err
 }
 
 // Repair modifies a damaged repo webhook.
-func (svc *RepoService) Repair(org, repo string) (*string, *Response, error) {
+func (svc *RepoService) Repair(ctx context.Context, org, repo string) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/repair", org, repo)
 
@@ -97,13 +98,13 @@ func (svc *RepoService) Repair(org, repo string) (*string, *Response, error) {
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("PATCH", u, nil, v)
+	resp, err := svc.client.Call(ctx, "PATCH", u, nil, v)
 
 	return v, resp, err
 }
 
 // Chown modifies the org of a repo.
-func (svc *RepoService) Chown(org, repo string) (*string, *Response, error) {
+func (svc *RepoService) Chown(ctx context.Context, org, repo string) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/chown", org, repo)
 
@@ -111,7 +112,7 @@ func (svc *RepoService) Chown(org, repo string) (*string, *Response, error) {
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("PATCH", u, nil, v)
+	resp, err := svc.client.Call(ctx, "PATCH", u, nil, v)
 
 	return v, resp, err
 }

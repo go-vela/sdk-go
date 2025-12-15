@@ -3,6 +3,7 @@
 package vela
 
 import (
+	"context"
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
@@ -13,7 +14,7 @@ import (
 type HookService service
 
 // Get returns the provided hook.
-func (svc *HookService) Get(org, repo string, hook int64) (*api.Hook, *Response, error) {
+func (svc *HookService) Get(ctx context.Context, org, repo string, hook int64) (*api.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s/%d", org, repo, hook)
 
@@ -21,13 +22,13 @@ func (svc *HookService) Get(org, repo string, hook int64) (*api.Hook, *Response,
 	v := new(api.Hook)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // GetAll returns a list of all hooks.
-func (svc *HookService) GetAll(org, repo string, opt *ListOptions) (*[]api.Hook, *Response, error) {
+func (svc *HookService) GetAll(ctx context.Context, org, repo string, opt *ListOptions) (*[]api.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s", org, repo)
 
@@ -41,13 +42,13 @@ func (svc *HookService) GetAll(org, repo string, opt *ListOptions) (*[]api.Hook,
 	v := new([]api.Hook)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // Add constructs a hook with the provided details.
-func (svc *HookService) Add(org, repo string, h *api.Hook) (*api.Hook, *Response, error) {
+func (svc *HookService) Add(ctx context.Context, org, repo string, h *api.Hook) (*api.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s", org, repo)
 
@@ -55,13 +56,13 @@ func (svc *HookService) Add(org, repo string, h *api.Hook) (*api.Hook, *Response
 	v := new(api.Hook)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, h, v)
+	resp, err := svc.client.Call(ctx, "POST", u, h, v)
 
 	return v, resp, err
 }
 
 // Update modifies a hook with the provided details.
-func (svc *HookService) Update(org, repo string, h *api.Hook) (*api.Hook, *Response, error) {
+func (svc *HookService) Update(ctx context.Context, org, repo string, h *api.Hook) (*api.Hook, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s/%d", org, repo, h.GetNumber())
 
@@ -69,13 +70,13 @@ func (svc *HookService) Update(org, repo string, h *api.Hook) (*api.Hook, *Respo
 	v := new(api.Hook)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, h, v)
+	resp, err := svc.client.Call(ctx, "PUT", u, h, v)
 
 	return v, resp, err
 }
 
 // Remove deletes the provided hook.
-func (svc *HookService) Remove(org, repo string, hook int64) (*string, *Response, error) {
+func (svc *HookService) Remove(ctx context.Context, org, repo string, hook int64) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/hooks/%s/%s/%d", org, repo, hook)
 
@@ -83,7 +84,7 @@ func (svc *HookService) Remove(org, repo string, hook int64) (*string, *Response
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v)
+	resp, err := svc.client.Call(ctx, "DELETE", u, nil, v)
 
 	return v, resp, err
 }
