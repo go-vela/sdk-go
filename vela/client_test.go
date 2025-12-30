@@ -276,7 +276,7 @@ func TestVela_addAuthentication_BuildToken(t *testing.T) {
 	}
 
 	// run test
-	c.Authentication.SetBuildTokenAuth("foobar", "baz", 0)
+	c.Authentication.SetBuildTokenAuth("foobar", "baz", 0, "org/repo", 1)
 
 	err = c.addAuthentication(t.Context(), r)
 	if err != nil {
