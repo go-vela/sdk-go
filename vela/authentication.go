@@ -35,6 +35,8 @@ type AuthenticationService struct {
 	scmToken            *string
 	authType            AuthenticationType
 	scmTokenExp         *int64
+	buildRepo           *string
+	buildNumber         *int64
 }
 
 // SetTokenAuth sets the authentication type as a plain token.
@@ -44,9 +46,11 @@ func (svc *AuthenticationService) SetTokenAuth(token string) {
 }
 
 // SetBuildTokenAuth sets the authentication type and the two tokens used.
-func (svc *AuthenticationService) SetBuildTokenAuth(buildTkn, scmTkn string, scmTokenExp int64) {
+func (svc *AuthenticationService) SetBuildTokenAuth(buildTkn, scmTkn string, scmTokenExp int64, buildRepo string, buildNumber int64) {
 	svc.token = String(buildTkn)
 	svc.scmToken = String(scmTkn)
+	svc.buildRepo = String(buildRepo)
+	svc.buildNumber = Int64(buildNumber)
 
 	// set expiration if provided - only for installation tokens
 	if scmTokenExp > 0 {
@@ -120,6 +124,24 @@ func (svc *AuthenticationService) IsSCMTokenExpired() bool {
 	return false
 }
 
+// SCMExpiration returns the SCM token expiration time.
+func (svc *AuthenticationService) SCMExpiration() int64 {
+	if svc.scmTokenExp != nil {
+		return *svc.scmTokenExp
+	}
+
+	return 0
+}
+
+// SCMToken returns the SCM token.
+func (svc *AuthenticationService) SCMToken() string {
+	if svc.scmToken != nil {
+		return *svc.scmToken
+	}
+
+	return ""
+}
+
 // RefreshAccessToken uses the supplied refresh token to attempt and refresh
 // the access token.
 func (svc *AuthenticationService) RefreshAccessToken(ctx context.Context, refreshToken string) (*Response, error) {
@@ -154,22 +176,6 @@ func (svc *AuthenticationService) RefreshAccessToken(ctx context.Context, refres
 
 	// set the received access token
 	svc.accessToken = v.Token
-
-	return resp, err
-}
-
-// RefreshInstallToken refreshes the SCM install token for a build.
-func (svc *AuthenticationService) RefreshInstallToken(ctx context.Context, build *api.Build) (*Response, error) {
-	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/builds/%d/install_token", build.GetRepo().GetFullName(), build.GetNumber())
-
-	v := new(api.Token)
-
-	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
-
-	// set the received access token
-	svc.scmToken = v.Token
-	svc.scmTokenExp = v.Expiration
 
 	return resp, err
 }
@@ -285,6 +291,40 @@ func (svc *AuthenticationService) ValidateOAuthToken(ctx context.Context) (*Resp
 
 	// attempt to validate an oauth token
 	resp, err := svc.client.Call(ctx, "GET", u, nil, nil)
+
+	return resp, err
+}
+
+// RefreshInstallToken refreshes the SCM install token for a build.
+func (svc *AuthenticationService) RefreshInstallToken(ctx context.Context, org, repo string, build int64) (*Response, error) {
+	// set the API endpoint path we send the request to
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/install_token", org, repo, build)
+
+	// will hold access token
+	v := new(api.Token)
+
+	// building a custom request -
+	// we can't use svc.client.NewRequest because
+	// that's what can send us here
+	url, err := svc.client.buildURLForRequest(u)
+	if err != nil {
+		return nil, err
+	}
+
+	// create a new request that we can attach a header to
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", *svc.token))
+	req.Header.Add("Token", *svc.scmToken)
+
+	resp, err := svc.client.Do(req, v)
+
+	// set the received access token
+	svc.scmToken = v.Token
+	svc.scmTokenExp = v.Expiration
 
 	return resp, err
 }
