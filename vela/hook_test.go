@@ -3,6 +3,7 @@
 package vela
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -30,7 +31,7 @@ func TestHook_Get_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Hook.Get("github", "octocat", 1)
+	got, resp, err := c.Hook.Get(t.Context(), "github", "octocat", 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -54,7 +55,7 @@ func TestHook_Get_404(t *testing.T) {
 	want := api.Hook{}
 
 	// run test
-	got, resp, err := c.Hook.Get("github", "octocat", 0)
+	got, resp, err := c.Hook.Get(t.Context(), "github", "octocat", 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -82,7 +83,7 @@ func TestHook_GetAll_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Hook.GetAll("github", "octocat", nil)
+	got, resp, err := c.Hook.GetAll(t.Context(), "github", "octocat", nil)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -122,7 +123,7 @@ func TestHook_Add_201(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Hook.Add("github", "octocat", &req)
+	got, resp, err := c.Hook.Add(t.Context(), "github", "octocat", &req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -156,7 +157,7 @@ func TestHook_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Hook.Update("github", "octocat", &req)
+	got, resp, err := c.Hook.Update(t.Context(), "github", "octocat", &req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -186,7 +187,7 @@ func TestHook_Update_404(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Hook.Update("github", "octocat", &req)
+	got, resp, err := c.Hook.Update(t.Context(), "github", "octocat", &req)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -208,7 +209,7 @@ func TestHook_Remove_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Hook.Remove("github", "octocat", 1)
+	_, resp, err := c.Hook.Remove(t.Context(), "github", "octocat", 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -226,7 +227,7 @@ func TestHook_Remove_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Hook.Remove("github", "octocat", 0)
+	_, resp, err := c.Hook.Remove(t.Context(), "github", "octocat", 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -244,7 +245,7 @@ func ExampleHookService_Get() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a hook from the server
-	hook, resp, err := c.Hook.Get("github", "octocat", 1)
+	hook, resp, err := c.Hook.Get(context.Background(), "github", "octocat", 1)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -260,7 +261,7 @@ func ExampleHookService_GetAll() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the hooks from the server
-	hooks, resp, err := c.Hook.GetAll("github", "octocat", nil)
+	hooks, resp, err := c.Hook.GetAll(context.Background(), "github", "octocat", nil)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -288,7 +289,7 @@ func ExampleHookService_Add() {
 	}
 
 	// Create the hook in the server
-	hook, resp, err := c.Hook.Add("github", "octocat", &req)
+	hook, resp, err := c.Hook.Add(context.Background(), "github", "octocat", &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -309,7 +310,7 @@ func ExampleHookService_Update() {
 	}
 
 	// Update the step in the server
-	hook, resp, err := c.Hook.Update("github", "octocat", &req)
+	hook, resp, err := c.Hook.Update(context.Background(), "github", "octocat", &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -325,7 +326,7 @@ func ExampleHookService_Remove() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the hook in the server
-	hook, resp, err := c.Hook.Remove("github", "octocat", 1)
+	hook, resp, err := c.Hook.Remove(context.Background(), "github", "octocat", 1)
 	if err != nil {
 		fmt.Println(err)
 	}

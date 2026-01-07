@@ -248,7 +248,7 @@ func TestVela_addAuthentication(t *testing.T) {
 	// run test
 	c.Authentication.SetTokenAuth("foobar")
 
-	err = c.addAuthentication(r)
+	err = c.addAuthentication(t.Context(), r)
 	if err != nil {
 		t.Error("addAuthentication should not have errored")
 	}
@@ -276,9 +276,9 @@ func TestVela_addAuthentication_BuildToken(t *testing.T) {
 	}
 
 	// run test
-	c.Authentication.SetBuildTokenAuth("foobar", "baz")
+	c.Authentication.SetBuildTokenAuth("foobar", "baz", 0, "org/repo", 1)
 
-	err = c.addAuthentication(r)
+	err = c.addAuthentication(t.Context(), r)
 	if err != nil {
 		t.Error("addAuthentication should not have errored")
 	}
@@ -313,7 +313,7 @@ func TestVela_addAuthentication_AccessAndRefresh_GoodToken(t *testing.T) {
 	// run test
 	c.Authentication.SetAccessAndRefreshAuth(testToken, "bar")
 
-	err = c.addAuthentication(r)
+	err = c.addAuthentication(t.Context(), r)
 	if err != nil {
 		t.Error("addAuthentication should not have errored")
 	}
@@ -342,7 +342,7 @@ func TestVela_addAuthentication_AccessAndRefresh_ExpiredTokens(t *testing.T) {
 	// run test
 	c.Authentication.SetAccessAndRefreshAuth(testToken, testToken)
 
-	err = c.addAuthentication(r)
+	err = c.addAuthentication(t.Context(), r)
 	if err == nil {
 		t.Error("addAuthentication should have errored with expired tokens")
 	}
@@ -366,7 +366,7 @@ func TestVela_addAuthentication_AccessAndRefresh_ExpiredAccessGoodRefresh(t *tes
 	// run test
 	c.Authentication.SetAccessAndRefreshAuth(TestTokenExpired, TestTokenGood)
 
-	err = c.addAuthentication(r)
+	err = c.addAuthentication(t.Context(), r)
 	if err != nil {
 		t.Error("addAuthentication should not have errored")
 	}
@@ -413,7 +413,7 @@ func TestVela_Call_BadMethod(t *testing.T) {
 	}
 
 	// run test
-	_, err = c.Call("!@#$%^&*()", "/health", nil, nil)
+	_, err = c.Call(t.Context(), "!@#$%^&*()", "/health", nil, nil)
 	if err == nil {
 		t.Errorf("Call should have returned err")
 	}
@@ -459,7 +459,7 @@ func TestClient_CallWithHeaders(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := c.CallWithHeaders(tt.args.method, tt.args.u, tt.args.body, tt.args.v, tt.args.headers)
+			_, err := c.CallWithHeaders(t.Context(), tt.args.method, tt.args.u, tt.args.body, tt.args.v, tt.args.headers)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Client.CallWithHeaders() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -523,13 +523,15 @@ func TestVela_NewRequest(t *testing.T) {
 			// setup types
 			if !test.failure {
 				if test.input.body == nil {
-					test.want, err = http.NewRequest(
+					test.want, err = http.NewRequestWithContext(
+						t.Context(),
 						test.input.method,
 						fmt.Sprintf("http://localhost:8080%s", test.input.endpoint),
 						nil,
 					)
 				} else {
-					test.want, err = http.NewRequest(
+					test.want, err = http.NewRequestWithContext(
+						t.Context(),
 						test.input.method,
 						fmt.Sprintf("http://localhost:8080%s", test.input.endpoint),
 						test.input.body.(io.ReadCloser),
@@ -545,7 +547,7 @@ func TestVela_NewRequest(t *testing.T) {
 				test.want.Header.Add("User-Agent", c.UserAgent)
 			}
 
-			got, err := c.NewRequest(test.input.method, test.input.endpoint, test.input.body)
+			got, err := c.NewRequest(t.Context(), test.input.method, test.input.endpoint, test.input.body)
 
 			if test.failure {
 				if err == nil {
