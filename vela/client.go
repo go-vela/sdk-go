@@ -199,11 +199,21 @@ func (c *Client) addAuthentication(ctx context.Context, req *http.Request) error
 	// handle access + refresh tokens
 	// refresh access token if needed
 	if c.Authentication.HasAccessAndRefreshAuth() {
-		isExpired := IsTokenExpired(*c.Authentication.accessToken)
+		currentAccess, err := c.Authentication.getAccessToken()
+		if err != nil {
+			return err
+		}
+
+		currentRefresh, err := c.Authentication.getRefreshToken()
+		if err != nil {
+			return err
+		}
+
+		isExpired := IsTokenExpired(currentAccess)
 		if isExpired {
 			logrus.Debug("access token has expired")
 
-			isRefreshExpired := IsTokenExpired(*c.Authentication.refreshToken)
+			isRefreshExpired := IsTokenExpired(currentRefresh)
 			if isRefreshExpired {
 				return fmt.Errorf("your tokens have expired - please log in again with 'vela login'")
 			}
@@ -213,14 +223,19 @@ func (c *Client) addAuthentication(ctx context.Context, req *http.Request) error
 			// send API call to refresh the access token to Vela
 			//
 			// https://pkg.go.dev/github.com/go-vela/sdk-go/vela?tab=doc#AuthenticationService.RefreshAccessToken
-			_, err := c.Authentication.RefreshAccessToken(ctx, *c.Authentication.refreshToken)
+			_, err = c.Authentication.RefreshAccessToken(ctx, currentRefresh)
 			if err != nil {
 				return err
 			}
 		}
 
-		// set (new?) access token as the token
-		token = *c.Authentication.accessToken
+		// refresh could have produced new access token
+		updatedAccess, err := c.Authentication.getAccessToken()
+		if err != nil {
+			return err
+		}
+
+		token = updatedAccess
 	}
 
 	// handle personal access token

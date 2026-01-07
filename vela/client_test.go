@@ -378,6 +378,33 @@ func TestVela_addAuthentication_AccessAndRefresh_ExpiredAccessGoodRefresh(t *tes
 	}
 }
 
+func TestVela_addAuthentication_AccessAndRefresh_MissingAccessToken(t *testing.T) {
+	// setup types
+	c, err := NewClient("http://localhost:8080", "", nil)
+	if err != nil {
+		t.Errorf("Unable to create new client: %v", err)
+	}
+
+	r, err := http.NewRequestWithContext(context.Background(), "GET", "http://localhost:8080/health", nil)
+	if err != nil {
+		t.Errorf("Unable to create new request: %v", err)
+	}
+
+	// run test
+	c.Authentication.SetAccessAndRefreshAuth(TestTokenGood, TestTokenGood)
+	c.Authentication.accessToken = nil
+
+	err = c.addAuthentication(t.Context(), r)
+	if err == nil {
+		t.Fatal("addAuthentication should have errored")
+	}
+
+	want := "access token has no value - please log in again with 'vela login'"
+	if err.Error() != want {
+		t.Errorf("addAuthentication error mismatch: want %q, got %q", want, err.Error())
+	}
+}
+
 func TestVela_Call_BadMethod(t *testing.T) {
 	// setup types
 	c, err := NewClient("http://localhost:8080", "", nil)
