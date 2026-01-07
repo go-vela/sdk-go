@@ -394,7 +394,7 @@ func TestVela_addAuthentication_AccessAndRefresh_MissingAccessToken(t *testing.T
 	c.Authentication.SetAccessAndRefreshAuth(TestTokenGood, TestTokenGood)
 	c.Authentication.accessToken = nil
 
-	err = c.addAuthentication(r)
+	err = c.addAuthentication(t.Context(), r)
 	if err == nil {
 		t.Fatal("addAuthentication should have errored")
 	}
