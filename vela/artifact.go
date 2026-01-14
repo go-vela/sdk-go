@@ -16,7 +16,7 @@ type ArtifactService service
 // Add constructs an artifact with the provided details.
 func (svc *ArtifactService) Add(ctx context.Context, org, repo string, build int64) (*api.Artifact, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/artifacts", org, repo, build)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/artifact", org, repo, build)
 
 	// API Artifact type we want to return
 	a := new(api.Artifact)
@@ -30,7 +30,7 @@ func (svc *ArtifactService) Add(ctx context.Context, org, repo string, build int
 // Update modifies an artifact with the provided details.
 func (svc *ArtifactService) Update(ctx context.Context, org, repo string, build int64, a *api.Artifact) (*api.Artifact, *Response, error) {
 	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/artifacts", org, repo, build)
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/artifact", org, repo, build)
 
 	// API Artifact type we want to return
 	_a := new(api.Artifact)
