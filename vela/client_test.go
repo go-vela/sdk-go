@@ -34,6 +34,7 @@ func TestVela_NewClient(t *testing.T) {
 	}
 	want.Authentication = &AuthenticationService{client: want}
 	want.Authorization = &AuthorizationService{client: want}
+	want.Artifact = &ArtifactService{client: want}
 	want.Admin = &AdminService{
 		&AdminBuildService{client: want},
 		&AdminCleanService{client: want},
@@ -47,6 +48,7 @@ func TestVela_NewClient(t *testing.T) {
 		&AdminUserService{client: want},
 		&AdminWorkerService{client: want},
 		&AdminSettingsService{client: want},
+		&AdminStorageSettingsService{client: want},
 	}
 	want.Build = &BuildService{client: want}
 	want.Dashboard = &DashboardService{client: want}
@@ -59,6 +61,7 @@ func TestVela_NewClient(t *testing.T) {
 	want.Schedule = &ScheduleService{client: want}
 	want.Secret = &SecretService{client: want}
 	want.Step = &StepService{client: want}
+	want.Storage = &StorageService{client: want}
 	want.Svc = &SvcService{client: want}
 	want.User = &UserService{client: want}
 	want.Worker = &WorkerService{client: want}
