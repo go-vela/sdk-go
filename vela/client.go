@@ -41,7 +41,6 @@ type (
 
 		// Vela service for authentication.
 		Admin          *AdminService
-		Artifact       *ArtifactService
 		Authentication *AuthenticationService
 		Authorization  *AuthorizationService
 		Build          *BuildService
@@ -145,7 +144,6 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 		&AdminSettingsService{client: c},
 		&AdminStorageSettingsService{client: c},
 	}
-	c.Artifact = &ArtifactService{client: c}
 	c.Build = &BuildService{client: c}
 	c.Dashboard = &DashboardService{client: c}
 	c.Deployment = &DeploymentService{client: c}
@@ -159,7 +157,6 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	c.Step = &StepService{client: c}
 	c.Storage = &StorageService{client: c}
 	c.Svc = &SvcService{client: c}
-	c.Artifact = &ArtifactService{client: c}
 	c.User = &UserService{client: c}
 	c.Worker = &WorkerService{client: c}
 	c.Queue = &QueueService{client: c}

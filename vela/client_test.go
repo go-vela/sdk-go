@@ -34,7 +34,6 @@ func TestVela_NewClient(t *testing.T) {
 	}
 	want.Authentication = &AuthenticationService{client: want}
 	want.Authorization = &AuthorizationService{client: want}
-	want.Artifact = &ArtifactService{client: want}
 	want.Admin = &AdminService{
 		&AdminBuildService{client: want},
 		&AdminCleanService{client: want},
