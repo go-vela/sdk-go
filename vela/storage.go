@@ -4,6 +4,7 @@ package vela
 
 import (
 	"context"
+	"fmt"
 
 	api "github.com/go-vela/server/api/types"
 )
@@ -24,4 +25,11 @@ func (svc *StorageService) GetInfo(ctx context.Context) (*api.StorageInfo, *Resp
 	resp, err := svc.client.Call(ctx, "GET", url, nil, t)
 
 	return t, resp, err
+}
+
+func (s *StorageService) GetSTSCreds(ctx context.Context, org, repo string, build int64) (*api.STSCreds, *Response, error) {
+	u := fmt.Sprintf("/api/v1/storage/sts/%s/%s/%d", org, repo, build)
+	out := new(api.STSCreds)
+	resp, err := s.client.Call(ctx, "GET", u, nil, out)
+	return out, resp, err
 }
