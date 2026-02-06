@@ -54,7 +54,6 @@ type (
 		Schedule       *ScheduleService
 		Secret         *SecretService
 		Step           *StepService
-		Storage        *StorageService
 		Svc            *SvcService
 		User           *UserService
 		Worker         *WorkerService
@@ -142,7 +141,6 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 		&AdminUserService{client: c},
 		&AdminWorkerService{client: c},
 		&AdminSettingsService{client: c},
-		&AdminStorageSettingsService{client: c},
 	}
 	c.Build = &BuildService{client: c}
 	c.Dashboard = &DashboardService{client: c}
@@ -155,7 +153,6 @@ func NewClient(baseURL, id string, httpClient *http.Client) (*Client, error) {
 	c.Schedule = &ScheduleService{client: c}
 	c.Secret = &SecretService{client: c}
 	c.Step = &StepService{client: c}
-	c.Storage = &StorageService{client: c}
 	c.Svc = &SvcService{client: c}
 	c.User = &UserService{client: c}
 	c.Worker = &WorkerService{client: c}

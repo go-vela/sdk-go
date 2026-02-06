@@ -29,7 +29,7 @@ func TestStorage_GetSTSCreds_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Storage.GetSTSCreds(t.Context(), "foo", "bar", 1)
+	got, resp, err := c.Build.GetSTSCreds(t.Context(), "foo", "bar", 1)
 	if err != nil {
 		t.Errorf("GetSTSCreds returned err: %v", err)
 	}
@@ -50,7 +50,7 @@ func TestStorage_GetSTSCreds_401(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Storage.GetSTSCreds(t.Context(), "foo", "bar", 1)
+	_, resp, err := c.Build.GetSTSCreds(t.Context(), "foo", "bar", 1)
 	if err == nil {
 		t.Errorf("GetSTSCreds should have returned err %v", resp.StatusCode)
 	}
