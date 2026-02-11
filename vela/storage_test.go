@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 package vela
 
 import (
@@ -19,6 +21,7 @@ func TestStorage_GetSTSCreds_200(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 	data := []byte(server.StorageSTSResp)
+
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	var want *api.STSCreds
@@ -54,6 +57,7 @@ func TestStorage_GetSTSCreds_401(t *testing.T) {
 	if err == nil {
 		t.Errorf("GetSTSCreds should have returned err %v", resp.StatusCode)
 	}
+
 	if resp.StatusCode != http.StatusUnauthorized {
 		t.Errorf("GetSTSCreds returned %v, want %v", resp.StatusCode, http.StatusUnauthorized)
 	}
