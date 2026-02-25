@@ -22,7 +22,7 @@ func TestStorage_GetSTSCreds_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 	data := []byte(server.StorageSTSResp)
 
-	c.Authentication.SetPersonalAccessTokenAuth("token")
+	c.Authentication.SetBuildTokenAuth("buildToken", "scmToken", 0, "foo/bar", 1)
 
 	var want *api.STSCreds
 
