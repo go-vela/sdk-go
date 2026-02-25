@@ -56,10 +56,6 @@ linters:
       require-explanation: true
       require-specific: true
       allow-unused: false
-    revive:
-      rules:
-        - name: var-naming
-          disabled: true
     wsl_v5:
       allow-first-in-block: true
       allow-whole-block: false
