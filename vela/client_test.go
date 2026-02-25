@@ -396,8 +396,8 @@ func TestClient_CallWithHeaders(t *testing.T) {
 	type args struct {
 		method  string
 		u       string
-		body    interface{}
-		v       interface{}
+		body    any
+		v       any
 		headers map[string]string
 	}
 
@@ -447,7 +447,7 @@ func TestVela_NewRequest(t *testing.T) {
 	type input struct {
 		method   string
 		endpoint string
-		body     interface{}
+		body     any
 	}
 
 	tests := []struct {

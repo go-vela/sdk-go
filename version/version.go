@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
-
+//
+//nolint:revive // keep package name
 package version
 
 import "github.com/coreos/go-semver/semver"
@@ -8,7 +9,7 @@ var (
 	// VersionMajor is for an API incompatible changes.
 	VersionMajor int64
 	// VersionMinor is for functionality in a backwards-compatible manner.
-	VersionMinor int64 = 27
+	VersionMinor int64 = 28
 	// VersionPatch is for backwards-compatible bug fixes.
 	VersionPatch int64
 )
