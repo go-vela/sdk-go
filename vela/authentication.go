@@ -98,6 +98,24 @@ func (svc *AuthenticationService) HasAccessAndRefreshAuth() bool {
 	return svc.authType == AccessAndRefreshToken
 }
 
+// getAccessToken returns the active access token value or an error.
+func (svc *AuthenticationService) getAccessToken() (string, error) {
+	if svc.accessToken == nil || len(*svc.accessToken) == 0 {
+		return "", fmt.Errorf("access token has no value - please log in again with 'vela login'")
+	}
+
+	return *svc.accessToken, nil
+}
+
+// getRefreshToken returns the active refresh token value or an error.
+func (svc *AuthenticationService) getRefreshToken() (string, error) {
+	if svc.refreshToken == nil || len(*svc.refreshToken) == 0 {
+		return "", fmt.Errorf("refresh token has no value - please log in again with 'vela login'")
+	}
+
+	return *svc.refreshToken, nil
+}
+
 // IsTokenAuthExpired returns whether or not the authentication token has expired.
 func (svc *AuthenticationService) IsTokenAuthExpired() (bool, error) {
 	// verify that the auth type is valid for this type of validation
@@ -173,6 +191,14 @@ func (svc *AuthenticationService) RefreshAccessToken(ctx context.Context, refres
 
 	// send the request
 	resp, err := svc.client.Do(req, v)
+	if err != nil {
+		return resp, err
+	}
+
+	// ensure we received a token before updating the client
+	if v.Token == nil || len(v.GetToken()) == 0 {
+		return resp, fmt.Errorf("token has no value")
+	}
 
 	// set the received access token
 	svc.accessToken = v.Token
