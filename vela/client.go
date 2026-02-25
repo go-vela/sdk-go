@@ -295,10 +295,10 @@ func (c *Client) addAuthentication(ctx context.Context, req *http.Request) error
 
 // addOptions adds the parameters in opt as url query parameters to s.
 // opt must be a struct whose fields may contain "url" tags.
-func addOptions(s string, opt interface{}) (string, error) {
+func addOptions(s string, opt any) (string, error) {
 	// return url if option is a pointer but is also nil
 	v := reflect.ValueOf(opt)
-	if v.Kind() == reflect.Ptr && v.IsNil() {
+	if v.Kind() == reflect.Pointer && v.IsNil() {
 		return s, nil
 	}
 
@@ -407,7 +407,7 @@ func newResponse(r *http.Response) *Response {
 // various pagination link values in the Response.
 func (r *Response) populatePageValues() {
 	if links, ok := r.Header["Link"]; ok && len(links) > 0 {
-		for _, link := range strings.Split(links[0], ",") {
+		for link := range strings.SplitSeq(links[0], ",") {
 			segments := strings.Split(strings.TrimSpace(link), ";")
 
 			// link must at least have href and rel
@@ -460,7 +460,7 @@ func (r *Response) populatePageValues() {
 // respType is the type that the HTTP response will resolve to.
 //
 // For more information read https://github.com/google/go-github/issues/234
-func (c *Client) Call(ctx context.Context, method, url string, body, respType interface{}) (*Response, error) {
+func (c *Client) Call(ctx context.Context, method, url string, body, respType any) (*Response, error) {
 	// create new request from parameters
 	req, err := c.NewRequest(ctx, method, url, body)
 	if err != nil {
@@ -490,7 +490,7 @@ func (c *Client) Call(ctx context.Context, method, url string, body, respType in
 // headers is a map of HTTP headers.
 //
 // For more information read https://github.com/google/go-github/issues/234
-func (c *Client) CallWithHeaders(ctx context.Context, method, url string, body, respType interface{}, headers map[string]string) (*Response, error) {
+func (c *Client) CallWithHeaders(ctx context.Context, method, url string, body, respType any, headers map[string]string) (*Response, error) {
 	// create new request from parameters
 	req, err := c.NewRequest(ctx, method, url, body)
 	if err != nil {
@@ -516,7 +516,7 @@ func (c *Client) CallWithHeaders(ctx context.Context, method, url string, body, 
 // or returned as an error if an API error has occurred.
 // If respType implements the io.Writer interface, the raw response body will
 // be written to respType, without attempting to first decode it.
-func (c *Client) Do(req *http.Request, respType interface{}) (*Response, error) {
+func (c *Client) Do(req *http.Request, respType any) (*Response, error) {
 	// send request with client
 	//
 	//nolint:gosec // ignore SSRF
