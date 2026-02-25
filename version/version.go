@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
-//nolint:revive // keep package name
+//nolint:revive // valid package name
 package version
 
 import "github.com/coreos/go-semver/semver"

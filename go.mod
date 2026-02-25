@@ -1,6 +1,6 @@
 module github.com/go-vela/sdk-go
 
-go 1.25.5
+go 1.25.7
 
 require (
 	github.com/coreos/go-semver v0.3.1
