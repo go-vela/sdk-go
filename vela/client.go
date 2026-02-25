@@ -4,6 +4,7 @@ package vela
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -191,18 +192,28 @@ func (c *Client) buildURLForRequest(urlStr string) (string, error) {
 }
 
 // addAuthentication adds the necessary authentication to the request.
-func (c *Client) addAuthentication(req *http.Request) error {
+func (c *Client) addAuthentication(ctx context.Context, req *http.Request) error {
 	// token that will be sent with the request depending on auth type
 	token := ""
 
 	// handle access + refresh tokens
 	// refresh access token if needed
 	if c.Authentication.HasAccessAndRefreshAuth() {
-		isExpired := IsTokenExpired(*c.Authentication.accessToken)
+		currentAccess, err := c.Authentication.getAccessToken()
+		if err != nil {
+			return err
+		}
+
+		currentRefresh, err := c.Authentication.getRefreshToken()
+		if err != nil {
+			return err
+		}
+
+		isExpired := IsTokenExpired(currentAccess)
 		if isExpired {
 			logrus.Debug("access token has expired")
 
-			isRefreshExpired := IsTokenExpired(*c.Authentication.refreshToken)
+			isRefreshExpired := IsTokenExpired(currentRefresh)
 			if isRefreshExpired {
 				return fmt.Errorf("your tokens have expired - please log in again with 'vela login'")
 			}
@@ -212,14 +223,19 @@ func (c *Client) addAuthentication(req *http.Request) error {
 			// send API call to refresh the access token to Vela
 			//
 			// https://pkg.go.dev/github.com/go-vela/sdk-go/vela?tab=doc#AuthenticationService.RefreshAccessToken
-			_, err := c.Authentication.RefreshAccessToken(*c.Authentication.refreshToken)
+			_, err = c.Authentication.RefreshAccessToken(ctx, currentRefresh)
 			if err != nil {
 				return err
 			}
 		}
 
-		// set (new?) access token as the token
-		token = *c.Authentication.accessToken
+		// refresh could have produced new access token
+		updatedAccess, err := c.Authentication.getAccessToken()
+		if err != nil {
+			return err
+		}
+
+		token = updatedAccess
 	}
 
 	// handle personal access token
@@ -227,7 +243,7 @@ func (c *Client) addAuthentication(req *http.Request) error {
 		// send API call to exchange token for access token to Vela
 		//
 		// https://pkg.go.dev/github.com/go-vela/sdk-go/vela?tab=doc#AuthenticationService.AuthenticateWithToken
-		at, _, err := c.Authentication.AuthenticateWithToken(*c.Authentication.personalAccessToken)
+		at, _, err := c.Authentication.AuthenticateWithToken(ctx, *c.Authentication.personalAccessToken)
 		if err != nil {
 			return err
 		}
@@ -238,6 +254,33 @@ func (c *Client) addAuthentication(req *http.Request) error {
 	// handle plain token
 	if c.Authentication.HasTokenAuth() {
 		token = *c.Authentication.token
+	}
+
+	if c.Authentication.HasBuildTokenAuth() {
+		token = *c.Authentication.token
+
+		scmTkn := *c.Authentication.scmToken
+		if len(scmTkn) == 0 {
+			return fmt.Errorf("scm token has no value")
+		}
+
+		if c.Authentication.IsSCMTokenExpired() {
+			splitR := strings.Split(*c.Authentication.buildRepo, "/")
+			if len(splitR) != 2 {
+				return fmt.Errorf("invalid build repo format")
+			}
+
+			org := splitR[0]
+			repo := splitR[1]
+			build := *c.Authentication.buildNumber
+
+			_, err := c.Authentication.RefreshInstallToken(ctx, org, repo, build)
+			if err != nil {
+				return err
+			}
+		}
+
+		req.Header.Add("Token", *c.Authentication.scmToken)
 	}
 
 	// make sure token is not empty
@@ -252,10 +295,10 @@ func (c *Client) addAuthentication(req *http.Request) error {
 
 // addOptions adds the parameters in opt as url query parameters to s.
 // opt must be a struct whose fields may contain "url" tags.
-func addOptions(s string, opt interface{}) (string, error) {
+func addOptions(s string, opt any) (string, error) {
 	// return url if option is a pointer but is also nil
 	v := reflect.ValueOf(opt)
-	if v.Kind() == reflect.Ptr && v.IsNil() {
+	if v.Kind() == reflect.Pointer && v.IsNil() {
 		return s, nil
 	}
 
@@ -282,7 +325,7 @@ func addOptions(s string, opt interface{}) (string, error) {
 // in which case it is resolved relative to the baseURL of the Client.
 // Relative URLs should always be specified without a preceding slash.
 // If specified, the value pointed to by body is JSON encoded and included as the request body.
-func (c *Client) NewRequest(method, url string, body interface{}) (*http.Request, error) {
+func (c *Client) NewRequest(ctx context.Context, method, url string, body any) (*http.Request, error) {
 	// build url for request
 	u, err := c.buildURLForRequest(url)
 	if err != nil {
@@ -296,7 +339,7 @@ func (c *Client) NewRequest(method, url string, body interface{}) (*http.Request
 	switch body := body.(type) {
 	// io.ReadCloser is used for streaming endpoints
 	case io.ReadCloser:
-		req, err = http.NewRequest(method, u, body)
+		req, err = http.NewRequestWithContext(ctx, method, u, body)
 		if err != nil {
 			return nil, err
 		}
@@ -315,7 +358,7 @@ func (c *Client) NewRequest(method, url string, body interface{}) (*http.Request
 		}
 
 		// create new http request from built url and body
-		req, err = http.NewRequest(method, u, buf)
+		req, err = http.NewRequestWithContext(ctx, method, u, buf)
 		if err != nil {
 			return nil, err
 		}
@@ -323,7 +366,7 @@ func (c *Client) NewRequest(method, url string, body interface{}) (*http.Request
 
 	// apply authentication to request if client is set
 	if c.Authentication.HasAuth() {
-		err = c.addAuthentication(req)
+		err = c.addAuthentication(ctx, req)
 		if err != nil {
 			return nil, err
 		}
@@ -364,7 +407,7 @@ func newResponse(r *http.Response) *Response {
 // various pagination link values in the Response.
 func (r *Response) populatePageValues() {
 	if links, ok := r.Header["Link"]; ok && len(links) > 0 {
-		for _, link := range strings.Split(links[0], ",") {
+		for link := range strings.SplitSeq(links[0], ",") {
 			segments := strings.Split(strings.TrimSpace(link), ";")
 
 			// link must at least have href and rel
@@ -417,9 +460,9 @@ func (r *Response) populatePageValues() {
 // respType is the type that the HTTP response will resolve to.
 //
 // For more information read https://github.com/google/go-github/issues/234
-func (c *Client) Call(method, url string, body, respType interface{}) (*Response, error) {
+func (c *Client) Call(ctx context.Context, method, url string, body, respType any) (*Response, error) {
 	// create new request from parameters
-	req, err := c.NewRequest(method, url, body)
+	req, err := c.NewRequest(ctx, method, url, body)
 	if err != nil {
 		return nil, err
 	}
@@ -447,9 +490,9 @@ func (c *Client) Call(method, url string, body, respType interface{}) (*Response
 // headers is a map of HTTP headers.
 //
 // For more information read https://github.com/google/go-github/issues/234
-func (c *Client) CallWithHeaders(method, url string, body, respType interface{}, headers map[string]string) (*Response, error) {
+func (c *Client) CallWithHeaders(ctx context.Context, method, url string, body, respType any, headers map[string]string) (*Response, error) {
 	// create new request from parameters
-	req, err := c.NewRequest(method, url, body)
+	req, err := c.NewRequest(ctx, method, url, body)
 	if err != nil {
 		return nil, err
 	}
@@ -473,8 +516,10 @@ func (c *Client) CallWithHeaders(method, url string, body, respType interface{},
 // or returned as an error if an API error has occurred.
 // If respType implements the io.Writer interface, the raw response body will
 // be written to respType, without attempting to first decode it.
-func (c *Client) Do(req *http.Request, respType interface{}) (*Response, error) {
+func (c *Client) Do(req *http.Request, respType any) (*Response, error) {
 	// send request with client
+	//
+	//nolint:gosec // ignore SSRF
 	resp, err := c.client.Do(req)
 	if err != nil {
 		return nil, err

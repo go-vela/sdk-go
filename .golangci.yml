@@ -36,7 +36,7 @@ linters:
     - unparam
     - unused
     - whitespace
-    - wsl
+    - wsl_v5
   settings:
     dupl:
       threshold: 100
@@ -45,12 +45,21 @@ linters:
       statements: 70
     goheader:
       template: "SPDX-License-Identifier: Apache-2.0"
+    # https://golangci-lint.run/docs/linters/configuration/#gosec
+    gosec:
+      excludes:
+        - G101 # hardcoded credentials
+        - G117 # exported field of "Secret" style
     misspell:
       locale: US
     nolintlint:
       require-explanation: true
       require-specific: true
       allow-unused: false
+    wsl_v5:
+      allow-first-in-block: true
+      allow-whole-block: false
+      branch-max-lines: 2
   exclusions:
     generated: lax
     presets:

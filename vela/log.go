@@ -3,6 +3,7 @@
 package vela
 
 import (
+	"context"
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
@@ -13,7 +14,7 @@ import (
 type LogService service
 
 // GetService returns the provided service log.
-func (svc *LogService) GetService(org, repo string, build int64, service int32) (*api.Log, *Response, error) {
+func (svc *LogService) GetService(ctx context.Context, org, repo string, build int64, service int32) (*api.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, build, service)
 
@@ -21,35 +22,35 @@ func (svc *LogService) GetService(org, repo string, build int64, service int32) 
 	v := new(api.Log)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // AddService constructs a service log with the provided details.
-func (svc *LogService) AddService(org, repo string, build, service int, l *api.Log) (*Response, error) {
+func (svc *LogService) AddService(ctx context.Context, org, repo string, build, service int, l *api.Log) (*Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, build, service)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, l, nil)
+	resp, err := svc.client.Call(ctx, "POST", u, l, nil)
 
 	return resp, err
 }
 
 // UpdateService modifies a service log with the provided details.
-func (svc *LogService) UpdateService(org, repo string, build int64, service int32, l *api.Log) (*Response, error) {
+func (svc *LogService) UpdateService(ctx context.Context, org, repo string, build int64, service int32, l *api.Log) (*Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, build, service)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, l, nil)
+	resp, err := svc.client.Call(ctx, "PUT", u, l, nil)
 
 	return resp, err
 }
 
 // RemoveService deletes the provided service log.
-func (svc *LogService) RemoveService(org, repo string, build, service int) (*string, *Response, error) {
+func (svc *LogService) RemoveService(ctx context.Context, org, repo string, build, service int) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/services/%d/logs", org, repo, build, service)
 
@@ -57,13 +58,13 @@ func (svc *LogService) RemoveService(org, repo string, build, service int) (*str
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v)
+	resp, err := svc.client.Call(ctx, "DELETE", u, nil, v)
 
 	return v, resp, err
 }
 
 // GetStep returns the provided step log.
-func (svc *LogService) GetStep(org, repo string, build int64, step int32) (*api.Log, *Response, error) {
+func (svc *LogService) GetStep(ctx context.Context, org, repo string, build int64, step int32) (*api.Log, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, build, step)
 
@@ -71,35 +72,35 @@ func (svc *LogService) GetStep(org, repo string, build int64, step int32) (*api.
 	v := new(api.Log)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // AddStep constructs a step log with the provided details.
-func (svc *LogService) AddStep(org, repo string, build, step int, l *api.Log) (*Response, error) {
+func (svc *LogService) AddStep(ctx context.Context, org, repo string, build, step int, l *api.Log) (*Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, build, step)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, l, nil)
+	resp, err := svc.client.Call(ctx, "POST", u, l, nil)
 
 	return resp, err
 }
 
 // UpdateStep modifies a step log with the provided details.
-func (svc *LogService) UpdateStep(org, repo string, build int64, step int32, l *api.Log) (*Response, error) {
+func (svc *LogService) UpdateStep(ctx context.Context, org, repo string, build int64, step int32, l *api.Log) (*Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, build, step)
 
 	// send request using client
-	resp, err := svc.client.Call("PUT", u, l, nil)
+	resp, err := svc.client.Call(ctx, "PUT", u, l, nil)
 
 	return resp, err
 }
 
 // RemoveStep deletes the provided step log.
-func (svc *LogService) RemoveStep(org, repo string, build, step int) (*string, *Response, error) {
+func (svc *LogService) RemoveStep(ctx context.Context, org, repo string, build, step int) (*string, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/steps/%d/logs", org, repo, build, step)
 
@@ -107,7 +108,7 @@ func (svc *LogService) RemoveStep(org, repo string, build, step int) (*string, *
 	v := new(string)
 
 	// send request using client
-	resp, err := svc.client.Call("DELETE", u, nil, v)
+	resp, err := svc.client.Call(ctx, "DELETE", u, nil, v)
 
 	return v, resp, err
 }

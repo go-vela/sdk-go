@@ -3,6 +3,7 @@
 package vela
 
 import (
+	"context"
 	"fmt"
 
 	api "github.com/go-vela/server/api/types"
@@ -13,7 +14,7 @@ import (
 type DeploymentService service
 
 // Get returns the provided deployment.
-func (svc *DeploymentService) Get(org, repo string, deployment int64) (*api.Deployment, *Response, error) {
+func (svc *DeploymentService) Get(ctx context.Context, org, repo string, deployment int64) (*api.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/deployments/%s/%s/%d", org, repo, deployment)
 
@@ -21,13 +22,13 @@ func (svc *DeploymentService) Get(org, repo string, deployment int64) (*api.Depl
 	v := new(api.Deployment)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // GetAll returns a list of all deployments.
-func (svc *DeploymentService) GetAll(org, repo string, opt *ListOptions) (*[]api.Deployment, *Response, error) {
+func (svc *DeploymentService) GetAll(ctx context.Context, org, repo string, opt *ListOptions) (*[]api.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/deployments/%s/%s", org, repo)
 
@@ -41,13 +42,13 @@ func (svc *DeploymentService) GetAll(org, repo string, opt *ListOptions) (*[]api
 	v := new([]api.Deployment)
 
 	// send request using client
-	resp, err := svc.client.Call("GET", u, nil, v)
+	resp, err := svc.client.Call(ctx, "GET", u, nil, v)
 
 	return v, resp, err
 }
 
 // Add constructs a deployment with the provided details.
-func (svc *DeploymentService) Add(org, repo string, d *api.Deployment) (*api.Deployment, *Response, error) {
+func (svc *DeploymentService) Add(ctx context.Context, org, repo string, d *api.Deployment) (*api.Deployment, *Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/deployments/%s/%s", org, repo)
 
@@ -55,7 +56,7 @@ func (svc *DeploymentService) Add(org, repo string, d *api.Deployment) (*api.Dep
 	v := new(api.Deployment)
 
 	// send request using client
-	resp, err := svc.client.Call("POST", u, d, v)
+	resp, err := svc.client.Call(ctx, "POST", u, d, v)
 
 	return v, resp, err
 }

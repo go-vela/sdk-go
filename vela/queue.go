@@ -3,6 +3,8 @@
 package vela
 
 import (
+	"context"
+
 	api "github.com/go-vela/server/api/types"
 )
 
@@ -11,7 +13,7 @@ import (
 type QueueService service
 
 // GetInfo fetches queue info, primarily used during worker onboarding.
-func (qvc *QueueService) GetInfo() (*api.QueueInfo, *Response, error) {
+func (qvc *QueueService) GetInfo(ctx context.Context) (*api.QueueInfo, *Response, error) {
 	// set the API endpoint path we send the request to
 	url := "/api/v1/queue/info"
 
@@ -19,7 +21,7 @@ func (qvc *QueueService) GetInfo() (*api.QueueInfo, *Response, error) {
 	t := new(api.QueueInfo)
 
 	// send request using client
-	resp, err := qvc.client.Call("GET", url, nil, t)
+	resp, err := qvc.client.Call(ctx, "GET", url, nil, t)
 
 	return t, resp, err
 }

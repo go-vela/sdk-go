@@ -28,6 +28,7 @@ func TestAdmin_Build_Update_200(t *testing.T) {
 	data := []byte(server.BuildResp)
 
 	var want api.Build
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Build{
@@ -38,8 +39,7 @@ func TestAdmin_Build_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Build.Update(&req)
-
+	got, resp, err := c.Admin.Build.Update(t.Context(), &req)
 	if err != nil {
 		t.Errorf("Build returned err: %v", err)
 	}
@@ -67,8 +67,7 @@ func TestAdmin_Clean_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Clean.Clean(&req, nil)
-
+	got, resp, err := c.Admin.Clean.Clean(t.Context(), &req, nil)
 	if err != nil {
 		t.Errorf("Clean returned err: %v", err)
 	}
@@ -102,13 +101,13 @@ func TestAdmin_Clean_Error(t *testing.T) {
 	}
 
 	// run tests
-	_, resp, _ := c.Admin.Clean.Clean(&req, &opt500)
+	_, resp, _ := c.Admin.Clean.Clean(t.Context(), &req, &opt500)
 
 	if resp.StatusCode != http.StatusInternalServerError {
 		t.Errorf("Clean returned %v, want %v", resp.StatusCode, http.StatusInternalServerError)
 	}
 
-	_, resp, _ = c.Admin.Clean.Clean(&req, &opt401)
+	_, resp, _ = c.Admin.Clean.Clean(t.Context(), &req, &opt401)
 
 	if resp.StatusCode != http.StatusUnauthorized {
 		t.Errorf("Clean returned %v, want %v", resp.StatusCode, http.StatusUnauthorized)
@@ -125,6 +124,7 @@ func TestAdmin_Deployment_Update_200(t *testing.T) {
 	data := []byte(server.DeploymentResp)
 
 	var want api.Deployment
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Deployment{
@@ -136,8 +136,7 @@ func TestAdmin_Deployment_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Deployment.Update(&req)
-
+	got, resp, err := c.Admin.Deployment.Update(t.Context(), &req)
 	if err != nil {
 		t.Errorf("Deployment returned err: %v", err)
 	}
@@ -161,6 +160,7 @@ func TestAdmin_Hook_Update_200(t *testing.T) {
 	data := []byte(server.HookResp)
 
 	var want api.Hook
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Hook{
@@ -170,8 +170,7 @@ func TestAdmin_Hook_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Hook.Update(&req)
-
+	got, resp, err := c.Admin.Hook.Update(t.Context(), &req)
 	if err != nil {
 		t.Errorf("Hook returned err: %v", err)
 	}
@@ -195,6 +194,7 @@ func TestAdmin_Repo_Update_200(t *testing.T) {
 	data := []byte(server.RepoResp)
 
 	var want api.Repo
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Repo{
@@ -228,8 +228,7 @@ func TestAdmin_Repo_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Repo.Update(&req)
-
+	got, resp, err := c.Admin.Repo.Update(t.Context(), &req)
 	if err != nil {
 		t.Errorf("Repo returned err: %v", err)
 	}
@@ -253,6 +252,7 @@ func TestAdmin_Secret_Update_200(t *testing.T) {
 	data := []byte(server.SecretResp)
 
 	var want api.Secret
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Secret{
@@ -262,8 +262,7 @@ func TestAdmin_Secret_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Secret.Update(&req)
-
+	got, resp, err := c.Admin.Secret.Update(t.Context(), &req)
 	if err != nil {
 		t.Errorf("Secret returned err: %v", err)
 	}
@@ -287,6 +286,7 @@ func TestAdmin_Service_Update_200(t *testing.T) {
 	data := []byte(server.ServiceResp)
 
 	var want api.Service
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Service{
@@ -297,8 +297,7 @@ func TestAdmin_Service_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Service.Update(&req)
-
+	got, resp, err := c.Admin.Service.Update(t.Context(), &req)
 	if err != nil {
 		t.Errorf("Service returned err: %v", err)
 	}
@@ -322,6 +321,7 @@ func TestAdmin_Step_Update_200(t *testing.T) {
 	data := []byte(server.StepResp)
 
 	var want api.Step
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Step{
@@ -332,8 +332,7 @@ func TestAdmin_Step_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Step.Update(&req)
-
+	got, resp, err := c.Admin.Step.Update(t.Context(), &req)
 	if err != nil {
 		t.Errorf("Step returned err: %v", err)
 	}
@@ -357,6 +356,7 @@ func TestAdmin_User_Update_200(t *testing.T) {
 	data := []byte(server.UserResp)
 
 	var want api.User
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.User{
@@ -364,8 +364,7 @@ func TestAdmin_User_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.User.Update(&req)
-
+	got, resp, err := c.Admin.User.Update(t.Context(), &req)
 	if err != nil {
 		t.Errorf("User returned err: %v", err)
 	}
@@ -396,7 +395,7 @@ func TestAdmin_Build_Queue_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Build.GetQueue(&GetQueueOptions{})
+	got, resp, err := c.Admin.Build.GetQueue(t.Context(), &GetQueueOptions{})
 	if err != nil {
 		t.Errorf("GetQueue returned err: %v", err)
 	}
@@ -429,7 +428,7 @@ func TestAdmin_Worker_RegistrationToken_201(t *testing.T) {
 	hostname := "foo"
 
 	// run test
-	got, resp, err := c.Admin.Worker.RegisterToken(hostname)
+	got, resp, err := c.Admin.Worker.RegisterToken(t.Context(), hostname)
 	if err != nil {
 		t.Errorf("RegisterToken returned err: %v", err)
 	}
@@ -454,7 +453,7 @@ func TestAdmin_Worker_RegistrationToken_NoHostname(t *testing.T) {
 	hostname := ""
 
 	// run test
-	_, _, err := c.Admin.Worker.RegisterToken(hostname)
+	_, _, err := c.Admin.Worker.RegisterToken(t.Context(), hostname)
 	if err == nil {
 		t.Error("RegisterToken should have returned err")
 	}
@@ -477,7 +476,7 @@ func TestAdmin_Settings_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Admin.Settings.Get()
+	got, resp, err := c.Admin.Settings.Get(t.Context())
 	if err != nil {
 		t.Errorf("Settings.Get returned err: %v", err)
 	}
@@ -501,13 +500,13 @@ func TestAdmin_Settings_Update_200(t *testing.T) {
 	data := []byte(server.UpdateSettingsResp)
 
 	var want settings.Platform
+
 	_ = json.Unmarshal(data, &want)
 
 	req := settings.Platform{}
 
 	// run test
-	got, resp, err := c.Admin.Settings.Update(&req)
-
+	got, resp, err := c.Admin.Settings.Update(t.Context(), &req)
 	if err != nil {
 		t.Errorf("Settings.Update returned err: %v", err)
 	}
@@ -531,11 +530,11 @@ func TestAdmin_Settings_Restore_200(t *testing.T) {
 	data := []byte(server.RestoreSettingsResp)
 
 	var want settings.Platform
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Admin.Settings.Restore()
-
+	got, resp, err := c.Admin.Settings.Restore(t.Context())
 	if err != nil {
 		t.Errorf("Settings.Restore returned err: %v", err)
 	}
@@ -559,7 +558,7 @@ func TestAdmin_OIDC_RotateKeys_200(t *testing.T) {
 	want := "keys rotated successfully"
 
 	// run test
-	got, resp, err := c.Admin.OIDC.RotateOIDCKeys()
+	got, resp, err := c.Admin.OIDC.RotateOIDCKeys(t.Context())
 	if err != nil {
 		t.Errorf("RotateOIDCKeys returned err: %v", err)
 	}
@@ -583,7 +582,7 @@ func TestAdmin_OIDC_RotateKeys_Unauthorized(t *testing.T) {
 	c.Authentication.SetTokenAuth("invalid")
 
 	// run test
-	_, resp, err := c.Admin.OIDC.RotateOIDCKeys()
+	_, resp, err := c.Admin.OIDC.RotateOIDCKeys(t.Context())
 	if err == nil {
 		t.Error("RotateOIDCKeys should have returned err")
 	}

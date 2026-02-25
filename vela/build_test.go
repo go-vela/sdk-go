@@ -3,6 +3,7 @@
 package vela
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -27,11 +28,11 @@ func TestBuild_Get_200(t *testing.T) {
 	data := []byte(server.BuildResp)
 
 	var want api.Build
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Build.Get("github", "octocat", 1)
-
+	got, resp, err := c.Build.Get(t.Context(), "github", "octocat", 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -55,8 +56,7 @@ func TestBuild_Get_404(t *testing.T) {
 	want := api.Build{}
 
 	// run test
-	got, resp, err := c.Build.Get("github", "octocat", 0)
-
+	got, resp, err := c.Build.Get(t.Context(), "github", "octocat", 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -80,11 +80,11 @@ func TestBuildExecutable_Get_200(t *testing.T) {
 	data := []byte(server.BuildExecutableResp)
 
 	var want api.BuildExecutable
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Build.GetBuildExecutable("github", "octocat", 1)
-
+	got, resp, err := c.Build.GetBuildExecutable(t.Context(), "github", "octocat", 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -108,8 +108,7 @@ func TestBuildExecutable_Get_500(t *testing.T) {
 	want := api.BuildExecutable{}
 
 	// run test
-	got, resp, err := c.Build.GetBuildExecutable("github", "octocat", 0)
-
+	got, resp, err := c.Build.GetBuildExecutable(t.Context(), "github", "octocat", 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -133,11 +132,11 @@ func TestBuild_GetAll_200(t *testing.T) {
 	data := []byte(server.BuildsResp)
 
 	var want []api.Build
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Build.GetAll("github", "octocat", nil)
-
+	got, resp, err := c.Build.GetAll(t.Context(), "github", "octocat", nil)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -161,11 +160,11 @@ func TestBuild_GetLogs_200(t *testing.T) {
 	data := []byte(server.BuildLogsResp)
 
 	var want []api.Log
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Build.GetLogs("github", "octocat", 1, nil)
-
+	got, resp, err := c.Build.GetLogs(t.Context(), "github", "octocat", 1, nil)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -189,8 +188,7 @@ func TestBuild_GetLogs_404(t *testing.T) {
 	want := []api.Log{}
 
 	// run test
-	got, resp, err := c.Build.GetLogs("github", "octocat", 0, nil)
-
+	got, resp, err := c.Build.GetLogs(t.Context(), "github", "octocat", 0, nil)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -214,6 +212,7 @@ func TestBuild_Add_201(t *testing.T) {
 	data := []byte(server.BuildResp)
 
 	var want api.Build
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Build{
@@ -249,8 +248,7 @@ func TestBuild_Add_201(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Build.Add(&req)
-
+	got, resp, err := c.Build.Add(t.Context(), &req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -274,6 +272,7 @@ func TestBuild_Update_200(t *testing.T) {
 	data := []byte(server.BuildResp)
 
 	var want api.Build
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Build{
@@ -288,8 +287,7 @@ func TestBuild_Update_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Build.Update(&req)
-
+	got, resp, err := c.Build.Update(t.Context(), &req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -324,8 +322,7 @@ func TestBuild_Update_404(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Build.Update(&req)
-
+	got, resp, err := c.Build.Update(t.Context(), &req)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -347,8 +344,7 @@ func TestBuild_Remove_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Build.Remove("github", "octocat", 1)
-
+	_, resp, err := c.Build.Remove(t.Context(), "github", "octocat", 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -366,8 +362,7 @@ func TestBuild_Remove_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Build.Remove("github", "octocat", 0)
-
+	_, resp, err := c.Build.Remove(t.Context(), "github", "octocat", 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -387,11 +382,11 @@ func TestBuild_Restart_200(t *testing.T) {
 	data := []byte(server.BuildResp)
 
 	var want api.Build
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Build.Restart("github", "octocat", 1)
-
+	got, resp, err := c.Build.Restart(t.Context(), "github", "octocat", 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -415,8 +410,7 @@ func TestBuild_Restart_404(t *testing.T) {
 	want := api.Build{}
 
 	// run test
-	got, resp, err := c.Build.Restart("github", "octocat", 0)
-
+	got, resp, err := c.Build.Restart(t.Context(), "github", "octocat", 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -438,8 +432,7 @@ func TestBuild_Cancel_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, got, err := c.Build.Cancel("github", "octocat", 1)
-
+	_, got, err := c.Build.Cancel(t.Context(), "github", "octocat", 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -457,8 +450,7 @@ func TestBuild_Cancel_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Build.Cancel("github", "octocat", 0)
-
+	_, resp, err := c.Build.Cancel(t.Context(), "github", "octocat", 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -476,8 +468,7 @@ func TestBuild_Approve_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	got, err := c.Build.Approve("github", "octocat", 1)
-
+	got, err := c.Build.Approve(t.Context(), "github", "octocat", 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -495,8 +486,7 @@ func TestBuild_Approve_403(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	resp, err := c.Build.Approve("github", "octocat", 0)
-
+	resp, err := c.Build.Approve(t.Context(), "github", "octocat", 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -516,11 +506,11 @@ func TestBuild_GetBuildToken_200(t *testing.T) {
 	data := []byte(server.BuildTokenResp)
 
 	var want api.Token
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Build.GetBuildToken("github", "octocat", 1)
-
+	got, resp, err := c.Build.GetBuildToken(t.Context(), "github", "octocat", 1)
 	if err != nil {
 		t.Errorf("GetBuildToken returned err: %v", err)
 	}
@@ -544,8 +534,7 @@ func TestBuild_GetBuildToken_404(t *testing.T) {
 	var want api.Token
 
 	// run test
-	got, resp, err := c.Build.GetBuildToken("github", "octocat", 0)
-
+	got, resp, err := c.Build.GetBuildToken(t.Context(), "github", "octocat", 0)
 	if err != nil {
 		t.Errorf("GetBuildToken returned err: %v", err)
 	}
@@ -569,8 +558,7 @@ func TestBuild_GetBuildToken_400(t *testing.T) {
 	var want api.Token
 
 	// run test
-	got, resp, err := c.Build.GetBuildToken("github", "octocat", 2)
-
+	got, resp, err := c.Build.GetBuildToken(t.Context(), "github", "octocat", 2)
 	if err != nil {
 		t.Errorf("GetBuildToken returned err: %v", err)
 	}
@@ -594,11 +582,11 @@ func TestBuild_GetIDRequestToken_200(t *testing.T) {
 	data := []byte(server.IDTokenRequestTokenResp)
 
 	var want api.Token
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Build.GetIDRequestToken("github", "octocat", 1, nil)
-
+	got, resp, err := c.Build.GetIDRequestToken(t.Context(), "github", "octocat", 1, nil)
 	if err != nil {
 		t.Errorf("GetIDRequestToken returned err: %v", err)
 	}
@@ -622,8 +610,7 @@ func TestBuild_GetIDRequestToken_400(t *testing.T) {
 	var want api.Token
 
 	// run test
-	got, resp, err := c.Build.GetIDRequestToken("github", "octocat", 0, nil)
-
+	got, resp, err := c.Build.GetIDRequestToken(t.Context(), "github", "octocat", 0, nil)
 	if err != nil {
 		t.Errorf("GetIDRequestToken returned err: %v", err)
 	}
@@ -647,11 +634,11 @@ func TestBuild_GetIDToken_200(t *testing.T) {
 	data := []byte(server.IDTokenResp)
 
 	var want api.Token
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Build.GetIDToken("github", "octocat", 1, nil)
-
+	got, resp, err := c.Build.GetIDToken(t.Context(), "github", "octocat", 1, nil)
 	if err != nil {
 		t.Errorf("GetIDToken returned err: %v", err)
 	}
@@ -675,8 +662,7 @@ func TestBuild_GetIDToken_400(t *testing.T) {
 	var want api.Token
 
 	// run test
-	got, resp, err := c.Build.GetIDToken("github", "octocat", 0, nil)
-
+	got, resp, err := c.Build.GetIDToken(t.Context(), "github", "octocat", 0, nil)
 	if err != nil {
 		t.Errorf("GetIDToken returned err: %v", err)
 	}
@@ -698,7 +684,7 @@ func ExampleBuildService_Get() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a build from the server
-	build, resp, err := c.Build.Get("github", "octocat", 1)
+	build, resp, err := c.Build.Get(context.Background(), "github", "octocat", 1)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -714,7 +700,7 @@ func ExampleBuildService_GetAll() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the builds from the server
-	builds, resp, err := c.Build.GetAll("github", "octocat", nil)
+	builds, resp, err := c.Build.GetAll(context.Background(), "github", "octocat", nil)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -730,7 +716,7 @@ func ExampleBuildService_GetLogs() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get for a build from the server
-	logs, resp, err := c.Build.GetLogs("github", "octocat", 1, nil)
+	logs, resp, err := c.Build.GetLogs(context.Background(), "github", "octocat", 1, nil)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -775,7 +761,7 @@ func ExampleBuildService_Add() {
 	}
 
 	// Create the build in the server
-	build, resp, err := c.Build.Add(&req)
+	build, resp, err := c.Build.Add(context.Background(), &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -797,7 +783,7 @@ func ExampleBuildService_Update() {
 	}
 
 	// Update the step in the server
-	build, resp, err := c.Build.Update(&req)
+	build, resp, err := c.Build.Update(context.Background(), &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -813,7 +799,7 @@ func ExampleBuildService_Remove() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the build in the server
-	build, resp, err := c.Build.Remove("github", "octocat", 1)
+	build, resp, err := c.Build.Remove(context.Background(), "github", "octocat", 1)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -829,7 +815,7 @@ func ExampleBuildService_Restart() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Restart the build in the server
-	build, resp, err := c.Build.Restart("github", "octocat", 1)
+	build, resp, err := c.Build.Restart(context.Background(), "github", "octocat", 1)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -845,7 +831,7 @@ func ExampleBuildService_Cancel() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Cancel the build in the server
-	_, resp, err := c.Build.Cancel("github", "octocat", 1)
+	_, resp, err := c.Build.Cancel(context.Background(), "github", "octocat", 1)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -861,7 +847,7 @@ func ExampleBuildService_GetBuildToken() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get token for a build from the server
-	token, resp, err := c.Build.GetBuildToken("github", "octocat", 1)
+	token, resp, err := c.Build.GetBuildToken(context.Background(), "github", "octocat", 1)
 	if err != nil {
 		fmt.Println(err)
 	}

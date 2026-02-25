@@ -3,6 +3,7 @@
 package vela
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -16,12 +17,14 @@ import (
 
 func TestSchedule_Get(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
+
 	c, err := NewClient(s.URL, "", nil)
 	if err != nil {
 		t.Errorf("unable to create test client: %v", err)
 	}
 
 	var schedule api.Schedule
+
 	err = json.Unmarshal([]byte(server.ScheduleResp), &schedule)
 	if err != nil {
 		t.Errorf("unable to create test schedule: %v", err)
@@ -32,6 +35,7 @@ func TestSchedule_Get(t *testing.T) {
 		repo     string
 		schedule string
 	}
+
 	tests := []struct {
 		failure  bool
 		name     string
@@ -64,7 +68,7 @@ func TestSchedule_Get(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			got, gotResp, err := c.Schedule.Get(test.args.org, test.args.repo, test.args.schedule)
+			got, gotResp, err := c.Schedule.Get(t.Context(), test.args.org, test.args.repo, test.args.schedule)
 
 			if test.failure {
 				if err == nil {
@@ -91,13 +95,16 @@ func TestSchedule_Get(t *testing.T) {
 
 func TestSchedule_GetAll(t *testing.T) {
 	t.Skip() // server.SchedulesResp is a poorly formatted string. TODO: fix in v0.24
+
 	s := httptest.NewServer(server.FakeHandler())
+
 	c, err := NewClient(s.URL, "", nil)
 	if err != nil {
 		t.Errorf("unable to create test client: %v", err)
 	}
 
 	var schedules []api.Schedule
+
 	err = json.Unmarshal([]byte(server.SchedulesResp), &schedules)
 	if err != nil {
 		t.Errorf("unable to create test schedules: %v", err)
@@ -108,6 +115,7 @@ func TestSchedule_GetAll(t *testing.T) {
 		repo string
 		opts *ListOptions
 	}
+
 	tests := []struct {
 		failure  bool
 		name     string
@@ -129,7 +137,7 @@ func TestSchedule_GetAll(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			got, gotResp, err := c.Schedule.GetAll(test.args.org, test.args.repo, test.args.opts)
+			got, gotResp, err := c.Schedule.GetAll(t.Context(), test.args.org, test.args.repo, test.args.opts)
 
 			if test.failure {
 				if err == nil {
@@ -156,12 +164,14 @@ func TestSchedule_GetAll(t *testing.T) {
 
 func TestSchedule_Add(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
+
 	c, err := NewClient(s.URL, "", nil)
 	if err != nil {
 		t.Errorf("unable to create test client: %v", err)
 	}
 
 	var schedule api.Schedule
+
 	err = json.Unmarshal([]byte(server.ScheduleResp), &schedule)
 	if err != nil {
 		t.Errorf("unable to create test schedule: %v", err)
@@ -172,6 +182,7 @@ func TestSchedule_Add(t *testing.T) {
 		repo     string
 		schedule *api.Schedule
 	}
+
 	tests := []struct {
 		failure  bool
 		name     string
@@ -197,7 +208,7 @@ func TestSchedule_Add(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			got, gotResp, err := c.Schedule.Add(test.args.org, test.args.repo, test.args.schedule)
+			got, gotResp, err := c.Schedule.Add(t.Context(), test.args.org, test.args.repo, test.args.schedule)
 
 			if test.failure {
 				if err == nil {
@@ -224,12 +235,14 @@ func TestSchedule_Add(t *testing.T) {
 
 func TestSchedule_Update(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
+
 	c, err := NewClient(s.URL, "", nil)
 	if err != nil {
 		t.Errorf("unable to create test client: %v", err)
 	}
 
 	var schedule api.Schedule
+
 	err = json.Unmarshal([]byte(server.ScheduleResp), &schedule)
 	if err != nil {
 		t.Errorf("unable to create test schedule: %v", err)
@@ -240,6 +253,7 @@ func TestSchedule_Update(t *testing.T) {
 		repo     string
 		schedule *api.Schedule
 	}
+
 	tests := []struct {
 		failure  bool
 		name     string
@@ -278,7 +292,7 @@ func TestSchedule_Update(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			got, gotResp, err := c.Schedule.Update(test.args.org, test.args.repo, test.args.schedule)
+			got, gotResp, err := c.Schedule.Update(t.Context(), test.args.org, test.args.repo, test.args.schedule)
 
 			if test.failure {
 				if err == nil {
@@ -305,6 +319,7 @@ func TestSchedule_Update(t *testing.T) {
 
 func TestSchedule_Remove(t *testing.T) {
 	s := httptest.NewServer(server.FakeHandler())
+
 	c, err := NewClient(s.URL, "", nil)
 	if err != nil {
 		t.Errorf("unable to create test client: %v", err)
@@ -315,6 +330,7 @@ func TestSchedule_Remove(t *testing.T) {
 		repo     string
 		schedule string
 	}
+
 	tests := []struct {
 		failure  bool
 		name     string
@@ -347,7 +363,7 @@ func TestSchedule_Remove(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			got, gotResp, err := c.Schedule.Remove(test.args.org, test.args.repo, test.args.schedule)
+			got, gotResp, err := c.Schedule.Remove(t.Context(), test.args.org, test.args.repo, test.args.schedule)
 
 			if test.failure {
 				if err == nil {
@@ -383,7 +399,7 @@ func ExampleScheduleService_Get() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// get a schedule from a repo in the server
-	schedule, resp, err := c.Schedule.Get("github", "octocat", "nightly")
+	schedule, resp, err := c.Schedule.Get(context.Background(), "github", "octocat", "nightly")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -402,7 +418,7 @@ func ExampleScheduleService_GetAll() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// get all the schedules from a repo in the server
-	schedules, resp, err := c.Schedule.GetAll("github", "octocat", nil)
+	schedules, resp, err := c.Schedule.GetAll(context.Background(), "github", "octocat", nil)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -427,7 +443,7 @@ func ExampleScheduleService_Add() {
 	}
 
 	// create the schedule in the server
-	schedule, resp, err := c.Schedule.Add("github", "octocat", &req)
+	schedule, resp, err := c.Schedule.Add(context.Background(), "github", "octocat", &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -452,7 +468,7 @@ func ExampleScheduleService_Update() {
 	}
 
 	// update the schedule in the server
-	schedule, resp, err := c.Schedule.Update("github", "octocat", &req)
+	schedule, resp, err := c.Schedule.Update(context.Background(), "github", "octocat", &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -471,7 +487,7 @@ func ExampleScheduleService_Remove() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// remove the schedule from the server
-	schedule, resp, err := c.Schedule.Remove("github", "octocat", "nightly")
+	schedule, resp, err := c.Schedule.Remove(context.Background(), "github", "octocat", "nightly")
 	if err != nil {
 		fmt.Println(err)
 	}

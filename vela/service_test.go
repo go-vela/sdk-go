@@ -3,6 +3,7 @@
 package vela
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -27,11 +28,11 @@ func TestService_Get_200(t *testing.T) {
 	data := []byte(server.ServiceResp)
 
 	var want api.Service
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Svc.Get("github", "octocat", 1, 1)
-
+	got, resp, err := c.Svc.Get(t.Context(), "github", "octocat", 1, 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -55,8 +56,7 @@ func TestService_Get_404(t *testing.T) {
 	want := api.Service{}
 
 	// run test
-	got, resp, err := c.Svc.Get("github", "octocat", 1, 0)
-
+	got, resp, err := c.Svc.Get(t.Context(), "github", "octocat", 1, 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -80,11 +80,11 @@ func TestService_GetAll_200(t *testing.T) {
 	data := []byte(server.ServicesResp)
 
 	var want []api.Service
+
 	_ = json.Unmarshal(data, &want)
 
 	// run test
-	got, resp, err := c.Svc.GetAll("github", "octocat", 1, nil)
-
+	got, resp, err := c.Svc.GetAll(t.Context(), "github", "octocat", 1, nil)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -108,6 +108,7 @@ func TestService_Add_201(t *testing.T) {
 	data := []byte(server.ServiceResp)
 
 	var want api.Service
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Service{
@@ -122,8 +123,7 @@ func TestService_Add_201(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Svc.Add("github", "octocat", 1, &req)
-
+	got, resp, err := c.Svc.Add(t.Context(), "github", "octocat", 1, &req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -147,6 +147,7 @@ func TestService_Update_201(t *testing.T) {
 	data := []byte(server.ServiceResp)
 
 	var want api.Service
+
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Service{
@@ -157,8 +158,7 @@ func TestService_Update_201(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Svc.Update("github", "octocat", 1, &req)
-
+	got, resp, err := c.Svc.Update(t.Context(), "github", "octocat", 1, &req)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -189,8 +189,7 @@ func TestService_Update_404(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Svc.Update("github", "not-found", 0, &req)
-
+	got, resp, err := c.Svc.Update(t.Context(), "github", "not-found", 0, &req)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -212,8 +211,7 @@ func TestService_Remove_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Svc.Remove("github", "octocat", 1, 1)
-
+	_, resp, err := c.Svc.Remove(t.Context(), "github", "octocat", 1, 1)
 	if err != nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -231,8 +229,7 @@ func TestService_Remove_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Svc.Remove("github", "octocat", 1, 0)
-
+	_, resp, err := c.Svc.Remove(t.Context(), "github", "octocat", 1, 0)
 	if err == nil {
 		t.Errorf("New returned err: %v", err)
 	}
@@ -250,7 +247,7 @@ func ExampleSvcService_Get() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get a service from the server
-	service, resp, err := c.Svc.Get("github", "octocat", 1, 1)
+	service, resp, err := c.Svc.Get(context.Background(), "github", "octocat", 1, 1)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -266,7 +263,7 @@ func ExampleSvcService_GetAll() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Get all the services from the server
-	services, resp, err := c.Svc.GetAll("github", "octocat", 1, nil)
+	services, resp, err := c.Svc.GetAll(context.Background(), "github", "octocat", 1, nil)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -293,7 +290,7 @@ func ExampleSvcService_Add() {
 	}
 
 	// Create the service in the server
-	service, resp, err := c.Svc.Add("github", "octocat", 1, &req)
+	service, resp, err := c.Svc.Add(context.Background(), "github", "octocat", 1, &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -314,7 +311,7 @@ func ExampleSvcService_Update() {
 	}
 
 	// Update the service in the server
-	service, resp, err := c.Svc.Update("github", "octocat", 1, &req)
+	service, resp, err := c.Svc.Update(context.Background(), "github", "octocat", 1, &req)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -330,7 +327,7 @@ func ExampleSvcService_Remove() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	// Remove the service in the server
-	service, resp, err := c.Svc.Remove("github", "octocat", 1, 1)
+	service, resp, err := c.Svc.Remove(context.Background(), "github", "octocat", 1, 1)
 	if err != nil {
 		fmt.Println(err)
 	}
