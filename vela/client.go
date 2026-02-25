@@ -518,6 +518,8 @@ func (c *Client) CallWithHeaders(ctx context.Context, method, url string, body, 
 // be written to respType, without attempting to first decode it.
 func (c *Client) Do(req *http.Request, respType interface{}) (*Response, error) {
 	// send request with client
+	//
+	//nolint:gosec // ignore SSRF
 	resp, err := c.client.Do(req)
 	if err != nil {
 		return nil, err
