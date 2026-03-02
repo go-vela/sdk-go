@@ -239,10 +239,10 @@ func (svc *BuildService) GetIDToken(ctx context.Context, org, repo string, build
 	return t, resp, err
 }
 
-func (svc *BuildService) GetSTSCreds(ctx context.Context, org, repo string, build int64) (*api.STSCreds, *Response, error) {
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/storage/sts", org, repo, build)
-	out := new(api.STSCreds)
-	resp, err := svc.client.Call(ctx, "GET", u, nil, out)
+func (svc *BuildService) GetPresignedPutURL(ctx context.Context, objName, org, repo string, build int64) (*api.PresignURL, *Response, error) {
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/storage/%s/upload-url", org, repo, build, objName)
+	out := new(api.PresignURL)
+	resp, err := svc.client.Call(ctx, "PUT", u, nil, out)
 
 	return out, resp, err
 }

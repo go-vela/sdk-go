@@ -15,16 +15,16 @@ import (
 	"github.com/go-vela/server/mock/server"
 )
 
-func TestStorage_GetSTSCreds_200(t *testing.T) {
+func TestStorage_GetPresignedPutURL_200(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
-	data := []byte(server.StorageSTSResp)
+	data := []byte(server.PresignedPutResp)
 
 	c.Authentication.SetBuildTokenAuth("buildToken", "scmToken", 0, "foo/bar", 1)
 
-	var want *api.STSCreds
+	var want *api.PresignURL
 
 	err := json.Unmarshal(data, &want)
 	if err != nil {
@@ -32,33 +32,33 @@ func TestStorage_GetSTSCreds_200(t *testing.T) {
 	}
 
 	// run test
-	got, resp, err := c.Build.GetSTSCreds(t.Context(), "foo", "bar", 1)
+	got, resp, err := c.Build.GetPresignedPutURL(t.Context(), "file.txt", "foo", "bar", 1)
 	if err != nil {
-		t.Errorf("GetSTSCreds returned err: %v", err)
+		t.Errorf("GetPresignedPutURL returned err: %v", err)
 	}
 
 	if resp.StatusCode != http.StatusCreated {
-		t.Errorf("GetSTSCreds returned %v, want %v", resp.StatusCode, http.StatusCreated)
+		t.Errorf("GetPresignedPutURL returned %v, want %v", resp.StatusCode, http.StatusCreated)
 	}
 
 	if diff := cmp.Diff(want, got); diff != "" {
-		t.Errorf("GetSTSCreds mismatch (-want +got):\n%s", diff)
+		t.Errorf("GetPresignedPutURL mismatch (-want +got):\n%s", diff)
 	}
 }
 
-func TestStorage_GetSTSCreds_401(t *testing.T) {
+func TestStorage_GetPresignedPutURL_401(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	s := httptest.NewServer(server.FakeHandler())
 	c, _ := NewClient(s.URL, "", nil)
 
 	// run test
-	_, resp, err := c.Build.GetSTSCreds(t.Context(), "foo", "bar", 1)
+	_, resp, err := c.Build.GetPresignedPutURL(t.Context(), "file.txt", "foo", "bar", 1)
 	if err == nil {
-		t.Errorf("GetSTSCreds should have returned err %v", resp.StatusCode)
+		t.Errorf("GetPresignedPutURL should have returned err %v", resp.StatusCode)
 	}
 
 	if resp.StatusCode != http.StatusUnauthorized {
-		t.Errorf("GetSTSCreds returned %v, want %v", resp.StatusCode, http.StatusUnauthorized)
+		t.Errorf("GetPresignedPutURL returned %v, want %v", resp.StatusCode, http.StatusUnauthorized)
 	}
 }
