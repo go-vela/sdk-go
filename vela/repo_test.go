@@ -112,17 +112,17 @@ func TestRepo_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Repo{
-		Org:         String("github"),
-		Name:        String("octocat"),
-		FullName:    String("github/octocat"),
-		Link:        String("https://github.com/github/octocat"),
-		Clone:       String("https://github.com/github/octocat.git"),
-		Branch:      String("main"),
-		Timeout:     Int32(60),
-		Visibility:  String("public"),
-		Private:     Bool(false),
-		Trusted:     Bool(false),
-		Active:      Bool(true),
+		Org:         new("github"),
+		Name:        new("octocat"),
+		FullName:    new("github/octocat"),
+		Link:        new("https://github.com/github/octocat"),
+		Clone:       new("https://github.com/github/octocat.git"),
+		Branch:      new("main"),
+		Timeout:     new(int32(60)),
+		Visibility:  new("public"),
+		Private:     new(false),
+		Trusted:     new(false),
+		Active:      new(true),
 		AllowEvents: testEvents(),
 	}
 
@@ -155,9 +155,9 @@ func TestRepo_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Repo{
-		Private:     Bool(true),
-		Trusted:     Bool(true),
-		Active:      Bool(true),
+		Private:     new(true),
+		Trusted:     new(true),
+		Active:      new(true),
 		AllowEvents: testEvents(),
 	}
 
@@ -186,9 +186,9 @@ func TestRepo_Update_404(t *testing.T) {
 	want := api.Repo{}
 
 	req := api.Repo{
-		Private:     Bool(true),
-		Trusted:     Bool(true),
-		Active:      Bool(true),
+		Private:     new(true),
+		Trusted:     new(true),
+		Active:      new(true),
 		AllowEvents: testEvents(),
 	}
 
@@ -355,17 +355,17 @@ func ExampleRepoService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Repo{
-		Org:         String("github"),
-		Name:        String("octocat"),
-		FullName:    String("github/octocat"),
-		Link:        String("https://github.com/github/octocat"),
-		Clone:       String("https://github.com/github/octocat.git"),
-		Branch:      String("main"),
-		Timeout:     Int32(60),
-		Visibility:  String("public"),
-		Private:     Bool(false),
-		Trusted:     Bool(false),
-		Active:      Bool(true),
+		Org:         new("github"),
+		Name:        new("octocat"),
+		FullName:    new("github/octocat"),
+		Link:        new("https://github.com/github/octocat"),
+		Clone:       new("https://github.com/github/octocat.git"),
+		Branch:      new("main"),
+		Timeout:     new(int32(60)),
+		Visibility:  new("public"),
+		Private:     new(false),
+		Trusted:     new(false),
+		Active:      new(true),
 		AllowEvents: testEvents(),
 	}
 
@@ -449,26 +449,26 @@ func ExampleRepoService_Chown() {
 func testEvents() *api.Events {
 	return &api.Events{
 		Push: &actions.Push{
-			Branch:       Bool(true),
-			Tag:          Bool(true),
-			DeleteBranch: Bool(true),
-			DeleteTag:    Bool(true),
+			Branch:       new(true),
+			Tag:          new(true),
+			DeleteBranch: new(true),
+			DeleteTag:    new(true),
 		},
 		PullRequest: &actions.Pull{
-			Opened:      Bool(true),
-			Edited:      Bool(true),
-			Synchronize: Bool(true),
-			Reopened:    Bool(true),
+			Opened:      new(true),
+			Edited:      new(true),
+			Synchronize: new(true),
+			Reopened:    new(true),
 		},
 		Deployment: &actions.Deploy{
-			Created: Bool(true),
+			Created: new(true),
 		},
 		Comment: &actions.Comment{
-			Created: Bool(true),
-			Edited:  Bool(true),
+			Created: new(true),
+			Edited:  new(true),
 		},
 		Schedule: &actions.Schedule{
-			Run: Bool(true),
+			Run: new(true),
 		},
 	}
 }

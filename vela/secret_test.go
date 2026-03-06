@@ -112,10 +112,10 @@ func TestSecret_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Secret{
-		Org:         String("github"),
-		Repo:        String("octocat"),
-		Name:        String("foo"),
-		Value:       String("bar"),
+		Org:         new("github"),
+		Repo:        new("octocat"),
+		Name:        new("foo"),
+		Value:       new("bar"),
 		Images:      &[]string{"foo", "bar"},
 		AllowEvents: testEvents(),
 	}
@@ -149,8 +149,8 @@ func TestSecret_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Secret{
-		Name:        String("foo"),
-		Value:       String("bar"),
+		Name:        new("foo"),
+		Value:       new("bar"),
 		AllowEvents: testEvents(),
 	}
 
@@ -179,8 +179,8 @@ func TestSecret_Update_404(t *testing.T) {
 	want := api.Secret{}
 
 	req := api.Secret{
-		Name:        String("foo"),
-		Value:       String("bar"),
+		Name:        new("foo"),
+		Value:       new("bar"),
 		AllowEvents: testEvents(),
 	}
 
@@ -275,8 +275,8 @@ func ExampleSecretService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Secret{
-		Name:        String("foo"),
-		Value:       String("bar"),
+		Name:        new("foo"),
+		Value:       new("bar"),
 		Images:      &[]string{"foo", "bar"},
 		AllowEvents: testEvents(),
 	}
@@ -298,8 +298,8 @@ func ExampleSecretService_Update() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Secret{
-		Name:        String("foo"),
-		Value:       String("bar"),
+		Name:        new("foo"),
+		Value:       new("bar"),
 		AllowEvents: testEvents(),
 	}
 

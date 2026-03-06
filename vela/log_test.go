@@ -83,7 +83,7 @@ func TestLog_AddService_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Log{
-		Data: Bytes([]byte("Hello, World")),
+		Data: new([]byte("Hello, World")),
 	}
 
 	// run test
@@ -105,7 +105,7 @@ func TestLog_UpdateService_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	req := api.Log{
-		Data: Bytes([]byte("Hello, World Manny")),
+		Data: new([]byte("Hello, World Manny")),
 	}
 
 	// run test
@@ -127,7 +127,7 @@ func TestLog_UpdateService_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	req := api.Log{
-		Data: Bytes([]byte("Hello, World Manny")),
+		Data: new([]byte("Hello, World Manny")),
 	}
 
 	// run test
@@ -243,7 +243,7 @@ func TestLog_AddStep_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Log{
-		Data: Bytes([]byte("Hello, World")),
+		Data: new([]byte("Hello, World")),
 	}
 
 	// run test
@@ -265,7 +265,7 @@ func TestLog_UpdateStep_200(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	req := api.Log{
-		Data: Bytes([]byte("Hello, World Manny")),
+		Data: new([]byte("Hello, World Manny")),
 	}
 
 	// run test
@@ -287,7 +287,7 @@ func TestLog_UpdateStep_404(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	req := api.Log{
-		Data: Bytes([]byte("Hello, World Manny")),
+		Data: new([]byte("Hello, World Manny")),
 	}
 
 	// run test
@@ -361,7 +361,7 @@ func ExampleLogService_AddService() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Log{
-		Data: Bytes([]byte("Hello World")),
+		Data: new([]byte("Hello World")),
 	}
 
 	// Create the log in the server
@@ -381,7 +381,7 @@ func ExampleLogService_UpdateService() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Log{
-		Data: Bytes([]byte("Hello World")),
+		Data: new([]byte("Hello World")),
 	}
 
 	// Update the log in the server
@@ -433,7 +433,7 @@ func ExampleLogService_AddStep() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Log{
-		Data: Bytes([]byte("Hello World")),
+		Data: new([]byte("Hello World")),
 	}
 
 	// Create the log in the server
@@ -453,7 +453,7 @@ func ExampleLogService_UpdateStep() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Log{
-		Data: Bytes([]byte("Hello World")),
+		Data: new([]byte("Hello World")),
 	}
 
 	// Update the log in the server

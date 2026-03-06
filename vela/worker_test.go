@@ -111,16 +111,16 @@ func TestWorker_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Worker{
-		ID:       Int64(1),
-		Hostname: String("worker_1"),
-		Address:  String("http://vela:8080"),
-		Routes: Strings([]string{
+		ID:       new(int64(1)),
+		Hostname: new("worker_1"),
+		Address:  new("http://vela:8080"),
+		Routes: new([]string{
 			"large",
 			"docker",
 			"large:docker",
 		}),
-		Active:        Bool(true),
-		LastCheckedIn: Int64(1602612590),
+		Active:        new(true),
+		LastCheckedIn: new(int64(1602612590)),
 	}
 
 	// run test
@@ -202,7 +202,7 @@ func TestWorker_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Worker{
-		Active: Bool(true),
+		Active: new(true),
 	}
 
 	// run test
@@ -230,7 +230,7 @@ func TestWorker_Update_404(t *testing.T) {
 	want := api.Worker{}
 
 	req := api.Worker{
-		Active: Bool(true),
+		Active: new(true),
 	}
 
 	// run test
@@ -324,16 +324,16 @@ func ExampleWorkerService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Worker{
-		ID:       Int64(1),
-		Hostname: String("worker_1"),
-		Address:  String("http://vela:8080"),
-		Routes: Strings([]string{
+		ID:       new(int64(1)),
+		Hostname: new("worker_1"),
+		Address:  new("http://vela:8080"),
+		Routes: new([]string{
 			"large",
 			"docker",
 			"large:docker",
 		}),
-		Active:        Bool(true),
-		LastCheckedIn: Int64(1602612590),
+		Active:        new(true),
+		LastCheckedIn: new(int64(1602612590)),
 	}
 
 	// Create the worker in the server
@@ -371,7 +371,7 @@ func ExampleWorkerService_Update() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Worker{
-		Active: Bool(false),
+		Active: new(false),
 	}
 
 	// Update the worker in the server

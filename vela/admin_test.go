@@ -32,10 +32,10 @@ func TestAdmin_Build_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Build{
-		Number: Int64(1),
-		Parent: Int64(1),
-		Event:  String("push"),
-		Status: String("running"),
+		Number: new(int64(1)),
+		Parent: new(int64(1)),
+		Event:  new("push"),
+		Status: new("running"),
 	}
 
 	// run test
@@ -63,7 +63,7 @@ func TestAdmin_Clean_200(t *testing.T) {
 	want := server.CleanResourcesResp
 
 	req := api.Error{
-		Message: String("msg"),
+		Message: new("msg"),
 	}
 
 	// run test
@@ -89,7 +89,7 @@ func TestAdmin_Clean_Error(t *testing.T) {
 	c, _ := NewClient(s.URL, "", nil)
 
 	req := api.Error{
-		Message: String("msg"),
+		Message: new("msg"),
 	}
 
 	opt500 := CleanOptions{
@@ -128,11 +128,11 @@ func TestAdmin_Deployment_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Deployment{
-		Commit:      String("48afb5bdc41ad69bf22588491333f7cf71135163"),
-		Ref:         String("refs/heads/main"),
-		Task:        String("vela-deploy"),
-		Target:      String("production"),
-		Description: String("Deployment request from Vela"),
+		Commit:      new("48afb5bdc41ad69bf22588491333f7cf71135163"),
+		Ref:         new("refs/heads/main"),
+		Task:        new("vela-deploy"),
+		Target:      new("production"),
+		Description: new("Deployment request from Vela"),
 	}
 
 	// run test
@@ -164,9 +164,9 @@ func TestAdmin_Hook_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Hook{
-		Number: Int64(1),
-		Event:  String("push"),
-		Status: String("success"),
+		Number: new(int64(1)),
+		Event:  new("push"),
+		Status: new("success"),
 	}
 
 	// run test
@@ -198,31 +198,31 @@ func TestAdmin_Repo_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Repo{
-		Private: Bool(true),
-		Trusted: Bool(true),
-		Active:  Bool(true),
+		Private: new(true),
+		Trusted: new(true),
+		Active:  new(true),
 		AllowEvents: &api.Events{
 			Push: &actions.Push{
-				Branch:       Bool(true),
-				Tag:          Bool(true),
-				DeleteBranch: Bool(true),
-				DeleteTag:    Bool(true),
+				Branch:       new(true),
+				Tag:          new(true),
+				DeleteBranch: new(true),
+				DeleteTag:    new(true),
 			},
 			PullRequest: &actions.Pull{
-				Opened:      Bool(true),
-				Edited:      Bool(true),
-				Synchronize: Bool(true),
-				Reopened:    Bool(true),
+				Opened:      new(true),
+				Edited:      new(true),
+				Synchronize: new(true),
+				Reopened:    new(true),
 			},
 			Deployment: &actions.Deploy{
-				Created: Bool(true),
+				Created: new(true),
 			},
 			Comment: &actions.Comment{
-				Created: Bool(true),
-				Edited:  Bool(true),
+				Created: new(true),
+				Edited:  new(true),
 			},
 			Schedule: &actions.Schedule{
-				Run: Bool(true),
+				Run: new(true),
 			},
 		},
 	}
@@ -256,8 +256,8 @@ func TestAdmin_Secret_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Secret{
-		Name:        String("foo"),
-		Value:       String("bar"),
+		Name:        new("foo"),
+		Value:       new("bar"),
 		AllowEvents: testEvents(),
 	}
 
@@ -290,10 +290,10 @@ func TestAdmin_Service_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Service{
-		Number:   Int32(1),
-		Status:   String("finished"),
-		Started:  Int64(1563475419),
-		Finished: Int64(1563475419),
+		Number:   new(int32(1)),
+		Status:   new("finished"),
+		Started:  new(int64(1563475419)),
+		Finished: new(int64(1563475419)),
 	}
 
 	// run test
@@ -325,10 +325,10 @@ func TestAdmin_Step_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Step{
-		Number:   Int32(1),
-		Status:   String("finished"),
-		Started:  Int64(1563475419),
-		Finished: Int64(1563475419),
+		Number:   new(int32(1)),
+		Status:   new("finished"),
+		Started:  new(int64(1563475419)),
+		Finished: new(int64(1563475419)),
 	}
 
 	// run test
@@ -360,7 +360,7 @@ func TestAdmin_User_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.User{
-		Name: String("octocat"),
+		Name: new("octocat"),
 	}
 
 	// run test

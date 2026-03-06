@@ -111,15 +111,15 @@ func TestHook_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Hook{
-		Number:   Int64(1),
-		SourceID: String("c8da1302-07d6-11ea-882f-4893bca275b8"),
-		Event:    String("push"),
-		Status:   String("created"),
-		Error:    String(""),
-		Created:  Int64(1563474076),
-		Link:     String("https://github.com/github/octocat/settings/hooks/1"),
-		Branch:   String("main"),
-		Host:     String("github.com"),
+		Number:   new(int64(1)),
+		SourceID: new("c8da1302-07d6-11ea-882f-4893bca275b8"),
+		Event:    new("push"),
+		Status:   new("created"),
+		Error:    new(""),
+		Created:  new(int64(1563474076)),
+		Link:     new("https://github.com/github/octocat/settings/hooks/1"),
+		Branch:   new("main"),
+		Host:     new("github.com"),
 	}
 
 	// run test
@@ -151,9 +151,9 @@ func TestHook_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Hook{
-		Number: Int64(1),
-		Event:  String("push"),
-		Status: String("success"),
+		Number: new(int64(1)),
+		Event:  new("push"),
+		Status: new("success"),
 	}
 
 	// run test
@@ -181,9 +181,9 @@ func TestHook_Update_404(t *testing.T) {
 	want := api.Hook{}
 
 	req := api.Hook{
-		Number: Int64(0),
-		Event:  String("push"),
-		Status: String("running"),
+		Number: new(int64(0)),
+		Event:  new("push"),
+		Status: new("running"),
 	}
 
 	// run test
@@ -277,15 +277,15 @@ func ExampleHookService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Hook{
-		Number:   Int64(1),
-		SourceID: String("c8da1302-07d6-11ea-882f-4893bca275b8"),
-		Event:    String("push"),
-		Status:   String("created"),
-		Error:    String(""),
-		Created:  Int64(1563474076),
-		Link:     String("https://github.com/github/octocat/settings/hooks/1"),
-		Branch:   String("main"),
-		Host:     String("github.com"),
+		Number:   new(int64(1)),
+		SourceID: new("c8da1302-07d6-11ea-882f-4893bca275b8"),
+		Event:    new("push"),
+		Status:   new("created"),
+		Error:    new(""),
+		Created:  new(int64(1563474076)),
+		Link:     new("https://github.com/github/octocat/settings/hooks/1"),
+		Branch:   new("main"),
+		Host:     new("github.com"),
 	}
 
 	// Create the hook in the server
@@ -305,8 +305,8 @@ func ExampleHookService_Update() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Hook{
-		Status: String("error"),
-		Error:  String(""),
+		Status: new("error"),
+		Error:  new(""),
 	}
 
 	// Update the step in the server

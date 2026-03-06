@@ -81,7 +81,7 @@ func TestUser_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.User{
-		Admin: Bool(true),
+		Admin: new(true),
 	}
 
 	// run test
@@ -109,7 +109,7 @@ func TestUser_Update_404(t *testing.T) {
 	want := api.User{}
 
 	req := api.User{
-		Admin: Bool(true),
+		Admin: new(true),
 	}
 
 	// run test

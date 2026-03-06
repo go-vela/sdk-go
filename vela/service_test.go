@@ -112,14 +112,14 @@ func TestService_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Service{
-		Number:   Int32(1),
-		Name:     String("clone"),
-		Status:   String("created"),
-		Error:    String(""),
-		ExitCode: Int32(0),
-		Created:  Int64(1563475419),
-		Started:  Int64(0),
-		Finished: Int64(0),
+		Number:   new(int32(1)),
+		Name:     new("clone"),
+		Status:   new("created"),
+		Error:    new(""),
+		ExitCode: new(int32(0)),
+		Created:  new(int64(1563475419)),
+		Started:  new(int64(0)),
+		Finished: new(int64(0)),
 	}
 
 	// run test
@@ -151,10 +151,10 @@ func TestService_Update_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Service{
-		Number:   Int32(1),
-		Status:   String("finished"),
-		Started:  Int64(1563475419),
-		Finished: Int64(1563475419),
+		Number:   new(int32(1)),
+		Status:   new("finished"),
+		Started:  new(int64(1563475419)),
+		Finished: new(int64(1563475419)),
 	}
 
 	// run test
@@ -182,10 +182,10 @@ func TestService_Update_404(t *testing.T) {
 	want := api.Service{}
 
 	req := api.Service{
-		Number:   Int32(0),
-		Status:   String("finished"),
-		Started:  Int64(1563475419),
-		Finished: Int64(1563475419),
+		Number:   new(int32(0)),
+		Status:   new("finished"),
+		Started:  new(int64(1563475419)),
+		Finished: new(int64(1563475419)),
 	}
 
 	// run test
@@ -279,14 +279,14 @@ func ExampleSvcService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Service{
-		Number:   Int32(1),
-		Name:     String("clone"),
-		Status:   String("pending"),
-		Error:    String(""),
-		ExitCode: Int32(0),
-		Created:  Int64(time.Now().UTC().Unix()),
-		Started:  Int64(0),
-		Finished: Int64(0),
+		Number:   new(int32(1)),
+		Name:     new("clone"),
+		Status:   new("pending"),
+		Error:    new(""),
+		ExitCode: new(int32(0)),
+		Created:  new(time.Now().UTC().Unix()),
+		Started:  new(int64(0)),
+		Finished: new(int64(0)),
 	}
 
 	// Create the service in the server
@@ -306,8 +306,8 @@ func ExampleSvcService_Update() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Service{
-		Status: String("error"),
-		Error:  String("Something in the runtime broke"),
+		Status: new("error"),
+		Error:  new("Something in the runtime broke"),
 	}
 
 	// Update the service in the server
