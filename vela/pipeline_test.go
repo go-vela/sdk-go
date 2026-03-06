@@ -113,11 +113,11 @@ func TestPipeline_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Pipeline{
-		Commit:  String("48afb5bdc41ad69bf22588491333f7cf71135163"),
-		Ref:     String("refs/heads/main"),
-		Type:    String("yaml"),
-		Version: String("1"),
-		Steps:   Bool(true),
+		Commit:  new("48afb5bdc41ad69bf22588491333f7cf71135163"),
+		Ref:     new("refs/heads/main"),
+		Type:    new("yaml"),
+		Version: new("1"),
+		Steps:   new(true),
 	}
 
 	// run test
@@ -149,8 +149,8 @@ func TestPipeline_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Pipeline{
-		Commit: String("48afb5bdc41ad69bf22588491333f7cf71135163"),
-		Type:   String("yaml"),
+		Commit: new("48afb5bdc41ad69bf22588491333f7cf71135163"),
+		Type:   new("yaml"),
 	}
 
 	// run test
@@ -178,7 +178,7 @@ func TestPipeline_Update_404(t *testing.T) {
 	want := api.Pipeline{}
 
 	req := api.Pipeline{
-		Commit: String("0"),
+		Commit: new("0"),
 	}
 
 	// run test
@@ -463,11 +463,11 @@ func ExamplePipelineService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Pipeline{
-		Commit:  String("48afb5bdc41ad69bf22588491333f7cf71135163"),
-		Ref:     String("refs/heads/main"),
-		Type:    String("yaml"),
-		Version: String("1"),
-		Steps:   Bool(true),
+		Commit:  new("48afb5bdc41ad69bf22588491333f7cf71135163"),
+		Ref:     new("refs/heads/main"),
+		Type:    new("yaml"),
+		Version: new("1"),
+		Steps:   new(true),
 	}
 
 	// Create the pipeline in the server
@@ -487,8 +487,8 @@ func ExamplePipelineService_Update() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Pipeline{
-		Commit: String("48afb5bdc41ad69bf22588491333f7cf71135163"),
-		Type:   String("yaml"),
+		Commit: new("48afb5bdc41ad69bf22588491333f7cf71135163"),
+		Type:   new("yaml"),
 	}
 
 	// Update the step in the server

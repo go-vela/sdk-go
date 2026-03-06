@@ -197,9 +197,9 @@ func TestSchedule_Add(t *testing.T) {
 				org:  "github",
 				repo: "octocat",
 				schedule: &api.Schedule{
-					Active: Bool(true),
-					Name:   String("foo"),
-					Entry:  String("@weekly"),
+					Active: new(true),
+					Name:   new("foo"),
+					Entry:  new("@weekly"),
 				},
 			},
 			want:     &schedule,
@@ -268,9 +268,9 @@ func TestSchedule_Update(t *testing.T) {
 				org:  "github",
 				repo: "octocat",
 				schedule: &api.Schedule{
-					Active: Bool(true),
-					Name:   String("foo"),
-					Entry:  String("@weekly"),
+					Active: new(true),
+					Name:   new("foo"),
+					Entry:  new("@weekly"),
 				},
 			},
 			want:     &schedule,
@@ -283,7 +283,7 @@ func TestSchedule_Update(t *testing.T) {
 				org:  "github",
 				repo: "octocat",
 				schedule: &api.Schedule{
-					Name: String("not-found"),
+					Name: new("not-found"),
 				},
 			},
 			want:     new(api.Schedule),
@@ -346,7 +346,7 @@ func TestSchedule_Remove(t *testing.T) {
 				repo:     "octocat",
 				schedule: "foo",
 			},
-			want:     String("schedule foo deleted"),
+			want:     new("schedule foo deleted"),
 			wantResp: http.StatusOK,
 		},
 		{
@@ -357,7 +357,7 @@ func TestSchedule_Remove(t *testing.T) {
 				repo:     "octocat",
 				schedule: "not-found",
 			},
-			want:     String("Schedule not-found does not exist"),
+			want:     new("Schedule not-found does not exist"),
 			wantResp: http.StatusNotFound,
 		},
 	}
@@ -437,9 +437,9 @@ func ExampleScheduleService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Schedule{
-		Active: Bool(true),
-		Name:   String("nightly"),
-		Entry:  String("0 0 * * *"),
+		Active: new(true),
+		Name:   new("nightly"),
+		Entry:  new("0 0 * * *"),
 	}
 
 	// create the schedule in the server
@@ -462,9 +462,9 @@ func ExampleScheduleService_Update() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Schedule{
-		Active: Bool(false),
-		Name:   String("nightly"),
-		Entry:  String("0 0 * * *"),
+		Active: new(false),
+		Name:   new("nightly"),
+		Entry:  new("0 0 * * *"),
 	}
 
 	// update the schedule in the server

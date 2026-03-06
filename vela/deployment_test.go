@@ -112,11 +112,11 @@ func TestDeployment_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Deployment{
-		Commit:      String("48afb5bdc41ad69bf22588491333f7cf71135163"),
-		Ref:         String("refs/heads/main"),
-		Task:        String("vela-deploy"),
-		Target:      String("production"),
-		Description: String("Deployment request from Vela"),
+		Commit:      new("48afb5bdc41ad69bf22588491333f7cf71135163"),
+		Ref:         new("refs/heads/main"),
+		Task:        new("vela-deploy"),
+		Target:      new("production"),
+		Description: new("Deployment request from Vela"),
 	}
 
 	// run test
@@ -174,11 +174,11 @@ func ExampleDeploymentService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Deployment{
-		Commit:      String("48afb5bdc41ad69bf22588491333f7cf71135163"),
-		Ref:         String("refs/heads/main"),
-		Task:        String("vela-deploy"),
-		Target:      String("production"),
-		Description: String("Deployment request from Vela"),
+		Commit:      new("48afb5bdc41ad69bf22588491333f7cf71135163"),
+		Ref:         new("refs/heads/main"),
+		Task:        new("vela-deploy"),
+		Target:      new("production"),
+		Description: new("Deployment request from Vela"),
 	}
 
 	// Create the deployment in the server

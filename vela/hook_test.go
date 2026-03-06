@@ -112,14 +112,14 @@ func TestHook_Add_201(t *testing.T) {
 
 	req := api.Hook{
 		Number:   Int64(1),
-		SourceID: String("c8da1302-07d6-11ea-882f-4893bca275b8"),
-		Event:    String("push"),
-		Status:   String("created"),
-		Error:    String(""),
+		SourceID: new("c8da1302-07d6-11ea-882f-4893bca275b8"),
+		Event:    new("push"),
+		Status:   new("created"),
+		Error:    new(""),
 		Created:  Int64(1563474076),
-		Link:     String("https://github.com/github/octocat/settings/hooks/1"),
-		Branch:   String("main"),
-		Host:     String("github.com"),
+		Link:     new("https://github.com/github/octocat/settings/hooks/1"),
+		Branch:   new("main"),
+		Host:     new("github.com"),
 	}
 
 	// run test
@@ -152,8 +152,8 @@ func TestHook_Update_200(t *testing.T) {
 
 	req := api.Hook{
 		Number: Int64(1),
-		Event:  String("push"),
-		Status: String("success"),
+		Event:  new("push"),
+		Status: new("success"),
 	}
 
 	// run test
@@ -182,8 +182,8 @@ func TestHook_Update_404(t *testing.T) {
 
 	req := api.Hook{
 		Number: Int64(0),
-		Event:  String("push"),
-		Status: String("running"),
+		Event:  new("push"),
+		Status: new("running"),
 	}
 
 	// run test
@@ -278,14 +278,14 @@ func ExampleHookService_Add() {
 
 	req := api.Hook{
 		Number:   Int64(1),
-		SourceID: String("c8da1302-07d6-11ea-882f-4893bca275b8"),
-		Event:    String("push"),
-		Status:   String("created"),
-		Error:    String(""),
+		SourceID: new("c8da1302-07d6-11ea-882f-4893bca275b8"),
+		Event:    new("push"),
+		Status:   new("created"),
+		Error:    new(""),
 		Created:  Int64(1563474076),
-		Link:     String("https://github.com/github/octocat/settings/hooks/1"),
-		Branch:   String("main"),
-		Host:     String("github.com"),
+		Link:     new("https://github.com/github/octocat/settings/hooks/1"),
+		Branch:   new("main"),
+		Host:     new("github.com"),
 	}
 
 	// Create the hook in the server
@@ -305,8 +305,8 @@ func ExampleHookService_Update() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Hook{
-		Status: String("error"),
-		Error:  String(""),
+		Status: new("error"),
+		Error:  new(""),
 	}
 
 	// Update the step in the server

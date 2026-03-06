@@ -218,33 +218,33 @@ func TestBuild_Add_201(t *testing.T) {
 	req := api.Build{
 		Number: Int64(1),
 		Repo: &api.Repo{
-			Org:  String("github"),
-			Name: String("octocat"),
+			Org:  new("github"),
+			Name: new("octocat"),
 		},
 		Parent:       Int64(1),
-		Event:        String("push"),
-		Status:       String("created"),
-		Error:        String(""),
+		Event:        new("push"),
+		Status:       new("created"),
+		Error:        new(""),
 		Enqueued:     Int64(1563474077),
 		Created:      Int64(1563474076),
 		Started:      Int64(1563474077),
 		Finished:     Int64(0),
-		Deploy:       String(""),
-		Clone:        String("https://github.com/github/octocat.git"),
-		Source:       String("https://github.com/github/octocat/abcdefghi123456789"),
-		Title:        String("push received from https://github.com/github/octocat"),
-		Message:      String("First commit..."),
-		Commit:       String("48afb5bdc41ad69bf22588491333f7cf71135163"),
-		Sender:       String("OctoKitty"),
-		Author:       String("OctoKitty"),
-		Email:        String("octokitty@github.com"),
-		Link:         String("https://vela.example.company.com/github/octocat/1"),
-		Branch:       String("main"),
-		Ref:          String("refs/heads/main"),
-		BaseRef:      String(""),
-		Host:         String("example.company.com"),
-		Runtime:      String("docker"),
-		Distribution: String("linux"),
+		Deploy:       new(""),
+		Clone:        new("https://github.com/github/octocat.git"),
+		Source:       new("https://github.com/github/octocat/abcdefghi123456789"),
+		Title:        new("push received from https://github.com/github/octocat"),
+		Message:      new("First commit..."),
+		Commit:       new("48afb5bdc41ad69bf22588491333f7cf71135163"),
+		Sender:       new("OctoKitty"),
+		Author:       new("OctoKitty"),
+		Email:        new("octokitty@github.com"),
+		Link:         new("https://vela.example.company.com/github/octocat/1"),
+		Branch:       new("main"),
+		Ref:          new("refs/heads/main"),
+		BaseRef:      new(""),
+		Host:         new("example.company.com"),
+		Runtime:      new("docker"),
+		Distribution: new("linux"),
 	}
 
 	// run test
@@ -278,12 +278,12 @@ func TestBuild_Update_200(t *testing.T) {
 	req := api.Build{
 		Number: Int64(1),
 		Repo: &api.Repo{
-			Org:  String("github"),
-			Name: String("octocat"),
+			Org:  new("github"),
+			Name: new("octocat"),
 		},
 		Parent: Int64(1),
-		Event:  String("push"),
-		Status: String("running"),
+		Event:  new("push"),
+		Status: new("running"),
 	}
 
 	// run test
@@ -313,12 +313,12 @@ func TestBuild_Update_404(t *testing.T) {
 	req := api.Build{
 		Number: Int64(0),
 		Repo: &api.Repo{
-			Org:  String("github"),
-			Name: String("octocat"),
+			Org:  new("github"),
+			Name: new("octocat"),
 		},
 		Parent: Int64(1),
-		Event:  String("push"),
-		Status: String("running"),
+		Event:  new("push"),
+		Status: new("running"),
 	}
 
 	// run test
@@ -733,31 +733,31 @@ func ExampleBuildService_Add() {
 
 	req := api.Build{
 		Number:       Int64(1),
-		Repo:         &api.Repo{Org: String("github"), Name: String("octocat")},
+		Repo:         &api.Repo{Org: new("github"), Name: new("octocat")},
 		Parent:       Int64(1),
-		Event:        String("push"),
-		Status:       String("created"),
-		Error:        String(""),
-		Enqueued:     Int64(time.Now().UTC().Unix()),
-		Created:      Int64(time.Now().UTC().Unix()),
+		Event:        new("push"),
+		Status:       new("created"),
+		Error:        new(""),
+		Enqueued:     new(time.Now().UTC().Unix()),
+		Created:      new(time.Now().UTC().Unix()),
 		Started:      Int64(0),
 		Finished:     Int64(0),
-		Deploy:       String(""),
-		Clone:        String("https://github.com/go-vela/server.git"),
-		Source:       String("https://github.com/go-vela/server/abcdefghi123456789"),
-		Title:        String(""),
-		Message:      String(""),
-		Commit:       String("abcdefghi123456789"),
-		Sender:       String("someone"),
-		Author:       String("someone"),
-		Email:        String("someone@example.com"),
-		Link:         String("https://vela.example.company.com/go-vela/server/1"),
-		Branch:       String("main"),
-		Ref:          String(""),
-		BaseRef:      String(""),
-		Host:         String("example.company.com"),
-		Runtime:      String("docker"),
-		Distribution: String("linux"),
+		Deploy:       new(""),
+		Clone:        new("https://github.com/go-vela/server.git"),
+		Source:       new("https://github.com/go-vela/server/abcdefghi123456789"),
+		Title:        new(""),
+		Message:      new(""),
+		Commit:       new("abcdefghi123456789"),
+		Sender:       new("someone"),
+		Author:       new("someone"),
+		Email:        new("someone@example.com"),
+		Link:         new("https://vela.example.company.com/go-vela/server/1"),
+		Branch:       new("main"),
+		Ref:          new(""),
+		BaseRef:      new(""),
+		Host:         new("example.company.com"),
+		Runtime:      new("docker"),
+		Distribution: new("linux"),
 	}
 
 	// Create the build in the server
@@ -777,9 +777,9 @@ func ExampleBuildService_Update() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Build{
-		Repo:   &api.Repo{Org: String("github"), Name: String("octocat")},
-		Status: String("error"),
-		Error:  String(""),
+		Repo:   &api.Repo{Org: new("github"), Name: new("octocat")},
+		Status: new("error"),
+		Error:  new(""),
 	}
 
 	// Update the step in the server

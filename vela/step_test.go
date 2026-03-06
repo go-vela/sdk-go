@@ -113,16 +113,16 @@ func TestStep_Add_201(t *testing.T) {
 
 	req := api.Step{
 		Number:       Int32(1),
-		Name:         String("clone"),
-		Status:       String("created"),
-		Error:        String(""),
+		Name:         new("clone"),
+		Status:       new("created"),
+		Error:        new(""),
 		ExitCode:     Int32(0),
 		Created:      Int64(1563475419),
 		Started:      Int64(0),
 		Finished:     Int64(0),
-		Host:         String("example.company.com"),
-		Runtime:      String("docker"),
-		Distribution: String("linux"),
+		Host:         new("example.company.com"),
+		Runtime:      new("docker"),
+		Distribution: new("linux"),
 	}
 
 	// run test
@@ -155,7 +155,7 @@ func TestStep_Update_201(t *testing.T) {
 
 	req := api.Step{
 		Number:   Int32(1),
-		Status:   String("finished"),
+		Status:   new("finished"),
 		Started:  Int64(1563475419),
 		Finished: Int64(1563475419),
 	}
@@ -186,7 +186,7 @@ func TestStep_Update_404(t *testing.T) {
 
 	req := api.Step{
 		Number:   Int32(0),
-		Status:   String("finished"),
+		Status:   new("finished"),
 		Started:  Int64(1563475419),
 		Finished: Int64(1563475419),
 	}
@@ -283,16 +283,16 @@ func ExampleStepService_Add() {
 
 	req := api.Step{
 		Number:       Int32(1),
-		Name:         String("clone"),
-		Status:       String("pending"),
-		Error:        String(""),
+		Name:         new("clone"),
+		Status:       new("pending"),
+		Error:        new(""),
 		ExitCode:     Int32(0),
-		Created:      Int64(time.Now().UTC().Unix()),
+		Created:      new(time.Now().UTC().Unix()),
 		Started:      Int64(0),
 		Finished:     Int64(0),
-		Host:         String("example.company.com"),
-		Runtime:      String("docker"),
-		Distribution: String("linux"),
+		Host:         new("example.company.com"),
+		Runtime:      new("docker"),
+		Distribution: new("linux"),
 	}
 
 	// Create the step in the server
@@ -312,8 +312,8 @@ func ExampleStepService_Update() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Step{
-		Status: String("error"),
-		Error:  String("Something in the runtime broke"),
+		Status: new("error"),
+		Error:  new("Something in the runtime broke"),
 	}
 
 	// Update the step in the server

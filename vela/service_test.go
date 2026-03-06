@@ -113,9 +113,9 @@ func TestService_Add_201(t *testing.T) {
 
 	req := api.Service{
 		Number:   Int32(1),
-		Name:     String("clone"),
-		Status:   String("created"),
-		Error:    String(""),
+		Name:     new("clone"),
+		Status:   new("created"),
+		Error:    new(""),
 		ExitCode: Int32(0),
 		Created:  Int64(1563475419),
 		Started:  Int64(0),
@@ -152,7 +152,7 @@ func TestService_Update_201(t *testing.T) {
 
 	req := api.Service{
 		Number:   Int32(1),
-		Status:   String("finished"),
+		Status:   new("finished"),
 		Started:  Int64(1563475419),
 		Finished: Int64(1563475419),
 	}
@@ -183,7 +183,7 @@ func TestService_Update_404(t *testing.T) {
 
 	req := api.Service{
 		Number:   Int32(0),
-		Status:   String("finished"),
+		Status:   new("finished"),
 		Started:  Int64(1563475419),
 		Finished: Int64(1563475419),
 	}
@@ -280,11 +280,11 @@ func ExampleSvcService_Add() {
 
 	req := api.Service{
 		Number:   Int32(1),
-		Name:     String("clone"),
-		Status:   String("pending"),
-		Error:    String(""),
+		Name:     new("clone"),
+		Status:   new("pending"),
+		Error:    new(""),
 		ExitCode: Int32(0),
-		Created:  Int64(time.Now().UTC().Unix()),
+		Created:  new(time.Now().UTC().Unix()),
 		Started:  Int64(0),
 		Finished: Int64(0),
 	}
@@ -306,8 +306,8 @@ func ExampleSvcService_Update() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Service{
-		Status: String("error"),
-		Error:  String("Something in the runtime broke"),
+		Status: new("error"),
+		Error:  new("Something in the runtime broke"),
 	}
 
 	// Update the service in the server

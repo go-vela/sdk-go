@@ -41,16 +41,16 @@ type AuthenticationService struct {
 
 // SetTokenAuth sets the authentication type as a plain token.
 func (svc *AuthenticationService) SetTokenAuth(token string) {
-	svc.token = String(token)
+	svc.token = new(token)
 	svc.authType = AuthenticationToken
 }
 
 // SetBuildTokenAuth sets the authentication type and the two tokens used.
 func (svc *AuthenticationService) SetBuildTokenAuth(buildTkn, scmTkn string, scmTokenExp int64, buildRepo string, buildNumber int64) {
-	svc.token = String(buildTkn)
-	svc.scmToken = String(scmTkn)
-	svc.buildRepo = String(buildRepo)
-	svc.buildNumber = Int64(buildNumber)
+	svc.token = new(buildTkn)
+	svc.scmToken = new(scmTkn)
+	svc.buildRepo = new(buildRepo)
+	svc.buildNumber = new(buildNumber)
 
 	// set expiration if provided - only for installation tokens
 	if scmTokenExp > 0 {
@@ -62,14 +62,14 @@ func (svc *AuthenticationService) SetBuildTokenAuth(buildTkn, scmTkn string, scm
 
 // SetPersonalAccessTokenAuth sets the authentication type as personal access token.
 func (svc *AuthenticationService) SetPersonalAccessTokenAuth(token string) {
-	svc.personalAccessToken = String(token)
+	svc.personalAccessToken = new(token)
 	svc.authType = PersonalAccessToken
 }
 
 // SetAccessAndRefreshAuth sets the authentication type as oauth token pair.
 func (svc *AuthenticationService) SetAccessAndRefreshAuth(access, refresh string) {
-	svc.accessToken = String(access)
-	svc.refreshToken = String(refresh)
+	svc.accessToken = new(access)
+	svc.refreshToken = new(refresh)
 	svc.authType = AccessAndRefreshToken
 }
 

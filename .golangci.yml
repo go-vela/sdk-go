@@ -50,6 +50,8 @@ linters:
       excludes:
         - G101 # hardcoded credentials
         - G117 # exported field of "Secret" style
+        - G705
+        - G704
     misspell:
       locale: US
     nolintlint:

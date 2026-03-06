@@ -14,7 +14,7 @@ func TestVela_Bool(t *testing.T) {
 	want := &_bool
 
 	// run test
-	got := Bool(_bool)
+	got := new(_bool)
 
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("Bool is %v, want %v", got, want)
@@ -28,7 +28,7 @@ func TestVela_Bytes(t *testing.T) {
 	want := &_bytes
 
 	// run test
-	got := Bytes(_bytes)
+	got := new(_bytes)
 
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("Bytes is %v, want %v", got, want)
@@ -42,7 +42,7 @@ func TestVela_Int(t *testing.T) {
 	want := &_int
 
 	// run test
-	got := Int(_int)
+	got := new(_int)
 
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("Int is %v, want %v", got, want)
@@ -56,7 +56,7 @@ func TestVela_Int64(t *testing.T) {
 	want := &_int64
 
 	// run test
-	got := Int64(_int64)
+	got := new(_int64)
 
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("Int64 is %v, want %v", got, want)
@@ -70,7 +70,7 @@ func TestVela_String(t *testing.T) {
 	want := &_string
 
 	// run test
-	got := String(_string)
+	got := new(_string)
 
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("String is %v, want %v", got, want)
@@ -84,7 +84,7 @@ func TestVela_Strings(t *testing.T) {
 	want := &_strings
 
 	// run test
-	got := Strings(_strings)
+	got := new(_strings)
 
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("Strings is %v, want %v", got, want)
