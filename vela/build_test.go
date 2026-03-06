@@ -216,19 +216,19 @@ func TestBuild_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Build{
-		Number: Int64(1),
+		Number: new(int64(1)),
 		Repo: &api.Repo{
 			Org:  new("github"),
 			Name: new("octocat"),
 		},
-		Parent:       Int64(1),
+		Parent:       new(int64(1)),
 		Event:        new("push"),
 		Status:       new("created"),
 		Error:        new(""),
-		Enqueued:     Int64(1563474077),
-		Created:      Int64(1563474076),
-		Started:      Int64(1563474077),
-		Finished:     Int64(0),
+		Enqueued:     new(int64(1563474077)),
+		Created:      new(int64(1563474076)),
+		Started:      new(int64(1563474077)),
+		Finished:     new(int64(0)),
 		Deploy:       new(""),
 		Clone:        new("https://github.com/github/octocat.git"),
 		Source:       new("https://github.com/github/octocat/abcdefghi123456789"),
@@ -276,12 +276,12 @@ func TestBuild_Update_200(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Build{
-		Number: Int64(1),
+		Number: new(int64(1)),
 		Repo: &api.Repo{
 			Org:  new("github"),
 			Name: new("octocat"),
 		},
-		Parent: Int64(1),
+		Parent: new(int64(1)),
 		Event:  new("push"),
 		Status: new("running"),
 	}
@@ -311,12 +311,12 @@ func TestBuild_Update_404(t *testing.T) {
 	want := api.Build{}
 
 	req := api.Build{
-		Number: Int64(0),
+		Number: new(int64(0)),
 		Repo: &api.Repo{
 			Org:  new("github"),
 			Name: new("octocat"),
 		},
-		Parent: Int64(1),
+		Parent: new(int64(1)),
 		Event:  new("push"),
 		Status: new("running"),
 	}
@@ -732,16 +732,16 @@ func ExampleBuildService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Build{
-		Number:       Int64(1),
+		Number:       new(int64(1)),
 		Repo:         &api.Repo{Org: new("github"), Name: new("octocat")},
-		Parent:       Int64(1),
+		Parent:       new(int64(1)),
 		Event:        new("push"),
 		Status:       new("created"),
 		Error:        new(""),
 		Enqueued:     new(time.Now().UTC().Unix()),
 		Created:      new(time.Now().UTC().Unix()),
-		Started:      Int64(0),
-		Finished:     Int64(0),
+		Started:      new(int64(0)),
+		Finished:     new(int64(0)),
 		Deploy:       new(""),
 		Clone:        new("https://github.com/go-vela/server.git"),
 		Source:       new("https://github.com/go-vela/server/abcdefghi123456789"),

@@ -111,7 +111,7 @@ func TestWorker_Add_201(t *testing.T) {
 	_ = json.Unmarshal(data, &want)
 
 	req := api.Worker{
-		ID:       Int64(1),
+		ID:       new(int64(1)),
 		Hostname: new("worker_1"),
 		Address:  new("http://vela:8080"),
 		Routes: new([]string{
@@ -120,7 +120,7 @@ func TestWorker_Add_201(t *testing.T) {
 			"large:docker",
 		}),
 		Active:        new(true),
-		LastCheckedIn: Int64(1602612590),
+		LastCheckedIn: new(int64(1602612590)),
 	}
 
 	// run test
@@ -324,7 +324,7 @@ func ExampleWorkerService_Add() {
 	c.Authentication.SetPersonalAccessTokenAuth("token")
 
 	req := api.Worker{
-		ID:       Int64(1),
+		ID:       new(int64(1)),
 		Hostname: new("worker_1"),
 		Address:  new("http://vela:8080"),
 		Routes: new([]string{
@@ -333,7 +333,7 @@ func ExampleWorkerService_Add() {
 			"large:docker",
 		}),
 		Active:        new(true),
-		LastCheckedIn: Int64(1602612590),
+		LastCheckedIn: new(int64(1602612590)),
 	}
 
 	// Create the worker in the server
