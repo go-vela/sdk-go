@@ -259,11 +259,6 @@ func (c *Client) addAuthentication(ctx context.Context, req *http.Request) error
 	if c.Authentication.HasBuildTokenAuth() {
 		token = *c.Authentication.token
 
-		scmTkn := *c.Authentication.scmToken
-		if len(scmTkn) == 0 {
-			return fmt.Errorf("scm token has no value")
-		}
-
 		if c.Authentication.IsSCMTokenExpired() {
 			splitR := strings.Split(*c.Authentication.buildRepo, "/")
 			if len(splitR) != 2 {
@@ -279,8 +274,6 @@ func (c *Client) addAuthentication(ctx context.Context, req *http.Request) error
 				return err
 			}
 		}
-
-		req.Header.Add("Token", *c.Authentication.scmToken)
 	}
 
 	// make sure token is not empty

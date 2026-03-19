@@ -246,3 +246,12 @@ func (svc *BuildService) GetPresignedPutURL(ctx context.Context, objName, org, r
 
 	return out, resp, err
 }
+
+func (svc *BuildService) PostInstallToken(ctx context.Context, org, repo string, build int64, tokenRequest *api.TokenRequest) (*api.Token, *Response, error) {
+	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/install_token", org, repo, build)
+
+	t := new(api.Token)
+	resp, err := svc.client.Call(ctx, "POST", u, tokenRequest, t)
+
+	return t, resp, err
+}
