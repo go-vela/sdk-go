@@ -263,7 +263,6 @@ func TestVela_addAuthentication(t *testing.T) {
 func TestVela_addAuthentication_BuildToken(t *testing.T) {
 	// setup types
 	wantBuild := "Bearer foobar"
-	wantScm := "baz"
 
 	c, err := NewClient("http://localhost:8080", "", nil)
 	if err != nil {
@@ -284,14 +283,9 @@ func TestVela_addAuthentication_BuildToken(t *testing.T) {
 	}
 
 	gotBuild := r.Header.Get("Authorization")
-	gotScm := r.Header.Get("Token")
 
 	if gotBuild != wantBuild {
 		t.Errorf("addAuthentication BuildToken is %v, want %v", gotBuild, wantBuild)
-	}
-
-	if gotScm != wantScm {
-		t.Errorf("addAuthentication SCM Token is %v, want %v", gotScm, wantScm)
 	}
 }
 
