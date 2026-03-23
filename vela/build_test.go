@@ -676,6 +676,67 @@ func TestBuild_GetIDToken_400(t *testing.T) {
 	}
 }
 
+func TestBuild_PostInstallToken_200(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	c.Authentication.SetBuildTokenAuth("123abc", "scmToken", 0, "repo", 1)
+
+	data := []byte(server.InstallTokenResp)
+
+	var want api.Token
+
+	_ = json.Unmarshal(data, &want)
+
+	tknRequest := &api.TokenRequest{
+		Repositories: []string{"hello-world"},
+		Permissions: map[string]string{
+			"contents": "write",
+		},
+	}
+
+	// run test
+	got, resp, err := c.Build.PostInstallToken(t.Context(), "github", "octocat", 1, tknRequest)
+	if err != nil {
+		t.Errorf("PostInstallToken returned err: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Build returned %v, want %v", resp.StatusCode, http.StatusOK)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("PostInstallToken is %v, want %v", got, want)
+	}
+}
+
+func TestBuild_PostInstallToken_401(t *testing.T) {
+	// setup context
+	gin.SetMode(gin.TestMode)
+
+	s := httptest.NewServer(server.FakeHandler())
+	c, _ := NewClient(s.URL, "", nil)
+
+	var want api.Token
+
+	// run test
+	got, resp, err := c.Build.PostInstallToken(t.Context(), "github", "octocat", 0, nil)
+	if err == nil {
+		t.Errorf("PostInstallToken should have returned err")
+	}
+
+	if resp.StatusCode != http.StatusUnauthorized {
+		t.Errorf("Build returned %v, want %v", resp.StatusCode, http.StatusUnauthorized)
+	}
+
+	if !reflect.DeepEqual(got, &want) {
+		t.Errorf("PostInstallToken is %v, want %v", got, want)
+	}
+}
+
 func ExampleBuildService_Get() {
 	// Create a new vela client for interacting with server
 	c, _ := NewClient("http://localhost:8080", "", nil)
