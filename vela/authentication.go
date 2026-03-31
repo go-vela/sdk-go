@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"time"
 
 	api "github.com/go-vela/server/api/types"
 	"github.com/go-vela/server/constants"
@@ -46,16 +45,11 @@ func (svc *AuthenticationService) SetTokenAuth(token string) {
 }
 
 // SetBuildTokenAuth sets the authentication type and the two tokens used.
-func (svc *AuthenticationService) SetBuildTokenAuth(buildTkn, scmTkn string, scmTokenExp int64, buildRepo string, buildNumber int64) {
+func (svc *AuthenticationService) SetBuildTokenAuth(buildTkn, scmTkn string, buildRepo string, buildNumber int64) {
 	svc.token = new(buildTkn)
 	svc.scmToken = new(scmTkn)
 	svc.buildRepo = new(buildRepo)
 	svc.buildNumber = new(buildNumber)
-
-	// set expiration if provided - only for installation tokens
-	if scmTokenExp > 0 {
-		svc.scmTokenExp = &scmTokenExp
-	}
 
 	svc.authType = BuildToken
 }
@@ -130,25 +124,6 @@ func (svc *AuthenticationService) IsTokenAuthExpired() (bool, error) {
 
 	// check auth token expiration
 	return IsTokenExpired(*svc.token), nil
-}
-
-// IsSCMTokenExpired checks if the SCM token has expired.
-func (svc *AuthenticationService) IsSCMTokenExpired() bool {
-	// 5 minute buffer
-	if svc.scmTokenExp != nil && time.Now().Unix() >= (*svc.scmTokenExp-300) {
-		return true
-	}
-
-	return false
-}
-
-// SCMExpiration returns the SCM token expiration time.
-func (svc *AuthenticationService) SCMExpiration() int64 {
-	if svc.scmTokenExp != nil {
-		return *svc.scmTokenExp
-	}
-
-	return 0
 }
 
 // SCMToken returns the SCM token.
@@ -317,40 +292,6 @@ func (svc *AuthenticationService) ValidateOAuthToken(ctx context.Context) (*Resp
 
 	// attempt to validate an oauth token
 	resp, err := svc.client.Call(ctx, "GET", u, nil, nil)
-
-	return resp, err
-}
-
-// RefreshInstallToken refreshes the SCM install token for a build.
-func (svc *AuthenticationService) RefreshInstallToken(ctx context.Context, org, repo string, build int64) (*Response, error) {
-	// set the API endpoint path we send the request to
-	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/install_token", org, repo, build)
-
-	// will hold access token
-	v := new(api.Token)
-
-	// building a custom request -
-	// we can't use svc.client.NewRequest because
-	// that's what can send us here
-	url, err := svc.client.buildURLForRequest(u)
-	if err != nil {
-		return nil, err
-	}
-
-	// create a new request that we can attach a header to
-	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", *svc.token))
-	req.Header.Add("Token", *svc.scmToken)
-
-	resp, err := svc.client.Do(req, v)
-
-	// set the received access token
-	svc.scmToken = v.Token
-	svc.scmTokenExp = v.Expiration
 
 	return resp, err
 }

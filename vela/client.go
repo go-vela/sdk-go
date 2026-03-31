@@ -258,22 +258,6 @@ func (c *Client) addAuthentication(ctx context.Context, req *http.Request) error
 
 	if c.Authentication.HasBuildTokenAuth() {
 		token = *c.Authentication.token
-
-		if c.Authentication.IsSCMTokenExpired() {
-			splitR := strings.Split(*c.Authentication.buildRepo, "/")
-			if len(splitR) != 2 {
-				return fmt.Errorf("invalid build repo format")
-			}
-
-			org := splitR[0]
-			repo := splitR[1]
-			build := *c.Authentication.buildNumber
-
-			_, err := c.Authentication.RefreshInstallToken(ctx, org, repo, build)
-			if err != nil {
-				return err
-			}
-		}
 	}
 
 	// make sure token is not empty

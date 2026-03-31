@@ -2,6 +2,8 @@ module github.com/go-vela/sdk-go
 
 go 1.26.1
 
+replace github.com/go-vela/server => ../server
+
 require (
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.12.0
