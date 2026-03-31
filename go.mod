@@ -5,7 +5,7 @@ go 1.26.1
 require (
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.12.0
-	github.com/go-vela/server v0.28.0-rc9
+	github.com/go-vela/server v0.28.0
 	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/google/go-cmp v0.7.0
 	github.com/google/go-querystring v1.2.0
@@ -62,7 +62,7 @@ require (
 	github.com/tinylib/msgp v1.6.1 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.3.1 // indirect
-	github.com/urfave/cli/v3 v3.7.0 // indirect
+	github.com/urfave/cli/v3 v3.8.0 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
 	go.mongodb.org/mongo-driver/v2 v2.5.0 // indirect
 	golang.org/x/arch v0.24.0 // indirect
