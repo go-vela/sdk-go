@@ -32,11 +32,17 @@ type AuthenticationService struct {
 	personalAccessToken *string
 	accessToken         *string
 	refreshToken        *string
+	performTokenRefresh *bool
 	scmToken            *string
 	authType            AuthenticationType
 	scmTokenExp         *int64
 	buildRepo           *string
 	buildNumber         *int64
+}
+
+// SetPerformTokenRefresh sets whether or not the client should attempt to refresh tokens when they expire.
+func (s *AuthenticationService) SetPerformTokenRefresh(refreshToken bool) {
+	s.performTokenRefresh = new(refreshToken)
 }
 
 // SetTokenAuth sets the authentication type as a plain token.
@@ -105,6 +111,15 @@ func (svc *AuthenticationService) getAccessToken() (string, error) {
 	}
 
 	return *svc.accessToken, nil
+}
+
+// getPerformTokenRefresh returns the perform token refresh value.
+func (svc *AuthenticationService) getPerformTokenRefresh() bool {
+	if svc.performTokenRefresh == nil {
+		return true
+	}
+
+	return *svc.performTokenRefresh
 }
 
 // getRefreshToken returns the active refresh token value or an error.
