@@ -113,6 +113,7 @@ func (svc *AuthenticationService) getAccessToken() (string, error) {
 	return *svc.accessToken, nil
 }
 
+// getPerformTokenRefresh returns the perform token refresh value.
 func (svc *AuthenticationService) getPerformTokenRefresh() bool {
 	if svc.performTokenRefresh == nil {
 		return true
