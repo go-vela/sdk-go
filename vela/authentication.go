@@ -7,6 +7,8 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strings"
+	"sync"
 	"time"
 
 	api "github.com/go-vela/server/api/types"
@@ -37,6 +39,7 @@ type AuthenticationService struct {
 	scmTokenExp         *int64
 	buildRepo           *string
 	buildNumber         *int64
+	scmAuthMu           sync.RWMutex
 }
 
 // SetTokenAuth sets the authentication type as a plain token.
@@ -47,6 +50,9 @@ func (svc *AuthenticationService) SetTokenAuth(token string) {
 
 // SetBuildTokenAuth sets the authentication type and the two tokens used.
 func (svc *AuthenticationService) SetBuildTokenAuth(buildTkn, scmTkn string, scmTokenExp int64, buildRepo string, buildNumber int64) {
+	svc.scmAuthMu.Lock()
+	defer svc.scmAuthMu.Unlock()
+
 	svc.token = new(buildTkn)
 	svc.scmToken = new(scmTkn)
 	svc.buildRepo = new(buildRepo)
@@ -134,6 +140,13 @@ func (svc *AuthenticationService) IsTokenAuthExpired() (bool, error) {
 
 // IsSCMTokenExpired checks if the SCM token has expired.
 func (svc *AuthenticationService) IsSCMTokenExpired() bool {
+	svc.scmAuthMu.RLock()
+	defer svc.scmAuthMu.RUnlock()
+
+	return svc.isSCMTokenExpired()
+}
+
+func (svc *AuthenticationService) isSCMTokenExpired() bool {
 	// 5 minute buffer
 	if svc.scmTokenExp != nil && time.Now().Unix() >= (*svc.scmTokenExp-300) {
 		return true
@@ -144,6 +157,9 @@ func (svc *AuthenticationService) IsSCMTokenExpired() bool {
 
 // SCMExpiration returns the SCM token expiration time.
 func (svc *AuthenticationService) SCMExpiration() int64 {
+	svc.scmAuthMu.RLock()
+	defer svc.scmAuthMu.RUnlock()
+
 	if svc.scmTokenExp != nil {
 		return *svc.scmTokenExp
 	}
@@ -153,6 +169,9 @@ func (svc *AuthenticationService) SCMExpiration() int64 {
 
 // SCMToken returns the SCM token.
 func (svc *AuthenticationService) SCMToken() string {
+	svc.scmAuthMu.RLock()
+	defer svc.scmAuthMu.RUnlock()
+
 	if svc.scmToken != nil {
 		return *svc.scmToken
 	}
@@ -323,6 +342,41 @@ func (svc *AuthenticationService) ValidateOAuthToken(ctx context.Context) (*Resp
 
 // RefreshInstallToken refreshes the SCM install token for a build.
 func (svc *AuthenticationService) RefreshInstallToken(ctx context.Context, org, repo string, build int64) (*Response, error) {
+	svc.scmAuthMu.Lock()
+	defer svc.scmAuthMu.Unlock()
+
+	return svc.refreshInstallToken(ctx, org, repo, build)
+}
+
+// refreshInstallTokenIfNeeded synchronizes refresh checks and execution so
+// concurrent requests don't race refreshing the same SCM token.
+func (svc *AuthenticationService) refreshInstallTokenIfNeeded(ctx context.Context) error {
+	svc.scmAuthMu.Lock()
+	defer svc.scmAuthMu.Unlock()
+
+	if !svc.isSCMTokenExpired() {
+		return nil
+	}
+
+	if svc.buildRepo == nil || svc.buildNumber == nil {
+		return fmt.Errorf("build token authentication details are incomplete")
+	}
+
+	splitR := strings.Split(*svc.buildRepo, "/")
+	if len(splitR) != 2 {
+		return fmt.Errorf("invalid build repo format")
+	}
+
+	org := splitR[0]
+	repo := splitR[1]
+	build := *svc.buildNumber
+
+	_, err := svc.refreshInstallToken(ctx, org, repo, build)
+
+	return err
+}
+
+func (svc *AuthenticationService) refreshInstallToken(ctx context.Context, org, repo string, build int64) (*Response, error) {
 	// set the API endpoint path we send the request to
 	u := fmt.Sprintf("/api/v1/repos/%s/%s/builds/%d/install_token", org, repo, build)
 
@@ -343,10 +397,17 @@ func (svc *AuthenticationService) RefreshInstallToken(ctx context.Context, org, 
 		return nil, err
 	}
 
+	if svc.token == nil || svc.scmToken == nil {
+		return nil, fmt.Errorf("build token authentication details are incomplete")
+	}
+
 	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", *svc.token))
 	req.Header.Add("Token", *svc.scmToken)
 
 	resp, err := svc.client.Do(req, v)
+	if err != nil {
+		return resp, err
+	}
 
 	// set the received access token
 	svc.scmToken = v.Token

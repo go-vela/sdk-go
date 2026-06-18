@@ -11,6 +11,8 @@ import (
 	"net/url"
 	"reflect"
 	"strings"
+	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -286,6 +288,67 @@ func TestVela_addAuthentication_BuildToken(t *testing.T) {
 
 	if gotBuild != wantBuild {
 		t.Errorf("addAuthentication BuildToken is %v, want %v", gotBuild, wantBuild)
+	}
+}
+
+func TestVela_addAuthentication_BuildToken_ConcurrentRefresh(t *testing.T) {
+	var refreshCalls int32
+
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet && r.URL.Path == "/api/v1/repos/org/repo/builds/1/install_token" {
+			atomic.AddInt32(&refreshCalls, 1)
+			w.Header().Set("Content-Type", "application/json")
+			_, _ = w.Write([]byte(`{"token":"refreshed","expiration":4102444800}`))
+
+			return
+		}
+
+		w.WriteHeader(http.StatusNotFound)
+	}))
+	defer s.Close()
+
+	c, err := NewClient(s.URL, "", nil)
+	if err != nil {
+		t.Errorf("Unable to create new client: %v", err)
+	}
+
+	// Expiration near now triggers refresh via the 5 minute SDK buffer.
+	c.Authentication.SetBuildTokenAuth("foobar", "stale-token", time.Now().Unix()+1, "org/repo", 1)
+
+	const goroutines = 16
+
+	errCh := make(chan error, goroutines)
+
+	var wg sync.WaitGroup
+	for range goroutines {
+		wg.Add(1)
+
+		go func() {
+			defer wg.Done()
+
+			r, err := http.NewRequestWithContext(context.Background(), "GET", fmt.Sprintf("%s/health", s.URL), nil)
+			if err != nil {
+				errCh <- err
+
+				return
+			}
+
+			err = c.addAuthentication(context.Background(), r)
+			errCh <- err
+		}()
+	}
+
+	wg.Wait()
+	close(errCh)
+
+	for err := range errCh {
+		if err != nil {
+			t.Fatalf("addAuthentication returned err: %v", err)
+		}
+	}
+
+	if got, want := atomic.LoadInt32(&refreshCalls), int32(1); got != want {
+		t.Fatalf("unexpected refresh call count: got %d, want %d", got, want)
 	}
 }
 
