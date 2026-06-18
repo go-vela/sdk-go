@@ -321,9 +321,7 @@ func TestVela_addAuthentication_BuildToken_ConcurrentRefresh(t *testing.T) {
 
 	var wg sync.WaitGroup
 	for range goroutines {
-
 		wg.Go(func() {
-
 			r, err := http.NewRequestWithContext(context.Background(), "GET", fmt.Sprintf("%s/health", s.URL), nil)
 			if err != nil {
 				errCh <- err
