@@ -292,11 +292,11 @@ func TestVela_addAuthentication_BuildToken(t *testing.T) {
 }
 
 func TestVela_addAuthentication_BuildToken_ConcurrentRefresh(t *testing.T) {
-	var refreshCalls int32
+	var refreshCalls atomic.Int32
 
 	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == http.MethodGet && r.URL.Path == "/api/v1/repos/org/repo/builds/1/install_token" {
-			atomic.AddInt32(&refreshCalls, 1)
+			refreshCalls.Add(1)
 			w.Header().Set("Content-Type", "application/json")
 			_, _ = w.Write([]byte(`{"token":"refreshed","expiration":4102444800}`))
 
@@ -347,7 +347,7 @@ func TestVela_addAuthentication_BuildToken_ConcurrentRefresh(t *testing.T) {
 		}
 	}
 
-	if got, want := atomic.LoadInt32(&refreshCalls), int32(1); got != want {
+	if got, want := refreshCalls.Load(), int32(1); got != want {
 		t.Fatalf("unexpected refresh call count: got %d, want %d", got, want)
 	}
 }
