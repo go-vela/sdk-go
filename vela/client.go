@@ -210,7 +210,7 @@ func (c *Client) addAuthentication(ctx context.Context, req *http.Request) error
 		}
 
 		isExpired := IsTokenExpired(currentAccess)
-		if isExpired {
+		if isExpired && c.Authentication.getPerformTokenRefresh() {
 			logrus.Debug("access token has expired")
 
 			isRefreshExpired := IsTokenExpired(currentRefresh)
