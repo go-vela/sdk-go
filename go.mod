@@ -9,8 +9,8 @@ require (
 	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/google/go-cmp v0.7.0
 	github.com/google/go-querystring v1.2.0
-	github.com/sirupsen/logrus v1.9.4
-	go.yaml.in/yaml/v3 v3.0.4
+	github.com/sirupsen/logrus v1.10.2
+	go.yaml.in/yaml/v3 v3.0.5
 )
 
 require (
