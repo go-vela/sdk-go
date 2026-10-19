@@ -201,6 +201,8 @@ func (svc *AuthenticationService) RefreshAccessToken(ctx context.Context, refres
 	}
 
 	// set a minimal cookie with the refresh token value
+	//
+	//nolint:gosec // false positive
 	cookie := &http.Cookie{
 		Name:  constants.RefreshTokenName,
 		Value: refreshToken,
