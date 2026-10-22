@@ -1,11 +1,11 @@
 module github.com/go-vela/sdk-go
 
-go 1.27.2
+go 1.27.3
 
 require (
 	github.com/coreos/go-semver v0.3.1
 	github.com/gin-gonic/gin v1.12.0
-	github.com/go-vela/server v0.28.9
+	github.com/go-vela/server v0.28.10
 	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/google/go-cmp v0.7.0
 	github.com/google/go-querystring v1.2.0
