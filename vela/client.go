@@ -17,7 +17,7 @@ import (
 
 	"github.com/google/go-querystring/query"
 	"github.com/sirupsen/logrus"
-	"go.yaml.in/yaml/v3"
+	"go.yaml.in/yaml/v4"
 
 	"github.com/go-vela/sdk-go/version"
 	api "github.com/go-vela/server/api/types"
